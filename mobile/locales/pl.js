@@ -17,6 +17,12 @@ export default {
       "project_name": "_PL_Project name",
       "project_tagline": "_PL_Project tagline",
       "project_description": "_PL_Project description"
+    },
+    "links": {
+      "whitepaper": "_PL_Whitepaper",
+      "website": "_PL_Website",
+      "telegram": "_PL_Telegram",
+      "twitter": "_PL_Twitter"
     }
   },
   "common": {

@@ -17,6 +17,12 @@ export default {
       "project_name": "Project name",
       "project_tagline": "Project tagline",
       "project_description": "Project description"
+    },
+    "links": {
+      "whitepaper": "Whitepaper",
+      "website": "Website",
+      "telegram": "Telegram",
+      "twitter": "Twitter"
     }
   },
   "common": {
