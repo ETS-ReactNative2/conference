@@ -27,7 +27,7 @@ const AppStackNavigator = createStackNavigator({
   FLOW_PAGE: {
     screen: FlowPage,
     navigationOptions: () => ({
-      title: 'Signup flow DEV',
+      title: I18n.t('flow_page.title'),
       ...commonNavBarStyle
     })
   },

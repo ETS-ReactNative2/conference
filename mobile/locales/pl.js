@@ -11,7 +11,9 @@ export default {
     "title": "_PL_Sign up"
   },
   "flow_page": {
+    "title": "_PL_Signup flow DEV",
     "project_setup": {
+      "title": "_PL_Project setup",
       "project_name": "_PL_Project name",
       "project_tagline": "_PL_Project tagline",
       "project_description": "_PL_Project description"

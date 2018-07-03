@@ -16,7 +16,7 @@ class InvesteeProjectSetup extends React.Component {
   render () {
     return (
       <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>Project setup</Text>
+        <Text style={ { fontSize: 24 } }>{I18n.t('flow_page.project_setup.title')}</Text>
         <Form>
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.project_setup.project_name') }</Label>
