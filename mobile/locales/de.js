@@ -9,5 +9,15 @@ export default {
   },
   "signup_page": {
     "title": "Registrieren"
+  },
+  "flow_page": {
+    "project_setup": {
+      "project_name": "_DE_Project name",
+      "project_tagline": "_DE_Project tagline",
+      "project_description": "_DE_Project description"
+    }
+  },
+  "common": {
+    "next": "Weiter"
   }
 }

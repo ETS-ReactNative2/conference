@@ -6,10 +6,10 @@ import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 
 const PAGES_NAMES = {
+  FLOW_PAGE: 'FLOW_PAGE',
   WELCOME_PAGE: 'WELCOME_PAGE',
   LOGIN_PAGE: 'LOGIN_PAGE',
-  SIGNUP_PAGE: 'SIGNUP_PAGE',
-  FLOW_PAGE: 'FLOW_PAGE'
+  SIGNUP_PAGE: 'SIGNUP_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -24,6 +24,13 @@ const commonNavBarStyle = {
 }
 
 const AppStackNavigator = createStackNavigator({
+  FLOW_PAGE: {
+    screen: FlowPage,
+    navigationOptions: () => ({
+      title: 'Signup flow DEV',
+      ...commonNavBarStyle
+    })
+  },
   WELCOME_PAGE: {
     screen: WelcomePage,
     navigationOptions: () => ({
@@ -43,13 +50,6 @@ const AppStackNavigator = createStackNavigator({
       title: I18n.t('signup_page.title'),
       ...commonNavBarStyle
     }),
-  },
-  FLOW_PAGE: {
-    screen: FlowPage,
-    navigationOptions: () => ({
-      title: 'Signup flow DEV',
-      ...commonNavBarStyle
-    })
   }
 })
 
