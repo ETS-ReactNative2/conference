@@ -9,5 +9,17 @@ export default {
   },
   "signup_page": {
     "title": "Sign up"
+  },
+  "flow_page": {
+    "title": "Signup flow DEV",
+    "project_setup": {
+      "title": "Project setup",
+      "project_name": "Project name",
+      "project_tagline": "Project tagline",
+      "project_description": "Project description"
+    }
+  },
+  "common": {
+    "next": "Next"
   }
 }
