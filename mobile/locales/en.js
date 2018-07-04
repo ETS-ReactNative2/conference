@@ -6,10 +6,7 @@ export default {
     'signup': 'Registrieren'
   },
   'login_page': {
-    'title': 'Einloggen'
-  },
-  'signup_page': {
-    'title': 'Registrieren',
+    'title': 'Einloggen',
     'email_placeholder': 'Enter email',
     'password_placeholder': 'Enter password',
     'button': 'Log in'
