@@ -1,18 +1,17 @@
 export default {
   'welcome_page': {
-
-    'app_description': 'Luna Conference',
-    'login': 'Einloggen',
-    'signup': 'Registrieren'
+    'app_description': '_PL_Luna Conference',
+    'login': '_PL_Login',
+    'signup': '_PL_Sign Up'
   },
   'login_page': {
-    'title': 'Einloggen',
+    'title': '_PL_Login',
     'email_placeholder': '_PL_Enter email',
     'password_placeholder': '_PL_Enter password',
     'button': '_PL_Log in'
   },
   'signup_page': {
-    'title': 'Registrieren',
+    'title': '_PL_Sign Up',
     'email_placeholder': '_PL_Enter email',
     'password_placeholder': '_PL_Enter password',
     'phone_placeholder': '_PL_Enter phone number',
