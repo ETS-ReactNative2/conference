@@ -11,7 +11,7 @@ export default {
     'button': 'Log in'
   },
   'signup_page': {
-    'title': 'Sign up',
+    'title': 'Sign Up',
     'email_placeholder': 'Enter email',
     'password_placeholder': 'Enter password',
     'phone_placeholder': 'Enter phone number',
@@ -64,8 +64,26 @@ export default {
       'question': 'Are you hiring?'
     },
     'members': {
-      'title': 'Notable team member(s) or advisor(s)',
+      'title': 'Members',
       'label': 'Members'
+    },
+    'employee': {
+      'role': {
+        'title': 'Role'
+      },
+      'keyword': {
+        'title': 'Keywords',
+        'placeholder': 'Select your skills'
+      }
+    },
+    'investor': {
+      'company_location': {
+        'title': 'Company Location',
+        'localization': 'My company is located in:',
+        'localization_placeholder': 'Country',
+        'nationality': 'My nationality is:',
+        'nationality_placeholder': 'Nationality'
+      }
     },
     'common': {
       'profile_onboarding': {
@@ -79,20 +97,18 @@ export default {
         'meeting': 'Meeting',
         'projects': 'Projects to invest in',
         'metting_investors': 'Meeting Investors'
-      }
-    },
-    'investor': {
-      'company_location': {
-        'title': 'Company Location',
-        'localization': 'My company is located in:',
-        'localization_placeholder': 'Country',
-        'nationality': 'My nationality is:',
-        'nationality_placeholder': 'Nationality'
-      }
+      },
     }
   },
   'common': {
     'next': 'Next',
+    'roles': {
+      'developer': 'Developer',
+      'marketing': 'Marketing',
+      'ceo': 'CEO',
+      'sales': 'Sales',
+      'founder': 'Founder'
+    },
     'twitter': 'Twitter',
     'facebook': 'Facebook',
     'nationality': {

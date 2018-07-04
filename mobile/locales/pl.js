@@ -11,16 +11,16 @@ export default {
     'button': '_PL_Log in'
   },
   'signup_page': {
-    'title': '_PL_Sign up',
+    'title': '_PL_Sign Up',
     'email_placeholder': '_PL_Enter email',
     'password_placeholder': '_PL_Enter password',
     'phone_placeholder': '_PL_Enter phone number',
     'account_type_header': '_PL_Select your account type',
     'account_type_placeholder': '_PL_Account type',
     'button': '_PL_Sign up',
-    'account-type_investor': '_PL_Investor',
-    'account-type_investee': '_PL_Investee',
-    'account-type_employer': '_PL_Employer',
+    'account_type_investor': '_PL_Investor',
+    'account_type_investee': '_PL_Investee',
+    'account_type_employer': '_PL_Employer',
     'account_type_employee': '_PL_Employee'
   },
   'flow_page': {
@@ -67,6 +67,24 @@ export default {
       'title': '_PL_Members',
       'label': '_PL_Members'
     },
+    'employee': {
+      'role': {
+        'title': '_PL_Role'
+      },
+      'keyword': {
+        'title': '_PL_Keywords',
+        'placeholder': '_PL_Select your skills'
+      }
+    },
+    'investor': {
+      'company_location': {
+        'title': '_PL_Company Location',
+        'localization': '_PL_My company is located in:',
+        'localization_placeholder': '_PL_Country',
+        'nationality': '_PL_My nationality is:',
+        'nationality_placeholder': '_PL_Nationality'
+      }
+    },
     'common': {
       'profile_onboarding': {
         'title': '_PL_Profile Onboarding',
@@ -80,19 +98,17 @@ export default {
         'projects': '_PL_Projects to invest in',
         'metting_investors': '_PL_Meeting Investors'
       }
-    },
-    'investor': {
-      'company_location': {
-        'title': '_PL_Company Location',
-        'localization': '_PL_My company is located in:',
-        'localization_placeholder': '_PL_Country',
-        'nationality': '_PL_My nationality is:',
-        'nationality_placeholder': '_PL_Nationality'
-      }
     }
   },
   'common': {
     'next': '_PL_Next',
+    'roles': {
+      'developer': '_PL_Developer',
+      'marketing': '_PL_Marketing',
+      'ceo': '_PL_CEO',
+      'sales': '_PL_Sales',
+      'founder': '_PL_Founder'
+    },
     'twitter': '_PL_Twitter',
     'facebook': '_PL_Facebook',
     'nationality': {

@@ -1,6 +1,6 @@
 export default {
   'welcome_page': {
-    'app_description': 'Luna Conference',
+    'app_description': '_DE_Luna Conference',
     'login': 'Einloggen',
     'signup': 'Registrieren'
   },
@@ -67,6 +67,24 @@ export default {
       'title': '_DE_Members',
       'label': '_DE_Members'
     },
+    'employee': {
+      'role': {
+        'title': '_DE_Role'
+      },
+      'keyword': {
+        'title': '_DE_Keywords',
+        'placeholder': '_DE_Select your skills'
+      }
+    },
+    'investor': {
+      'company_location': {
+        'title': '_DE_Company Location',
+        'localization': '_DE_My company is located in:',
+        'localization_placeholder': '_DE_Country',
+        'nationality': '_DE_My nationality is:',
+        'nationality_placeholder': '_DE_Nationality'
+      }
+    },
     'common': {
       'profile_onboarding': {
         'title': '_DE_Profile Onboarding',
@@ -79,20 +97,18 @@ export default {
         'meeting': '_DE_Meeting',
         'projects': '_DE_Projects to invest in',
         'metting_investors': '_DE_Meeting Investors'
-      }
-    },
-    'investor': {
-      'company_location': {
-        'title': '_DE_Company Location',
-        'localization': '_DE_My company is located in:',
-        'localization_placeholder': '_DE_Country',
-        'nationality': '_DE_My nationality is:',
-        'nationality_placeholder': '_DE_Nationality'
-      }
+      },
     }
   },
   'common': {
     'next': 'Weiter',
+    'roles': {
+      'developer': '_DE_Developer',
+      'marketing': '_DE_Marketing',
+      'ceo': '_DE_CEO',
+      'sales': '_DE_Sales',
+      'founder': '_DE_Founder'
+    },
     'twitter': '_DE_Twitter',
     'facebook': '_DE_Facebook',
     'nationality': {
