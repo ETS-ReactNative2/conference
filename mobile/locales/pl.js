@@ -36,6 +36,10 @@ export default {
       "seed": "_PL_Seed",
       "pre": "_PL_Pre ICO",
       "post": "_PL_Post ICO"
+    },
+    "members": {
+      "title": "_PL_Members",
+      "label": "_PL_Members"
     }
   },
   "common": {

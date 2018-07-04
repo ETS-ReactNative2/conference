@@ -36,6 +36,10 @@ export default {
       "seed": "Seed",
       "pre": "Pre ICO",
       "post": "Post ICO"
+    },
+    "members": {
+      "title": "Notable team member(s) or advisor(s)",
+      "label": "Members"
     }
   },
   "common": {
