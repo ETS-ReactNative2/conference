@@ -30,6 +30,12 @@ export default {
       "pre": "_DE_Pre-product",
       "live": "_DE_Live product",
       "revenue": "_DE_Live product + $ Revenue"
+    },
+    "funding_stage": {
+      "title": "_DE_Funding stage",
+      "seed": "_DE_Seed",
+      "pre": "_DE_Pre ICO",
+      "post": "_DE_Post ICO"
     }
   },
   "common": {

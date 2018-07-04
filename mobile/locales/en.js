@@ -30,6 +30,12 @@ export default {
       "pre": "Pre-product",
       "live": "Live product",
       "revenue": "Live product + $ Revenue"
+    },
+    "funding_stage": {
+      "title": "Funding stage",
+      "seed": "Seed",
+      "pre": "Pre ICO",
+      "post": "Post ICO"
     }
   },
   "common": {
