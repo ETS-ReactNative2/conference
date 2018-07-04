@@ -71,10 +71,16 @@ captures/
 
 # Intellij
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/libraries
+android/.idea/workspace.xml
+android/.idea/tasks.xml
+android/.idea/misc.xml
+android/.idea/modules.xml
+android/.idea/runConfigurations.xml
+android/.idea/codeStyles/Project.xml
+android/.idea/gradle.xml
+android/.idea/.name
+android/.idea/libraries
+android/.idea/caches
 
 # Keystore files
 *.jks
