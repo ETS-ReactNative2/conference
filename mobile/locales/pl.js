@@ -44,6 +44,10 @@ export default {
     "employee": {
       "role": {
         "title": "_PL_Role"
+      },
+      "keyword": {
+        "title": "_PL_Keywords",
+        "placeholder": "_PL_Select your skills"
       }
     }
   },
