@@ -5,7 +5,10 @@ import {
   EmployeeKeywords,
   EmployeeRole,
   InvesteeFundingStage,
+  InvesteeHiring,
+  InvesteeIco,
   InvesteeLinks,
+  InvesteeMoneySource,
   InvesteeProductStage,
   InvesteeProjectSetup,
   InvesteeTeamMembers,
@@ -23,6 +26,10 @@ class FlowPage extends React.Component {
           <EmployeeKeywords onFill={console.log} style={ { marginBottom: 16, marginTop: 16 } }/>
           <EmployeeRole onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
           <Text>Investee steps</Text>
+
+          <InvesteeHiring onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
+          <InvesteeIco onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
+          <InvesteeMoneySource onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
           <InvesteeTeamMembers onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
           <InvesteeFundingStage onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
           <InvesteeProductStage onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>

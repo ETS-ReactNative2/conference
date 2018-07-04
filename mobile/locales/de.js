@@ -53,6 +53,20 @@ export default {
       'pre': '_DE_Pre ICO',
       'post': '_DE_Post ICO'
     },
+    'money': {
+      'title': '_DE__Money source',
+      'need_money': '_DE__Are you looking for money?',
+      'amount': '_DE__How much money are you looking for?'
+    },
+    'ico': {
+      'title': '_DE__ICO',
+      'question': '_DE__Are you going to do an ICO?',
+      'when': '_DE__When are you going to do your ICO?'
+    },
+    'hiring': {
+      'title': '_DE_Hiring',
+      'question': '_DE_Are you hiring?'
+    },
     'members': {
       'title': '_DE_Members',
       'label': '_DE_Members'
