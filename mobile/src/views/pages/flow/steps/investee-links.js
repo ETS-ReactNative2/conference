@@ -43,7 +43,7 @@ class InvesteeLinks extends React.Component {
           </Item>
           <Item floatingLabel>
             <Icon active name='logo-twitter' />
-            <Label>{ I18n.t('flow_page.links.twitter') }</Label>
+            <Label>{ I18n.t('common.twitter') }</Label>
             <Input
               onChange={ (e) => this.handleFieldChange(e, 'twitter') }
               value={ this.state.twitter }
