@@ -1,14 +1,27 @@
 export default {
   'welcome_page': {
-    'app_description': 'Blockchain Optimized Dating',
+    'app_description': 'Luna Conference',
     'login': 'Login',
     'signup': 'Sign Up'
   },
   'login_page': {
-    'title': 'Login'
+    'title': 'Login',
+    'email_placeholder': 'Enter email',
+    'password_placeholder': 'Enter password',
+    'button': 'Log in'
   },
   'signup_page': {
-    'title': 'Sign up'
+    'title': 'Sign up',
+    'email_placeholder': 'Enter email',
+    'password_placeholder': 'Enter password',
+    'phone_placeholder': 'Enter phone number',
+    'account_type_header': 'Select your account type',
+    'account_type_placeholder': 'Account type',
+    'button': 'Sign up',
+    'account_type_investor': 'Investor',
+    'account_type_investee': 'Investee',
+    'account_type_employer': 'Employer',
+    'account_type_employee': 'Employee'
   },
   'flow_page': {
     'title': 'Signup flow DEV',

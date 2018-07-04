@@ -9,7 +9,9 @@ import { AppStackNavigator } from './src/navigation';
 configureApi();
 const store = configureStore();
 
-EStyleSheet.build();
+EStyleSheet.build({
+  $buttonBackground: '#603695'
+});
 
 
 export default class App extends React.Component {
