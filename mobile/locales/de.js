@@ -36,6 +36,10 @@ export default {
       "seed": "_DE_Seed",
       "pre": "_DE_Pre ICO",
       "post": "_DE_Post ICO"
+    },
+    "members": {
+      "title": "_DE_Members",
+      "label": "_DE_Members"
     }
   },
   "common": {
