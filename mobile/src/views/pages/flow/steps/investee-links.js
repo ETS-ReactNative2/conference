@@ -17,7 +17,7 @@ class InvesteeLinks extends React.Component {
   render () {
     return (
       <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>Links</Text>
+        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.links.title') }</Text>
         <Form>
           <Item floatingLabel>
             <Icon active name='globe' />
