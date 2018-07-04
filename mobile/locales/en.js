@@ -40,9 +40,21 @@ export default {
     "members": {
       "title": "Notable team member(s) or advisor(s)",
       "label": "Members"
+    },
+    "employee": {
+      "role": {
+        "title": "Role",
+      }
     }
   },
   "common": {
-    "next": "Next"
+    "next": "Next" ,
+    "roles": {
+      "developer": "Developer",
+      "marketing": "Marketing",
+      "ceo": "CEO",
+      "sales": "Sales",
+      "founder": "Founder"
+    }
   }
 }

@@ -37,7 +37,7 @@ class InvesteeFundingStage extends React.Component {
                   </Left>
                   <Right>
                     <Radio
-
+                      onPress={ () => this.handleChange(index) }
                       selected={ this.state.selected === index }/>
                   </Right>
                 </ListItem>

@@ -3,16 +3,12 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
 
-const options = [
-  {
-    slug: 'pre'
-  },
-  {
-    slug: 'live'
-  },
-  {
-    slug: 'revenue'
-  }
+const roles = [
+  'developer',
+  'founder',
+  'ceo',
+  'marketing',
+  'sales'
 ]
 
 class InvesteeProductStage extends React.Component {
@@ -26,14 +22,14 @@ class InvesteeProductStage extends React.Component {
   render () {
     return (
       <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.product_stage.title') }</Text>
+        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employee.role.title') }</Text>
         <Content>
           {
-            options.map((option, index) => {
+            roles.map((option, index) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(index) }>
+                <ListItem style={ { width: '100%' } } key={ option } onPress={ () => this.handleChange(index) }>
                   <Left>
-                    <Text>{ I18n.t(`flow_page.product_stage.${option.slug}`) }</Text>
+                    <Text>{ I18n.t(`common.roles.${option}`) }</Text>
                   </Left>
                   <Right>
                     <Radio

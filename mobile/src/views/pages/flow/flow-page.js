@@ -1,6 +1,7 @@
-import { Container, Content } from 'native-base'
+import { Container, Content, Text } from 'native-base'
 import React from 'react'
 import {
+  EmployeeRole,
   InvesteeFundingStage,
   InvesteeLinks,
   InvesteeProductStage,
@@ -13,6 +14,9 @@ class FlowPage extends React.Component {
     return (
       <Container>
         <Content>
+          <Text>Employee steps</Text>
+          <EmployeeRole onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
+          <Text>Investee steps</Text>
           <InvesteeTeamMembers onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
           <InvesteeFundingStage onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
           <InvesteeProductStage onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>

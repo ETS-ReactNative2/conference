@@ -40,9 +40,21 @@ export default {
     "members": {
       "title": "_PL_Members",
       "label": "_PL_Members"
+    },
+    "employee": {
+      "role": {
+        "title": "_PL_Role"
+      }
     }
   },
   "common": {
-    "next": "_PL_Next"
+    "next": "_PL_Next",
+    "roles": {
+      "developer": "_PL_Developer",
+      "marketing": "_PL_Marketing",
+      "ceo": "_PL_CEO",
+      "sales": "_PL_Sales",
+      "founder": "_PL_Founder"
+    }
   }
 }

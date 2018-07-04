@@ -40,9 +40,21 @@ export default {
     "members": {
       "title": "_DE_Members",
       "label": "_DE_Members"
+    },
+    "employee": {
+      "role": {
+        "title": "_DE_Role"
+      }
     }
   },
   "common": {
-    "next": "Weiter"
+    "next": "Weiter",
+    "roles": {
+      "developer": "_DE_Developer",
+      "marketing": "_DE_Marketing",
+      "ceo": "_DE_CEO",
+      "sales": "_DE_Sales",
+      "founder": "_DE_Founder"
+    }
   }
 }
