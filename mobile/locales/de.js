@@ -19,10 +19,17 @@ export default {
       "project_description": "_DE_Project description"
     },
     "links": {
+      "title": "_DE_Links",
       "whitepaper": "_DE_Whitepaper",
       "website": "_DE_Website",
       "telegram": "_DE_Telegram",
       "twitter": "_DE_Twitter"
+    },
+    "product_stage": {
+      "title": "_DE_Product stage",
+      "pre": "_DE_Pre-product",
+      "live": "_DE_Live product",
+      "revenue": "_DE_Live product + $ Revenue"
     }
   },
   "common": {

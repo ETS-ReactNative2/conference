@@ -23,7 +23,7 @@
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
       <meta-data
           android:name="io.fabric.ApiKey"
-          android:value="@@LUNA_FABRIC_API_KEY@@"
+          android:value="8b7d444e7701fbaad326f34bd8ca2749f97d7008"
       />
     </application>
 
