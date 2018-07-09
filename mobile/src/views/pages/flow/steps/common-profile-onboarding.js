@@ -1,7 +1,8 @@
 import { Button, Card, Form, Icon, Input, Item, Label, Text } from 'native-base'
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 import I18n from '../../../../../locales/i18n'
+import { CommonProfileType } from './index'
 
 class CommonProfileOnboarding extends React.Component {
   constructor (props) {
@@ -16,7 +17,7 @@ class CommonProfileOnboarding extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    this.props.onFill({ nextStep: CommonProfileType })
   }
   handleFieldChange = (e, name) => {
     this.setState({
@@ -27,7 +28,7 @@ class CommonProfileOnboarding extends React.Component {
   render () {
     return (
       <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{I18n.t('flow_page.common.profile_onboarding.title')}</Text>
+        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.common.profile_onboarding.title') }</Text>
         <Form>
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.common.profile_onboarding.name') }</Label>
@@ -50,7 +51,7 @@ class CommonProfileOnboarding extends React.Component {
             />
           </Item>
           <Item floatingLabel>
-            <Icon active name='logo-twitter' />
+            <Icon active name='logo-twitter'/>
             <Label>{ I18n.t('common.twitter') }</Label>
             <Input
               onChange={ (e) => this.handleFieldChange(e, 'twitter') }
@@ -58,7 +59,7 @@ class CommonProfileOnboarding extends React.Component {
             />
           </Item>
           <Item floatingLabel>
-            <Icon active name='logo-facebook' />
+            <Icon active name='logo-facebook'/>
             <Label>{ I18n.t('common.facebook') }</Label>
             <Input
               onChange={ (e) => this.handleFieldChange(e, 'facebook') }
