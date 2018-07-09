@@ -1,4 +1,4 @@
-import { Body, Button, Container, Content, Header, Icon, Left, Title } from 'native-base'
+import { Container, Content, Text } from 'native-base'
 import React from 'react'
 import { CommonProfileOnboarding } from './steps'
 
@@ -8,26 +8,34 @@ class FlowPage extends React.Component {
     super(props)
     this.state = {
       CurrentStep: CommonProfileOnboarding,
-      PreviousStep: null
+      PreviousStep: null,
+      done: false
     }
   }
 
-  onFill = (payload) => {
+  onFill = ({ nextStep, done }) => {
+
     this.setState({
       PreviousStep: this.state.CurrentStep,
-      CurrentStep: payload.nextStep
+      CurrentStep: nextStep,
+      done
     })
   }
 
   render () {
-    const { CurrentStep } = this.state
+    const { CurrentStep, done } = this.state
 
     return (
       <Container>
         <Content>
+          { !done &&
           <CurrentStep
             onFill={ this.onFill }
             style={ { marginBottom: 16, marginTop: 16 } }/>
+          }
+          { done &&
+          <Text>Done</Text>
+          }
         </Content>
       </Container>
     )

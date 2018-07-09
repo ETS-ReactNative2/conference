@@ -4,6 +4,7 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Chip, Selectize } from 'react-native-material-selectize'
 import I18n from '../../../../../locales/i18n'
+import { EmployerJob } from './index'
 
 const items = [
   { id: 1, text: 'React' },
@@ -57,7 +58,9 @@ class EmployerKeywords extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    this.props.onFill({
+      nextStep: EmployerJob
+    })
   }
   handleChange = (index) => {
     this.setState({

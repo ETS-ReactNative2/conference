@@ -65,7 +65,9 @@ class EmployerJobDescription extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    this.props.onFill({
+      done: true
+    })
   }
   handleFieldChange = (e, name) => {
     this.setState({
