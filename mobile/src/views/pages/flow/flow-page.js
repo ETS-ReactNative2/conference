@@ -14,7 +14,8 @@ import {
   InvesteeTeamMembers,
   CommonProfileOnboarding,
   CommonProfileType,
-  InvestorCompanyLocation
+  InvestorCompanyLocation,
+  InvestorInvestIn
 } from './steps'
 
 class FlowPage extends React.Component {
@@ -42,6 +43,7 @@ class FlowPage extends React.Component {
 
           <Text style={ { marginBottom: 16, marginTop: 16 } }>Investor LAYOUTS:</Text>
           <InvestorCompanyLocation onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
+          <InvestorInvestIn onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
 
         </Content>
       </Container>

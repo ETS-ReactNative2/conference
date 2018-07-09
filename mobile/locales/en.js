@@ -83,6 +83,14 @@ export default {
         'localization_placeholder': 'Country',
         'nationality': 'My nationality is:',
         'nationality_placeholder': 'Nationality'
+      },
+      'invest_in': {
+        'title': 'I want to invest in:',
+        'investment_topics': {
+          'protocols': 'Protocols',
+          'app_tokens': 'App Tokens',
+          'security_tokens': 'Security Tokens'
+        }
       }
     },
     'common': {
