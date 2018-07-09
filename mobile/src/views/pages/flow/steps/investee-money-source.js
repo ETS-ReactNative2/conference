@@ -2,6 +2,7 @@ import { Body, Button, Card, CheckBox, Form, Icon, Input, Item, Label, ListItem,
 import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
+import { InvesteeHiring, InvesteeIco } from './index'
 
 class InvesteeMoneySource extends React.Component {
   constructor (props) {
@@ -57,7 +58,10 @@ class InvesteeMoneySource extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    const { lookingForMoney } = this.state
+    this.props.onFill({
+      nextStep: lookingForMoney ? InvesteeIco : InvesteeHiring
+    })
   }
 }
 
