@@ -80,6 +80,13 @@ export default {
       'keyword': {
         'title': '_DE_Keywords',
         'placeholder': '_DE_Select your skills'
+      },
+      'job': {
+        'title': '_DE_Job',
+        'link': '_DE_Link',
+        'description': '_DE_Job description',
+        'min': '_DE_Min. salary',
+        'max': '_DE_Max. salary'
       }
     },
     'investor': {

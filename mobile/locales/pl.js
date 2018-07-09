@@ -80,6 +80,13 @@ export default {
       'keyword': {
         'title': '_PL_Keywords',
         'placeholder': '_PL_Select your skills'
+      },
+      'job': {
+        'title': '_PL_Job',
+        'link': '_PL_Link',
+        'description': '_PL_Job description',
+        'min': '_PL_Min. salary',
+        'max': '_PL_Max. salary'
       }
     },
     'investor': {
