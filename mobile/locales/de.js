@@ -44,10 +44,7 @@ export default {
       'revenue': '_DE_Live product + $ Revenue'
     },
     'funding_stage': {
-      'title': '_DE_Funding stage',
-      'seed': '_DE_Seed',
-      'pre': '_DE_Pre ICO',
-      'post': '_DE_Post ICO'
+      'title': '_DE_Funding stage'
     },
     'money': {
       'title': '_DE__Money source',
@@ -91,6 +88,15 @@ export default {
           'app_tokens': '_DE_App Tokens',
           'security_tokens': '_DE_Security Tokens'
         }
+      },
+      'ticket_size': {
+        'title': '_DE_Ticket size:'
+      },
+      'company_funding_stage': {
+        'title': '_DE_Funding slot for companies:'
+      },
+      'companies_location': {
+        'title': '_DE_The companies should be based in:'
       }
     },
     'common': {
@@ -127,7 +133,15 @@ export default {
     'country': {
       'usa': '_DE_USA',
       'korea': '_DE_Korea',
-      'poland': '_DE_Poland'
+      'poland': '_DE_Poland',
+      'north_america': '_DE_North America',
+      'south_america': '_DE_South America',
+      'africa': '_DE_Africa'
+    },
+    'funding_stages': {
+      'seed': '_DE_Seed',
+      'pre': '_DE_Pre ICO',
+      'post': '_DE_Post ICO'
     }
   }
 }

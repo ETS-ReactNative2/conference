@@ -3,22 +3,20 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
 
-const options = [
-  {
-    slug: 'seed'
-  },
-  {
-    slug: 'pre'
-  },
-  {
-    slug: 'post'
-  }
+const ticketSizes = [
+    '<5k',
+    '5-25k',
+    '25-100k',
+    '100-500k',
+    '500k-1000000',
+    '1000000'
 ]
 
-class InvesteeFundingStage extends React.Component {
+class InvestorTicketSize extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      selectedValue: '',
       selected: -1
     }
   }
@@ -26,14 +24,14 @@ class InvesteeFundingStage extends React.Component {
   render () {
     return (
       <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.funding_stage.title') }</Text>
+        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.ticket_size.title') }</Text>
         <Content>
-          {
-            options.map((option, index) => {
+        {
+            ticketSizes.map((option, index) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(index) }>
+                <ListItem style={ { width: '100%' } } key={ option } onPress={ () => this.handleChange(index) }>
                   <Left>
-                    <Text>{ I18n.t(`common.funding_stages.${option.slug}`) }</Text>
+                    <Text>{option}</Text>
                   </Left>
                   <Right>
                     <Radio
@@ -61,13 +59,14 @@ class InvesteeFundingStage extends React.Component {
   }
   handleChange = (index) => {
     this.setState({
-      selected: index
+      selected: index,
+      selectedValue: ticketSizes[index]
     })
   }
 }
 
-InvesteeFundingStage.propTypes = {
+InvestorTicketSize.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvesteeFundingStage
+export default InvestorTicketSize
