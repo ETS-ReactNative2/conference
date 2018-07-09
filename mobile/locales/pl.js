@@ -73,6 +73,22 @@ export default {
         'placeholder': '_PL_Select your skills'
       }
     },
+    'employer': {
+      'role': {
+        'title': '_PL_Role'
+      },
+      'keyword': {
+        'title': '_PL_Keywords',
+        'placeholder': '_PL_Select your skills'
+      },
+      'job': {
+        'title': '_PL_Job',
+        'link': '_PL_Link',
+        'description': '_PL_Job description',
+        'min': '_PL_Min. salary',
+        'max': '_PL_Max. salary'
+      }
+    },
     'investor': {
       'company_location': {
         'title': '_PL_Company Location',

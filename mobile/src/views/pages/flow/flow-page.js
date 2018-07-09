@@ -18,7 +18,10 @@ import {
   InvestorInvestIn,
   InvestorTicketSize,
   InvestorCompanyFundingStage,
-  InvestorCompaniesLocation
+  InvestorCompaniesLocation,
+  EmployerJob,
+  EmployerKeywords,
+  EmployerRole
 } from './steps'
 
 class FlowPage extends React.Component {
@@ -26,6 +29,10 @@ class FlowPage extends React.Component {
     return (
       <Container>
         <Content>
+          <Text>Employer steps</Text>
+          <EmployerJob onFill={console.log}  style={ { marginBottom: 16, marginTop: 16 } }/>
+          <EmployerKeywords onFill={console.log} style={ { marginBottom: 16, marginTop: 16 } }/>
+          <EmployerRole onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
           <Text>Employee steps</Text>
           <EmployeeKeywords onFill={console.log} style={ { marginBottom: 16, marginTop: 16 } }/>
           <EmployeeRole onFill={ console.log } style={ { marginBottom: 16, marginTop: 16 } }/>
