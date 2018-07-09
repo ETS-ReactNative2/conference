@@ -1,6 +1,5 @@
 import { Body, Button, Container, Content, Header, Icon, Left, Title } from 'native-base'
 import React from 'react'
-
 import { CommonProfileOnboarding } from './steps'
 
 class FlowPage extends React.Component {

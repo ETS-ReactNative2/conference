@@ -11,7 +11,7 @@ const roles = [
   'sales'
 ]
 
-class EmployeeRole extends React.Component {
+class EmployerRole extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -22,7 +22,7 @@ class EmployeeRole extends React.Component {
   render () {
     return (
       <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employee.role.title') }</Text>
+        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employer.role.title') }</Text>
         <Content>
           {
             roles.map((option, index) => {
@@ -62,8 +62,8 @@ class EmployeeRole extends React.Component {
   }
 }
 
-EmployeeRole.propTypes = {
+EmployerRole.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default EmployeeRole
+export default EmployerRole
