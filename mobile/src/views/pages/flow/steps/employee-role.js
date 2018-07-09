@@ -11,7 +11,7 @@ const roles = [
   'sales'
 ]
 
-class InvesteeProductStage extends React.Component {
+class EmployeeRole extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -62,8 +62,8 @@ class InvesteeProductStage extends React.Component {
   }
 }
 
-InvesteeProductStage.propTypes = {
+EmployeeRole.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvesteeProductStage
+export default EmployeeRole

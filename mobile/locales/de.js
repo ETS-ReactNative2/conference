@@ -73,6 +73,15 @@ export default {
         'placeholder': '_DE_Select your skills'
       }
     },
+    'employer': {
+      'role': {
+        'title': '_DE_Role'
+      },
+      'keyword': {
+        'title': '_DE_Keywords',
+        'placeholder': '_DE_Select your skills'
+      }
+    },
     'investor': {
       'company_location': {
         'title': '_DE_Company Location',

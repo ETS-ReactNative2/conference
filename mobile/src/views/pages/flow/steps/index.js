@@ -1,4 +1,4 @@
-export { default as EmployeeRole } from './employee-role'
+export { EmployeeRole as EmployeeRole } from './employee-role'
 export { default as EmployeeKeywords } from './employee-keywords'
 
 export { default as InvesteeLinks } from './investee-links'
