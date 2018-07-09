@@ -95,7 +95,7 @@ export default {
       'company_funding_stage': {
         'title': '_DE_Funding slot for companies:'
       },
-      'companies_location': {
+      'market_location': {
         'title': '_DE_The companies should be based in:'
       }
     },

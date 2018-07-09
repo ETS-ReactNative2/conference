@@ -10,7 +10,7 @@ const locations = [
     'africa'
 ]
 
-class InvestorCompaniesLocation extends React.Component {
+class InvestorMarketLocation extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -40,7 +40,7 @@ class InvestorCompaniesLocation extends React.Component {
   render () {
     return (
       <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.companies_location.title') }</Text>
+        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.market_location.title') }</Text>
             {locations.map(singleLocation => {
                 return (
                     <ListItem key={`location-item-${singleLocation}`}>
@@ -66,8 +66,8 @@ class InvestorCompaniesLocation extends React.Component {
   }
 }
 
-InvestorCompaniesLocation.propTypes = {
+InvestorMarketLocation.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvestorCompaniesLocation
+export default InvestorMarketLocation

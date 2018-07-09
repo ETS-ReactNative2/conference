@@ -2,6 +2,7 @@ import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'nativ
 import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
+import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation } from './index'
 
 const options = [
   {
@@ -49,6 +50,7 @@ class CommonProfileType extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={ this.state.selected === -1}
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
@@ -58,12 +60,25 @@ class CommonProfileType extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    let nextStep
+    switch (this.state.selected) {
+      case 0:
+        nextStep = EmployeeRole
+        break
+      case 1:
+        nextStep = InvestorCompanyLocation
+        break
+      case 2:
+        nextStep = InvesteeProjectSetup
+        break
+    }
+    this.props.onFill({ nextStep })
   }
+
   handleChange = (index) => {
     this.setState({
       selected: index,
-      selectedValue: options[index].slug
+      selectedValue: options[ index ].slug
     })
   }
 }
