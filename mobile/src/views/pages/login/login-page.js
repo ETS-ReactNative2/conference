@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import { Button, Card, Content, Container, Form, Label, Icon, Input, Item, Text } from 'native-base';
+import validator from 'validator';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import I18n from '../../../../locales/i18n';
 
@@ -9,19 +10,26 @@ class LoginPage extends React.Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      isFormValid: false
     }
   }
+
+  validateForm = () => {
+    const isEmailValid = validator.isEmail(this.state.email)
+    const isPasswordValid = validator.isLength(this.state.password, { min: 8, max: undefined })
+    const isFormValid = isEmailValid && isPasswordValid
+    this.setState( {isFormValid} )
+  };
 
   handleSubmit = () => {
     this.props.onSubmit(this.state);
   };
   
-  handleFieldChange = (e, name) => {
-    const value = e.target.value;
+  handleFieldChange = (newValue, name) => {
     this.setState({
-      [ name ]: value
-    })
+      [ name ]: newValue
+    }, this.validateForm)
   };
 
   render() {
@@ -34,18 +42,24 @@ class LoginPage extends React.Component {
                 <Icon active name='email' type='MaterialCommunityIcons' />
                 <Label>{I18n.t('login_page.email_placeholder')}</Label>
                 <Input keyboardType={"email-address"}
-                      onChange={ (e) => this.handleFieldChange(e, 'email') }
+                      onChangeText={ newValue => this.handleFieldChange(newValue, 'email') }
                       value={this.state.email}/>
               </Item>
               <Item floatingLabel>
                 <Icon active name='lock' />
                 <Label>{I18n.t('login_page.password_placeholder')}</Label>
                 <Input secureTextEntry={true}
-                      onChange={ (e) => this.handleFieldChange(e, 'password') }
+                      onChangeText={ newValue => this.handleFieldChange(newValue, 'password') }
                       value={this.state.password}/>
               </Item>
             </Form>
-            <Button rounded success block style={styles.button} onPress={ this.handleSubmit } >
+            <Button
+              success
+              rounded
+              block
+              disabled={!this.state.isFormValid}
+              style={styles.button}
+              onPress={ this.handleSubmit } >
               <Text>{I18n.t('login_page.button')}</Text>
             </Button>
           </Card>
