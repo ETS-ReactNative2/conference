@@ -1,4 +1,4 @@
-import { Button, Container, Content, Icon } from 'native-base'
+import { Button, Container, Content, Icon, Text } from 'native-base'
 import React from 'react'
 import { BackHandler } from 'react-native'
 import { CommonProfileOnboarding } from './steps'
@@ -6,9 +6,13 @@ import { CommonProfileOnboarding } from './steps'
 class FlowPage extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Button transparent onPress={ navigation.getParam('onHeaderBackButton') }>
-      <Icon name='arrow-back'/>
-    </Button>
+    headerLeft:
+      <Button
+        style={{ height: '100%'}}
+        transparent
+        onPress={ navigation.getParam('onHeaderBackButton') }>
+        <Icon style={{color: 'white'}} name='arrow-back'/>
+      </Button>
   })
 
   constructor (props) {
