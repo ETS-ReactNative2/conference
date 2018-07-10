@@ -24,7 +24,6 @@ const commonNavBarStyle = {
 }
 
 const AppStackNavigator = createStackNavigator({
-
   WELCOME_PAGE: {
     screen: WelcomePage,
     navigationOptions: () => ({

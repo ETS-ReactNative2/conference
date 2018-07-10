@@ -35,10 +35,11 @@ class FlowPage extends React.Component {
   }
   onBackButtonPressAndroid = () => {
     const { CurrentStep, PreviousSteps } = this.state
-    if (CurrentStep && PreviousSteps.length !== 0) {
+    const previousStepsCopy = [...PreviousSteps];
+    if (CurrentStep && previousStepsCopy.length !== 0) {
       this.setState({
-        CurrentStep: PreviousSteps.pop(),
-        PreviousSteps
+        CurrentStep: previousStepsCopy.pop(),
+        PreviousSteps: previousStepsCopy
       })
       return true
     }
@@ -47,9 +48,10 @@ class FlowPage extends React.Component {
 
   onFill = ({ nextStep, done }) => {
     const { PreviousSteps, CurrentStep } = this.state
-    PreviousSteps.push(CurrentStep)
+    const previousStepsCopy = [...PreviousSteps];
+    previousStepsCopy.push(CurrentStep)
     this.setState({
-      PreviousSteps,
+      PreviousSteps: previousStepsCopy,
       CurrentStep: nextStep,
       done
     })
