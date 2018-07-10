@@ -19,7 +19,7 @@ class InvestorMarketLocation extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    this.props.onFill({ done: true })
   }
 
   handleCheckboxClick = fieldName => {
@@ -57,6 +57,7 @@ class InvestorMarketLocation extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={ this.state.locations.length === 0}
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
