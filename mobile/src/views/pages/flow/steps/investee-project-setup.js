@@ -2,6 +2,7 @@ import { Button, Card, Form, Input, Item, Label, Text } from 'native-base'
 import React from 'react'
 import PropTypes from 'prop-types'
 import I18n from '../../../../../locales/i18n'
+import { InvesteeLinks } from './index'
 
 class InvesteeProjectSetup extends React.Component {
   constructor (props) {
@@ -53,7 +54,9 @@ class InvesteeProjectSetup extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    this.props.onFill({
+      nextStep: InvesteeLinks
+    })
   }
   handleFieldChange = (e, name) => {
     this.setState({

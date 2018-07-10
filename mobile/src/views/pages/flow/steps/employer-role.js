@@ -2,6 +2,7 @@ import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'nativ
 import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
+import { EmployerKeywords } from './index'
 
 const roles = [
   'developer',
@@ -53,7 +54,9 @@ class EmployerRole extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    this.props.onFill({
+      nextStep: EmployerKeywords
+    })
   }
   handleChange = (index) => {
     this.setState({

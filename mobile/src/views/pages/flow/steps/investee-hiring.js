@@ -2,6 +2,7 @@ import { Body, Button, Card, CheckBox, ListItem, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
+import { EmployerRole } from './index'
 
 class InvesteeHiring extends React.Component {
   constructor (props) {
@@ -35,7 +36,11 @@ class InvesteeHiring extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    const { hiring } = this.state
+    this.props.onFill({
+      done: !hiring,
+      nextStep: hiring ? EmployerRole : null
+    })
   }
 }
 

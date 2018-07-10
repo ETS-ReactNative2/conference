@@ -2,6 +2,7 @@ import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'nativ
 import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
+import { InvesteeTeamMembers } from './index'
 
 const options = [
   {
@@ -57,7 +58,9 @@ class InvesteeFundingStage extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    this.props.onFill({
+      nextStep: InvesteeTeamMembers
+    })
   }
   handleChange = (index) => {
     this.setState({

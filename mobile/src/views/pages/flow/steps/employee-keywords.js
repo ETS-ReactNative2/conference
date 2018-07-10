@@ -57,7 +57,9 @@ class EmployeeKeywords extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    this.props.onFill({
+      done: true
+    })
   }
   handleChange = (index) => {
     this.setState({

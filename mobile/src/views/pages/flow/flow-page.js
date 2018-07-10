@@ -29,7 +29,6 @@ class FlowPage extends React.Component {
       this.props.navigation.goBack()
     }
   }
-
   onBackButtonPressAndroid = () => {
     const { CurrentStep, PreviousSteps } = this.state
     if (CurrentStep && PreviousSteps.length !== 0) {
@@ -42,24 +41,30 @@ class FlowPage extends React.Component {
     return false
   }
 
-  onFill = (payload) => {
+  onFill = ({ nextStep, done }) => {
     const { PreviousSteps, CurrentStep } = this.state
     PreviousSteps.push(CurrentStep)
     this.setState({
       PreviousSteps,
-      CurrentStep: payload.nextStep
+      CurrentStep: nextStep,
+      done
     })
   }
 
   render () {
-    const { CurrentStep } = this.state
+    const { CurrentStep, done } = this.state
 
     return (
       <Container>
         <Content>
+          { !done &&
           <CurrentStep
             onFill={ this.onFill }
             style={ { marginBottom: 16, marginTop: 16 } }/>
+          }
+          { done &&
+          <Text>Done</Text>
+          }
         </Content>
       </Container>
     )
