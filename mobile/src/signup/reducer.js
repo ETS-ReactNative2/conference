@@ -1,6 +1,6 @@
 import {
   SAVE_PROFILE_INFO,
-  SAVE_INVESTOR
+  SAVE_INVESTOR, SAVE_EMPLOYEE
 } from './action-types'
 
 const initialState = {
@@ -19,6 +19,10 @@ const initialState = {
     ticketSize: '',
     stages: [],
     marketLocations: []
+  },
+  employee: {
+    role: '',
+    keywords: ''
   }
 };
 
@@ -38,6 +42,14 @@ export function signUpReducer (state = initialState, action) {
         investor: {
           ...state.investor,
           ...action.data
+        }
+      }
+    case SAVE_EMPLOYEE:
+      return {
+        ...state,
+        employee: {
+          ...state.employee,
+          ...action.employeeData
         }
       }
     default:

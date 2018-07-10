@@ -1,6 +1,7 @@
 import {
   SAVE_PROFILE_INFO,
-  SAVE_INVESTOR
+  SAVE_INVESTOR,
+  SAVE_EMPLOYEE
 } from './action-types'
 
 export function saveProfileInfo(profileInfo) {
@@ -15,4 +16,11 @@ export function saveInvestor(investorData) {
         type: SAVE_INVESTOR,
         data: investorData
     }
+}
+
+export function saveEmployee(employeeData) {
+  return {
+    type: SAVE_EMPLOYEE,
+    employeeData
+  }
 }

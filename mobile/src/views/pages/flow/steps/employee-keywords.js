@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Chip, Selectize } from 'react-native-material-selectize'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 
 const items = [
   { id: 1, text: 'React' },
@@ -16,7 +18,7 @@ class EmployeeKeywords extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: -1
+      selected: this.props.employee.keyword
     }
   }
 
@@ -57,6 +59,9 @@ class EmployeeKeywords extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.save({
+      keywords: []
+    })
     this.props.onFill({
       done: true
     })
@@ -117,4 +122,16 @@ EmployeeKeywords.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default EmployeeKeywords
+const mapStateToProps = state => {
+  return {
+    employee: state.signUp.employee
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    save : saveEmployee => dispatch(signUpActions.saveEmployee(saveEmployee))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeeKeywords)

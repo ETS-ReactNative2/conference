@@ -1,7 +1,9 @@
 import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 import { EmployeeKeywords } from './index'
 
 const roles = [
@@ -16,7 +18,7 @@ class EmployeeRole extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: -1
+      selected: this.props.employee.role
     }
   }
 
@@ -54,6 +56,9 @@ class EmployeeRole extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.save({
+      role: this.state.selected
+    })
     this.props.onFill({
       nextStep: EmployeeKeywords
     })
@@ -69,4 +74,17 @@ EmployeeRole.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default EmployeeRole
+
+const mapStateToProps = state => {
+  return {
+    employee: state.signUp.employee
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    save : employeeData => dispatch(signUpActions.saveEmployee(employeeData))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeeRole)
