@@ -2,6 +2,7 @@ import { Button, Card, Content, Icon, Picker, Text} from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
+import { InvestorInvestIn } from './index'
 
 const locationOptions = [
     'usa',
@@ -76,7 +77,7 @@ class InvestorCompanyLocation extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    this.props.onFill({ nextStep: InvestorInvestIn })
   }
   handleChange = (fieldName, value) => {
     this.setState({

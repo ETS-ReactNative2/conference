@@ -2,6 +2,7 @@ import { Body, Button, Card, CheckBox, Form, Icon, Input, Item, Label, ListItem,
 import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
+import { InvestorTicketSize } from './index'
 
 const investments = [
     'protocols',
@@ -18,7 +19,7 @@ class InvestorInvestIn extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFill(this.state)
+    this.props.onFill({ nextStep: InvestorTicketSize })
   }
 
   handleCheckboxClick = fieldName => {
@@ -56,6 +57,7 @@ class InvestorInvestIn extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={ this.state.investments.length === 0}
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
