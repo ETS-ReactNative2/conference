@@ -1,19 +1,28 @@
 import {
-  SAVE_PROFILE_BASIC_INFO
+  SAVE_PROFILE_INFO
 } from './action-types'
 
 const initialState = {
-    profileName: '',
-    profileTitle: '',
-    profileCompany: '',
-    profileTwitterLink: '',
-    profileFacebookLink: '',
+  profile: {
+    name: '',
+    title: '',
+    company: '',
+    twitter: '',
+    facebook: '',
+    type: ''
+  }
 };
 
 export function signUpReducer (state = initialState, action) {
   switch (action.type) {
-    case SAVE_PROFILE_BASIC_INFO:
-      return {...state, ...action.profileInfo}
+    case SAVE_PROFILE_INFO:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          ...action.profileInfo
+        }
+      }
     default:
       return state
   }

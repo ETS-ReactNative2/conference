@@ -10,21 +10,21 @@ class CommonProfileOnboarding extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      name: '',
-      title: '',
-      company: '',
-      twitter: '',
-      facebook: ''
+      name: this.props.name,
+      title: this.props.title,
+      company: this.props.company,
+      twitter: this.props.twitter,
+      facebook: this.props.facebook
     }
   }
 
   handleSubmit = () => {
-    this.props.saveBasicProfileInfo({
-      profileName: this.state.name,
-      profileTitle: this.state.title,
-      profileCompany: this.state.company,
-      profileTwitterLink: this.state.twitter,
-      profileFacebookLink: this.state.facebook,
+    this.props.saveProfileInfo({
+      name: this.state.name,
+      title: this.state.title,
+      company: this.state.company,
+      twitter: this.state.twitter,
+      facebook: this.state.facebook,
     })
     this.props.onFill({ nextStep: CommonProfileType })
   }
@@ -92,11 +92,20 @@ CommonProfileOnboarding.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-    saveBasicProfileInfo : profileInfo => dispatch(signUpActions.saveBasicProfileInfo(profileInfo))
+    name: state.signUp.profile.name,
+    title: state.signUp.profile.title,
+    company: state.signUp.profile.company,
+    twitter: state.signUp.profile.twitter,
+    facebook: state.signUp.profile.facebook
   }
 }
 
-export default connect(null, mapDispatchToProps)(CommonProfileOnboarding)
+const mapDispatchToProps = dispatch => {
+  return {
+    saveProfileInfo : profileInfo => dispatch(signUpActions.saveProfileInfo(profileInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommonProfileOnboarding)

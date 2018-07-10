@@ -1,10 +1,10 @@
 import {
-  SAVE_PROFILE_BASIC_INFO
+  SAVE_PROFILE_INFO
 } from './action-types'
 
-export function saveBasicProfileInfo(profileInfo) {
+export function saveProfileInfo(profileInfo) {
     return {
-        type: SAVE_PROFILE_BASIC_INFO,
+        type: SAVE_PROFILE_INFO,
         profileInfo
     }
 }
