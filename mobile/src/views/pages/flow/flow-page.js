@@ -1,22 +1,57 @@
-import { Container, Content, Text } from 'native-base'
+import { Button, Container, Content, Icon, Text } from 'native-base'
 import React from 'react'
+import { BackHandler } from 'react-native'
 import { CommonProfileOnboarding } from './steps'
 
 class FlowPage extends React.Component {
+
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft:
+      <Button
+        style={{ height: '100%'}}
+        transparent
+        onPress={ navigation.getParam('onHeaderBackButton') }>
+        <Icon style={{color: 'white'}} name='arrow-back'/>
+      </Button>
+  })
 
   constructor (props) {
     super(props)
     this.state = {
       CurrentStep: CommonProfileOnboarding,
-      PreviousStep: null,
-      done: false
+      PreviousSteps: []
     }
+    BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid)
+  }
+
+  componentDidMount () {
+    this.props.navigation.setParams({ onHeaderBackButton: this.onHeaderBackButton })
+  }
+
+  onHeaderBackButton = () => {
+    if (!this.onBackButtonPressAndroid()) {
+      this.props.navigation.goBack()
+    }
+  }
+  onBackButtonPressAndroid = () => {
+    const { CurrentStep, PreviousSteps } = this.state
+    const previousStepsCopy = [...PreviousSteps];
+    if (CurrentStep && previousStepsCopy.length !== 0) {
+      this.setState({
+        CurrentStep: previousStepsCopy.pop(),
+        PreviousSteps: previousStepsCopy
+      })
+      return true
+    }
+    return false
   }
 
   onFill = ({ nextStep, done }) => {
-
+    const { PreviousSteps, CurrentStep } = this.state
+    const previousStepsCopy = [...PreviousSteps];
+    previousStepsCopy.push(CurrentStep)
     this.setState({
-      PreviousStep: this.state.CurrentStep,
+      PreviousSteps: previousStepsCopy,
       CurrentStep: nextStep,
       done
     })
