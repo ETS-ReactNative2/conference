@@ -1,8 +1,10 @@
-import { Body, Button, Card, CheckBox, Form, Icon, Input, Item, Label, ListItem, Text } from 'native-base'
+import { Body, Button, Card, CheckBox, ListItem, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { InvestorTicketSize } from './index'
+import { signUpActions } from '../../../../signup'
 
 const investments = [
     'protocols',
@@ -14,11 +16,12 @@ class InvestorInvestIn extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      investments: []
+      investments: this.props.investments
     }
   }
 
   handleSubmit = () => {
+    this.props.saveInvestor({ investments: this.state.investments })
     this.props.onFill({ nextStep: InvestorTicketSize })
   }
 
@@ -71,4 +74,16 @@ InvestorInvestIn.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvestorInvestIn
+const mapStateToProps = state => {
+  return {
+    investments: state.signUp.investor.investments
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveInvestor : investorData => dispatch(signUpActions.saveInvestor(investorData))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvestorInvestIn)

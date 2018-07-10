@@ -1,8 +1,10 @@
 import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { InvestorCompanyFundingStage } from './index'
+import { signUpActions } from '../../../../signup'
 
 const ticketSizes = [
     '<5k',
@@ -17,8 +19,8 @@ class InvestorTicketSize extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedValue: '',
-      selected: -1
+      selectedValue: this.props.ticketSize,
+      selected: ticketSizes.findIndex(singleSize => singleSize === this.props.ticketSize)
     }
   }
 
@@ -57,6 +59,7 @@ class InvestorTicketSize extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.saveInvestor({ ticketSize: this.state.selectedValue })
     this.props.onFill({ nextStep: InvestorCompanyFundingStage})
   }
   handleChange = (index) => {
@@ -71,4 +74,16 @@ InvestorTicketSize.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvestorTicketSize
+const mapStateToProps = state => {
+  return {
+    ticketSize: state.signUp.investor.ticketSize
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveInvestor : ticketSize => dispatch(signUpActions.saveInvestor(ticketSize))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvestorTicketSize)

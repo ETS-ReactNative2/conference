@@ -1,7 +1,9 @@
 import { Body, Button, Card, CheckBox, Form, Icon, Input, Item, Label, ListItem, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 
 const locations = [
     'korea',
@@ -14,11 +16,12 @@ class InvestorMarketLocation extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      locations: []
+      locations: this.props.marketLocations
     }
   }
 
   handleSubmit = () => {
+    this.props.saveInvestor({ marketLocations: this.state.locations })
     this.props.onFill({ done: true })
   }
 
@@ -71,4 +74,16 @@ InvestorMarketLocation.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvestorMarketLocation
+const mapStateToProps = state => {
+  return {
+    marketLocations: state.signUp.investor.marketLocations
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveInvestor : investorData => dispatch(signUpActions.saveInvestor(investorData))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvestorMarketLocation)

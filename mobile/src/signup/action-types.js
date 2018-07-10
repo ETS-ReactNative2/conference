@@ -1,1 +1,2 @@
 export const SAVE_PROFILE_INFO = 'SAVE_PROFILE_INFO'
+export const SAVE_INVESTOR = 'SAVE_INVESTOR'
