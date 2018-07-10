@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types'
 import { Button, Card, Content, Container, Form, Icon, Label, Input, Item, Text } from 'native-base';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { PAGES_NAMES } from '../../../navigation';
 import I18n from '../../../../locales/i18n';
 
 class SignupPage extends React.Component {
@@ -13,10 +13,6 @@ class SignupPage extends React.Component {
       phone: ''
     }
   }
-
-  handleSubmit = () => {
-    this.props.onSubmit(this.state);
-  };
   
   handleFieldChange = (e, name) => {
     const value = e.target ? e.target.value : e;
@@ -25,8 +21,8 @@ class SignupPage extends React.Component {
     })
   };
 
-  
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <Container>
         <Content padder>
@@ -55,7 +51,7 @@ class SignupPage extends React.Component {
                 />
               </Item>
             </Form>
-            <Button rounded success block style={styles.button} onPress={ this.handleSubmit } >
+            <Button rounded success block style={styles.button} onPress={() => { navigate(PAGES_NAMES.FLOW_PAGE) }}>
               <Text>{I18n.t('signup_page.button')}</Text>
             </Button>
           </Card>
@@ -73,9 +69,5 @@ const styles = EStyleSheet.create({
     color: '#bfc6ea'
   }
 });
-
-SignupPage.propTypes = {
-  onSubmit: PropTypes.func.isRequired
-}
 
 export default SignupPage;
