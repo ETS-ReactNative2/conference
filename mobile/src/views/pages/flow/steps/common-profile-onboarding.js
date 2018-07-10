@@ -1,8 +1,10 @@
 import { Button, Card, Form, Icon, Input, Item, Label, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { CommonProfileType } from './index'
+import { signUpActions } from '../../../../signup'
 
 class CommonProfileOnboarding extends React.Component {
   constructor (props) {
@@ -17,11 +19,18 @@ class CommonProfileOnboarding extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.saveBasicProfileInfo({
+      profileName: this.state.name,
+      profileTitle: this.state.title,
+      profileCompany: this.state.company,
+      profileTwitterLink: this.state.twitter,
+      profileFacebookLink: this.state.facebook,
+    })
     this.props.onFill({ nextStep: CommonProfileType })
   }
-  handleFieldChange = (e, name) => {
+  handleFieldChange = (newValue, name) => {
     this.setState({
-      [ name ]: e.target.value
+      [ name ]: newValue
     })
   }
 
@@ -33,28 +42,28 @@ class CommonProfileOnboarding extends React.Component {
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.common.profile_onboarding.name') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'name') }
+              onChangeText={ text => this.handleFieldChange(text, 'name')}
               value={ this.state.name }/>
           </Item>
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.common.profile_onboarding.titleField') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'title') }
+              onChangeText={ text => this.handleFieldChange(text, 'title')}
               value={ this.state.title }
             />
           </Item>
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.common.profile_onboarding.company') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'company') }
-              value={ this.state.title }
+              onChangeText={ text => this.handleFieldChange(text, 'company')}
+              value={ this.state.company }
             />
           </Item>
           <Item floatingLabel>
             <Icon active name='logo-twitter'/>
             <Label>{ I18n.t('common.twitter') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'twitter') }
+              onChangeText={ text => this.handleFieldChange(text, 'twitter')}
               value={ this.state.twitter }
             />
           </Item>
@@ -62,7 +71,7 @@ class CommonProfileOnboarding extends React.Component {
             <Icon active name='logo-facebook'/>
             <Label>{ I18n.t('common.facebook') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'facebook') }
+              onChangeText={ text => this.handleFieldChange(text, 'facebook')}
               value={ this.state.facebook }
             />
           </Item>
@@ -83,4 +92,11 @@ CommonProfileOnboarding.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default CommonProfileOnboarding
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveBasicProfileInfo : profileInfo => dispatch(signUpActions.saveBasicProfileInfo(profileInfo))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(CommonProfileOnboarding)
