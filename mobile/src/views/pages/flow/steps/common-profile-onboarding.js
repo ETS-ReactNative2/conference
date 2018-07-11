@@ -1,4 +1,5 @@
 import { Button, Card, Form, Icon, Input, Item, Label, Text } from 'native-base'
+import validator from 'validator'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -16,6 +17,18 @@ class CommonProfileOnboarding extends React.Component {
       twitter: this.props.twitter,
       facebook: this.props.facebook
     }
+    this.state.isFormValid = this.isFormValid()
+  }
+
+  isFormValid = () => {
+    const isNameCorrect = validator.isLength(this.state.name, { min: 4, max: undefined })
+    const isFormValid = isNameCorrect
+    return isFormValid
+  }
+
+  validateForm = () => {
+    const isFormValid = this.isFormValid()
+    this.setState( {isFormValid} )
   }
 
   handleSubmit = () => {
@@ -24,14 +37,15 @@ class CommonProfileOnboarding extends React.Component {
       title: this.state.title,
       company: this.state.company,
       twitter: this.state.twitter,
-      facebook: this.state.facebook,
+      facebook: this.state.facebook
     })
     this.props.onFill({ nextStep: CommonProfileType })
   }
+
   handleFieldChange = (newValue, name) => {
     this.setState({
       [ name ]: newValue
-    })
+    }, this.validateForm)
   }
 
   render () {
@@ -79,6 +93,7 @@ class CommonProfileOnboarding extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={!this.state.isFormValid}
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
