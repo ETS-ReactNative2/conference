@@ -1,14 +1,16 @@
 import { Button, Card, Form, Input, Item, Label, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 import { InvesteeMoneySource } from './index'
 
 class InvesteeTeamMembers extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      members: ''
+      members: this.props.investee.teamMembers
     }
   }
 
@@ -20,7 +22,7 @@ class InvesteeTeamMembers extends React.Component {
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.members.label') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'members') }
+              onChangeText={ text => this.handleFieldChange(text, 'members') }
               value={ this.state.members }
               multiline={ true }
               numberOfLines={ 5 }
@@ -39,13 +41,16 @@ class InvesteeTeamMembers extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.save({
+      teamMembers: this.state.members
+    })
     this.props.onFill({
       nextStep: InvesteeMoneySource
     })
   }
-  handleFieldChange = (event, field) => {
+  handleFieldChange = (text, field) => {
     this.setState({
-      [ field ]: event.target.value
+      [ field ]: text
     })
   }
 }
@@ -54,4 +59,16 @@ InvesteeTeamMembers.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvesteeTeamMembers
+const mapStateToProps = state => {
+  return {
+    investee: state.signUp.investee
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    save: investeeInfo => dispatch(signUpActions.saveProfileInvestee(investeeInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvesteeTeamMembers)

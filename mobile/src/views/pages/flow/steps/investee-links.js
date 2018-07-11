@@ -1,17 +1,16 @@
-import { Button, Card, Form, Input, Item, Label, Text, Icon } from 'native-base'
-import React from 'react'
+import { Button, Card, Form, Icon, Input, Item, Label, Text } from 'native-base'
 import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 import { InvesteeProductStage } from './index'
 
 class InvesteeLinks extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      website: '',
-      whitepaper: '',
-      telegram: '',
-      twitter: ''
+      ...{ website, whitepaper, telegram, twitter } = this.props.investee
     }
   }
 
@@ -21,32 +20,32 @@ class InvesteeLinks extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.links.title') }</Text>
         <Form>
           <Item floatingLabel>
-            <Icon active name='globe' />
+            <Icon active name='globe'/>
             <Label>{ I18n.t('flow_page.links.website') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'website') }
+              onChangeText={ text => this.handleFieldChange(text, 'website') }
               value={ this.state.website }/>
           </Item>
           <Item floatingLabel>
-            <Icon active name='copy' />
+            <Icon active name='copy'/>
             <Label>{ I18n.t('flow_page.links.whitepaper') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'whitepaper') }
+              onChangeText={ text => this.handleFieldChange(text, 'whitepaper') }
               value={ this.state.whitepaper }
             />
           </Item>
           <Item floatingLabel>
-            <Icon active name='paper-plane' />
+            <Icon active name='paper-plane'/>
             <Label>{ I18n.t('flow_page.links.telegram') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'telegram') }
+              onChangeText={ text => this.handleFieldChange(text, 'telegram') }
               value={ this.state.telegram }/>
           </Item>
           <Item floatingLabel>
-            <Icon active name='logo-twitter' />
+            <Icon active name='logo-twitter'/>
             <Label>{ I18n.t('common.twitter') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'twitter') }
+              onChangeText={ text => this.handleFieldChange(text, 'twitter') }
               value={ this.state.twitter }
             />
           </Item>
@@ -64,13 +63,15 @@ class InvesteeLinks extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.save(this.state)
     this.props.onFill({
       nextStep: InvesteeProductStage
     })
   }
-  handleFieldChange = (e, name) => {
+
+  handleFieldChange = (text, name) => {
     this.setState({
-      [ name ]: e.target.value
+      [ name ]: text
     })
   }
 }
@@ -79,4 +80,16 @@ InvesteeLinks.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvesteeLinks
+const mapStateToProps = state => {
+  return {
+    investee: state.signUp.investee
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    save: investeeInfo => dispatch(signUpActions.saveProfileInvestee(investeeInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvesteeLinks)

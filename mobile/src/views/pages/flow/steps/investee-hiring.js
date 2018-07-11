@@ -1,14 +1,16 @@
 import { Body, Button, Card, CheckBox, ListItem, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 import { EmployerRole } from './index'
 
 class InvesteeHiring extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      hiring: false
+      hiring: this.props.investee.hiring
     }
   }
 
@@ -37,6 +39,9 @@ class InvesteeHiring extends React.Component {
 
   handleSubmit = () => {
     const { hiring } = this.state
+    this.props.save({
+      hiring
+    })
     this.props.onFill({
       done: !hiring,
       nextStep: hiring ? EmployerRole : null
@@ -48,4 +53,16 @@ InvesteeHiring.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvesteeHiring
+const mapStateToProps = state => {
+  return {
+    investee: state.signUp.investee
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    save: investeeInfo => dispatch(signUpActions.saveProfileInvestee(investeeInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvesteeHiring)

@@ -1,7 +1,8 @@
-import {
-  SAVE_PROFILE_INFO,
-  SAVE_INVESTOR, SAVE_EMPLOYEE
-} from './action-types'
+import { SAVE_PROFILE_INFO,
+  SAVE_INVESTOR,
+  SAVE_PROFILE_EMPLOYER,
+  SAVE_PROFILE_INVESTEE,
+  SAVE_EMPLOYEE } from './action-types'
 
 const initialState = {
   profile: {
@@ -20,11 +21,35 @@ const initialState = {
     stages: [],
     marketLocations: []
   },
+  investee: {
+    projectName: '',
+    projectTagline: '',
+    projectDescription: '',
+    website: '',
+    whitepaper: '',
+    telegram: '',
+    twitter: '',
+    productStage: -1,
+    fundingStage: -1,
+    teamMembers: '',
+    money: false,
+    amount: '',
+    ico: false,
+    icoWhen: ''
+  },
+  employer: {
+    role: -1,
+    keywords: [],
+    link: '',
+    description: '',
+    min: '',
+    max: ''
+  },
   employee: {
     role: '',
     keywords: []
   }
-};
+}
 
 export function signUpReducer (state = initialState, action) {
   switch (action.type) {
@@ -44,6 +69,22 @@ export function signUpReducer (state = initialState, action) {
           ...action.data
         }
       }
+    case SAVE_PROFILE_INVESTEE:
+      return {
+        ...state,
+        investee: {
+          ...state.investee,
+          ...action.investeeInfo
+        }
+      }
+    case SAVE_PROFILE_EMPLOYER:
+      return {
+        ...state,
+        employer: {
+          ...state.employer,
+          ...action.employerInfo
+        }
+      }
     case SAVE_EMPLOYEE:
       return {
         ...state,
@@ -53,6 +94,6 @@ export function signUpReducer (state = initialState, action) {
         }
       }
     default:
-      return state
+      return state;
   }
 }

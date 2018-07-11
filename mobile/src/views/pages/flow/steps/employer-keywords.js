@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Chip, Selectize } from 'react-native-material-selectize'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 import { EmployerJob } from './index'
 
 const items = [
@@ -17,8 +19,25 @@ class EmployerKeywords extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: -1
+      selectedItems: this.props.employer.keywords
     }
+  }
+
+  onChipAdded = (chipToAdd, callBack) => {
+    const itemsCopy = [...this.state.selectedItems]
+    itemsCopy.push(chipToAdd)
+    this.setState( {selectedItems: itemsCopy} )
+    // passing true to callback let's library add item to list of selected items
+    callBack(true)
+  }
+
+  onChipRemoved = (chipToRemove, callBack) => {
+    const itemsCopy = [...this.state.selectedItems]
+    const idOfChipToRemove = chipToRemove.id;
+    const filteredChips = itemsCopy.filter(singleChip => singleChip.id !== idOfChipToRemove);
+    this.setState( {selectedItems: filteredChips} )
+    // passing true to callback allows library to remove items from list of selected items
+    callBack(true)
   }
 
   render () {
@@ -26,13 +45,14 @@ class EmployerKeywords extends React.Component {
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employer.keyword.title') }</Text>
         <Selectize
+          selectedItems={ this.state.selectedItems }
           items={ items }
           label={ I18n.t('flow_page.employer.keyword.title') }
           textInputProps={{
             placeholder: I18n.t('flow_page.employer.keyword.placeholder')
           }}
           renderRow={ (id, onPress, item) => (
-            <ListItem style={ styles.listRow } key={ id } onPress={ onPress }>
+            <ListItem style={ styles.listRow } key={ id } onPress={ () => this.onChipAdded(item, onPress) }>
               <Text>{ item.text }</Text>
             </ListItem>
           ) }
@@ -40,7 +60,7 @@ class EmployerKeywords extends React.Component {
             <Chip
               key={ id }
               iconStyle={ iconStyle }
-              onClose={ onClose }
+              onClose={ () => this.onChipRemoved(item, onClose)  }
               text={ item.text }
               style={ style }
             />
@@ -58,13 +78,11 @@ class EmployerKeywords extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.save({
+      keywords: this.state.selectedItems
+    })
     this.props.onFill({
       nextStep: EmployerJob
-    })
-  }
-  handleChange = (index) => {
-    this.setState({
-      selected: index
     })
   }
 }
@@ -118,4 +136,16 @@ EmployerKeywords.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default EmployerKeywords
+const mapStateToProps = state => {
+  return {
+    employer: state.signUp.employer
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    save: employerInfo => dispatch(signUpActions.saveProfileEmployer(employerInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmployerKeywords)

@@ -1,37 +1,36 @@
-import { Button, Card, Form, Input, Item, Label, Text, Icon } from 'native-base'
-import React from 'react'
+import { Button, Card, Form, Icon, Input, Item, Label, Text } from 'native-base'
 import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 
 class EmployerJobDescription extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      link: '',
-      description: '',
-      min: '0',
-      max: '0'
+      ...{link, description, min, max} = this.props.employer
     }
   }
 
   render () {
     return (
       <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{I18n.t('flow_page.employer.job.title')}</Text>
+        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employer.job.title') }</Text>
         <Form>
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.employer.job.link') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'link') }
-              value={ this.state.name }/>
+              onChangeText={ text => this.handleFieldChange(text, 'link') }
+              value={ this.state.link }/>
           </Item>
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.employer.job.description') }</Label>
             <Input
-              onChange={ (e) => this.handleFieldChange(e, 'description') }
+              onChangeText={ text => this.handleFieldChange(text, 'description') }
               value={ this.state.description }
-              multiline={true}
-              numberOfLines={5}
+              multiline={ true }
+              numberOfLines={ 5 }
             />
           </Item>
           <Item floatingLabel>
@@ -39,7 +38,7 @@ class EmployerJobDescription extends React.Component {
             <Label>{ I18n.t('flow_page.employer.job.min') }</Label>
             <Input
               keyboardType={ 'numeric' }
-              onChange={ (e) => this.handleFieldChange(e, 'min') }
+              onChangeText={ text => this.handleFieldChange(text, 'min') }
               value={ this.state.min }
             />
           </Item>
@@ -48,7 +47,7 @@ class EmployerJobDescription extends React.Component {
             <Label>{ I18n.t('flow_page.employer.job.max') }</Label>
             <Input
               keyboardType={ 'numeric' }
-              onChange={ (e) => this.handleFieldChange(e, 'max') }
+              onChangeText={ text => this.handleFieldChange(text, 'max') }
               value={ this.state.max }
             />
           </Item>
@@ -65,13 +64,14 @@ class EmployerJobDescription extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.save(this.state)
     this.props.onFill({
       done: true
     })
   }
-  handleFieldChange = (e, name) => {
+  handleFieldChange = (text, name) => {
     this.setState({
-      [ name ]: e.target.value
+      [ name ]: text
     })
   }
 }
@@ -80,4 +80,16 @@ EmployerJobDescription.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default EmployerJobDescription
+const mapStateToProps = state => {
+  return {
+    employer: state.signUp.employer
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    save: employerInfo => dispatch(signUpActions.saveProfileEmployer(employerInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmployerJobDescription)

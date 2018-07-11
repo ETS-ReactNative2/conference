@@ -1,7 +1,9 @@
 import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 import { InvesteeTeamMembers } from './index'
 
 const options = [
@@ -20,7 +22,7 @@ class InvesteeFundingStage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: -1
+      selected: this.props.investee.fundingStage
     }
   }
 
@@ -58,6 +60,9 @@ class InvesteeFundingStage extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.save({
+      fundingStage: this.state.selected
+    })
     this.props.onFill({
       nextStep: InvesteeTeamMembers
     })
@@ -73,4 +78,16 @@ InvesteeFundingStage.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvesteeFundingStage
+const mapStateToProps = state => {
+  return {
+    investee: state.signUp.investee
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    save: investeeInfo => dispatch(signUpActions.saveProfileInvestee(investeeInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvesteeFundingStage)

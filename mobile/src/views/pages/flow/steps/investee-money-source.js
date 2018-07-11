@@ -1,15 +1,17 @@
 import { Body, Button, Card, CheckBox, Form, Icon, Input, Item, Label, ListItem, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 import { InvesteeHiring, InvesteeIco } from './index'
 
 class InvesteeMoneySource extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      lookingForMoney: false,
-      amount: ''
+      lookingForMoney: this.props.investee.money,
+      amount: this.props.investee.amount
     }
   }
 
@@ -33,7 +35,7 @@ class InvesteeMoneySource extends React.Component {
                 <Label>{ I18n.t('flow_page.money.amount') }</Label>
                 <Input
                   keyboardType={ 'numeric' }
-                  onChange={ (e) => this.handleFieldChange(e, 'amount') }
+                  onChangeText={ text => this.handleFieldChange(text, 'amount') }
                   value={ this.state.amount }
                 />
               </Item>
@@ -51,22 +53,34 @@ class InvesteeMoneySource extends React.Component {
     )
   }
 
-  handleFieldChange = (e, name) => {
+  handleFieldChange = (text, name) => {
     this.setState({
-      [ name ]: e.target.value
+      [ name ]: text
     })
   }
 
   handleSubmit = () => {
-    const { lookingForMoney } = this.state
+    const { lookingForMoney, amount } = this.state
+    this.props.save({
+      money: lookingForMoney,
+      amount: amount
+    })
     this.props.onFill({
       nextStep: lookingForMoney ? InvesteeIco : InvesteeHiring
     })
   }
 }
 
-InvesteeMoneySource.propTypes = {
-  onFill: PropTypes.func.isRequired
+const mapStateToProps = state => {
+  return {
+    investee: state.signUp.investee
+  }
 }
 
-export default InvesteeMoneySource
+const mapDispatchToProps = dispatch => {
+  return {
+    save: investeeInfo => dispatch(signUpActions.saveProfileInvestee(investeeInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvesteeMoneySource)

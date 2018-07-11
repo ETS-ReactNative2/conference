@@ -1,15 +1,17 @@
 import { Button, Card, Form, Input, Item, Label, Text, Icon, ListItem, CheckBox, Body, DatePicker } from 'native-base'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { signUpActions } from '../../../../signup'
 import { InvesteeHiring } from './index'
 
 class InvesteeIco extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      ico: false,
-      when: ''
+      ico: this.props.investee.ico,
+      when: this.props.investee.icoWhen
     }
   }
 
@@ -53,6 +55,10 @@ class InvesteeIco extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.save({
+      ico: this.state.ico,
+      icoWhen: this.state.when
+    })
     this.props.onFill({
       nextStep: InvesteeHiring
     })
@@ -63,4 +69,16 @@ InvesteeIco.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
-export default InvesteeIco
+const mapStateToProps = state => {
+  return {
+    investee: state.signUp.investee
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    save: investeeInfo => dispatch(signUpActions.saveProfileInvestee(investeeInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvesteeIco)
