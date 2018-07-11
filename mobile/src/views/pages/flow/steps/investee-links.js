@@ -12,6 +12,7 @@ class InvesteeLinks extends React.Component {
     this.state = {
       ...{ website, whitepaper, telegram, twitter } = this.props.investee
     }
+    this.state.isFormValid = this.isFormValid()
   }
 
   render () {
@@ -54,12 +55,22 @@ class InvesteeLinks extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={!this.state.isFormValid}
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
         </Button>
       </Card>
     )
+  }
+
+  isFormValid = () => {
+    return true
+  }
+
+  validateForm = () => {
+    const isFormValid = this.isFormValid()
+    this.setState({ isFormValid })
   }
 
   handleSubmit = () => {
@@ -72,7 +83,7 @@ class InvesteeLinks extends React.Component {
   handleFieldChange = (text, name) => {
     this.setState({
       [ name ]: text
-    })
+    }, this.validateForm)
   }
 }
 

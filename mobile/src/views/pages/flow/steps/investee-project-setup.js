@@ -2,6 +2,7 @@ import { Button, Card, Form, Input, Item, Label, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
+import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { InvesteeLinks } from './index'
@@ -10,8 +11,9 @@ class InvesteeProjectSetup extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      ...{projectName, projectTagline, projectDescription} = this.props.investee
+      ...{ projectName, projectTagline, projectDescription } = this.props.investee
     }
+    this.state.isFormValid = this.isFormValid()
   }
 
   render () {
@@ -45,12 +47,27 @@ class InvesteeProjectSetup extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={ !this.state.isFormValid }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
         </Button>
       </Card>
     )
+  }
+
+  isFormValid = () => {
+    const { projectName, projectTagline, projectDescription } = this.state
+    const nameLength = validator.isLength(projectName, { min: 3 })
+    const taglineExists = !validator.isEmpty(projectTagline)
+    const descriptionExists = !validator.isEmpty(projectDescription)
+
+    return nameLength && taglineExists && descriptionExists
+  }
+
+  validateForm = () => {
+    const isFormValid = this.isFormValid()
+    this.setState({ isFormValid })
   }
 
   handleSubmit = () => {
@@ -66,7 +83,7 @@ class InvesteeProjectSetup extends React.Component {
   handleFieldChange = (value, name) => {
     this.setState({
       [ name ]: value
-    })
+    }, this.validateForm)
   }
 }
 

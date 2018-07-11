@@ -2,6 +2,7 @@ import { Button, Card, Form, Icon, Input, Item, Label, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
+import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 
@@ -9,8 +10,9 @@ class EmployerJobDescription extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      ...{link, description, min, max} = this.props.employer
+      ...{ link, description, min, max } = this.props.employer
     }
+    this.state.isFormValid = this.isFormValid()
   }
 
   render () {
@@ -56,11 +58,34 @@ class EmployerJobDescription extends React.Component {
                 rounded
                 block
                 onPress={ this.handleSubmit }
+                disabled={ !this.state.isFormValid }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
         </Button>
       </Card>
     )
+  }
+
+  isFormValid = () => {
+    const { link, description, min, max } = this.state
+    const linkExists = !validator.isEmpty(link)
+    const descriptionExists = !validator.isEmpty(description)
+    const minExists = !validator.isEmpty(min)
+    const maxExists = !validator.isEmpty(max)
+
+    console.log({ linkExists, descriptionExists, minExists, maxExists })
+    if (maxExists && minExists) {
+      return (linkExists || descriptionExists)
+        && max >= min
+        && min >= 0
+        && max >= 0
+    }
+    return linkExists || descriptionExists
+  }
+
+  validateForm = () => {
+    const isFormValid = this.isFormValid()
+    this.setState({ isFormValid })
   }
 
   handleSubmit = () => {
@@ -72,7 +97,7 @@ class EmployerJobDescription extends React.Component {
   handleFieldChange = (text, name) => {
     this.setState({
       [ name ]: text
-    })
+    }, this.validateForm)
   }
 }
 

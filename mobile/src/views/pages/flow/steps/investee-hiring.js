@@ -12,6 +12,7 @@ class InvesteeHiring extends React.Component {
     this.state = {
       hiring: this.props.investee.hiring
     }
+    this.state.isFormValid = this.isFormValid()
   }
 
   render () {
@@ -29,12 +30,20 @@ class InvesteeHiring extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={ !this.state.isFormValid }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
         </Button>
       </Card>
     )
+  }
+
+  isFormValid = () => true
+
+  validateForm = () => {
+    const isFormValid = this.isFormValid()
+    this.setState({ isFormValid })
   }
 
   handleSubmit = () => {

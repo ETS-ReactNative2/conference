@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { InvesteeMoneySource } from './index'
+import validator from 'validator'
 
 class InvesteeTeamMembers extends React.Component {
   constructor (props) {
@@ -12,6 +13,7 @@ class InvesteeTeamMembers extends React.Component {
     this.state = {
       members: this.props.investee.teamMembers
     }
+    this.state.isFormValid = this.isFormValid()
   }
 
   render () {
@@ -32,12 +34,22 @@ class InvesteeTeamMembers extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={ !this.state.isFormValid }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
         </Button>
       </Card>
     )
+  }
+
+  isFormValid = () => {
+    return true //!validator.isEmpty(this.state.member)
+  }
+
+  validateForm = () => {
+    const isFormValid = this.isFormValid()
+    this.setState({ isFormValid })
   }
 
   handleSubmit = () => {
@@ -51,7 +63,7 @@ class InvesteeTeamMembers extends React.Component {
   handleFieldChange = (text, field) => {
     this.setState({
       [ field ]: text
-    })
+    }, this.validateForm)
   }
 }
 

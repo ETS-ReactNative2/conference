@@ -24,6 +24,7 @@ class InvesteeFundingStage extends React.Component {
     this.state = {
       selected: this.props.investee.fundingStage
     }
+    this.state.isFormValid = this.isFormValid()
   }
 
   render () {
@@ -51,12 +52,22 @@ class InvesteeFundingStage extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={ !this.state.isFormValid }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
         </Button>
       </Card>
     )
+  }
+
+  isFormValid = () => {
+    return this.state.selected !== -1
+  }
+
+  validateForm = () => {
+    const isFormValid = this.isFormValid()
+    this.setState({ isFormValid })
   }
 
   handleSubmit = () => {
@@ -70,7 +81,7 @@ class InvesteeFundingStage extends React.Component {
   handleChange = (index) => {
     this.setState({
       selected: index
-    })
+    }, this.validateForm)
   }
 }
 

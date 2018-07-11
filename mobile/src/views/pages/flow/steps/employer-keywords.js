@@ -21,21 +21,22 @@ class EmployerKeywords extends React.Component {
     this.state = {
       selectedItems: this.props.employer.keywords
     }
+    this.state.isFormValid = this.isFormValid()
   }
 
   onChipAdded = (chipToAdd, callBack) => {
-    const itemsCopy = [...this.state.selectedItems]
+    const itemsCopy = [ ...this.state.selectedItems ]
     itemsCopy.push(chipToAdd)
-    this.setState( {selectedItems: itemsCopy} )
+    this.setState({ selectedItems: itemsCopy })
     // passing true to callback let's library add item to list of selected items
     callBack(true)
   }
 
   onChipRemoved = (chipToRemove, callBack) => {
-    const itemsCopy = [...this.state.selectedItems]
-    const idOfChipToRemove = chipToRemove.id;
-    const filteredChips = itemsCopy.filter(singleChip => singleChip.id !== idOfChipToRemove);
-    this.setState( {selectedItems: filteredChips} )
+    const itemsCopy = [ ...this.state.selectedItems ]
+    const idOfChipToRemove = chipToRemove.id
+    const filteredChips = itemsCopy.filter(singleChip => singleChip.id !== idOfChipToRemove)
+    this.setState({ selectedItems: filteredChips })
     // passing true to callback allows library to remove items from list of selected items
     callBack(true)
   }
@@ -48,9 +49,9 @@ class EmployerKeywords extends React.Component {
           selectedItems={ this.state.selectedItems }
           items={ items }
           label={ I18n.t('flow_page.employer.keyword.title') }
-          textInputProps={{
+          textInputProps={ {
             placeholder: I18n.t('flow_page.employer.keyword.placeholder')
-          }}
+          } }
           renderRow={ (id, onPress, item) => (
             <ListItem style={ styles.listRow } key={ id } onPress={ () => this.onChipAdded(item, onPress) }>
               <Text>{ item.text }</Text>
@@ -60,7 +61,7 @@ class EmployerKeywords extends React.Component {
             <Chip
               key={ id }
               iconStyle={ iconStyle }
-              onClose={ () => this.onChipRemoved(item, onClose)  }
+              onClose={ () => this.onChipRemoved(item, onClose) }
               text={ item.text }
               style={ style }
             />
@@ -69,12 +70,17 @@ class EmployerKeywords extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={ !this.state.isFormValid }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
         </Button>
       </Card>
     )
+  }
+
+  isFormValid = () => {
+    return true
   }
 
   handleSubmit = () => {

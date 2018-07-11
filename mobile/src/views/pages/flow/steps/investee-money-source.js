@@ -1,10 +1,10 @@
 import { Body, Button, Card, CheckBox, Form, Icon, Input, Item, Label, ListItem, Text } from 'native-base'
-import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { InvesteeHiring, InvesteeIco } from './index'
+import validator from 'validator'
 
 class InvesteeMoneySource extends React.Component {
   constructor (props) {
@@ -13,6 +13,7 @@ class InvesteeMoneySource extends React.Component {
       lookingForMoney: this.props.investee.money,
       amount: this.props.investee.amount
     }
+    this.state.isFormValid = this.isFormValid()
   }
 
   render () {
@@ -21,7 +22,7 @@ class InvesteeMoneySource extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.money.title') }</Text>
         <ListItem>
           <CheckBox
-            onPress={ () => this.setState({ lookingForMoney: !this.state.lookingForMoney }) }
+            onPress={ this.handleCheck }
             checked={ this.state.lookingForMoney }/>
           <Body>
           <Text>{ I18n.t('flow_page.money.need_money') }</Text>
@@ -45,6 +46,7 @@ class InvesteeMoneySource extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={ !this.state.isFormValid }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
@@ -53,10 +55,27 @@ class InvesteeMoneySource extends React.Component {
     )
   }
 
+  isFormValid = () => {
+    const { lookingForMoney: money, amount } = this.state
+    if (!money) {
+      return true
+    }
+    return !validator.isEmpty(amount) && amount > 0
+  }
+
+  validateForm = () => {
+    const isFormValid = this.isFormValid()
+    this.setState({ isFormValid })
+  }
+
+  handleCheck = () => {
+    this.setState({ lookingForMoney: !this.state.lookingForMoney }, this.validateForm)
+  }
+
   handleFieldChange = (text, name) => {
     this.setState({
       [ name ]: text
-    })
+    }, this.validateForm)
   }
 
   handleSubmit = () => {

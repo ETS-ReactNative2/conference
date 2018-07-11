@@ -42,8 +42,8 @@ const initialState = {
     keywords: [],
     link: '',
     description: '',
-    min: '',
-    max: ''
+    min: '0',
+    max: '0'
   },
   employee: {
     role: '',
