@@ -20,6 +20,7 @@ class EmployeeRole extends React.Component {
     this.state = {
       selected: this.props.employee.role
     }
+    this.state.isFormValid = this.state.selected !== ''
   }
 
   render () {
@@ -47,6 +48,7 @@ class EmployeeRole extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={!this.state.isFormValid}
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
@@ -65,7 +67,8 @@ class EmployeeRole extends React.Component {
   }
   handleChange = (index) => {
     this.setState({
-      selected: index
+      selected: index,
+      isFormValid: true
     })
   }
 }

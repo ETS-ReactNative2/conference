@@ -18,8 +18,24 @@ class EmployeeKeywords extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: this.props.employee.keyword
+      selectedItems: this.props.employee.keywords
     }
+    this.state.isFormValid = this.state.selectedItems.length > 0
+  }
+
+  onChipAdded = (chipToAdd, callBack) => {
+    const itemsCopy = [...this.state.selectedItems]
+    itemsCopy.push(chipToAdd)
+    this.setState( {selectedItems: itemsCopy, isFormValid: true} )
+    callBack(true)
+  }
+
+  onChipRemoved = (chipToRemove, callBack) => {
+    const itemsCopy = [...this.state.selectedItems]
+    const idOfChipToRemove = chipToRemove.id;
+    const filteredChips = itemsCopy.filter(singleChip => singleChip.id !== idOfChipToRemove);
+    this.setState( {selectedItems: filteredChips, isFormValid: filteredChips.length > 0})
+    callBack(true)
   }
 
   render () {
@@ -27,13 +43,14 @@ class EmployeeKeywords extends React.Component {
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employee.keyword.title') }</Text>
         <Selectize
+          selectedItems={ this.state.selectedItems }
           items={ items }
           label={ I18n.t('flow_page.employee.keyword.title') }
           textInputProps={{
             placeholder: I18n.t('flow_page.employee.keyword.placeholder')
           }}
           renderRow={ (id, onPress, item) => (
-            <ListItem style={ styles.listRow } key={ id } onPress={ onPress }>
+            <ListItem style={ styles.listRow } key={ id } onPress={ () => this.onChipAdded(item, onPress) }>
               <Text>{ item.text }</Text>
             </ListItem>
           ) }
@@ -41,7 +58,7 @@ class EmployeeKeywords extends React.Component {
             <Chip
               key={ id }
               iconStyle={ iconStyle }
-              onClose={ onClose }
+              onClose={ () => this.onChipRemoved(item, onClose) }
               text={ item.text }
               style={ style }
             />
@@ -50,6 +67,7 @@ class EmployeeKeywords extends React.Component {
         <Button success
                 rounded
                 block
+                disabled={!this.state.isFormValid}
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
@@ -60,7 +78,7 @@ class EmployeeKeywords extends React.Component {
 
   handleSubmit = () => {
     this.props.save({
-      keywords: []
+      keywords: this.state.selectedItems
     })
     this.props.onFill({
       done: true
