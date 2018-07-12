@@ -1,0 +1,41 @@
+{
+	"info": {
+		"_postman_id": "9b34f730-797f-4584-aa2a-d9a7e11dd3e5",
+		"name": "Conference",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/users/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/vnd.lunalabs.conference-v1+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"email\",\n\t\"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/users/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
