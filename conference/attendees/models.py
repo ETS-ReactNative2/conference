@@ -5,26 +5,6 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-class FundingStage(models.Model):
-    """
-    Seed
-    Pre-ICO
-    Post-ICO
-    """
-
-    name = models.CharField(max_length=30)
-
-
-class Giveaway(models.Model):
-    """
-    Token
-    Equity
-    Both
-    """
-
-    name = models.CharField(max_length=30)
-
-
 class Link(models.Model):
     """
     Link to social media.
@@ -33,43 +13,12 @@ class Link(models.Model):
     url = models.URLField()
 
 
-class ProductStage(models.Model):
+class ConferenceUser(models.Model):
     """
-    Pre-Product
-    Live Product
-    Live Product With Revenue
+    Extra information about a user that's not related to the authentication process.
     """
 
-    name = models.CharField(max_length=30)
-
-
-class Region(models.Model):
-    """
-    South Korea
-    United States of America
-    Other
-    """
-
-    name = models.CharField(max_length=30)
-
-
-class TokenType(models.Model):
-    """
-    Protocol
-    Utility
-    Security
-    """
-
-    name = models.CharField(max_length=30)
-
-
-class Attendee(models.Model):
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    links = models.ManyToManyField(Link)
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
 
 class Company(models.Model):
@@ -77,13 +26,46 @@ class Company(models.Model):
     Abstract superclass of Project and Investor.
     """
 
+    FUNDING_STAGE_SEED = 1
+    FUNDING_STAGE_PRE_ICO = 2
+    FUNDING_STAGE_POST_ICO = 3
+    FUNDING_STAGES = (
+        (FUNDING_STAGE_SEED, 'FUNDING_STAGE_SEED'),
+        (FUNDING_STAGE_PRE_ICO, 'FUNDING_STAGE_PRE_ICO'),
+        (FUNDING_STAGE_POST_ICO, 'FUNDING_STAGE_POST_ICO'),
+    )
+    GIVEAWAY_TOKEN = 1
+    GIVEAWAY_EQUITY = 2
+    GIVEAWAY_BOTH = 3
+    GIVEAWAYS = (
+        (GIVEAWAY_TOKEN, 'GIVEAWAY_TOKEN'),
+        (GIVEAWAY_EQUITY, 'GIVEAWAY_EQUITY'),
+        (GIVEAWAY_BOTH, 'GIVEAWAY_BOTH'),
+    )
+    PRODUCT_STAGE_PRE_PRODUCT = 1
+    PRODUCT_STAGE_LIVE_PRODUCT = 2
+    PRODUCT_STAGE_LIVE_PRODUCT_WITH_REVENUE = 3
+    PRODUCT_STAGES = (
+        (PRODUCT_STAGE_PRE_PRODUCT, 'PRODUCT_STAGE_PRE_PRODUCT'),
+        (PRODUCT_STAGE_LIVE_PRODUCT, 'PRODUCT_STAGE_LIVE_PRODUCT'),
+        (PRODUCT_STAGE_LIVE_PRODUCT_WITH_REVENUE, 'PRODUCT_STAGE_LIVE_PRODUCT_WITH_REVENUE'),
+    )
+    TOKEN_TYPE_PROTOCOL = 1
+    TOKEN_TYPE_UTILITY = 2
+    TOKEN_TYPE_SECURITY = 3
+    TOKEN_TYPES = (
+        (TOKEN_TYPE_PROTOCOL, 'TOKEN_TYPE_PROTOCOL'),
+        (TOKEN_TYPE_UTILITY, 'TOKEN_TYPE_UTILITY'),
+        (TOKEN_TYPE_SECURITY, 'TOKEN_TYPE_SECURITY'),
+    )
+
+    country = models.CharField(max_length=3, null=True, blank=True)
+
     description = models.TextField(null=True, blank=True)
 
     links = models.ManyToManyField(Link)
 
     name = models.CharField(max_length=255, null=True, blank=True)
-
-    region = models.ForeignKey(Region, null=True, blank=True)
 
     tagline = models.CharField(max_length=255, null=True, blank=True)
 
@@ -93,17 +75,17 @@ class Project(Company):
     A company potentially raising funds.
     """
 
-    funding_stage = models.ForeignKey(FundingStage, null=True, blank=True, on_delete=models.SET_NULL)
+    funding_stage = models.PositiveSmallIntegerField(choices=Company.FUNDING_STAGES, null=True, blank=True)
 
     fundraising_amount = models.DecimalField(db_index=True, max_digits=12, decimal_places=0, null=True, blank=True)
 
-    giveaway = models.ForeignKey(Giveaway, null=True, blank=True, on_delete=models.SET_NULL)
+    giveaway = models.PositiveSmallIntegerField(choices=Company.GIVEAWAYS, null=True, blank=True)
 
-    notable_team_members = models.TextField(null=True, blank=True)
+    notable = models.TextField(null=True, blank=True)
 
-    product_stage = models.ForeignKey(ProductStage, null=True, blank=True, on_delete=models.SET_NULL)
+    product_stage = models.PositiveSmallIntegerField(choices=Company.PRODUCT_STAGES, null=True, blank=True)
 
-    token_type = models.ForeignKey(TokenType, null=True, blank=True, on_delete=models.SET_NULL)
+    token_type = models.PositiveSmallIntegerField(choices=Company.TOKEN_TYPES, null=True, blank=True)
 
 
 class Investor(Company):
@@ -111,14 +93,27 @@ class Investor(Company):
     A company doing investing.
     """
 
-    funding_stages = models.ManyToManyField(FundingStage)
-
     max_ticket = models.DecimalField(db_index=True, max_digits=12, decimal_places=0, null=True, blank=True)
 
     min_ticket = models.DecimalField(db_index=True, max_digits=12, decimal_places=0, null=True, blank=True)
 
-    product_stages = models.ManyToManyField(ProductStage)
 
-    regions = models.ManyToManyField(Region)
+class InvestorFundingStage(models.Model):
 
-    token_types = models.ManyToManyField(TokenType)
+    investor = models.ForeignKey(Investor, on_delete=models.CASCADE)
+
+    funding_stage = models.PositiveSmallIntegerField(choices=Company.FUNDING_STAGES)
+
+
+class InvestorProductStage(models.Model):
+
+    investor = models.ForeignKey(Investor, on_delete=models.CASCADE)
+
+    product_stage = models.PositiveSmallIntegerField(choices=Company.PRODUCT_STAGES)
+
+
+class InvestorTokenType(models.Model):
+
+    investor = models.ForeignKey(Investor, on_delete=models.CASCADE)
+
+    token_type = models.PositiveSmallIntegerField(choices=Company.TOKEN_TYPES)
