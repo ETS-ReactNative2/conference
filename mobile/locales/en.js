@@ -62,7 +62,7 @@ export default {
     },
     'members': {
       'title': 'Members',
-      'label': 'Members'
+      'label': 'Who are your notable members or advisors, if any?'
     },
     'employee': {
       'role': {
@@ -109,7 +109,7 @@ export default {
         'title': 'Ticket size:'
       },
       'company_funding_stage': {
-        'title': 'Funding slot for companies:'
+        'title': 'What is your funding stage?'
       },
       'market_location': {
         'title': 'The companies should be based in:'
@@ -123,10 +123,10 @@ export default {
         'company': 'Company'
       },
       'profile_type': {
-        'title': 'I am here for:',
-        'meeting': 'Meeting',
-        'projects': 'Projects to invest in',
-        'metting_investors': 'Meeting Investors'
+        'title': 'I am here to',
+        'meeting': 'Meet people',
+        'projects': 'Invest',
+        'metting_investors': 'Meet investors'
       },
     }
   },
