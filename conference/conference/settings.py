@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('CONFERENCE_SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'app.luna.com'
+    '*'
 ]
 
 

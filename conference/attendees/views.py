@@ -64,6 +64,22 @@ def investors(request):
     return JsonResponse({'id': investor.id}, status=200)
 
 
+def investors_id(request, investor_id):
+    if request.method == 'GET':
+        investor = Investor.objects.get(id=investor_id)
+        return JsonResponse({
+            'id': investor.id,
+            'country': investor.country,
+            'description': investor.description,
+            'links': investor.links,
+            'max_ticket': investor.max_ticket,
+            'min_ticket': investor.min_ticket,
+            'name': investor.name,
+            'tagline': investor.tagline,
+        }, status=200)
+    return JsonResponse({}, status=400)
+
+
 def projects(request):
     if not request.method == 'POST':
         return JsonResponse({}, status=400)
@@ -94,6 +110,24 @@ def projects(request):
     return JsonResponse({'id': project.id}, status=200)
 
 
+def projects_id(request, project_id):
+    if request.method == 'GET':
+        project = Project.objects.get(id=project_id)
+        return JsonResponse({
+            'id': project.id,
+            'country': project.country,
+            'description': project.description,
+            'funding_stage': project.funding_stage,
+            'giveaway': project.giveaway,
+            'name': project.name,
+            'notable': project.notable,
+            'product_stage': project.product_stage,
+            'tagline': project.tagline,
+            'token_type': project.token_type,
+        }, status=200)
+    return JsonResponse({}, status=400)
+
+
 def users(request):
     if not request.method == 'POST':
         return JsonResponse({}, status=400)
@@ -116,3 +150,15 @@ def users(request):
         user=user,
     )
     return JsonResponse({'id': user.id}, status=200)
+
+
+def users_id(request, user_id):
+    if request.method == 'GET':
+        user = User.objects.get(id=user_id)
+        return JsonResponse({
+            'id': user.id,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+        }, status=200)
+    return JsonResponse({}, status=400)
