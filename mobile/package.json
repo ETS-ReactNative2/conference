@@ -1,0 +1,53 @@
+{
+  "name": "luna-app-conference",
+  "version": "0.1.1",
+  "private": true,
+  "devDependencies": {
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "jest": "^23.1.0",
+    "jest-react-native": "^18.0.0",
+    "react-test-renderer": "16.3.1"
+  },
+  "scripts": {
+    "start": "react-native start",
+    "android-dev": "ENVFILE=.env.development react-native run-android",
+    "android-staging": "ENVFILE=.env.staging react-native run-android",
+    "android-production": "ENVFILE=.env.production react-native run-android",
+    "ios": "react-native run-ios",
+    "test": "jest",
+    "react-devtools": "react-devtools",
+    "build-debug-android": "react-native bundle --dev false --platform android --entry-file index.js --bundle-output ./android/app/build/intermediates/assets/debug/index.android.bundle --assets-dest ./android/app/build/intermediates/res/merged/debug && cd android && ./gradlew assembleDebug && cd .. && mkdir -p ./dist && rm -f ./dist/luna-android-debug.apk && cp ./android/app/build/outputs/apk/app-debug.apk ./dist/luna-android-debug.apk",
+    "build-debug-android-dev": "export ENVFILE=.env.development && npm run build-debug-android",
+    "build-debug-android-staging": "export ENVFILE=.env.staging && npm run build-debug-android",
+    "build-debug-android-production": "export ENVFILE=.env.production && npm run build-debug-android",
+    "build-release-android": "cd android && ./gradlew assembleRelease && cd .."
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "dependencies": {
+    "axios": "0.18.0",
+    "create-react-class": "15.6.3",
+    "humps": "2.0.1",
+    "immutable": "3.8.2",
+    "material-ui-chip-input": "^1.0.0-beta.5",
+    "native-base": "2.6.1",
+    "prop-types": "^15.6.2",
+    "qs": "6.5.2",
+    "react": "16.3.1",
+    "react-devtools": "^3.2.3",
+    "react-native": "~0.55.2",
+    "react-native-config": "0.11.5",
+    "react-native-extended-stylesheet": "0.8.1",
+    "react-native-fabric": "0.5.1",
+    "react-native-i18n": "2.0.12",
+    "react-native-languages": "2.0.0",
+    "react-native-material-selectize": "^1.9.0",
+    "react-navigation": "2.5.3",
+    "react-redux": "5.0.7",
+    "redux": "4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "2.3.0",
+    "validator": "10.4.0"
+  }
+}
