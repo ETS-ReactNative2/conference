@@ -3,10 +3,10 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^investors/', views.investors),
-    url(r'^investors/<int:investor_id>/', views.investors_id),
-    url(r'^projects/', views.projects),
-    url(r'^projects/<int:project_id>/', views.projects_id),
-    url(r'^users/', views.users),
-    url(r'^users/<int:user_id>/', views.users_id),
+    url(r'^investors/$', views.investors),
+    url(r'^investors/(?P<pk>\d+)/$', views.investors_id),
+    url(r'^projects/$', views.projects),
+    url(r'^projects/(?P<pk>\d+)/$', views.projects_id),
+    url(r'^users/$', views.users),
+    url(r'^users/(?P<pk>\d+)/$', views.users_id),
 ]

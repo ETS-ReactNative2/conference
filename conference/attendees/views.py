@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.hashers import make_password
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
 import json
 from .models import ConferenceUser
 from .models import Investor
@@ -24,7 +24,7 @@ def _fill_company(json_body):
 
 def investors(request):
     if not request.method == 'POST':
-        return JsonResponse({}, status=400)
+        return HttpResponse(status=405)
 
     try:
         json_body = json.loads(request.body)
@@ -61,28 +61,27 @@ def investors(request):
             token_type=token_type,
         )
     # TODO assign to user
-    return JsonResponse({'id': investor.id}, status=200)
+    return JsonResponse({'id': investor.id}, status=201)
 
 
-def investors_id(request, investor_id):
+def investors_id(request, pk):
     if request.method == 'GET':
-        investor = Investor.objects.get(id=investor_id)
+        investor = get_object_or_404(Investor, id=pk)
         return JsonResponse({
             'id': investor.id,
             'country': investor.country,
             'description': investor.description,
-            'links': investor.links,
-            'max_ticket': investor.max_ticket,
-            'min_ticket': investor.min_ticket,
+            'max_ticket': int(investor.max_ticket),
+            'min_ticket': int(investor.min_ticket),
             'name': investor.name,
             'tagline': investor.tagline,
         }, status=200)
-    return JsonResponse({}, status=400)
+    return HttpResponse(status=405)
 
 
 def projects(request):
     if not request.method == 'POST':
-        return JsonResponse({}, status=400)
+        return HttpResponse(status=405)
 
     try:
         json_body = json.loads(request.body)
@@ -107,12 +106,12 @@ def projects(request):
         token_type=token_type,
     )
     # TODO assign to user
-    return JsonResponse({'id': project.id}, status=200)
+    return JsonResponse({'id': project.id}, status=201)
 
 
-def projects_id(request, project_id):
+def projects_id(request, pk):
     if request.method == 'GET':
-        project = Project.objects.get(id=project_id)
+        project = get_object_or_404(Project, id=pk)
         return JsonResponse({
             'id': project.id,
             'country': project.country,
@@ -125,12 +124,12 @@ def projects_id(request, project_id):
             'tagline': project.tagline,
             'token_type': project.token_type,
         }, status=200)
-    return JsonResponse({}, status=400)
+    return HttpResponse(status=405)
 
 
 def users(request):
     if not request.method == 'POST':
-        return JsonResponse({}, status=400)
+        return HttpResponse(status=405)
 
     try:
         json_body = json.loads(request.body)
@@ -149,16 +148,16 @@ def users(request):
     conference_user = ConferenceUser.objects.create(
         user=user,
     )
-    return JsonResponse({'id': user.id}, status=200)
+    return JsonResponse({'id': user.id}, status=201)
 
 
-def users_id(request, user_id):
+def users_id(request, pk):
     if request.method == 'GET':
-        user = User.objects.get(id=user_id)
+        user = get_object_or_404(User, id=pk)
         return JsonResponse({
             'id': user.id,
             'email': user.email,
             'first_name': user.first_name,
             'last_name': user.last_name,
         }, status=200)
-    return JsonResponse({}, status=400)
+    return HttpResponse(status=405)
