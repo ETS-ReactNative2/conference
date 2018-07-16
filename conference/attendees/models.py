@@ -59,15 +59,15 @@ class Company(models.Model):
         (TOKEN_TYPE_SECURITY, 'TOKEN_TYPE_SECURITY'),
     )
 
-    country = models.CharField(max_length=3, null=True, blank=True)
+    country = models.CharField(max_length=3, blank=True, default='')
 
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(blank=True, default='')
 
     links = models.ManyToManyField(Link)
 
-    name = models.CharField(max_length=255, null=True, blank=True)
+    name = models.CharField(max_length=255, blank=True, default='')
 
-    tagline = models.CharField(max_length=255, null=True, blank=True)
+    tagline = models.CharField(max_length=255, blank=True, default='')
 
 
 class Project(Company):
@@ -81,7 +81,7 @@ class Project(Company):
 
     giveaway = models.PositiveSmallIntegerField(choices=Company.GIVEAWAYS, null=True, blank=True)
 
-    notable = models.TextField(null=True, blank=True)
+    notable = models.TextField(blank=True, default='')
 
     product_stage = models.PositiveSmallIntegerField(choices=Company.PRODUCT_STAGES, null=True, blank=True)
 
