@@ -100,20 +100,20 @@ class Investor(Company):
 
 class InvestorFundingStage(models.Model):
 
-    investor = models.ForeignKey(Investor, on_delete=models.CASCADE)
+    investor = models.ForeignKey(Investor, related_name='funding_stages', on_delete=models.CASCADE)
 
     funding_stage = models.PositiveSmallIntegerField(choices=Company.FUNDING_STAGES)
 
 
 class InvestorProductStage(models.Model):
 
-    investor = models.ForeignKey(Investor, on_delete=models.CASCADE)
+    investor = models.ForeignKey(Investor, related_name='product_stages', on_delete=models.CASCADE)
 
     product_stage = models.PositiveSmallIntegerField(choices=Company.PRODUCT_STAGES)
 
 
 class InvestorTokenType(models.Model):
 
-    investor = models.ForeignKey(Investor, on_delete=models.CASCADE)
+    investor = models.ForeignKey(Investor, related_name='token_types', on_delete=models.CASCADE)
 
     token_type = models.PositiveSmallIntegerField(choices=Company.TOKEN_TYPES)
