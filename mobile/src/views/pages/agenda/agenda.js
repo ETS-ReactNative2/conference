@@ -28,7 +28,7 @@ const exampleConferenceAgenda = [{
         startDate: '2018-07-17T15:05:05.909Z',
         endDate: '2018-07-17T16:15:05.909Z',
         classes: [{
-          title: 'Later 1',
+          title: 'Later 1 hahaha shshs wewe sjsjsj asdad',
           location: 'Class A1',
           person: 'Ms Somebody'
         }, {
