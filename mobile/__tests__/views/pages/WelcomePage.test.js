@@ -23,7 +23,7 @@ it('clicking login button should change navigation to LOGIN_PAGE', () => {
     // Click Button
     loginButtonProps.onPress()
     expect(navigation.navigate.mock.calls.length).toBe(1)
-    expect(navigation.navigate.mock.calls[0][0]).toBe(PAGES_NAMES.LOGIN_PAGE)
+    expect(navigation.navigate.mock.calls[0][0]).toBe(PAGES_NAMES.FLOW_PAGE)
 });
 
 it('clicking sign up button should change navigation to SIGNUP_PAGE', () => {
