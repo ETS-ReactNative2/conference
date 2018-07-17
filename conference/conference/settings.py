@@ -25,6 +25,7 @@ SECRET_KEY = os.environ.get('CONFERENCE_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# SECURITY WARNING: remove unnecessary rows in production
 ALLOWED_HOSTS = [
     '*'
 ]
