@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 class ConferenceEvent extends Component {
   render() {
     return (
-      <View>
+      <View styles={styles.container}>
         <Content>
           <Card>
             <CardItem header bordered style={styles.eventHeader}>
@@ -39,6 +39,10 @@ class ConferenceEvent extends Component {
 }
 
 const styles = EStyleSheet.create({
+    container: {
+        flex: 1,
+        flexGrow: 1
+    },
     eventHeader: {
         flex: 1,
         flexDirection: 'row',

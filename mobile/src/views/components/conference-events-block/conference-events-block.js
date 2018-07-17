@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -15,7 +15,7 @@ class ConferenceEventsBlock extends Component {
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 <Content padder>
                     <Card>
                         <CardItem>
@@ -23,22 +23,22 @@ class ConferenceEventsBlock extends Component {
                                 <View style={styles.eventsStartDateHeaderContainer}>
                                     {this.renderBlockStartDate()}
                                 </View>
-                                <Grid>
-                                    <Section>
-                                    {this.props.event.classes.map(singleClass => {
-                                        return (
-                                                <Block key={`class-${singleClass.title}`} xsSize="1/1" smSize="1/2" lg="1/3" xl="1/4" xxl="1/4">
+                                <Grid stretchable>
+                                    <Section stretch>
+                                        {this.props.event.classes.map(singleClass => {
+                                            return (
+                                                <Block style={{flexGrow: 1}} key={`class-${singleClass.title}`} xsSize="1/1" smSize="1/2" lg="1/3" xl="1/4" xxl="1/4">
                                                     <ConferenceEvent event={{...singleClass, endDate: moment(this.props.event.endDate).format('hh:mm A')}} />
                                                 </Block>
-                                        )
-                                    })}
+                                            )
+                                        })}
                                     </Section>
                                 </Grid>
                             </Body>
                         </CardItem>
                     </Card>
                 </Content>
-            </View>
+            </ScrollView>
         )
     }
 }
