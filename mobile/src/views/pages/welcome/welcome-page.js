@@ -15,7 +15,7 @@ class WelcomePage extends React.Component {
         </View>
         <Grid style={{alignItems: 'center'}}>
           <Col>
-            <Button style={styles.button} onPress={() => {navigate(PAGES_NAMES.FLOW_PAGE)}}>
+            <Button style={styles.button} onPress={() => {navigate(PAGES_NAMES.LOGIN_PAGE)}}>
               <Text style={styles.buttonText}>{I18n.t('welcome_page.login')}</Text>
             </Button>
             <Button style={styles.button} onPress={() => {navigate(PAGES_NAMES.SIGNUP_PAGE)}}>

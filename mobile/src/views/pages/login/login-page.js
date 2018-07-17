@@ -23,7 +23,9 @@ class LoginPage extends React.Component {
   };
 
   handleSubmit = () => {
-    this.props.onSubmit(this.state);
+    if (this.state.isFormValid) {
+      this.props.onSubmit(this.state);
+    }
   };
   
   handleFieldChange = (newValue, name) => {

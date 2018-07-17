@@ -4,8 +4,13 @@
   "private": true,
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^23.1.0",
     "jest-react-native": "^18.0.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.4.1",
+    "react-native-mock": "^0.3.1",
     "react-test-renderer": "16.3.1"
   },
   "scripts": {
@@ -23,7 +28,20 @@
     "build-release-android": "export ENVFILE=.env.production && cd android && ./gradlew assembleRelease && cd .. && mkdir -p ./dist && rm -f ./dist/luna-conference-android-release.apk && cp ./android/app/build/outputs/apk/app-release.apk ./dist/luna-conference-android-release.apk"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFiles": [
+      "<rootDir>/__mocks__/react-native-i18n.js",
+      "<rootDir>/__mocks__/react-native-languages.js",
+      "<rootDir>/__mocks__/react-navigation.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|native-base-shoutem-theme|react-navigation)"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
   },
   "dependencies": {
     "axios": "0.18.0",
