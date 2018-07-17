@@ -23,6 +23,9 @@ export default {
     'account_type_employer': 'Employer',
     'account_type_employee': 'Employee'
   },
+  'agenda_event': {
+    'until': 'UNTIL'
+  },
   'flow_page': {
     'title': 'Signup flow DEV',
     'project_setup': {
@@ -158,6 +161,20 @@ export default {
       'seed': 'Seed',
       'pre': 'Pre ICO',
       'post': 'Post ICO'
+    },
+    'months': {
+      '0': 'January',
+      '1': 'February',
+      '2': 'March',
+      '3': 'April',
+      '4': 'May',
+      '5': 'June',
+      '6': 'July',
+      '7': 'August',
+      '8': 'September',
+      '9': 'October',
+      '10': 'November',
+      '11': 'December'
     }
   }
 }
