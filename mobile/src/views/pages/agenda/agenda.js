@@ -39,10 +39,6 @@ const exampleConferenceAgenda = [{
             title: 'Later 3',
             location: 'Class A1',
             persons: ['Ms Somebody']
-          }, {
-            title: 'Later 4',
-            location: 'Class A3',
-            persons: ['Ms Somebody']
           }]
       }]
   }]

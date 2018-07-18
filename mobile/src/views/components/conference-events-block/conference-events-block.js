@@ -32,9 +32,9 @@ class ConferenceEventsBlock extends Component {
                             key={`class-${singleClass.title}`}
                             xsSize="1/1"
                             smSize="1/2"
-                            lg="1/3"
-                            xl="1/4"
-                            xxl="1/4"
+                            lgSize="1/3"
+                            xlSize="1/4"
+                            xxlSize="1/4"
                           >
                             <ConferenceEvent
                               event={{
