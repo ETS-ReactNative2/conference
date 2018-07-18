@@ -2,6 +2,7 @@
 
 .idea/
 
+conference/*.log
 conference/db.sqlite3
 
 #======================================
