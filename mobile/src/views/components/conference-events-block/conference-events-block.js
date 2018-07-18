@@ -1,20 +1,20 @@
-import React, { Component } from "react"
-import { View } from "react-native"
-import moment from "moment"
-import PropTypes from "prop-types"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { Grid, Section, Block } from "react-native-responsive-layout"
-import { Content, Card, CardItem, Text, Body } from "native-base"
-import ConferenceEvent from "../conference-event/conference-event"
+import React, { Component } from "react";
+import { View } from "react-native";
+import moment from "moment";
+import PropTypes from "prop-types";
+import EStyleSheet from "react-native-extended-stylesheet";
+import { Grid, Section, Block } from "react-native-responsive-layout";
+import { Content, Card, CardItem, Text, Body } from "native-base";
+import ConferenceEvent from "../conference-event/conference-event";
 
 class ConferenceEventsBlock extends Component {
   renderBlockStartDate() {
-    return <Text>{moment(this.props.event.startDate).format("hh:mm A")}</Text>
+    return <Text>{moment(this.props.event.startDate).format("hh:mm A")}</Text>;
   }
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.mainViewContainer}>
         <Content padder>
           <Card>
             <CardItem>
@@ -24,13 +24,7 @@ class ConferenceEventsBlock extends Component {
                 </View>
                 <Grid stretchable>
                   <Section stretch>
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: "row",
-                        flexWrap: "wrap"
-                      }}
-                    >
+                    <View style={styles.eventsBlockContainer}>
                       {this.props.event.classes.map(singleClass => {
                         return (
                           <Block
@@ -51,7 +45,7 @@ class ConferenceEventsBlock extends Component {
                               }}
                             />
                           </Block>
-                        )
+                        );
                       })}
                     </View>
                   </Section>
@@ -61,15 +55,23 @@ class ConferenceEventsBlock extends Component {
           </Card>
         </Content>
       </View>
-    )
+    );
   }
 }
 
 const styles = EStyleSheet.create({
+  mainViewContainer: {
+    flex: 1
+  },
+  eventsBlockContainer: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap"
+  },
   eventsStartDateHeaderContainer: {
     alignSelf: "center"
   }
-})
+});
 
 ConferenceEventsBlock.propTypes = {
   event: PropTypes.shape({
@@ -83,6 +85,6 @@ ConferenceEventsBlock.propTypes = {
       })
     )
   }).isRequired
-}
+};
 
-export default ConferenceEventsBlock
+export default ConferenceEventsBlock;

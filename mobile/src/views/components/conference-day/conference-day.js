@@ -58,6 +58,7 @@ const styles = EStyleSheet.create({
     alignSelf: "center"
   },
   dayHeader: {
+    marginTop: "1rem",
     fontSize: "1rem"
   }
 })
