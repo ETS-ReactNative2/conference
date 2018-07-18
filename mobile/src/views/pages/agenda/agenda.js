@@ -39,6 +39,10 @@ const exampleConferenceAgenda = [{
             title: 'Some intresting topic, etc',
             location: 'Luna 2',
             persons: ['Ms Somebody']
+          }, {
+            title: 'Some intresting topic, etc',
+            location: 'Luna 2',
+            persons: ['Ms Somebody']
           }]
       }, {
         startDate: '2018-07-17T13:00:05.909Z',

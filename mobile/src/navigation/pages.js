@@ -5,8 +5,6 @@ import LoginPage from '../views/pages/login/login-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 
-import Agenda from '../views/pages/agenda/agenda'
-
 const PAGES_NAMES = {
   WELCOME_PAGE: 'WELCOME_PAGE',
   FLOW_PAGE: 'FLOW_PAGE',
@@ -27,7 +25,7 @@ const commonNavBarStyle = {
 
 const AppStackNavigator = createStackNavigator({
   WELCOME_PAGE: {
-    screen: Agenda,
+    screen: WelcomePage,
     navigationOptions: () => ({
       header: null
     }),

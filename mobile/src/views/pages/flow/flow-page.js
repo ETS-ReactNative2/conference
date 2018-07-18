@@ -3,6 +3,8 @@ import React from 'react'
 import { BackHandler } from 'react-native'
 import { CommonProfileOnboarding } from './steps'
 
+import Agenda from '../agenda/agenda'
+
 class FlowPage extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
@@ -69,7 +71,7 @@ class FlowPage extends React.Component {
             style={ { marginBottom: 16, marginTop: 16 } }/>
           }
           { done &&
-          <Text>Done</Text>
+          <Agenda />
           }
         </Content>
       </Container>
