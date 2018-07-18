@@ -39,6 +39,12 @@ LOGGING = {
             'filename': 'attendees.log',
             'formatter': 'verbose',
         },
+        'smatched_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'smatched.log',
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         'django': {
@@ -50,6 +56,12 @@ LOGGING = {
         'attendees': {
             'formatter': 'verbose',
             'handlers': ['attendees_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'smatched': {
+            'formatter': 'verbose',
+            'handlers': ['smatched_file'],
             'level': 'DEBUG',
             'propagate': True,
         },
@@ -81,7 +93,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'attendees',
+    'smatched',
 ]
 
 MIDDLEWARE = [
