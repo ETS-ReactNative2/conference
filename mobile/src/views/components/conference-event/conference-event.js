@@ -19,9 +19,7 @@ class ConferenceEvent extends Component {
                 {this.props.event.title.toUpperCase()}
               </Text>
             </View>
-            <View style={styles.textContainer}>
-              <Text>{this.props.event.person}</Text>
-            </View>
+            {this.props.event.persons.map(singlePerson => <Text key={`presenter-${singlePerson}`}>{singlePerson}</Text>)}
           </Body>
         </CardItem>
         <CardItem footer bordered style={styles.eventFooter}>
@@ -70,7 +68,7 @@ ConferenceEvent.propTypes = {
     endDate: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
-    person: PropTypes.string.isRequired
+    persons: PropTypes.arrayOf(PropTypes.string).isRequired
   }).isRequired
 }
 

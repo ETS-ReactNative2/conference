@@ -79,7 +79,7 @@ ConferenceEventsBlock.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         location: PropTypes.string.isRequired,
-        person: PropTypes.string
+        persons: PropTypes.arrayOf(PropTypes.string).isRequired
       })
     )
   }).isRequired

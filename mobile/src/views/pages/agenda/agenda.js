@@ -10,7 +10,7 @@ const exampleConferenceAgenda = [{
       classes: [{
         title: 'Some Long testtttttttttt string to check, well some more also also',
         location: 'Class A4',
-        person: 'Mr Somebody'
+        persons: ['Mr Somebody']
       }]
     }, {
       startDate: '2018-07-17T09:05:05.909Z',
@@ -18,11 +18,11 @@ const exampleConferenceAgenda = [{
       classes: [{
         title: 'This is some crytpocurrency talk, you should join it now before it is too late',
         location: 'Class A1',
-        person: 'Ms Somebody'
+        persons: ['Ms Somebody']
       }, {
         title: 'Nice classes v2',
         location: 'Class A3',
-        person: 'Ms Somebody'
+        persons: ['Ms Somebody']
       }]
     }, {
         startDate: '2018-07-17T15:05:05.909Z',
@@ -30,19 +30,19 @@ const exampleConferenceAgenda = [{
         classes: [{
           title: 'Later 1 hahaha shshs wewe sjsjsj asdad',
           location: 'Class A1',
-          person: 'Ms Somebody'
+          persons: ['Ms Somebody']
         }, {
           title: 'Later 2',
           location: 'Class A3',
-          person: 'Ms Somebody'
+          persons: ['Ms Somebody']
         }, {
             title: 'Later 3',
             location: 'Class A1',
-            person: 'Ms Somebody'
+            persons: ['Ms Somebody']
           }, {
             title: 'Later 4',
             location: 'Class A3',
-            person: 'Ms Somebody'
+            persons: ['Ms Somebody']
           }]
       }]
   }]
