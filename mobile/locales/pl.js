@@ -133,6 +133,9 @@ export default {
       }
     }
   },
+  'drawer': {
+    'agenda': '_PL_Agenda'
+  },
   'common': {
     'next': '_PL_Next',
     'roles': {

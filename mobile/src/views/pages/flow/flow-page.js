@@ -2,81 +2,85 @@ import { Button, Container, Content, Icon, Text } from 'native-base'
 import React from 'react'
 import { BackHandler } from 'react-native'
 import { CommonProfileOnboarding } from './steps'
-
-import Agenda from '../agenda/agenda'
+import { PAGES_NAMES } from '../../../navigation'
 
 class FlowPage extends React.Component {
-
   static navigationOptions = ({ navigation }) => ({
-    headerLeft:
+    headerLeft: (
       <Button
-        style={{ height: '100%'}}
+        style={{ height: "100%" }}
         transparent
-        onPress={ navigation.getParam('onHeaderBackButton') }>
-        <Icon style={{color: 'white'}} name='arrow-back'/>
+        onPress={navigation.getParam("onHeaderBackButton")}
+      >
+        <Icon style={{ color: "white" }} name="arrow-back" />
       </Button>
-  })
+    )
+  });
 
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       CurrentStep: CommonProfileOnboarding,
       PreviousSteps: []
-    }
-    BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid)
+    };
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.onBackButtonPressAndroid
+    );
   }
 
-  componentDidMount () {
-    this.props.navigation.setParams({ onHeaderBackButton: this.onHeaderBackButton })
+  componentDidMount() {
+    this.props.navigation.setParams({
+      onHeaderBackButton: this.onHeaderBackButton
+    });
   }
 
   onHeaderBackButton = () => {
     if (!this.onBackButtonPressAndroid()) {
-      this.props.navigation.goBack()
+      this.props.navigation.goBack();
     }
-  }
+  };
   onBackButtonPressAndroid = () => {
-    const { CurrentStep, PreviousSteps } = this.state
+    const { CurrentStep, PreviousSteps } = this.state;
     const previousStepsCopy = [...PreviousSteps];
     if (CurrentStep && previousStepsCopy.length !== 0) {
       this.setState({
         CurrentStep: previousStepsCopy.pop(),
         PreviousSteps: previousStepsCopy
-      })
-      return true
+      });
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   onFill = ({ nextStep, done }) => {
-    const { PreviousSteps, CurrentStep } = this.state
+    const { PreviousSteps, CurrentStep } = this.state;
     const previousStepsCopy = [...PreviousSteps];
-    previousStepsCopy.push(CurrentStep)
-    this.setState({
-      PreviousSteps: previousStepsCopy,
-      CurrentStep: nextStep,
-      done
-    })
-  }
+    previousStepsCopy.push(CurrentStep);
+    if (done) {
+      this.props.navigation.navigate(PAGES_NAMES.HOME_PAGE);
+    } else {
+      this.setState({
+        PreviousSteps: previousStepsCopy,
+        CurrentStep: nextStep
+      });
+    }
+  };
 
-  render () {
-    const { CurrentStep, done } = this.state
+  render() {
+    const { CurrentStep } = this.state;
 
     return (
       <Container>
         <Content>
-          { !done &&
           <CurrentStep
-            onFill={ this.onFill }
-            style={ { marginBottom: 16, marginTop: 16 } }/>
-          }
-          { done &&
-          <Agenda />
-          }
+            onFill={this.onFill}
+            style={{ marginBottom: 16, marginTop: 16 }}
+          />
         </Content>
       </Container>
-    )
+    );
   }
 }
 
-export default FlowPage
+export default FlowPage;

@@ -133,6 +133,9 @@ export default {
       },
     }
   },
+  'drawer': {
+    'agenda': 'Agenda'
+  },
   'common': {
     'next': 'Next',
     'roles': {
