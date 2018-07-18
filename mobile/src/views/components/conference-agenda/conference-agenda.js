@@ -1,25 +1,21 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { Col, Container, Row } from "native-base"
+import {ScrollView } from 'react-native'
 import ConferenceDay from "../../components/conference-day/conference-day"
 
 class ConferenceAgenda extends Component {
   render() {
     return (
-      <Container>
-        <Col>
-          <Row>
-            {this.props.days.map(singleConferenceDay => {
-              return (
-                <ConferenceDay
-                  key={`confernece-day-${singleConferenceDay.date}`}
-                  day={singleConferenceDay}
-                />
-              )
-            })}
-          </Row>
-        </Col>
-      </Container>
+      <ScrollView>
+        {this.props.days.map(singleConferenceDay => {
+          return (
+            <ConferenceDay
+              key={`confernece-day-${singleConferenceDay.date}`}
+              day={singleConferenceDay}
+            />
+          )
+        })}
+      </ScrollView>
     )
   }
 }
