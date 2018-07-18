@@ -24,6 +24,12 @@ class SignupPage extends React.Component {
     this.setState( {isFormValid} )
   };
 
+  handleSubmit = () => {
+    if (this.state.isFormValid) {
+      this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
+    }
+  };
+
   handleFieldChange = (newValue, name) => {
     this.setState({
       [ name ]: newValue
@@ -31,7 +37,6 @@ class SignupPage extends React.Component {
   };
 
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <Container>
         <Content padder>
@@ -66,7 +71,7 @@ class SignupPage extends React.Component {
               block
               disabled={!this.state.isFormValid}
               style={styles.button}
-              onPress={() => { navigate(PAGES_NAMES.FLOW_PAGE) }}>
+              onPress={() => { this.handleSubmit() }}>
               <Text>{I18n.t('signup_page.button')}</Text>
             </Button>
           </Card>

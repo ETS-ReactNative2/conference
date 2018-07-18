@@ -1,0 +1,35 @@
+version: "2"
+services:
+  python:
+    container_name: python
+    image: python:2-slim
+    environment:
+      - CONFERENCE_DB_ENGINE=django.contrib.gis.db.backends.postgis
+      - CONFERENCE_DB_NAME=andrzej
+      - CONFERENCE_DB_USER=andrzej
+      - CONFERENCE_DB_PASSWORD=testtest
+      - CONFERENCE_DB_HOST=postgres
+      - CONFERENCE_DB_PORT=5432
+      - CONFERENCE_SECRET_KEY=123testtest
+    ports:
+      - 8001:8001
+    volumes:
+      - .:/conference
+    command: sh /conference/run_python.sh
+    depends_on:
+      - postgres
+    links:
+      - postgres
+  postgres:
+    image: mdillon/postgis:10-alpine
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=andrzej
+      - POSTGRES_USER=andrzej
+      - POSTGRES_PASSWORD=testtest
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+    volumes:
+      - ./database/postgres:/var/lib/postgresql/data:z
