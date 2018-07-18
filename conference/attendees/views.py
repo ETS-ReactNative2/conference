@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 import json
+import logging
 from .models import ConferenceUser
 from .models import Investor
 from .models import InvestorFundingStage
@@ -12,6 +13,8 @@ from .models import InvestorProductStage
 from .models import InvestorTokenType
 from .models import Project
 from .models import User
+
+log = logging.getLogger(__name__)
 
 
 def _fill_company(json_body):
@@ -23,6 +26,7 @@ def _fill_company(json_body):
 
 
 def investors(request):
+    log.info('investors called with request method "{}" and body "{}"'.format(request.method, request.body))
     if not request.method == 'POST':
         return HttpResponse(status=405)
 
@@ -65,6 +69,7 @@ def investors(request):
 
 
 def investors_id(request, pk):
+    log.info('investors_id called with request method "{}" and body "{}"'.format(request.method, request.body))
     if request.method == 'GET':
         investor = get_object_or_404(Investor, id=pk)
         return JsonResponse({
@@ -80,6 +85,7 @@ def investors_id(request, pk):
 
 
 def projects(request):
+    log.info('projects called with request method "{}" and body "{}"'.format(request.method, request.body))
     if not request.method == 'POST':
         return HttpResponse(status=405)
 
@@ -110,6 +116,7 @@ def projects(request):
 
 
 def projects_id(request, pk):
+    log.info('projects_id called with request method "{}" and body "{}"'.format(request.method, request.body))
     if request.method == 'GET':
         project = get_object_or_404(Project, id=pk)
         return JsonResponse({
@@ -128,6 +135,7 @@ def projects_id(request, pk):
 
 
 def users(request):
+    log.info('users called with request method "{}" and body "{}"'.format(request.method, request.body))
     if not request.method == 'POST':
         return HttpResponse(status=405)
 
@@ -152,6 +160,7 @@ def users(request):
 
 
 def users_id(request, pk):
+    log.info('users_id called with request method "{}" and body "{}"'.format(request.method, request.body))
     if request.method == 'GET':
         user = get_object_or_404(User, id=pk)
         return JsonResponse({

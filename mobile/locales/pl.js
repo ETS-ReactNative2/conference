@@ -137,6 +137,8 @@ export default {
     'agenda': '_PL_Agenda'
   },
   'common': {
+    'yes': 'Tak',
+    'no': 'Nie',
     'next': '_PL_Next',
     'roles': {
       'developer': '_PL_Developer',

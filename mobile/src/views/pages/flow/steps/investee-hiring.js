@@ -1,4 +1,4 @@
-import { Body, Button, Card, CheckBox, ListItem, Text } from 'native-base'
+import { Button, Card, Left, ListItem, Radio, Right, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -12,38 +12,41 @@ class InvesteeHiring extends React.Component {
     this.state = {
       hiring: this.props.investee.hiring
     }
-    this.state.isFormValid = this.isFormValid()
   }
 
   render () {
     return (
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.hiring.title') }</Text>
-        <ListItem>
-          <CheckBox
-            onPress={ () => this.setState({ hiring: !this.state.hiring }) }
-            checked={ this.state.hiring }/>
-          <Body>
-          <Text>{ I18n.t('flow_page.hiring.question') }</Text>
-          </Body>
+        <ListItem style={ { width: '100%' } } onPress={ () => this.setState({ hiring: false }) }>
+          <Left>
+            <Text>{ I18n.t('common.no') }</Text>
+          </Left>
+          <Right>
+            <Radio
+              onPress={ () => this.setState({ hiring: false }) }
+              selected={ !this.state.hiring }/>
+          </Right>
+        </ListItem>
+        <ListItem style={ { width: '100%' } } onPress={ () => this.setState({ hiring: true }) }>
+          <Left>
+            <Text>{ I18n.t('common.yes') }</Text>
+          </Left>
+          <Right>
+            <Radio
+              onPress={ () => this.setState({ hiring: true }) }
+              selected={ this.state.hiring }/>
+          </Right>
         </ListItem>
         <Button success
                 rounded
                 block
-                disabled={ !this.state.isFormValid }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
         </Button>
       </Card>
     )
-  }
-
-  isFormValid = () => true
-
-  validateForm = () => {
-    const isFormValid = this.isFormValid()
-    this.setState({ isFormValid })
   }
 
   handleSubmit = () => {

@@ -1,4 +1,4 @@
-import { Body, Button, Card, CheckBox, ListItem, Text } from 'native-base'
+import { Body, Button, Card, CheckBox, Left, ListItem, Radio, Right, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -44,16 +44,19 @@ class InvestorInvestIn extends React.Component {
     return (
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.invest_in.title') }</Text>
-            {investments.map(singleInvestment => {
+            {investments.map( (singleInvestment, index) => {
                 return (
-                    <ListItem key={`investment-item-${singleInvestment}`}>
-                      <CheckBox
-                        onPress={ () => this.handleCheckboxClick(singleInvestment)}
-                        checked={ this.isCheckboxSelected(singleInvestment)}
-                      />
-                      <Body>
+                    <ListItem
+                      onPress={ () => this.handleCheckboxClick(singleInvestment)}
+                      key={`investment-item-${singleInvestment}`}>
+                      <Left>
                         <Text>{ I18n.t(`flow_page.investor.invest_in.investment_topics.${singleInvestment}`) }</Text>
-                      </Body>
+                      </Left>
+                      <Right>
+                        <Radio
+                          onPress={ () => this.handleCheckboxClick(singleInvestment) }
+                          selected={ this.isCheckboxSelected(singleInvestment) }/>
+                      </Right>
                     </ListItem>
                 );
             })}

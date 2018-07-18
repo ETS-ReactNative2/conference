@@ -11,7 +11,6 @@ export { default as InvesteeFundingStage } from './investee-funding-stage'
 export { default as InvesteeTeamMembers } from './investee-team-members'
 export { default as InvesteeMoneySource } from './investee-money-source'
 export { default as InvesteeProjectSetup } from './investee-project-setup'
-export { default as InvesteeIco } from './investee-ico-question'
 export { default as InvesteeHiring } from './investee-hiring'
 
 export { default as CommonProfileOnboarding } from './common-profile-onboarding'

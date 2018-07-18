@@ -1,4 +1,4 @@
-import { Body, Button, Card, CheckBox, ListItem, Text } from 'native-base'
+import { Body, Button, Card, CheckBox, Left, ListItem, Radio, Right, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -46,14 +46,17 @@ class InvestorCompanyFundingStage extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.company_funding_stage.title') }</Text>
             {stages.map(singleStage => {
                 return (
-                    <ListItem key={`funding-item-${singleStage}`}>
-                      <CheckBox
-                        onPress={ () => this.handleCheckboxClick(singleStage)}
-                        checked={ this.isCheckboxSelected(singleStage)}
-                      />
-                      <Body>
+                    <ListItem
+                      onPress={ () => this.handleCheckboxClick(singleStage) }
+                      key={`funding-item-${singleStage}`}>
+                      <Left>
                         <Text>{ I18n.t(`common.funding_stages.${singleStage}`) }</Text>
-                      </Body>
+                      </Left>
+                      <Right>
+                        <Radio
+                          onPress={ () => this.handleCheckboxClick(singleStage) }
+                          selected={ this.isCheckboxSelected(singleStage) }/>
+                      </Right>
                     </ListItem>
                 );
             })}

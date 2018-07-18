@@ -137,6 +137,8 @@ export default {
     'agenda': '_DE_Agenda'
   },
   'common': {
+    'yes': 'Ja',
+    'no': 'Nein',
     'next': 'Weiter',
     'roles': {
       'developer': '_DE_Developer',
