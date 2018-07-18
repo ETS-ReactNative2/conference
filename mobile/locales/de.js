@@ -131,6 +131,8 @@ export default {
     }
   },
   'common': {
+    'yes': 'Ja',
+    'no': 'Nein',
     'next': 'Weiter',
     'roles': {
       'developer': '_DE_Developer',

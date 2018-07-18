@@ -1,9 +1,24 @@
-import { Body, Button, Card, CheckBox, Form, Icon, Input, Item, Label, ListItem, Text } from 'native-base'
+import {
+  Body,
+  Button,
+  Card,
+  CheckBox,
+  Form,
+  Icon,
+  Input,
+  Item,
+  Label, Left,
+  ListItem,
+  Radio,
+  Right,
+  Switch,
+  Text
+} from 'native-base'
 import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { InvesteeHiring, InvesteeIco } from './index'
+import { InvesteeHiring } from './index'
 import validator from 'validator'
 
 class InvesteeMoneySource extends React.Component {
@@ -21,12 +36,12 @@ class InvesteeMoneySource extends React.Component {
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.money.title') }</Text>
         <ListItem>
-          <CheckBox
-            onPress={ this.handleCheck }
-            checked={ this.state.lookingForMoney }/>
-          <Body>
-          <Text>{ I18n.t('flow_page.money.need_money') }</Text>
-          </Body>
+          <Left>
+            <Switch
+              onValueChange={ () => this.handleCheck() }
+              value={ this.state.lookingForMoney }/>
+            <Text style={{ marginLeft: 8 }}>{ I18n.t('flow_page.money.need_money') }</Text>
+          </Left>
         </ListItem>
         {
           this.state.lookingForMoney && (
@@ -85,7 +100,7 @@ class InvesteeMoneySource extends React.Component {
       amount: amount
     })
     this.props.onFill({
-      nextStep: lookingForMoney ? InvesteeIco : InvesteeHiring
+      nextStep: InvesteeHiring
     })
   }
 }

@@ -78,7 +78,8 @@ class InvesteeFundingStage extends React.Component {
       nextStep: InvesteeTeamMembers
     })
   }
-  handleChange = (index) => {
+
+  handleChange = index => {
     this.setState({
       selected: index
     }, this.validateForm)

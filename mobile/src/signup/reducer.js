@@ -31,6 +31,7 @@ const initialState = {
     twitter: '',
     productStage: -1,
     fundingStage: -1,
+    hiring: false,
     teamMembers: '',
     money: false,
     amount: '',
