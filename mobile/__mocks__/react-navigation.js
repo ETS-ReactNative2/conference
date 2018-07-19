@@ -1,5 +1,6 @@
 jest.mock('react-navigation', () => {
     return {
-        createStackNavigator: () => {return ''}
+        createStackNavigator: () => { return ''},
+        createDrawerNavigator: () => { return ''}
     }
   });

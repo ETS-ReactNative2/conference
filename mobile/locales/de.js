@@ -23,6 +23,9 @@ export default {
     'account_type_employer': '_DE_Employer',
     'account_type_employee': '_DE_Employee'
   },
+  'agenda_event': {
+    'until': '_DE_UNTIL'
+  },
   'flow_page': {
     'title': '_DE_Signup flow DEV',
     'project_setup': {
@@ -130,6 +133,9 @@ export default {
       },
     }
   },
+  'drawer': {
+    'agenda': '_DE_Agenda'
+  },
   'common': {
     'yes': 'Ja',
     'no': 'Nein',
@@ -160,6 +166,20 @@ export default {
       'seed': '_DE_Seed',
       'pre': '_DE_Pre ICO',
       'post': '_DE_Post ICO'
+    },
+    'months': {
+      '0': 'Januar',
+      '1': 'Februar',
+      '2': 'Marz',
+      '3': 'April',
+      '4': 'Mai',
+      '5': 'Juni',
+      '6': 'Juli',
+      '7': 'August',
+      '8': 'September',
+      '9': 'Oktober',
+      '10': 'November',
+      '11': 'Dezember'
     }
   }
 }
