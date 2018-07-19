@@ -4,19 +4,19 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 import json
-from .models import Company, Investor, Project, User
-from .views import investors, investors_id, projects, projects_id, users, users_id
+from . import models
+from . import views
 
 
 class SharedListViewMixin(object):
 
     def test_get(self):
         response = self.client.get(reverse(self.view()))
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 200)
 
     def test_post_no_data(self):
         response = self.client.post(reverse(self.view()))
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 201)
 
 
 class SharedDetailViewMixin(object):
@@ -37,15 +37,16 @@ class SharedDetailViewMixin(object):
 class InvestorsViewTest(TestCase, SharedListViewMixin):
 
     def view(self):
-        return investors
+        return 'investor_list'
 
     def test_post_max(self):
         response = self.client.post(
-            reverse(investors),
+            reverse(self.view()),
             json.dumps({
                 'country': 'DE',
                 'description': 'aaaaaaaa',
                 'funding_stages': [1, 2, 3],
+                'giveaways': [1, 2, 3],
                 'max_ticket': 999999999999,
                 'min_ticket': 999999999999,
                 'name': 'aaaaaaaa',
@@ -61,10 +62,10 @@ class InvestorsViewTest(TestCase, SharedListViewMixin):
 class InvestorsIdViewTest(TestCase, SharedDetailViewMixin):
 
     def view(self):
-        return investors_id
+        return 'investor_detail'
 
     def test_get(self):
-        investor = Investor.objects.create(
+        investor = models.Investor.objects.create(
             country='DE',
             description='aaaaaaaa',
             max_ticket=999999999999,
@@ -72,28 +73,37 @@ class InvestorsIdViewTest(TestCase, SharedDetailViewMixin):
             name='aaaaaaaa',
             tagline='aaaaaaaa',
         )
+        investor.funding_stages = models.FundingStage.objects.all()
+        investor.giveaways = models.Giveaway.objects.all()
+        investor.product_stages = models.ProductStage.objects.all()
+        investor.token_types = models.TokenType.objects.all()
+        investor.save()
         response = self.client.get(
-            reverse(investors_id, kwargs={'pk': investor.id}),
+            reverse(self.view(), kwargs={'pk': investor.id}),
         )
         self.assertEquals(response.status_code, 200)
         response_dict = json.loads(response.content)
         self.assertEqual(response_dict.get('id'), investor.id)
         self.assertEqual(response_dict.get('country'), 'DE')
         self.assertEqual(response_dict.get('description'), 'aaaaaaaa')
-        self.assertEqual(response_dict.get('max_ticket'), 999999999999)
-        self.assertEqual(response_dict.get('min_ticket'), 999999999999)
+        self.assertEqual(response_dict.get('funding_stages'), [1, 2, 3])
+        self.assertEqual(response_dict.get('giveaways'), [1, 2, 3])
+        self.assertEqual(response_dict.get('max_ticket'), '999999999999')
+        self.assertEqual(response_dict.get('min_ticket'), '999999999999')
         self.assertEqual(response_dict.get('name'), 'aaaaaaaa')
+        self.assertEqual(response_dict.get('product_stages'), [1, 2, 3])
         self.assertEqual(response_dict.get('tagline'), 'aaaaaaaa')
+        self.assertEqual(response_dict.get('token_types'), [1, 2, 3])
 
 
 class ProjectsViewTest(TestCase, SharedListViewMixin):
 
     def view(self):
-        return projects
+        return 'project_list'
 
     def test_post_max(self):
         response = self.client.post(
-            reverse(projects),
+            reverse(self.view()),
             json.dumps({
                 'country': 'DE',
                 'description': 'aaaaaaaa',
@@ -113,22 +123,22 @@ class ProjectsViewTest(TestCase, SharedListViewMixin):
 class ProjectsIdViewTest(TestCase, SharedDetailViewMixin):
 
     def view(self):
-        return projects_id
+        return 'project_detail'
 
     def test_get(self):
-        project = Project.objects.create(
+        project = models.Project.objects.create(
             country='DE',
             description='aaaaaaaa',
-            funding_stage=Company.FUNDING_STAGE_SEED,
-            giveaway=Company.GIVEAWAY_TOKEN,
+            funding_stage=models.FundingStage.objects.get(id=1),
+            giveaway=models.Giveaway.objects.get(id=1),
             name='aaaaaaaa',
             notable='aaaaaaaa',
-            product_stage=Company.PRODUCT_STAGE_PRE_PRODUCT,
+            product_stage=models.ProductStage.objects.get(id=1),
             tagline='aaaaaaaa',
-            token_type=Company.TOKEN_TYPE_PROTOCOL,
+            token_type=models.TokenType.objects.get(id=1),
         )
         response = self.client.get(
-            reverse(projects_id, kwargs={'pk': project.id}),
+            reverse(self.view(), kwargs={'pk': project.id}),
         )
         self.assertEquals(response.status_code, 200)
         response_dict = json.loads(response.content)
@@ -147,11 +157,11 @@ class ProjectsIdViewTest(TestCase, SharedDetailViewMixin):
 class UsersViewTest(TestCase, SharedListViewMixin):
 
     def view(self):
-        return users
+        return 'user_list'
 
     def test_post_min(self):
         response = self.client.post(
-            reverse(users),
+            reverse(self.view()),
             json.dumps({
                 'email': 'a@b.cc',
                 'password': 'aaaaaaaa',
@@ -164,15 +174,15 @@ class UsersViewTest(TestCase, SharedListViewMixin):
 class UsersIdViewTest(TestCase, SharedDetailViewMixin):
 
     def view(self):
-        return users_id
+        return 'user_detail'
 
     def test_get(self):
-        user = User.objects.create(
+        user = models.User.objects.create(
             email='a@b.cc',
             password='aaaaaaaa',
         )
         response = self.client.get(
-            reverse(users_id, kwargs={'pk': user.id}),
+            reverse(self.view(), kwargs={'pk': user.id}),
         )
         self.assertEquals(response.status_code, 200)
         response_dict = json.loads(response.content)
