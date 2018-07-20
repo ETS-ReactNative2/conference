@@ -2,7 +2,10 @@ export default {
   'welcome_page': {
     'app_description': 'Luna Conference',
     'login': 'Login',
-    'signup': 'Sign Up'
+    'signup': 'Sign Up',
+    'search': 'Search - temp',
+    'flow': 'Flow - temp',
+    'agenda': 'Agenda - temp',
   },
   'login_page': {
     'title': 'Login',
@@ -22,6 +25,11 @@ export default {
     'account_type_investee': 'Investee',
     'account_type_employer': 'Employer',
     'account_type_employee': 'Employee'
+  },
+  'search_page': {
+    'title': 'Search',
+    'investor_header': 'Investors',
+    'projects_header': 'Projects'
   },
   'agenda_event': {
     'until': 'UNTIL'
@@ -101,12 +109,7 @@ export default {
         'nationality_placeholder': 'Nationality'
       },
       'invest_in': {
-        'title': 'I want to invest in:',
-        'investment_topics': {
-          'protocols': 'Protocols',
-          'app_tokens': 'App Tokens',
-          'security_tokens': 'Security Tokens'
-        }
+        'title': 'I want to invest in:'
       },
       'ticket_size': {
         'title': 'Ticket size:'
@@ -166,6 +169,21 @@ export default {
       'seed': 'Seed',
       'pre': 'Pre ICO',
       'post': 'Post ICO'
+    },
+    'product_stages': {
+      'pre': 'Pre-product',
+      'live': 'Live product',
+      'revenue': 'Live product + $ Revenue'
+    },
+    'token_types': {
+      'protocols': 'Protocols',
+      'app_tokens': 'App Tokens',
+      'security_tokens': 'Security Tokens'
+    },
+    'giveaway': {
+      'token': 'Tokens',
+      'equity': 'Equity',
+      'both': 'Both'
     },
     'months': {
       '0': 'January',

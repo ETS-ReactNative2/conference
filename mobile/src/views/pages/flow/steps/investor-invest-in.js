@@ -1,16 +1,11 @@
-import { Body, Button, Card, CheckBox, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { Button, Card, Left, ListItem, Radio, Right, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { InvestorTicketSize } from './index'
+import { TOKEN_TYPES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
-
-const investments = [
-    'protocols',
-    'app_tokens',
-    'security_tokens'
-]
+import { InvestorTicketSize } from './index'
 
 class InvestorInvestIn extends React.Component {
   constructor (props) {
@@ -26,44 +21,44 @@ class InvestorInvestIn extends React.Component {
   }
 
   handleCheckboxClick = fieldName => {
-      let investments = [...this.state.investments]
-      const investmentIndex = investments.indexOf(fieldName)
-      if (investmentIndex !== -1) {
-          investments = investments.filter(singleInvestemnt => singleInvestemnt !== fieldName)
-      } else {
-          investments.push(fieldName)
-      }
-      this.setState({ investments })
+    let investments = [ ...this.state.investments ]
+    const investmentIndex = investments.indexOf(fieldName)
+    if (investmentIndex !== -1) {
+      investments = investments.filter(singleInvestemnt => singleInvestemnt !== fieldName)
+    } else {
+      investments.push(fieldName)
+    }
+    this.setState({ investments })
   }
 
   isCheckboxSelected = fieldName => {
-      return this.state.investments.indexOf(fieldName) !== -1;
+    return this.state.investments.indexOf(fieldName) !== -1
   }
 
   render () {
     return (
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.invest_in.title') }</Text>
-            {investments.map( (singleInvestment, index) => {
-                return (
-                    <ListItem
-                      onPress={ () => this.handleCheckboxClick(singleInvestment)}
-                      key={`investment-item-${singleInvestment}`}>
-                      <Left>
-                        <Text>{ I18n.t(`flow_page.investor.invest_in.investment_topics.${singleInvestment}`) }</Text>
-                      </Left>
-                      <Right>
-                        <Radio
-                          onPress={ () => this.handleCheckboxClick(singleInvestment) }
-                          selected={ this.isCheckboxSelected(singleInvestment) }/>
-                      </Right>
-                    </ListItem>
-                );
-            })}
+        { TOKEN_TYPES.map((singleInvestment, index) => {
+          return (
+            <ListItem
+              onPress={ () => this.handleCheckboxClick(singleInvestment.slug) }
+              key={ `investment-item-${singleInvestment.slug}` }>
+              <Left>
+                <Text>{ I18n.t(`common.token_types.${singleInvestment.slug}`) }</Text>
+              </Left>
+              <Right>
+                <Radio
+                  onPress={ () => this.handleCheckboxClick(singleInvestment.slug) }
+                  selected={ this.isCheckboxSelected(singleInvestment.slug) }/>
+              </Right>
+            </ListItem>
+          )
+        }) }
         <Button success
                 rounded
                 block
-                disabled={ this.state.investments.length === 0}
+                disabled={ this.state.investments.length === 0 }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
@@ -85,7 +80,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveInvestor : investorData => dispatch(signUpActions.saveInvestor(investorData))
+    saveInvestor: investorData => dispatch(signUpActions.saveInvestor(investorData))
   }
 }
 

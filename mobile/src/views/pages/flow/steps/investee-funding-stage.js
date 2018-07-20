@@ -3,20 +3,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { FUNDING_STAGES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { InvesteeTeamMembers } from './index'
-
-const options = [
-  {
-    slug: 'seed'
-  },
-  {
-    slug: 'pre'
-  },
-  {
-    slug: 'post'
-  }
-]
 
 class InvesteeFundingStage extends React.Component {
   constructor (props) {
@@ -33,7 +22,7 @@ class InvesteeFundingStage extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.funding_stage.title') }</Text>
         <Content>
           {
-            options.map((option, index) => {
+            FUNDING_STAGES.map((option, index) => {
               return (
                 <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(index) }>
                   <Left>

@@ -17,7 +17,11 @@ const initialState = {
     companyLocation: '',
     nationality: '',
     investments: [],
-    ticketSize: '',
+    ticketSize: {
+      id: -1,
+      min: '',
+      max: ''
+    },
     stages: [],
     marketLocations: []
   },
@@ -34,9 +38,7 @@ const initialState = {
     hiring: false,
     teamMembers: '',
     money: false,
-    amount: '',
-    ico: false,
-    icoWhen: ''
+    amount: ''
   },
   employer: {
     role: -1,

@@ -2,7 +2,10 @@ export default {
   'welcome_page': {
     'app_description': '_PL_Luna Conference',
     'login': '_PL_Login',
-    'signup': '_PL_Sign Up'
+    'signup': '_PL_Sign Up',
+    'search': 'Search - temp',
+    'flow': 'Flow - temp',
+    'agenda': 'Agenda - temp',
   },
   'login_page': {
     'title': '_PL_Login',

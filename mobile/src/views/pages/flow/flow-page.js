@@ -1,6 +1,8 @@
 import { Button, Container, Content, Icon, Text } from 'native-base'
 import React from 'react'
 import { BackHandler } from 'react-native'
+import { connect } from 'react-redux'
+import { signUpActions } from '../../../signup'
 import { CommonProfileOnboarding } from './steps'
 import { PAGES_NAMES } from '../../../navigation'
 
@@ -8,11 +10,10 @@ class FlowPage extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: (
       <Button
-        style={{ height: "100%" }}
+        style={ { height: '100%' } }
         transparent
-        onPress={navigation.getParam("onHeaderBackButton")}
-      >
-        <Icon style={{ color: "white" }} name="arrow-back" />
+        onPress={ navigation.getParam('onHeaderBackButton') }>
+        <Icon style={ { color: 'white' } } name='arrow-back'/>
       </Button>
     )
   });
@@ -41,8 +42,8 @@ class FlowPage extends React.Component {
     }
   };
   onBackButtonPressAndroid = () => {
-    const { CurrentStep, PreviousSteps } = this.state;
-    const previousStepsCopy = [...PreviousSteps];
+    const { CurrentStep, PreviousSteps } = this.state
+    const previousStepsCopy = [ ...PreviousSteps ]
     if (CurrentStep && previousStepsCopy.length !== 0) {
       this.setState({
         CurrentStep: previousStepsCopy.pop(),
@@ -53,19 +54,28 @@ class FlowPage extends React.Component {
     return false;
   };
 
-  onFill = ({ nextStep, done }) => {
-    const { PreviousSteps, CurrentStep } = this.state;
-    const previousStepsCopy = [...PreviousSteps];
-    previousStepsCopy.push(CurrentStep);
-    if (done) {
-      this.props.navigation.navigate(PAGES_NAMES.HOME_PAGE);
-    } else {
+  onFill = async ({ nextStep, done }) => {
+    const { PreviousSteps, CurrentStep } = this.state
+    const { navigation, uploadProfile } = this.props
+    const previousStepsCopy = [ ...PreviousSteps ]
+    previousStepsCopy.push(CurrentStep)
+    if (!done) {
       this.setState({
         PreviousSteps: previousStepsCopy,
-        CurrentStep: nextStep
-      });
+        CurrentStep: nextStep,
+        done
+      })
     }
-  };
+    else {
+      try {
+        await uploadProfile()
+        //TODO
+        navigation.navigate(PAGES_NAMES.HOME_PAGE);
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  }
 
   render() {
     const { CurrentStep } = this.state;
@@ -83,4 +93,14 @@ class FlowPage extends React.Component {
   }
 }
 
-export default FlowPage;
+const mapStateToProps = () => {
+  return {}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    uploadProfile: () => dispatch(signUpActions.uploadProfile())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FlowPage)

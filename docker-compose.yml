@@ -16,8 +16,6 @@ services:
     volumes:
       - .:/conference
     command: sh /conference/run_python.sh
-    depends_on:
-      - postgres
     links:
       - postgres
   postgres:

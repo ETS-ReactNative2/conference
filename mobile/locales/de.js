@@ -2,7 +2,10 @@ export default {
   'welcome_page': {
     'app_description': '_DE_Luna Conference',
     'login': 'Einloggen',
-    'signup': 'Registrieren'
+    'signup': 'Registrieren',
+    'search': 'Search - temp',
+    'flow': 'Flow - temp',
+    'agenda': 'Agenda - temp',
   },
   'login_page': {
     'title': 'Einloggen',

@@ -3,24 +3,23 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { InvestorCompanyFundingStage } from './index'
 import { signUpActions } from '../../../../signup'
+import { InvestorCompanyFundingStage } from './index'
 
 const ticketSizes = [
-    '<5k',
-    '5-25k',
-    '25-100k',
-    '100-500k',
-    '500k-1000000',
-    '1000000'
+  { id: 0, min: '0', max: '5000', label: '<5k' },
+  { id: 1, min: '5000', max: '25000', label: '5k-25k' },
+  { id: 2, min: '25000', max: '100000', label: '25k-100k' },
+  { id: 3, min: '100000', max: '500000', label: '100k-500k' },
+  { id: 4, min: '500000', max: '1000000', label: '500k-1000k' },
+  { id: 5, min: '1000000', max: Number.POSITIVE_INFINITY, label: '>1000k' }
 ]
 
 class InvestorTicketSize extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedValue: this.props.ticketSize,
-      selected: ticketSizes.findIndex(singleSize => singleSize === this.props.ticketSize)
+      selected: this.props.ticketSize || -1
     }
   }
 
@@ -29,12 +28,12 @@ class InvestorTicketSize extends React.Component {
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.ticket_size.title') }</Text>
         <Content>
-        {
+          {
             ticketSizes.map((option, index) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option } onPress={ () => this.handleChange(index) }>
+                <ListItem style={ { width: '100%' } } key={ option.id } onPress={ () => this.handleChange(index) }>
                   <Left>
-                    <Text>{option}</Text>
+                    <Text>{ option.label }</Text>
                   </Left>
                   <Right>
                     <Radio
@@ -49,7 +48,7 @@ class InvestorTicketSize extends React.Component {
         <Button success
                 rounded
                 block
-                disabled={ this.state.selected === -1}
+                disabled={ this.state.selected === -1 }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
@@ -59,13 +58,13 @@ class InvestorTicketSize extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.saveInvestor({ ticketSize: this.state.selectedValue })
-    this.props.onFill({ nextStep: InvestorCompanyFundingStage})
+    this.props.saveInvestor({ ticketSize: ticketSizes.find(size => size.id === this.state.selected) })
+    this.props.onFill({ nextStep: InvestorCompanyFundingStage })
   }
+
   handleChange = (index) => {
     this.setState({
-      selected: index,
-      selectedValue: ticketSizes[index]
+      selected: index
     })
   }
 }
@@ -82,7 +81,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveInvestor : ticketSize => dispatch(signUpActions.saveInvestor(ticketSize))
+    saveInvestor: ticketSize => dispatch(signUpActions.saveInvestor(ticketSize))
   }
 }
 

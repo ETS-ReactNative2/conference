@@ -23,13 +23,13 @@ it('clicking login button should change navigation to LOGIN_PAGE', () => {
     // Click Button
     loginButtonProps.onPress()
     expect(navigation.navigate.mock.calls.length).toBe(1)
-    expect(navigation.navigate.mock.calls[0][0]).toBe(PAGES_NAMES.FLOW_PAGE)
+    expect(navigation.navigate.mock.calls[0][0]).toBe(PAGES_NAMES.LOGIN_PAGE)
 });
 
 it('clicking sign up button should change navigation to SIGNUP_PAGE', () => {
     const navigation = { navigate: jest.fn() }
     const wrapper = shallow(<WelcomePage navigation={navigation}/>)
-    const signUpButton = wrapper.find(Button).last()
+    const signUpButton = wrapper.find(Button).at(1)
     const signUpButtonProps = signUpButton.props()
     // Click Button
     signUpButtonProps.onPress()

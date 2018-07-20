@@ -5,6 +5,7 @@ import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 import I18n from '../../locales/i18n'
 import FlowPage from '../views/pages/flow/flow-page'
 import LoginPage from '../views/pages/login/login-page'
+import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 import AgendaPage from '../views/pages/agenda/agenda-page'
@@ -15,6 +16,7 @@ const PAGES_NAMES = {
   FLOW_PAGE: 'FLOW_PAGE',
   LOGIN_PAGE: 'LOGIN_PAGE',
   SIGNUP_PAGE: 'SIGNUP_PAGE',
+  SEARCH_PAGE: 'SEARCH_PAGE',
   HOME_PAGE: 'HOME_PAGE',
   AGENDA_PAGE: 'AGENDA_PAGE'
 }
@@ -64,6 +66,14 @@ const AppStackNavigator = createStackNavigator({
     screen: FlowPage,
     navigationOptions: () => ({
       title: I18n.t('flow_page.title'),
+      ...commonNavBarStyle
+    })
+  },
+  SEARCH_PAGE: {
+    screen: SearchPage,
+    navigationOptions: (props) => ({
+      title: I18n.t('search_page.title'),
+      ...SearchPage.navigationOptions(props),
       ...commonNavBarStyle
     })
   },
