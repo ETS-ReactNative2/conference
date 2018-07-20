@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "9b34f730-797f-4584-aa2a-d9a7e11dd3e5",
+		"name": "Conference",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/investors/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"country\": \"DE\",\n    \"description\": \"aaaaaaaa\",\n    \"funding_stages\": [1, 2, 3],\n    \"max_ticket\": 999999999999,\n    \"min_ticket\": 999999999999,\n    \"name\": \"aaaaaaaa\",\n    \"product_stages\": [1, 2, 3],\n    \"tagline\": \"aaaaaaaa\",\n    \"token_types\": [1, 2, 3]\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/investors/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"investors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/projects/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"country\": \"DE\",\n    \"description\": \"aaaaaaaa\",\n    \"funding_stage\": 1,\n    \"giveaway\": 1,\n    \"name\": \"aaaaaaaa\",\n    \"notable\": \"aaaaaaaa\",\n    \"product_stage\": 1,\n    \"tagline\": \"aaaaaaaa\",\n    \"token_type\": 1\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/projects/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"projects",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"email\",\n\t\"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/users/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/investors/<id>/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{HOST}}/api/investors/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"investors",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/projects/<id>/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{HOST}}/api/projects/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"projects",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/<id>/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{HOST}}/api/users/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,4 +1,19 @@
-import { Body, Button, Card, CheckBox, Form, Icon, Input, Item, Label, ListItem, Text } from 'native-base'
+import {
+  Body,
+  Button,
+  Card,
+  CheckBox,
+  Form,
+  Icon,
+  Input,
+  Item,
+  Label,
+  Left,
+  ListItem,
+  Radio,
+  Right,
+  Text
+} from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -46,14 +61,17 @@ class InvestorMarketLocation extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.market_location.title') }</Text>
             {locations.map(singleLocation => {
                 return (
-                    <ListItem key={`location-item-${singleLocation}`}>
-                      <CheckBox
-                        onPress={ () => this.handleCheckboxClick(singleLocation)}
-                        checked={ this.isCheckboxSelected(singleLocation)}
-                      />
-                      <Body>
+                    <ListItem
+                      onPress={ () => this.handleCheckboxClick(singleLocation) }
+                      key={`location-item-${singleLocation}`}>
+                      <Left>
                         <Text>{ I18n.t(`common.country.${singleLocation}`) }</Text>
-                      </Body>
+                      </Left>
+                      <Right>
+                        <Radio
+                          onPress={ () => this.handleCheckboxClick(singleLocation) }
+                          selected={ this.isCheckboxSelected(singleLocation) }/>
+                      </Right>
                     </ListItem>
                 );
             })}

@@ -4,8 +4,13 @@
   "private": true,
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^23.1.0",
     "jest-react-native": "^18.0.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.4.1",
+    "react-native-mock": "^0.3.1",
     "react-test-renderer": "16.3.1"
   },
   "scripts": {
@@ -16,21 +21,35 @@
     "ios": "react-native run-ios",
     "test": "jest",
     "react-devtools": "react-devtools",
-    "build-debug-android": "react-native bundle --dev false --platform android --entry-file index.js --bundle-output ./android/app/build/intermediates/assets/debug/index.android.bundle --assets-dest ./android/app/build/intermediates/res/merged/debug && cd android && ./gradlew assembleDebug && cd .. && mkdir -p ./dist && rm -f ./dist/luna-android-debug.apk && cp ./android/app/build/outputs/apk/app-debug.apk ./dist/luna-android-debug.apk",
+    "build-debug-android": "react-native bundle --dev false --platform android --entry-file index.js --bundle-output ./android/app/build/intermediates/assets/debug/index.android.bundle --assets-dest ./android/app/build/intermediates/res/merged/debug && cd android && ./gradlew assembleDebug && cd .. && mkdir -p ./dist && rm -f ./dist/luna-conference-android-debug.apk && cp ./android/app/build/outputs/apk/app-debug.apk ./dist/luna-conference-android-debug.apk",
     "build-debug-android-dev": "export ENVFILE=.env.development && npm run build-debug-android",
     "build-debug-android-staging": "export ENVFILE=.env.staging && npm run build-debug-android",
     "build-debug-android-production": "export ENVFILE=.env.production && npm run build-debug-android",
-    "build-release-android": "cd android && ./gradlew assembleRelease && cd .."
+    "build-release-android": "export ENVFILE=.env.production && cd android && ./gradlew assembleRelease && cd .. && mkdir -p ./dist && rm -f ./dist/luna-conference-android-release.apk && cp ./android/app/build/outputs/apk/app-release.apk ./dist/luna-conference-android-release.apk"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFiles": [
+      "<rootDir>/__mocks__/react-native-i18n.js",
+      "<rootDir>/__mocks__/react-native-languages.js",
+      "<rootDir>/__mocks__/react-navigation.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|native-base-shoutem-theme|react-navigation)"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
   },
   "dependencies": {
     "axios": "0.18.0",
     "create-react-class": "15.6.3",
-    "humps": "2.0.1",
+    "humps": "^2.0.1",
     "immutable": "3.8.2",
     "material-ui-chip-input": "^1.0.0-beta.5",
+    "moment": "2.22.2",
     "native-base": "2.6.1",
     "prop-types": "^15.6.2",
     "qs": "6.5.2",
@@ -38,11 +57,14 @@
     "react-devtools": "^3.2.3",
     "react-native": "~0.55.2",
     "react-native-config": "0.11.5",
+    "react-native-country-picker-modal": "^0.6.2",
+    "react-native-device-info": "^0.21.5",
     "react-native-extended-stylesheet": "0.8.1",
     "react-native-fabric": "0.5.1",
     "react-native-i18n": "2.0.12",
     "react-native-languages": "2.0.0",
     "react-native-material-selectize": "^1.9.0",
+    "react-native-responsive-layout": "^1.1.0",
     "react-navigation": "2.5.3",
     "react-redux": "5.0.7",
     "redux": "4.0.0",

@@ -1,1 +1,15 @@
+*.pyc
+
+.idea/
+
+conference/*.log
+conference/db.sqlite3
+
+#======================================
+# OS generated
+#--------------------------------------
+__MACOSX/
 .DS_Store
+Thumbs.db
+
+database

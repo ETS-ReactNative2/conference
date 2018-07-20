@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "fb91a77d-76fe-458b-bb1a-cd357e5099b2",
+		"name": "Smatched",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{{HOST}}/api/smatched/chatfuelattributes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "messenger+user+id=3&adhd1=good&adhd2=bad"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/smatched/chatfuelattributes/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"smatched",
+						"chatfuelattributes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{HOST}}/api/smatched/files/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "fbJSON=https%3A%2F%2Fcdn.fbsbx.com%2Fv%2Ft59.2708-21%2F36865089_2013140538698279_6929286290160484352_n.json%2FsmartList-3.json%3F_nc_cat%3D0%26oh%3D17b9e7ddf95ad8ff22ae00d4f5ae16c9%26oe%3D5B510D4C&messenger+user+id=1701818123240960"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/smatched/files/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"smatched",
+						"files",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{HOST}}/api/smatched/users/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "messenger+user+id=1701818123240960&first+name=Suzie&last+name=Antal"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/smatched/users/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"smatched",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

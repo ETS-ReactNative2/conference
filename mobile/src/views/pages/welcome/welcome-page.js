@@ -15,11 +15,20 @@ class WelcomePage extends React.Component {
         </View>
         <Grid style={{alignItems: 'center'}}>
           <Col>
-            <Button style={styles.button} onPress={() => {navigate(PAGES_NAMES.FLOW_PAGE)}}>
+            <Button style={styles.button} onPress={() => {navigate(PAGES_NAMES.LOGIN_PAGE)}}>
               <Text style={styles.buttonText}>{I18n.t('welcome_page.login')}</Text>
             </Button>
             <Button style={styles.button} onPress={() => {navigate(PAGES_NAMES.SIGNUP_PAGE)}}>
               <Text style={styles.buttonText}>{I18n.t('welcome_page.signup')}</Text>
+            </Button>
+            <Button transparent style={styles.baseButton} onPress={() => {navigate(PAGES_NAMES.SEARCH_PAGE)}}>
+              <Text style={styles.buttonText}>{I18n.t('welcome_page.search')}</Text>
+            </Button>
+            <Button transparent style={styles.baseButton} onPress={() => {navigate(PAGES_NAMES.FLOW_PAGE)}}>
+              <Text style={styles.buttonText}>{I18n.t('welcome_page.flow')}</Text>
+            </Button>
+            <Button transparent style={styles.baseButton} onPress={() => {navigate(PAGES_NAMES.HOME_PAGE)}}>
+              <Text style={styles.buttonText}>{I18n.t('welcome_page.agenda')}</Text>
             </Button>
           </Col>
         </Grid>
@@ -32,6 +41,13 @@ const styles = EStyleSheet.create({
   button: {
     marginBottom: '1rem',
     backgroundColor: '$buttonBackground',
+    width: '100%',
+    maxWidth: 200,
+    alignSelf: 'center',
+    justifyContent: 'center'
+  },
+  baseButton: {
+    marginBottom: '1rem',
     width: '100%',
     maxWidth: 200,
     alignSelf: 'center',

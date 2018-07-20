@@ -17,7 +17,11 @@ const initialState = {
     companyLocation: '',
     nationality: '',
     investments: [],
-    ticketSize: '',
+    ticketSize: {
+      id: -1,
+      min: '',
+      max: ''
+    },
     stages: [],
     marketLocations: []
   },
@@ -31,11 +35,10 @@ const initialState = {
     twitter: '',
     productStage: -1,
     fundingStage: -1,
+    hiring: false,
     teamMembers: '',
     money: false,
-    amount: '',
-    ico: false,
-    icoWhen: ''
+    amount: ''
   },
   employer: {
     role: -1,

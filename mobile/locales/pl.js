@@ -2,7 +2,10 @@ export default {
   'welcome_page': {
     'app_description': '_PL_Luna Conference',
     'login': '_PL_Login',
-    'signup': '_PL_Sign Up'
+    'signup': '_PL_Sign Up',
+    'search': 'Search - temp',
+    'flow': 'Flow - temp',
+    'agenda': 'Agenda - temp',
   },
   'login_page': {
     'title': '_PL_Login',
@@ -22,6 +25,9 @@ export default {
     'account_type_investee': '_PL_Investee',
     'account_type_employer': '_PL_Employer',
     'account_type_employee': '_PL_Employee'
+  },
+  'agenda_event': {
+    'until': '_PL_UNTIL'
   },
   'flow_page': {
     'title': '_PL_Signup flow DEV',
@@ -130,7 +136,12 @@ export default {
       }
     }
   },
+  'drawer': {
+    'agenda': '_PL_Agenda'
+  },
   'common': {
+    'yes': 'Tak',
+    'no': 'Nie',
     'next': '_PL_Next',
     'roles': {
       'developer': '_PL_Developer',
@@ -158,6 +169,20 @@ export default {
       'seed': '_PL_Seed',
       'pre': '_PL_Pre ICO',
       'post': '_PL_Post ICO'
+    },
+    'months': {
+      '0': 'Styczeń',
+      '1': 'Luty',
+      '2': 'Marzec',
+      '3': 'Kwiecień',
+      '4': 'Maj',
+      '5': 'Czerwiec',
+      '6': 'Lipiec',
+      '7': 'Sierpień',
+      '8': 'Wrzesień',
+      '9': 'Październik',
+      '10': 'Listopad',
+      '11': 'Grudzień'
     }
   }
 }

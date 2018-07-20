@@ -2,7 +2,10 @@ export default {
   'welcome_page': {
     'app_description': 'Luna Conference',
     'login': 'Login',
-    'signup': 'Sign Up'
+    'signup': 'Sign Up',
+    'search': 'Search - temp',
+    'flow': 'Flow - temp',
+    'agenda': 'Agenda - temp',
   },
   'login_page': {
     'title': 'Login',
@@ -22,6 +25,14 @@ export default {
     'account_type_investee': 'Investee',
     'account_type_employer': 'Employer',
     'account_type_employee': 'Employee'
+  },
+  'search_page': {
+    'title': 'Search',
+    'investor_header': 'Investors',
+    'projects_header': 'Projects'
+  },
+  'agenda_event': {
+    'until': 'UNTIL'
   },
   'flow_page': {
     'title': 'Signup flow DEV',
@@ -62,7 +73,7 @@ export default {
     },
     'members': {
       'title': 'Members',
-      'label': 'Members'
+      'label': 'Who are your notable members or advisors, if any?'
     },
     'employee': {
       'role': {
@@ -98,18 +109,13 @@ export default {
         'nationality_placeholder': 'Nationality'
       },
       'invest_in': {
-        'title': 'I want to invest in:',
-        'investment_topics': {
-          'protocols': 'Protocols',
-          'app_tokens': 'App Tokens',
-          'security_tokens': 'Security Tokens'
-        }
+        'title': 'I want to invest in:'
       },
       'ticket_size': {
         'title': 'Ticket size:'
       },
       'company_funding_stage': {
-        'title': 'Funding slot for companies:'
+        'title': 'What is your funding stage?'
       },
       'market_location': {
         'title': 'The companies should be based in:'
@@ -123,14 +129,19 @@ export default {
         'company': 'Company'
       },
       'profile_type': {
-        'title': 'I am here for:',
-        'meeting': 'Meeting',
-        'projects': 'Projects to invest in',
-        'metting_investors': 'Meeting Investors'
+        'title': 'I am here to',
+        'meeting': 'Meet people',
+        'projects': 'Invest',
+        'metting_investors': 'Meet investors'
       },
     }
   },
+  'drawer': {
+    'agenda': 'Agenda'
+  },
   'common': {
+    'yes': 'Yes',
+    'no': 'No',
     'next': 'Next',
     'roles': {
       'developer': 'Developer',
@@ -158,6 +169,35 @@ export default {
       'seed': 'Seed',
       'pre': 'Pre ICO',
       'post': 'Post ICO'
+    },
+    'product_stages': {
+      'pre': 'Pre-product',
+      'live': 'Live product',
+      'revenue': 'Live product + $ Revenue'
+    },
+    'token_types': {
+      'protocols': 'Protocols',
+      'app_tokens': 'App Tokens',
+      'security_tokens': 'Security Tokens'
+    },
+    'giveaway': {
+      'token': 'Tokens',
+      'equity': 'Equity',
+      'both': 'Both'
+    },
+    'months': {
+      '0': 'January',
+      '1': 'February',
+      '2': 'March',
+      '3': 'April',
+      '4': 'May',
+      '5': 'June',
+      '6': 'July',
+      '7': 'August',
+      '8': 'September',
+      '9': 'October',
+      '10': 'November',
+      '11': 'December'
     }
   }
 }
