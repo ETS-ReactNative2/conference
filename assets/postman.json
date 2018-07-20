@@ -96,7 +96,10 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "/api/investors/1/",
+					"raw": "{{HOST}}/api/investors/1/",
+					"host": [
+						"{{HOST}}"
+					],
 					"path": [
 						"api",
 						"investors",
@@ -114,7 +117,10 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "/api/projects/1/",
+					"raw": "{{HOST}}/api/projects/1/",
+					"host": [
+						"{{HOST}}"
+					],
 					"path": [
 						"api",
 						"projects",
@@ -132,7 +138,10 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "/api/users/1/",
+					"raw": "{{HOST}}/api/users/1/",
+					"host": [
+						"{{HOST}}"
+					],
 					"path": [
 						"api",
 						"users",
