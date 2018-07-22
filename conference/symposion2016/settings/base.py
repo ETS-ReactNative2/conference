@@ -11,9 +11,13 @@ EMAIL_DEBUG = DEBUG
 
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(PROJECT_ROOT, "dev.db"),
+    'default': {
+        'ENGINE': os.environ.get('CONFERENCE_DB_ENGINE'),
+        'NAME': os.environ.get('CONFERENCE_DB_NAME'),
+        'USER': os.environ.get('CONFERENCE_DB_USER'),
+        'PASSWORD': os.environ.get('CONFERENCE_DB_PASSWORD'),
+        'HOST': os.environ.get('CONFERENCE_DB_HOST'),
+        'PORT': os.environ.get('CONFERENCE_DB_PORT'),
     }
 }
 
