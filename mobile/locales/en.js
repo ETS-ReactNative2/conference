@@ -137,7 +137,8 @@ export default {
     }
   },
   'drawer': {
-    'agenda': 'Agenda'
+    'agenda': 'Agenda',
+    'notifications': 'Notifications'
   },
   'common': {
     'yes': 'Yes',

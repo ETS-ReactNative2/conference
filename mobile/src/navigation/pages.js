@@ -9,6 +9,7 @@ import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 import AgendaPage from '../views/pages/agenda/agenda-page'
+import NotificationsPage from '../views/pages/notifications/notifications-page'
 import DrawerSideBar from '../views/components/drawer-sidebar/drawer-sidebar'
 
 const PAGES_NAMES = {
@@ -18,7 +19,8 @@ const PAGES_NAMES = {
   SIGNUP_PAGE: 'SIGNUP_PAGE',
   SEARCH_PAGE: 'SEARCH_PAGE',
   HOME_PAGE: 'HOME_PAGE',
-  AGENDA_PAGE: 'AGENDA_PAGE'
+  AGENDA_PAGE: 'AGENDA_PAGE',
+  NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -33,7 +35,8 @@ const commonNavBarStyle = {
 }
 
 const DrawerStack = createDrawerNavigator({
-  AGENDA_PAGE: { screen: AgendaPage }
+  AGENDA_PAGE: { screen: AgendaPage },
+  NOTIFICATIONS_PAGE: {screen: NotificationsPage}
 }, {
   contentComponent: props => <DrawerSideBar {...props} />
 })
