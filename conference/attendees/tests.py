@@ -154,21 +154,146 @@ class ProjectsIdViewTest(TestCase, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('token_type'), 1)
 
 
-class UsersViewTest(TestCase, SharedListViewMixin):
+class UsersViewTest(TestCase):
 
     def view(self):
         return 'user_list'
 
-    def test_post_min(self):
+    def test_get(self):
+        response = self.client.get(reverse(self.view()))
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_existing(self):
+        self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'email': 'A@b.Cc',
+                'first_name': 'Foo',
+                'last_name': 'Bar',
+                'password': 'aaaaaaaa',
+            }),
+            content_type='application/json',
+        )
         response = self.client.post(
             reverse(self.view()),
             json.dumps({
-                'email': 'a@b.cc',
+                'email': 'a@B.cC',
+                'first_name': 'Foo',
+                'last_name': 'Bar',
+                'password': 'aaaaaaaa',
+            }),
+            content_type='application/json',
+        )
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.data, 'email_exists')
+        self.assertEqual(models.User.objects.count(), 1)
+        self.assertEqual(models.ConferenceUser.objects.count(), 1)
+
+    def test_post_max(self):
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'email': 'A@b.Cc',
+                'first_name': 'Foo',
+                'last_name': 'Bar',
                 'password': 'aaaaaaaa',
             }),
             content_type='application/json',
         )
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data.get('email'), 'a@b.cc')
+        self.assertEqual(response.data.get('first_name'), 'Foo')
+        self.assertEqual(response.data.get('last_name'), 'Bar')
+        self.assertIn('id', response.data)
+        self.assertNotIn('password', response.data)
+        self.assertNotIn('username', response.data)
+
+        user = models.User.objects.get()
+        self.assertEqual(user.email, 'a@b.cc')
+        self.assertEqual(user.first_name, 'Foo')
+        self.assertEqual(user.last_name, 'Bar')
+        self.assertEqual(user.username, 'a@b.cc')
+        self.assertIsNotNone(user.password)
+
+        conference_user = models.ConferenceUser.objects.get()
+        self.assertEqual(conference_user.user, user)
+
+    def test_post_min(self):
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'email': 'A@b.Cc',
+                'password': 'aaaaaaaa',
+            }),
+            content_type='application/json',
+        )
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data.get('email'), 'a@b.cc')
+        self.assertEqual(response.data.get('first_name'), '')
+        self.assertEqual(response.data.get('last_name'), '')
+        self.assertIn('id', response.data)
+        self.assertNotIn('password', response.data)
+        self.assertNotIn('username', response.data)
+
+        user = models.User.objects.all().get()
+        self.assertEqual(user.email, 'a@b.cc')
+        self.assertEqual(user.first_name, '')
+        self.assertEqual(user.last_name, '')
+        self.assertEqual(user.username, 'a@b.cc')
+        self.assertIsNotNone(user.password)
+
+        conference_user = models.ConferenceUser.objects.get()
+        self.assertEqual(conference_user.user, user)
+
+    def test_post_email_none(self):
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'password': 'aaaaaaaa',
+            }),
+            content_type='application/json',
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data, 'email_missing')
+
+    def test_post_email_empty(self):
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'email': '',
+                'password': 'aaaaaaaa',
+            }),
+            content_type='application/json',
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data, 'email_missing')
+
+    def test_post_password_none(self):
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'email': 'A@b.Cc',
+            }),
+            content_type='application/json',
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data, 'password_missing')
+
+    def test_post_password_empty(self):
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'email': 'A@b.Cc',
+                'password': '',
+            }),
+            content_type='application/json',
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data, 'password_missing')
+
+    def test_post_no_data(self):
+        response = self.client.post(reverse(self.view()))
+        self.assertEqual(response.status_code, 400)
 
 
 class UsersIdViewTest(TestCase, SharedDetailViewMixin):
