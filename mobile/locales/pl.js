@@ -183,6 +183,19 @@ export default {
       '9': 'Październik',
       '10': 'Listopad',
       '11': 'Grudzień'
+    },
+    'errors': {
+      'incorrect_email': '_PL_Please enter correct email address',
+      'incorrect_password': '_PL_Password must be at least 8 characters long',
+      'incorrect_phone_number': '_PL_Please enter correct phone number',
+      'incorrect_profile_name': '_PL_Name must be at least 4 characters long',
+      'incorrect_project_name': '_PL_Project name must be at least 3 characters long',
+      'incorrect_project_tagline': '_PL_Please enter project tagline',
+      'incorrect_project_description': '_PL_Plesae enter project description',
+      'incorrect_job_link': '_PL_Please enter either job link or job description',
+      'incorrect_job_description': '_PL_Please enter either job link or job description',
+      'incorrect_job_min_salary': '_PL_Value should be greater or equal to 0',
+      'incorrect_job_max_salary': '_PL_Value should be greater or equal to 0 and greater than min salary if min salary is specified'
     }
   }
 }

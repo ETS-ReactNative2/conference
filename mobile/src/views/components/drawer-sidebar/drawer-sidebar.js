@@ -28,8 +28,6 @@ class DrawerSideBar extends Component {
   }
 
   render () {
-    const dupa = this.props.unread.length
-    console.log({ dupa })
     return (
       <Container>
         <Content>

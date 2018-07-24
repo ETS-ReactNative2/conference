@@ -199,6 +199,19 @@ export default {
       '9': 'October',
       '10': 'November',
       '11': 'December'
+    },
+    'errors': {
+      'incorrect_email': 'Please enter correct email address',
+      'incorrect_password': 'Password must be at least 8 characters long',
+      'incorrect_phone_number': 'Please enter correct phone number',
+      'incorrect_profile_name': 'Name must be at least 4 characters long',
+      'incorrect_project_name': 'Project name must be at least 3 characters long',
+      'incorrect_project_tagline': 'Please enter project tagline',
+      'incorrect_project_description': 'Plesae enter project description',
+      'incorrect_job_link': 'Please enter either job link or job description',
+      'incorrect_job_description': 'Please enter either job link or job description',
+      'incorrect_job_min_salary': 'Value should be greater or equal to 0',
+      'incorrect_job_max_salary': 'Value should be greater or equal to 0 and greater than min salary if min salary is specified'
     }
   }
 }
