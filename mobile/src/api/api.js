@@ -1,15 +1,8 @@
 import axios from 'axios'
-import { camelizeKeys, decamelizeKeys } from 'humps'
-
-axios.defaults.transformResponse = [
-  ...axios.defaults.transformResponse,
-  data => camelizeKeys(data)
-]
-
-const baseURL = 'http://18.219.97.90:8000'
+import { decamelizeKeys } from 'humps'
 
 export async function signup ({ email, password, phone }) {
-  return axios.post(baseURL + '/api/users/', { email, password, phone })
+  return axios.post('/api/users/', { email, password, phone })
 }
 
 export async function login ({ email, password }) {
@@ -17,15 +10,15 @@ export async function login ({ email, password }) {
 }
 
 export async function fetchProjects() {
-  return axios.get(baseURL + '/api/projects')
+  return axios.get('/api/projects')
 }
 
 export async function fetchInvestors() {
-  return axios.get(baseURL + '/api/investors')
+  return axios.get('/api/investors')
 }
 
 export async function createConferenceUser ({ name, title, company, twitter, facebook }) {
-  return axios.post(baseURL + '/api/users/', {
+  return axios.post('/api/users/', {
     name, title, company, twitter, facebook
   })
 }
@@ -33,7 +26,7 @@ export async function createConferenceUser ({ name, title, company, twitter, fac
 export async function createInvestee ({
   country, description, fundingStage, giveaway, notable, name, productStage, tagline, tokenType
 }) {
-  return axios.post(baseURL + '/api/projects/', decamelizeKeys({
+  return axios.post('/api/projects/', decamelizeKeys({
     country,
     description,
     fundingStage,
@@ -49,7 +42,7 @@ export async function createInvestee ({
 export async function createInvestor ({
   country, description, fundingStage, maxTickets, minTickets, name, productStages, tagline, tokenTypes
 }) {
-  return axios.post(baseURL + '/api/investors/', decamelizeKeys({
+  return axios.post('/api/investors/', decamelizeKeys({
     country,
     description,
     fundingStage,
@@ -60,4 +53,10 @@ export async function createInvestor ({
     tagline,
     tokenTypes
   }))
+}
+
+export async function fetchConferenceSchedule() {
+  return axios.get('/schedule', { headers: {
+    Accept: 'application/json'
+  }})
 }

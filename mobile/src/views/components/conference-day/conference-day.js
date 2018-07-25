@@ -13,20 +13,11 @@ class ConferenceDay extends Component {
     const day = momentDate.date()
     const month = momentDate.month()
     const year = momentDate.year()
-    if (this.props.day.title) {
-      return (
-        <Text style={styles.dayHeader} adjustsFontSizeToFit>
-          {this.props.day.title.toUpperCase()} -{" "}
-          {I18n.t(`common.months.${month}`).toUpperCase()} {day}, {year}
-        </Text>
-      )
-    } else {
-      return (
-        <Text style={styles.dayHeader} adjustsFontSizeToFit>
-          {I18n.t(`common.months.${month}`).toUpperCase()} {day}, {year}
-        </Text>
-      )
-    }
+    return (
+      <Text style={styles.dayHeader} adjustsFontSizeToFit>
+        {I18n.t(`common.months.${month}`).toUpperCase()} {day}, {year}
+      </Text>
+    )
   }
 
   renderDayEvents() {
@@ -65,21 +56,20 @@ const styles = EStyleSheet.create({
 
 ConferenceDay.propTypes = {
   day: PropTypes.shape({
-    title: PropTypes.string,
     date: PropTypes.string.isRequired,
     events: PropTypes.arrayOf(
       PropTypes.shape({
         startDate: PropTypes.string.isRequired,
-        endDate: PropTypes.string.isRequired,
         classes: PropTypes.arrayOf(
           PropTypes.shape({
             title: PropTypes.string.isRequired,
-            location: PropTypes.string.isRequired,
-            persons: PropTypes.arrayOf(PropTypes.string).isRequired
-          })
-        )
-      })
-    )
+            rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+            speakers: PropTypes.arrayOf(PropTypes.string).isRequired,
+            endDate: PropTypes.string.isRequired
+          }).isRequired
+        ).isRequired
+      }).isRequired
+    ).isRequired
   }).isRequired
 }
 
