@@ -55,6 +55,34 @@ export async function createInvestor ({
   }))
 }
 
+export async function fetchNotifications () {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // For testing errors
+      Math.random() >= 0.5 ?
+        reject('error') :
+        resolve({
+          data: [
+            {
+              id: 1,
+              title: 'New olaboga',
+              content: 'Datata lorem ipsum lorem ipsum',
+              time: new Date(),
+              isRead: false
+            },
+            {
+              id: 2,
+              title: 'New olaboga',
+              content: 'Datata lorem ipsum lorem ipsum',
+              time: new Date(),
+              isRead: false
+            }
+          ]
+        })
+    }, 3000)
+  })
+}
+
 export async function fetchConferenceSchedule() {
   return axios.get('/schedule', { headers: {
     Accept: 'application/json'

@@ -1,8 +1,10 @@
-import { Body, Button, Container, Content, List, ListItem, Right, Text } from 'native-base'
+import { Body, Button, Container, Content, List, ListItem, Right, Spinner, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { notificationsActions } from '../../../notifications'
+import ErrorMessage from '../../components/error-message/error-message'
+import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 
 class NotificationsPage extends Component {
 
@@ -23,6 +25,19 @@ class NotificationsPage extends Component {
   }
 
   render () {
+    const { notifications, isLoading, error } = this.props
+
+    if (isLoading) {
+      return <LunaSpinner/>
+    }
+
+    if (error) {
+      return (
+        <ErrorMessage
+          message={ 'Something went wrong' }
+          onRetry={ this.props.fetchNotifications }/>
+      )
+    }
     return (
       <Container>
         <Content>
@@ -34,7 +49,7 @@ class NotificationsPage extends Component {
           </ListItem>
           }
           <List>
-            { this.props.notifications.map(not =>
+            { notifications.map(not =>
               <NotificationItem
                 onRead={ () => this.handleReadClick(not) }
                 data={ not }
@@ -72,6 +87,8 @@ NotificationsPage.propTypes = {
 const mapStateToProps = state => {
   return {
     notifications: state.notifications.list,
+    isLoading: state.notifications.isLoading,
+    error: state.notifications.error
   }
 }
 

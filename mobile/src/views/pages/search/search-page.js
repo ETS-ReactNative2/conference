@@ -1,10 +1,12 @@
-import { Button, Container, Icon, Spinner, Tab, Tabs, Text, View } from 'native-base'
+import { Container, Tab, Tabs } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import { PAGES_NAMES } from '../../../navigation'
 import { searchActions } from '../../../search'
+import ErrorMessage from '../../components/error-message/error-message'
+import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import InvestorsList from './components/investors-list'
 import ProjectsList from './components/projects-list'
 
@@ -36,24 +38,30 @@ class SearchPage extends React.Component {
   }
 
   render () {
+    const { projects, investors, isLoading, error, fetchMatches, updateInvestors, updateProjects } = this.props
+
+    if (isLoading) {
+      return <LunaSpinner/>
+    }
+
+    if (error) {
+      return (
+        <ErrorMessage
+          message={ 'Something went wrong' }
+          onRetry={ fetchMatches }/>
+      )
+    }
     return (
       <Container>
-        { this.props.isLoading &&
-        <Spinner/>
-        }
-        { !this.props.isLoading &&
-        <Container>
-          <Tabs
-            onChangeTab={ this.onTabChange }>
-            <Tab heading={ I18n.t('search_page.investor_header') }>
-              <InvestorsList profiles={ this.props.investors } onClick={this.handleInvestorClick} onMark={() => {}}/>
-            </Tab>
-            <Tab heading={ I18n.t('search_page.projects_header') }>
-              <ProjectsList profiles={ this.props.projects }/>
-            </Tab>
-          </Tabs>
-        </Container>
-        }
+        <Tabs
+          onChangeTab={ this.onTabChange }>
+          <Tab heading={ I18n.t('search_page.investor_header') }>
+            <InvestorsList profiles={ this.props.investors } onClick={ this.handleInvestorClick } onMark={ () => {} }/>
+          </Tab>
+          <Tab heading={ I18n.t('search_page.projects_header') }>
+            <ProjectsList profiles={ this.props.projects }/>
+          </Tab>
+        </Tabs>
       </Container>
     )
   }
@@ -67,7 +75,8 @@ const mapStateToProps = state => {
   return {
     projects: state.search.projects,
     investors: state.search.investors,
-    isLoading: state.search.isLoading
+    isLoading: state.search.isLoading,
+    error: state.search.error
   }
 }
 

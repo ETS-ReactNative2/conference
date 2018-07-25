@@ -36,7 +36,7 @@ class LoginPage extends React.Component {
       this.props.onSubmit(this.state);
     }
   };
-  
+
   handleFieldChange = (newValue, name) => {
     this.setState({
       [ name ]: newValue
@@ -89,7 +89,7 @@ const styles = EStyleSheet.create({
 });
 
 LoginPage.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  // onSubmit: PropTypes.func.isRequired
 }
 
 export default LoginPage;

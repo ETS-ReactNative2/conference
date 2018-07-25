@@ -1,28 +1,45 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+
 import { scheduleActions } from '../../../schedule'
 import ConferenceAgenda from '../../components/conference-agenda/conference-agenda'
+import ErrorMessage from '../../components/error-message/error-message'
+import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 
 class AgendaPage extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.fetchConferenceAgenda()
   }
-  render() {
-    return (
-      <React.Fragment>
-        {!this.props.isLoading && !this.props.isError && (
-          <ConferenceAgenda sections={this.props.agendaSchedule}/>
-        )}
-      </React.Fragment>
-    )
+
+  render () {
+    const { isLoading, error, agenda, fetchAgenda } = this.props
+
+    if (isLoading) {
+      return <LunaSpinner/>
+    }
+    if (error) {
+      return (
+        <ErrorMessage
+          message={ 'Something went wrong' }
+          onRetry={ fetchAgenda }/>
+      )
+    }
+    return <ConferenceAgenda sections={ agenda }/>
   }
+}
+
+AgendaPage.propTypes = {
+  fetchAgenda: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  error: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => {
   return {
+    agenda: state.schedule.schedule,
     isLoading: state.schedule.isLoading,
-    isError: state.schedule.isError,
-    agendaSchedule: state.schedule.schedule,
+    error: state.schedule.error
   }
 }
 

@@ -1,4 +1,5 @@
 import { LOAD_NOTIFICATIONS, LOAD_NOTIFICATIONS_ERROR, LOAD_NOTIFICATIONS_SUCCESS } from './action-types'
+import * as api from '../api/api'
 
 export function readNotificationsAll () {
   return async (dispatch, getState) => {
@@ -37,24 +38,7 @@ export function fetchNotifications () {
   return async dispatch => {
     try {
       dispatch({ type: LOAD_NOTIFICATIONS })
-      const response = {
-        data: [
-          {
-            id: 1,
-            title: 'New olaboga',
-            content: 'Datata lorem ipsum lorem ipsum',
-            time: new Date(),
-            isRead: false
-          },
-          {
-            id: 2,
-            title: 'New olaboga',
-            content: 'Datata lorem ipsum lorem ipsum',
-            time: new Date(),
-            isRead: false
-          }
-        ]
-      }
+      const response = await api.fetchNotifications()
       dispatch({
         type: LOAD_NOTIFICATIONS_SUCCESS,
         data: {
@@ -63,7 +47,7 @@ export function fetchNotifications () {
       })
     } catch (err) {
       dispatch({ type: LOAD_NOTIFICATIONS_ERROR })
-      console.error(err)
+      console.log({err})
     }
   }
 }

@@ -2,7 +2,7 @@ import { LOAD_SCHEDULE, LOAD_SCHEDULE_ERROR, LOAD_SCHEDULE_SUCCESS } from './act
 
 const initialState = {
   isLoading: false,
-  isError: false,
+  error: false,
   schedule: []
 }
 
@@ -12,20 +12,20 @@ export function scheduleReducer (state = initialState, action) {
       return {
         ...state,
         isLoading: true,
-        isError: false
+        error: false
       }
     case LOAD_SCHEDULE_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        isError: false,
+        error: false,
         schedule: action.schedule || state.schedule
       }
     case LOAD_SCHEDULE_ERROR:
       return {
         ...state,
         isLoading: false,
-        isError: true
+        error: true
       }
     default:
       return state;
