@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 import json
 
 from django.core.urlresolvers import reverse
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader, Context
 
@@ -15,6 +15,7 @@ from account.decorators import login_required
 from symposion.schedule.forms import SlotEditForm, ScheduleSectionForm
 from symposion.schedule.models import Schedule, Day, Slot, Presentation, Session, SessionRole
 from symposion.schedule.timetable import TimeTable
+from . import serializers
 
 
 def fetch_schedule(slug):
@@ -51,6 +52,33 @@ def schedule_conference(request):
     ctx = {
         "sections": sections,
     }
+
+    if request.META.get('HTTP_ACCEPT') == 'application/json':
+        sections = []
+        for schedule in schedules:
+            days_qs = Day.objects.filter(schedule=schedule)
+            days = [TimeTable(day) for day in days_qs]
+            clean_days = []
+            for day in days:
+                rows = [row for row in day]
+                for row in rows:
+                    slots = row['slots']
+                    row['slots'] = [serializers.SlotSerializer(slot).data for slot in slots]
+                clean_days.append({
+                    "date": day.day.date,
+                    "rows": rows,
+                })
+            sections.append({
+                "name": schedule.section.name,
+                "days": clean_days,
+            })
+
+        ctx = {
+            "sections": sections,
+        }
+
+        return JsonResponse(ctx)
+
     return render(request, "symposion/schedule/schedule_conference.html", ctx)
 
 

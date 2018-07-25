@@ -151,6 +151,30 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/schedule/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{HOST}}/schedule/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"schedule",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
