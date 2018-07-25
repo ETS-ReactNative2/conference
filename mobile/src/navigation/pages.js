@@ -4,6 +4,7 @@ import { View } from 'react-native'
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 import I18n from '../../locales/i18n'
 import FlowPage from '../views/pages/flow/flow-page'
+import InvestorPage from '../views/pages/investor/investor-page'
 import LoginPage from '../views/pages/login/login-page'
 import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
@@ -20,7 +21,8 @@ const PAGES_NAMES = {
   SEARCH_PAGE: 'SEARCH_PAGE',
   HOME_PAGE: 'HOME_PAGE',
   AGENDA_PAGE: 'AGENDA_PAGE',
-  NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE'
+  NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE',
+  INVESTOR_PAGE: 'INVESTOR_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -74,9 +76,8 @@ const AppStackNavigator = createStackNavigator({
   },
   SEARCH_PAGE: {
     screen: SearchPage,
-    navigationOptions: (props) => ({
+    navigationOptions: () => ({
       title: I18n.t('search_page.title'),
-      ...SearchPage.navigationOptions(props),
       ...commonNavBarStyle
     })
   },
@@ -100,6 +101,13 @@ const AppStackNavigator = createStackNavigator({
       header: null
     })
   },
+  INVESTOR_PAGE: {
+    screen: InvestorPage,
+    navigationOptions: () => ({
+      title: I18n.t('investor_page.title'),
+      ...commonNavBarStyle
+    })
+  }
 })
 
 export { PAGES_NAMES, AppStackNavigator }

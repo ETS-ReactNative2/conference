@@ -5,13 +5,16 @@ export default {
     'signup': 'Sign Up',
     'search': 'Search - temp',
     'flow': 'Flow - temp',
-    'agenda': 'Agenda - temp',
+    'agenda': 'Agenda - temp'
   },
   'login_page': {
     'title': 'Login',
     'email_placeholder': 'Enter email',
     'password_placeholder': 'Enter password',
     'button': 'Log in'
+  },
+  'investor_page': {
+    'title': 'Investor details'
   },
   'signup_page': {
     'title': 'Sign Up',
@@ -159,6 +162,16 @@ export default {
       'polish': 'Polish'
     },
     'country': {
+      'usa': 'USA',
+      'korea': 'Korea',
+      'poland': 'Poland',
+      'north_america': 'North America',
+      'south_america': 'South America',
+      'africa': 'Africa',
+      'asia': 'Asia',
+      'europe': 'Europe'
+    },
+    'region': {
       'usa': 'USA',
       'korea': 'Korea',
       'poland': 'Poland',

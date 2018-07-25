@@ -13,6 +13,9 @@ export default {
     'password_placeholder': '_PL_Enter password',
     'button': '_PL_Log in'
   },
+  'investor_page': {
+    'title': '_PL_Investor details'
+  },
   'signup_page': {
     'title': '_PL_Sign Up',
     'email_placeholder': '_PL_Enter email',

@@ -15,7 +15,7 @@ import {
 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Modal, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import I18n from '../../../../../locales/i18n'
 import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TOKEN_TYPES } from '../../../../enums'
 
@@ -114,42 +114,37 @@ class ProjectsFilterModal extends React.Component {
 
   render () {
     return (
-      <Modal
-        animationType="slide"
-        transparent={ false }
-        visible={ this.props.visible }>
-        <Container>
-          <ScrollView>
-            <Header>
-              <Left/>
-              <Body>
-              <Title>Search filters</Title>
-              </Body>
-              <Right>
-                <Button
-                  style={ { height: '100%' } }
-                  transparent
-                  onPress={ this.props.onClose }>
-                  <Text style={ { color: 'red' } }>Close</Text>
-                </Button>
-              </Right>
-            </Header>
-            <ListItem itemDivider/>
-            { this.renderFilter('fundingStages',
-              { options: FUNDING_STAGES, title: 'Supporting funding stage', label: 'funding_stages' }) }
-            { this.renderFilter('giveaway',
-              { options: GIVEAWAY_TYPES, title: 'Supporting giveaway', label: 'giveaway' }) }
-            { this.renderFilter('productStages',
-              { options: PRODUCT_STAGES, title: 'Supporting product stages', label: 'product_stages' }) }
-            { this.renderFilter('tokenTypes',
-              { options: TOKEN_TYPES, title: 'Supporting token', label: 'token_types' }) }
+      <Container>
+        <ScrollView>
+          <Header>
+            <Left/>
+            <Body>
+            <Title>Search filters</Title>
+            </Body>
+            <Right>
+              <Button
+                style={ { height: '100%' } }
+                transparent
+                onPress={ this.props.onClose }>
+                <Text style={ { color: 'red' } }>Close</Text>
+              </Button>
+            </Right>
+          </Header>
+          <ListItem itemDivider/>
+          { this.renderFilter('fundingStages',
+            { options: FUNDING_STAGES, title: 'Supporting funding stage', label: 'funding_stages' }) }
+          { this.renderFilter('giveaway',
+            { options: GIVEAWAY_TYPES, title: 'Supporting giveaway', label: 'giveaway' }) }
+          { this.renderFilter('productStages',
+            { options: PRODUCT_STAGES, title: 'Supporting product stages', label: 'product_stages' }) }
+          { this.renderFilter('tokenTypes',
+            { options: TOKEN_TYPES, title: 'Supporting token', label: 'token_types' }) }
 
-            <Button block success onPress={() => this.props.onSearch()}>
-              <Text>Search</Text>
-            </Button>
-          </ScrollView>
-        </Container>
-      </Modal>
+          <Button block success onPress={ () => this.props.onSearch() }>
+            <Text>Search</Text>
+          </Button>
+        </ScrollView>
+      </Container>
     )
   }
 }
