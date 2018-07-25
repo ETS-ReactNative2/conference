@@ -158,12 +158,14 @@ export default {
       'polish': '_PL_Polish'
     },
     'country': {
-      'usa': '_PL_USA',
-      'korea': '_PL_Korea',
-      'poland': '_PL_Poland',
-      'north_america': '_PL_North America',
-      'south_america': '_PL_South America',
-      'africa': '_PL_Africa'
+      'usa': 'USA',
+      'korea': 'Korea',
+      'poland': 'Poland',
+      'north_america': 'North America',
+      'south_america': 'South America',
+      'africa': 'Africa',
+      'asia': 'Asia',
+      'europe': 'Europe'
     },
     'funding_stages': {
       'seed': '_PL_Seed',

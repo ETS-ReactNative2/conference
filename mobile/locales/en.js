@@ -164,7 +164,9 @@ export default {
       'poland': 'Poland',
       'north_america': 'North America',
       'south_america': 'South America',
-      'africa': 'Africa'
+      'africa': 'Africa',
+      'asia': 'Asia',
+      'europe': 'Europe'
     },
     'funding_stages': {
       'seed': 'Seed',
