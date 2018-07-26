@@ -2,3 +2,4 @@
 from __future__ import unicode_literals
 
 from chatfuelattributes import models
+from users import models
