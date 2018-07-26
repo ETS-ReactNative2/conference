@@ -181,6 +181,16 @@ export default {
       'asia': 'Asia',
       'europe': 'Europe'
     },
+    'region': {
+      'usa': 'USA',
+      'korea': 'Korea',
+      'poland': 'Poland',
+      'north_america': 'North America',
+      'south_america': 'South America',
+      'africa': 'Africa',
+      'asia': 'Asia',
+      'europe': 'Europe'
+    },
     'funding_stages': {
       'seed': 'Seed',
       'pre': 'Pre ICO',

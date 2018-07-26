@@ -4,7 +4,7 @@ import React from 'react'
 import I18n from '../../../../../locales/i18n'
 import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGION, TOKEN_TYPES } from '../../../../enums'
 
-class InvestorFilters extends React.Component {
+class Filters extends React.Component {
 
   constructor (props) {
     super(props)
@@ -129,9 +129,9 @@ class InvestorFilters extends React.Component {
   }
 }
 
-InvestorFilters.propTypes = {
+Filters.propTypes = {
   defaults: PropTypes.object.isRequired,
   onSearch: PropTypes.func.isRequired
 }
 
-export default InvestorFilters
+export default Filters

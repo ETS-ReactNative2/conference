@@ -2,7 +2,7 @@ import { Body, Button, Col, Container, Grid, Header, Icon, Left, List, ListItem,
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
-import InvestorFilters from './investor-filters'
+import Filters from './filters'
 
 class InvestorsList extends React.Component {
   constructor (props) {
@@ -60,7 +60,7 @@ class InvestorsList extends React.Component {
             </Right>
           </Header>
           { showFilters && (
-            <InvestorFilters defaults={ defaults } onSearch={ this.handleSearch }/>
+            <Filters defaults={ defaults } onSearch={ this.handleSearch }/>
           ) }
           { this.props.profiles.length === 0 && (
             <Grid style={ { alignItems: 'center', justifyContent: 'center' } }>
