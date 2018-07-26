@@ -16,6 +16,9 @@ export default {
   'investor_page': {
     'title': 'Investor details'
   },
+  'project_page': {
+    'title': 'Project details'
+  },
   'signup_page': {
     'title': 'Sign Up',
     'email_placeholder': 'Enter email',

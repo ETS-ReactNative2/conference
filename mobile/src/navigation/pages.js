@@ -23,7 +23,8 @@ const PAGES_NAMES = {
   HOME_PAGE: 'HOME_PAGE',
   AGENDA_PAGE: 'AGENDA_PAGE',
   NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE',
-  INVESTOR_PAGE: 'INVESTOR_PAGE'
+  INVESTOR_PAGE: 'INVESTOR_PAGE',
+  PROJECT_PAGE: 'PROJECT_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -109,7 +110,14 @@ const AppStackNavigator = createStackNavigator({
       title: I18n.t('investor_page.title'),
       ...commonNavBarStyle
     })
-  }
+  },
+  PROJECT_PAGE: {
+  screen: InvestorPage,
+    navigationOptions: () => ({
+    title: I18n.t('project_page.title'),
+    ...commonNavBarStyle
+  })
+}
 })
 
 const AppStackNavigatorWithSpinner = ({ isLoading, message }) => {

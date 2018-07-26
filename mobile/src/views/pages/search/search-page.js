@@ -31,6 +31,12 @@ class SearchPage extends React.Component {
     })
   }
 
+  handleProjectClick = project => {
+    this.props.navigation.navigate(PAGES_NAMES.PROJECT_PAGE, {
+      project
+    })
+  }
+
   onTabChange = ({ from, i }) => {
     this.setState({
       currentTab: i
@@ -59,7 +65,7 @@ class SearchPage extends React.Component {
             <InvestorsList profiles={ investors } onClick={ this.handleInvestorClick } onMark={ () => {} }/>
           </Tab>
           <Tab heading={ I18n.t('search_page.projects_header') }>
-            <ProjectsList profiles={ projects }/>
+            <ProjectsList profiles={ projects } onMark={() => {}} onClick={ this.handleProjectClick}/>
           </Tab>
         </Tabs>
       </Container>
