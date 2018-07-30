@@ -17,23 +17,43 @@ import json
 class ListCreateInvestor(generics.ListCreateAPIView):
     queryset = models.Investor.objects.all()
     serializer_class = serializers.InvestorSerializer
-    filter_fields = (
-        'funding_stages',
-        'giveaways',
-        'product_stages',
-        'token_types',
-    )
+
+    def get_queryset(self):
+        filters = {}
+        funding_stages = self.request.GET.getlist('funding_stage')
+        if funding_stages:
+            filters['funding_stages__in'] = funding_stages
+        giveaways = self.request.GET.getlist('giveaway')
+        if giveaways:
+            filters['giveaways__in'] = giveaways
+        product_stages = self.request.GET.getlist('product_stage')
+        if product_stages:
+            filters['product_stages__in'] = product_stages
+        token_types = self.request.GET.getlist('token_type')
+        if token_types:
+            filters['token_types__in'] = token_types
+        return models.Investor.objects.filter(**filters)
 
 
 class ListCreateProject(generics.ListCreateAPIView):
     queryset = models.Project.objects.all()
     serializer_class = serializers.ProjectSerializer
-    filter_fields = (
-        'funding_stage',
-        'giveaway',
-        'product_stage',
-        'token_type',
-    )
+
+    def get_queryset(self):
+        filters = {}
+        funding_stages = self.request.GET.getlist('funding_stage')
+        if funding_stages:
+            filters['funding_stage__in'] = funding_stages
+        giveaways = self.request.GET.getlist('giveaway')
+        if giveaways:
+            filters['giveaway__in'] = giveaways
+        product_stages = self.request.GET.getlist('product_stage')
+        if product_stages:
+            filters['product_stage__in'] = product_stages
+        token_types = self.request.GET.getlist('token_type')
+        if token_types:
+            filters['token_types__in'] = token_types
+        return models.Project.objects.filter(**filters)
 
 
 class ListCreateUser(APIView):
