@@ -6,6 +6,7 @@ from django.contrib.auth.hashers import make_password
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
+from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -57,10 +58,7 @@ class ListCreateProject(generics.ListCreateAPIView):
 
 
 class ListCreateUser(APIView):
-    def get(self, request, format=None):
-        users = models.User.objects.all()
-        serializer = serializers.UserSerializer(users, many=True)
-        return Response(serializer.data)
+    permission_classes = (permissions.AllowAny,)
 
     @transaction.atomic
     def post(self, request, format=None):
