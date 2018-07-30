@@ -73,7 +73,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"email\",\n\t\"password\": \"password\"\n}"
+					"raw": "{\n\t\"email\": \"foo@bar.baz\",\n\t\"first_name\": \"Foo\",\n\t\"last_name\": \"Bar\",\n\t\"password\": \"password\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/users/",
@@ -146,6 +146,30 @@
 						"api",
 						"users",
 						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/schedule/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{HOST}}/schedule/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"schedule",
 						""
 					]
 				}

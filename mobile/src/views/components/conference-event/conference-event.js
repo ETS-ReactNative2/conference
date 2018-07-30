@@ -4,13 +4,16 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import { Card, CardItem, Text, Body } from "native-base"
 import I18n from "../../../../locales/i18n"
 import PropTypes from "prop-types"
+import moment from "moment"
 
 class ConferenceEvent extends Component {
   render() {
     return (
       <Card>
         <CardItem header bordered style={styles.eventHeader}>
-          <Text>{this.props.event.location}</Text>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            {this.props.event.rooms.map(singleRoom => <Text key={`room-${singleRoom}-event-${this.props.event.title}`}>{singleRoom}</Text>)}
+          </View>
         </CardItem>
         <CardItem bordered style={styles.eventBodyWrapper}>
           <Body style={styles.eventBody}>
@@ -19,12 +22,12 @@ class ConferenceEvent extends Component {
                 {this.props.event.title.toUpperCase()}
               </Text>
             </View>
-            {this.props.event.persons.map(singlePerson => <Text key={`presenter-${singlePerson}`}>{singlePerson}</Text>)}
+            {this.props.event.speakers.map(singlePerson => <Text key={`presenter-${singlePerson}-event-${this.props.event.title}`}>{singlePerson}</Text>)}
           </Body>
         </CardItem>
         <CardItem footer bordered style={styles.eventFooter}>
           <Text style={styles.eventFooterText}>
-            {I18n.t("agenda_event.until")} - {this.props.event.endDate}
+            {I18n.t("agenda_event.until")} - {moment(this.props.event.endDate, "HH:mm:ss").format("hh:mm A")}
           </Text>
         </CardItem>
       </Card>
@@ -65,10 +68,10 @@ const styles = EStyleSheet.create({
 
 ConferenceEvent.propTypes = {
   event: PropTypes.shape({
-    endDate: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
-    persons: PropTypes.arrayOf(PropTypes.string).isRequired
+    rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+    speakers: PropTypes.arrayOf(PropTypes.string).isRequired,
+    endDate: PropTypes.string.isRequired
   }).isRequired
 }
 

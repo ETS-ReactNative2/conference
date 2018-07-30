@@ -8,10 +8,11 @@ import logging
 import re
 
 log = logging.getLogger(__name__)
-survey_answer_re = re.compile(r'^([a-z]+)([0-9]+)$')
+survey_answer_re = re.compile(r'^([a-zA-Z]+)([0-9]+)$')
 
 
 def chatfuelattributes(request):
+    print 'chatfuelattributes called with request method "{}" and body "{}"'.format(request.method, request.body)
     log.info('chatfuelattributes called with request method "{}" and body "{}"'.format(request.method, request.body))
     body_dict = parse_qs(request.body)
     raw_messenger_user_id = body_dict.get('messenger user id')
@@ -21,7 +22,7 @@ def chatfuelattributes(request):
     for pair in body_dict.items():
         match_object = survey_answer_re.match(pair[0])
         if match_object:
-            survey = match_object.group(1)
+            survey = match_object.group(1).lower()
             answer_number = int(match_object.group(2))
             answer_text = pair[1][0]
             query_set = models.ChatfuelattributesAnswer.objects.filter(

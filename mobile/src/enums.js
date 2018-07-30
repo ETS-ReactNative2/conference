@@ -45,3 +45,12 @@ export const PRODUCT_STAGES = [
     slug: 'revenue'
   }
 ]
+
+export const REGION = [
+  { slug: 'korea' },
+  { slug: 'north_america' },
+  { slug: 'south_america' },
+  { slug: 'africa' },
+  { slug: 'asia' },
+  { slug: 'europe' }
+]

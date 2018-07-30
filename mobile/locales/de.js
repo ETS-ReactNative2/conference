@@ -13,6 +13,12 @@ export default {
     'password_placeholder': '_DE_Enter password',
     'button': '_DE_Log in'
   },
+  'investor_page': {
+    'title': '_DE_Investor details'
+  },
+  'project_page': {
+    'title': '_DE_Project details'
+  },
   'signup_page': {
     'title': 'Registrieren',
     'email_placeholder': '_DE_Enter email',
@@ -158,12 +164,14 @@ export default {
       'polish': '_DE_Polish'
     },
     'country': {
-      'usa': '_DE_USA',
-      'korea': '_DE_Korea',
-      'poland': '_DE_Poland',
-      'north_america': '_DE_North America',
-      'south_america': '_DE_South America',
-      'africa': '_DE_Africa'
+      'usa': 'USA',
+      'korea': 'Korea',
+      'poland': 'Poland',
+      'north_america': 'North America',
+      'south_america': 'South America',
+      'africa': 'Africa',
+      'asia': 'Asia',
+      'europe': 'Europe'
     },
     'funding_stages': {
       'seed': '_DE_Seed',
@@ -183,6 +191,19 @@ export default {
       '9': 'Oktober',
       '10': 'November',
       '11': 'Dezember'
+    },
+    'errors': {
+      'incorrect_email': '_DE_Please enter correct email address',
+      'incorrect_password': '_DE_Password must be at least 8 characters long',
+      'incorrect_phone_number': '_DE_Please enter correct phone number',
+      'incorrect_profile_name': '_DE_Name must be at least 4 characters long',
+      'incorrect_project_name': '_DE_Project name must be at least 3 characters long',
+      'incorrect_project_tagline': '_DE_Please enter project tagline',
+      'incorrect_project_description': '_DE_Plesae enter project description',
+      'incorrect_job_link': '_DE_Please enter either job link or job description',
+      'incorrect_job_description': '_DE_Please enter either job link or job description',
+      'incorrect_job_min_salary': '_DE_Value should be greater or equal to 0',
+      'incorrect_job_max_salary': '_DE_Value should be greater or equal to 0 and greater than min salary if min salary is specified'
     }
   }
 }

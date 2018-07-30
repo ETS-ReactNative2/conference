@@ -1,9 +1,8 @@
+*.db
+*.log
 *.pyc
-
+*.sqlite3
 .idea/
-
-conference/*.log
-conference/db.sqlite3
 
 #======================================
 # OS generated

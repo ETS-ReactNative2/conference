@@ -1,0 +1,279 @@
+
+html {
+  height: 100%;
+}
+
+body {
+    padding-top: 70px;
+    height: 100%;
+    background-color: #FFF;
+    background: linear-gradient(140deg, #FFF 0%, #AAF5E2 51%, #5BD8EB 75%);
+    background-attachment: fixed;
+    font-family: 'Jaldi', sans-serif;
+    color: #1e415e;
+}
+
+section {
+    padding: 20px 0;
+}
+
+footer {
+    padding-bottom: 20px;
+}
+
+.container {
+  padding-bottom: 50px;
+}
+
+.feature-columns {
+    .make-row();
+
+    > div {
+        i.fa {
+            margin-bottom: 0.2em;
+        }
+        .make-sm-column(4);
+        .text-center;
+        margin: 2em 0;
+    }
+}
+
+.navbar {
+
+    background-image: linear-gradient(rgba(255, 201, 221, 0.1), rgba(255, 201, 221, 0)), linear-gradient(to right, rgb(237, 236, 236), rgb(248, 248, 248), rgb(237, 236, 236));
+}
+
+.navbar-nav {
+
+
+  > li > a {
+      font-size: 16px;
+      font-weight: bold;
+      border-bottom: 2px solid transparent;
+
+      &:hover {
+          background-color: transparent;
+          border-bottom-color: rgba(169, 169, 169, 0.75);
+      }
+  }
+}
+
+.navbar-brand {
+
+      font-size: 24px;
+      font-weight: bold;
+}
+
+.navbar-fixed-top {
+    padding-top: 20px;
+}
+
+
+.btn {
+  border: 0 solid transparent;
+  border-bottom: 2px solid transparent;
+  border-radius: @border-radius-base @border-radius-base 0 0;
+
+  &:hover,
+  &:focus,
+  &.focus {
+    color: fade(@btn-default-color, 80%);
+    text-decoration: none;
+    border-bottom-color: fade(@btn-default-color, 50%);
+  }
+}
+
+/* Replace the bootstrap's button variant creation */
+.button-variant(@color; @background; @border) {
+  color: @color;
+  background-color: @background;
+  border-color: fade(@border, 50%);
+
+  &:hover,
+  &:focus,
+  &.focus,
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    color: @color;
+    background-color: fade(@border, 10%);
+    border-bottom-color: fade(@border, 50%);
+  }
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: @background;
+      border-bottom-color: fade(@border, 50%);
+    }
+  }
+
+  .badge {
+    color: @background;
+    background-color: @color;
+  }
+}
+
+.btn-default {
+  .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+}
+.btn-primary {
+  .button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
+}
+// Success appears as green
+.btn-success {
+  .button-variant(@btn-success-color; @btn-success-bg; @btn-success-border);
+}
+// Info appears as blue-green
+.btn-info {
+  .button-variant(@btn-info-color; @btn-info-bg; @btn-info-border);
+}
+// Warning appears as orange
+.btn-warning {
+  .button-variant(@btn-warning-color; @btn-warning-bg; @btn-warning-border);
+}
+// Danger and error appear as red
+.btn-danger {
+  .button-variant(@btn-danger-color; @btn-danger-bg; @btn-danger-border);
+}
+
+
+.outer-container {
+  margin-bottom: 80px;
+}
+
+#background-pattern-1 {
+  z-index: -100;
+  position: fixed;
+  left: -90px;
+  top: -220px;
+  opacity: 0;
+}
+
+.page-header {
+  border: none;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.page-header h1 { /* this one is a little special, for the big title with a little red maple leaf */
+  font-weight: bold;
+  font-size: 4em;
+  background: -webkit-gradient(linear, left top, left bottom, from(#2b5b84), to(#00B9B0));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.page-header h1 img {
+  width: 30px;
+}
+
+.footer {
+  background: linear-gradient(rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.8) 80%);
+  position: fixed;
+  padding: 10px;
+  bottom: 0;
+  width: 100%;
+  border: none;
+  text-align: center;
+}
+
+.footer span {
+  padding: 0 10px;
+}
+
+
+.how-to-submit-container {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  background-color: rgba(255, 255, 255, 0.6);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.5) 50%);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.how-to-submit-container ol {
+  list-style: none;
+  -webkit-padding-start: 60px;
+  margin: 20px 0;
+}
+
+.how-to-submit-container li {
+  margin: 5px 0;
+  counter-increment: item;
+}
+
+.how-to-submit-container li::before {
+  margin-left: -46px;
+  margin-right: 10px;
+  content: counter(item);
+  background: #00B9B0;
+  border-radius: 50%;
+  color: white;
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  line-height: 2em;
+  display: inline-block;
+}
+
+.how-to-submit-container li span {
+  display: inline;
+}
+
+/* Aesthetic bottom border removal */
+legend {
+  border-width: 0;
+}
+
+/* Overload default bootstrap styles */
+
+.navbar {
+  border-color: #80C4FF;
+  background-color: #80C4FF;
+  background-image: linear-gradient(140deg, #00B9B0 0%, #5BD8EB 75%);
+  color: #FFF;
+  border-width: 0;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.7), inset 0 -10px 10px -10px rgba(0, 0, 0, 0.4);
+}
+
+.navbar-default .navbar-brand {
+  color: #FFF;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: #FFF;
+}
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-width: 0;
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #FFF;
+  color: #2b5b84;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #2b5b84;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #FFF;
+}
+
+.navbar-nav > li > a:hover {
+  border-bottom-color: #FFF;
+}

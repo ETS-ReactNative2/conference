@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import { Button, Card, Content, Container, Form, Label, Icon, Input, Item, Text } from 'native-base';
+import { Button, Card, Content, Container, Form, Text } from 'native-base';
 import validator from 'validator';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import I18n from '../../../../locales/i18n';
+import ValidatedInput from '../../components/validated-input/validated-input'
 
 class LoginPage extends React.Component {
   constructor (props) {
@@ -15,9 +16,17 @@ class LoginPage extends React.Component {
     }
   }
 
+  validateEmail = (email) => {
+    return validator.isEmail(email)
+  }
+
+  validatePassword = (password) => {
+    return validator.isLength(password, { min: 8, max: undefined })
+  }
+
   validateForm = () => {
-    const isEmailValid = validator.isEmail(this.state.email)
-    const isPasswordValid = validator.isLength(this.state.password, { min: 8, max: undefined })
+    const isEmailValid = this.validateEmail(this.state.email)
+    const isPasswordValid = this.validatePassword(this.state.password)
     const isFormValid = isEmailValid && isPasswordValid
     this.setState( {isFormValid} )
   };
@@ -27,7 +36,7 @@ class LoginPage extends React.Component {
       this.props.onSubmit(this.state);
     }
   };
-  
+
   handleFieldChange = (newValue, name) => {
     this.setState({
       [ name ]: newValue
@@ -40,20 +49,22 @@ class LoginPage extends React.Component {
         <Content padder>
         <Card style={ { padding: 8 } }>
             <Form>
-              <Item floatingLabel>
-                <Icon active name='email' type='MaterialCommunityIcons' />
-                <Label>{I18n.t('login_page.email_placeholder')}</Label>
-                <Input keyboardType={"email-address"}
-                      onChangeText={ newValue => this.handleFieldChange(newValue, 'email') }
-                      value={this.state.email}/>
-              </Item>
-              <Item floatingLabel>
-                <Icon active name='lock' />
-                <Label>{I18n.t('login_page.password_placeholder')}</Label>
-                <Input secureTextEntry={true}
-                      onChangeText={ newValue => this.handleFieldChange(newValue, 'password') }
-                      value={this.state.password}/>
-              </Item>
+              <ValidatedInput floatingLabel
+                              iconProps={{active: true, name: 'email', type:'MaterialCommunityIcons'}}
+                              value={ this.state.email }
+                              keyboardType={ 'email-address' }
+                              labelText={I18n.t('login_page.email_placeholder')}
+                              isError={!this.validateEmail(this.state.email)}
+                              errorMessage={I18n.t('common.errors.incorrect_email')}
+                              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'email')} />
+              <ValidatedInput floatingLabel
+                              iconProps={{active: true, name: 'lock'}}
+                              value={ this.state.password }
+                              secureTextEntry={ true }
+                              labelText={I18n.t('login_page.password_placeholder')}
+                              isError={!this.validatePassword(this.state.password)}
+                              errorMessage={I18n.t('common.errors.incorrect_password')}
+                              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password')} />
             </Form>
             <Button
               success
@@ -78,7 +89,7 @@ const styles = EStyleSheet.create({
 });
 
 LoginPage.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  // onSubmit: PropTypes.func.isRequired
 }
 
 export default LoginPage;

@@ -1,15 +1,18 @@
+import { Button, Container, Icon, Spinner, Text } from 'native-base'
 import React from 'react'
-import { Button, Icon } from 'native-base'
 import { View } from 'react-native'
-import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
+import { createDrawerNavigator, createStackNavigator } from 'react-navigation'
+import { connect } from 'react-redux'
 import I18n from '../../locales/i18n'
+import DrawerSideBar from '../views/components/drawer-sidebar/drawer-sidebar'
+import AgendaPage from '../views/pages/agenda/agenda-page'
 import FlowPage from '../views/pages/flow/flow-page'
+import InvestorPage from '../views/pages/investor/investor-page'
 import LoginPage from '../views/pages/login/login-page'
+import NotificationsPage from '../views/pages/notifications/notifications-page'
 import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
-import AgendaPage from '../views/pages/agenda/agenda-page'
-import DrawerSideBar from '../views/components/drawer-sidebar/drawer-sidebar'
 
 const PAGES_NAMES = {
   WELCOME_PAGE: 'WELCOME_PAGE',
@@ -18,7 +21,10 @@ const PAGES_NAMES = {
   SIGNUP_PAGE: 'SIGNUP_PAGE',
   SEARCH_PAGE: 'SEARCH_PAGE',
   HOME_PAGE: 'HOME_PAGE',
-  AGENDA_PAGE: 'AGENDA_PAGE'
+  AGENDA_PAGE: 'AGENDA_PAGE',
+  NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE',
+  INVESTOR_PAGE: 'INVESTOR_PAGE',
+  PROJECT_PAGE: 'PROJECT_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -33,25 +39,27 @@ const commonNavBarStyle = {
 }
 
 const DrawerStack = createDrawerNavigator({
-  AGENDA_PAGE: { screen: AgendaPage }
+  AGENDA_PAGE: { screen: AgendaPage },
+  NOTIFICATIONS_PAGE: { screen: NotificationsPage }
 }, {
-  contentComponent: props => <DrawerSideBar {...props} />
+  contentComponent: props => <DrawerSideBar { ...props } />
 })
 
 const DrawerNavigation = createStackNavigator({
   DrawerStack: {
     screen: DrawerStack
-}}, {
+  }
+}, {
   headerMode: 'float',
   navigationOptions: ({ navigation }) => ({
     title: 'Luna Conference',
     ...commonNavBarStyle,
     headerLeft:
-    <View style={{flex: 1}}>
-      <Button transparent onPress={() => navigation.openDrawer()}>
-        <Icon name="menu" style={{ color: "#FFFFFF" }} />
-      </Button>
-    </View>
+      <View style={ { flex: 1 } }>
+        <Button transparent onPress={ () => navigation.openDrawer() }>
+          <Icon name="menu" style={ { color: '#FFFFFF' } }/>
+        </Button>
+      </View>
   })
 })
 
@@ -71,9 +79,8 @@ const AppStackNavigator = createStackNavigator({
   },
   SEARCH_PAGE: {
     screen: SearchPage,
-    navigationOptions: (props) => ({
+    navigationOptions: () => ({
       title: I18n.t('search_page.title'),
-      ...SearchPage.navigationOptions(props),
       ...commonNavBarStyle
     })
   },
@@ -97,6 +104,63 @@ const AppStackNavigator = createStackNavigator({
       header: null
     })
   },
+  INVESTOR_PAGE: {
+    screen: InvestorPage,
+    navigationOptions: () => ({
+      title: I18n.t('investor_page.title'),
+      ...commonNavBarStyle
+    })
+  },
+  PROJECT_PAGE: {
+  screen: InvestorPage,
+    navigationOptions: () => ({
+    title: I18n.t('project_page.title'),
+    ...commonNavBarStyle
+  })
+}
 })
 
-export { PAGES_NAMES, AppStackNavigator }
+const AppStackNavigatorWithSpinner = ({ isLoading, message }) => {
+  return (
+    <Container style={ styles.container }>
+      <AppStackNavigator styles={ { position: 'absolute' } }/>
+      { isLoading && (
+        <View style={ styles.spinnerContainer }>
+          <Spinner color={ '#603695' }/>
+          <Text style={ styles.message }>{ message }</Text>
+        </View>
+      ) }
+    </Container>
+  )
+}
+
+const mapStateToProps = state => {
+  return {
+    isLoading: state.global.isLoading,
+    message: state.global.loadingMessage
+  }
+}
+
+const ConnectedAppStackNavigator = connect(mapStateToProps, null)(AppStackNavigatorWithSpinner)
+
+export { PAGES_NAMES, ConnectedAppStackNavigator }
+
+const styles = {
+  container: {
+    flex: 1
+  },
+  spinnerContainer: {
+    backgroundColor: 'white',
+    flex: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    width: '100%',
+    height: '100%'
+  },
+  message: {
+    color: '#603695',
+    fontWeight: 'bold'
+  }
+}

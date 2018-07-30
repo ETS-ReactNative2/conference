@@ -3,7 +3,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { Provider } from 'react-redux';
 import configureStore from './src/store';
 import configureApi from './src/config/config';
-import { AppStackNavigator } from './src/navigation';
+import { ConnectedAppStackNavigator } from './src/navigation';
 
 
 configureApi();
@@ -18,7 +18,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <AppStackNavigator />
+        <ConnectedAppStackNavigator />
       </Provider>
     );
   }

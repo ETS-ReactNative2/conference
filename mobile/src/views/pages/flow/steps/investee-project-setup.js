@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, Item, Label, Text } from 'native-base'
+import { Button, Card, Form, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -6,6 +6,7 @@ import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { InvesteeLinks } from './index'
+import ValidatedInput from '../../../components/validated-input/validated-input'
 
 class InvesteeProjectSetup extends React.Component {
   constructor (props) {
@@ -21,28 +22,26 @@ class InvesteeProjectSetup extends React.Component {
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.project_setup.title') }</Text>
         <Form>
-          <Item floatingLabel>
-            <Label>{ I18n.t('flow_page.project_setup.project_name') }</Label>
-            <Input
-              onChangeText={ text => this.handleFieldChange(text, 'projectName') }
-              value={ this.state.projectName }/>
-          </Item>
-          <Item floatingLabel>
-            <Label>{ I18n.t('flow_page.project_setup.project_tagline') }</Label>
-            <Input
-              onChangeText={ text => this.handleFieldChange(text, 'projectTagline') }
-              value={ this.state.projectTagline }
-            />
-          </Item>
-          <Item floatingLabel>
-            <Label>{ I18n.t('flow_page.project_setup.project_description') }</Label>
-            <Input
-              onChangeText={ text => this.handleFieldChange(text, 'projectDescription') }
-              value={ this.state.projectDescription }
-              multiline={ true }
-              numberOfLines={ 5 }
-            />
-          </Item>
+          <ValidatedInput floatingLabel
+                          value={ this.state.projectName }
+                          labelText={I18n.t('flow_page.project_setup.project_name')}
+                          isError={!this.validateProjectName(this.state.projectName)}
+                          errorMessage={I18n.t('common.errors.incorrect_project_name')}
+                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectName')} />
+          <ValidatedInput floatingLabel
+                          value={ this.state.projectTagline }
+                          labelText={I18n.t('flow_page.project_setup.project_tagline')}
+                          isError={!this.validateProjectTagline(this.state.projectTagline)}
+                          errorMessage={I18n.t('common.errors.incorrect_project_tagline')}
+                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectTagline')} />
+          <ValidatedInput floatingLabel
+                          multiline={ true }
+                          numberOfLines={ 5 }
+                          value={ this.state.projectDescription }
+                          labelText={I18n.t('flow_page.project_setup.project_description')}
+                          isError={!this.validateProjectDescription(this.state.projectDescription)}
+                          errorMessage={I18n.t('common.errors.incorrect_project_description')}
+                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectDescription')} />
         </Form>
         <Button success
                 rounded
@@ -56,11 +55,23 @@ class InvesteeProjectSetup extends React.Component {
     )
   }
 
+  validateProjectName = (projectName) => {
+    return validator.isLength(projectName, { min: 3 })
+  }
+
+  validateProjectTagline = (projectTagLine) => {
+    return !validator.isEmpty(projectTagLine)
+  }
+
+  validateProjectDescription = (projectDescription) => {
+    return !validator.isEmpty(projectDescription)
+  }
+
   isFormValid = () => {
     const { projectName, projectTagline, projectDescription } = this.state
-    const nameLength = validator.isLength(projectName, { min: 3 })
-    const taglineExists = !validator.isEmpty(projectTagline)
-    const descriptionExists = !validator.isEmpty(projectDescription)
+    const nameLength = this.validateProjectName(projectName)
+    const taglineExists = this.validateProjectTagline(projectTagline)
+    const descriptionExists = this.validateProjectDescription(projectDescription)
 
     return nameLength && taglineExists && descriptionExists
   }

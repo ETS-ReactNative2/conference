@@ -9,7 +9,7 @@ import ConferenceEvent from "../conference-event/conference-event";
 
 class ConferenceEventsBlock extends Component {
   renderBlockStartDate() {
-    return <Text>{moment(this.props.event.startDate).format("hh:mm A")}</Text>;
+    return <Text>{moment(this.props.event.startDate, "HH:mm:ss").format("hh:mm A")}</Text>;
   }
 
   render() {
@@ -29,7 +29,7 @@ class ConferenceEventsBlock extends Component {
                         return (
                           <Block
                             style={{ flexGrow: 1 }}
-                            key={`class-${singleClass.title}`}
+                            key={`class-${singleClass.title}-startDate-${this.props.event.startDate}-rooms-${singleClass.rooms.join('+')}`}
                             xsSize="1/1"
                             smSize="1/2"
                             lgSize="1/3"
@@ -37,12 +37,7 @@ class ConferenceEventsBlock extends Component {
                             xxlSize="1/4"
                           >
                             <ConferenceEvent
-                              event={{
-                                ...singleClass,
-                                endDate: moment(
-                                  this.props.event.endDate
-                                ).format("hh:mm A")
-                              }}
+                              event={singleClass}
                             />
                           </Block>
                         );
@@ -76,14 +71,14 @@ const styles = EStyleSheet.create({
 ConferenceEventsBlock.propTypes = {
   event: PropTypes.shape({
     startDate: PropTypes.string.isRequired,
-    endDate: PropTypes.string.isRequired,
     classes: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
-        location: PropTypes.string.isRequired,
-        persons: PropTypes.arrayOf(PropTypes.string).isRequired
-      })
-    )
+        rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+        speakers: PropTypes.arrayOf(PropTypes.string).isRequired,
+        endDate: PropTypes.string.isRequired
+      }).isRequired
+    ).isRequired
   }).isRequired
 };
 

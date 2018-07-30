@@ -1,11 +1,13 @@
-import { Button, Card, Container, Content, Form, Icon, Input, Item, Label, Text } from 'native-base'
+import { Button, Card, Container, Content, Form, Text } from 'native-base'
 import React from 'react'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../locales/i18n'
+import { globalActions } from '../../../global'
 import { PAGES_NAMES } from '../../../navigation/pages'
 import { signUpActions } from '../../../signup'
+import ValidatedInput from '../../components/validated-input/validated-input'
 
 export class SignupPage extends React.Component {
   constructor (props) {
@@ -18,20 +20,25 @@ export class SignupPage extends React.Component {
     }
   }
 
+  validateEmail = (email) => {
+    return validator.isEmail(email)
+  }
+
+  validatePassword = (password) => {
+    return validator.isLength(password, { min: 8, max: undefined })
+  }
+
+  validatePhoneNumber = (phoneNumber) => {
+    return validator.isMobilePhone(phoneNumber, 'any') && validator.isLength(phoneNumber, { min: 4, max: 20 })
+  }
+
   validateForm = () => {
-    const isEmailValid = validator.isEmail(this.state.email)
-    const isPasswordValid = validator.isLength(this.state.password, { min: 8, max: undefined })
-    const isPhoneValid = validator.isMobilePhone(this.state.phone, 'any') && validator.isLength(this.state.phone,
-      { min: 9, max: 20 })
+    const isEmailValid = this.validateEmail(this.state.email)
+    const isPasswordValid = this.validatePassword(this.state.password)
+    const isPhoneValid = this.validatePhoneNumber(this.state.phone)
     const isFormValid = isEmailValid && isPasswordValid && isPhoneValid
     this.setState({ isFormValid })
   }
-
-  handleSubmit = () => {
-    if (this.state.isFormValid) {
-      this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
-    }
-  };
 
   handleFieldChange = (newValue, name) => {
     this.setState({
@@ -42,13 +49,15 @@ export class SignupPage extends React.Component {
   handleSubmit = async () => {
     const { email, password, phone } = this.state
     const { signup, navigation } = this.props
-    try {
-      await signup({
-        email, password, phone
-      })
-      navigation.navigate(PAGES_NAMES.FLOW_PAGE)
-    } catch (err) {
-      console.error(err)
+    if (this.state.isFormValid) {
+      try {
+        await signup({
+          email, password, phone
+        })
+        navigation.navigate(PAGES_NAMES.FLOW_PAGE)
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 
@@ -58,28 +67,30 @@ export class SignupPage extends React.Component {
         <Content padder>
           <Card style={ { padding: 8 } }>
             <Form>
-              <Item floatingLabel>
-                <Icon active name='email' type='MaterialCommunityIcons'/>
-                <Label>{ I18n.t('signup_page.email_placeholder') }</Label>
-                <Input keyboardType={ 'email-address' }
-                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'email') }
-                       value={ this.state.email }/>
-              </Item>
-              <Item floatingLabel>
-                <Icon active name='lock'/>
-                <Label>{ I18n.t('signup_page.password_placeholder') }</Label>
-                <Input secureTextEntry={ true }
-                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password') }
-                       value={ this.state.password }/>
-              </Item>
-              <Item floatingLabel>
-                <Icon active name='phone' type='MaterialCommunityIcons'/>
-                <Label>{ I18n.t('signup_page.phone_placeholder') }</Label>
-                <Input keyboardType={ 'phone-pad' }
-                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'phone') }
-                       value={ this.state.phome }
-                />
-              </Item>
+              <ValidatedInput floatingLabel
+                              iconProps={ { active: true, name: 'email', type: 'MaterialCommunityIcons' } }
+                              value={ this.state.email }
+                              keyboardType={ 'email-address' }
+                              labelText={ I18n.t('signup_page.email_placeholder') }
+                              isError={ !this.validateEmail(this.state.email) }
+                              errorMessage={ I18n.t('common.errors.incorrect_email') }
+                              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'email') }/>
+              <ValidatedInput floatingLabel
+                              iconProps={ { active: true, name: 'lock' } }
+                              value={ this.state.password }
+                              secureTextEntry={ true }
+                              labelText={ I18n.t('signup_page.password_placeholder') }
+                              isError={ !this.validatePassword(this.state.password) }
+                              errorMessage={ I18n.t('common.errors.incorrect_password') }
+                              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password') }/>
+              <ValidatedInput floatingLabel
+                              iconProps={ { active: true, name: 'phone', type: 'MaterialCommunityIcons' } }
+                              value={ this.state.phone }
+                              keyboardType={ 'phone-pad' }
+                              labelText={ I18n.t('signup_page.phone_placeholder') }
+                              isError={ !this.validatePhoneNumber(this.state.phone) }
+                              errorMessage={ I18n.t('common.errors.incorrect_phone_number') }
+                              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'phone') }/>
             </Form>
             <Button
               success
@@ -112,7 +123,9 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signup: data => dispatch(signUpActions.signup(data))
+    signup: data => dispatch(signUpActions.signup(data)),
+    showLoader: message => dispatch(globalActions.setGlobalLoading(message)),
+    hideLoader: () => dispatch(globalActions.unsetGlobalLoading())
   }
 }
 

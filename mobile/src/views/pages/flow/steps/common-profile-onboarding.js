@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { CommonProfileType } from './index'
 import { signUpActions } from '../../../../signup'
+import ValidatedInput from '../../../components/validated-input/validated-input'
 
 class CommonProfileOnboarding extends React.Component {
   constructor (props) {
@@ -20,8 +21,12 @@ class CommonProfileOnboarding extends React.Component {
     this.state.isFormValid = this.isFormValid()
   }
 
+  validateProfileName = (profileName) => {
+    return validator.isLength(this.state.name, { min: 4, max: undefined })
+  }
+
   isFormValid = () => {
-    const isNameCorrect = validator.isLength(this.state.name, { min: 4, max: undefined })
+    const isNameCorrect = this.validateProfileName(this.state.name)
     const isFormValid = isNameCorrect
     return isFormValid
   }
@@ -53,12 +58,12 @@ class CommonProfileOnboarding extends React.Component {
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.common.profile_onboarding.title') }</Text>
         <Form>
-          <Item floatingLabel>
-            <Label>{ I18n.t('flow_page.common.profile_onboarding.name') }</Label>
-            <Input
-              onChangeText={ text => this.handleFieldChange(text, 'name')}
-              value={ this.state.name }/>
-          </Item>
+          <ValidatedInput floatingLabel
+                          value={ this.state.name }
+                          labelText={I18n.t('flow_page.common.profile_onboarding.name')}
+                          isError={!this.validateProfileName(this.state.name)}
+                          errorMessage={I18n.t('common.errors.incorrect_profile_name')}
+                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'name')} />
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.common.profile_onboarding.titleField') }</Label>
             <Input
