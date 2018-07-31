@@ -1,8 +1,10 @@
-import { SAVE_PROFILE_INFO,
+import {
+  SAVE_EMPLOYEE,
   SAVE_INVESTOR,
   SAVE_PROFILE_EMPLOYER,
-  SAVE_PROFILE_INVESTEE,
-  SAVE_EMPLOYEE } from './action-types'
+  SAVE_PROFILE_INFO,
+  SAVE_PROFILE_INVESTEE
+} from './action-types'
 
 const initialState = {
   profile: {
@@ -56,6 +58,7 @@ const initialState = {
 }
 
 export function signUpReducer (state = initialState, action) {
+  console.log(action.profileInfo)
   switch (action.type) {
     case SAVE_PROFILE_INFO:
       return {
@@ -63,6 +66,10 @@ export function signUpReducer (state = initialState, action) {
         profile: {
           ...state.profile,
           ...action.profileInfo
+        },
+        investee: {
+          ...state.investee,
+          projectName: action.profileInfo.company ? action.profileInfo.company : state.investee.projectName
         }
       }
     case SAVE_INVESTOR:
@@ -98,6 +105,6 @@ export function signUpReducer (state = initialState, action) {
         }
       }
     default:
-      return state;
+      return state
   }
 }
