@@ -11,7 +11,8 @@ export default {
     'title': 'Einloggen',
     'email_placeholder': '_DE_Enter email',
     'password_placeholder': '_DE_Enter password',
-    'button': '_DE_Log in'
+    'button': '_DE_Log in',
+    'spinner_text': '_DE_Logging you in... Please wait'
   },
   'investor_page': {
     'title': '_DE_Investor details'
