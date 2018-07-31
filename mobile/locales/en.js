@@ -160,6 +160,12 @@ export default {
     },
     'twitter': 'Twitter',
     'facebook': 'Facebook',
+    'telegram': 'Telegram',
+    'linkedin': 'Linkedin',
+    'personal_twitter': 'Personal Twitter',
+    'personal_facebook': 'Personal Facebook',
+    'personal_telegram': 'Personal Telegram',
+    'personal_linkedin': 'Personal Linkedin',
     'nationality': {
       'american': 'American',
       'korean': 'Korean',

@@ -159,6 +159,12 @@ export default {
     },
     'twitter': '_DE_Twitter',
     'facebook': '_DE_Facebook',
+    'telegram': '_DE_Telegram',
+    'linkedin': '_DE_Linkedin',
+    'personal_twitter': '_DE_Personal Twitter',
+    'personal_facebook': '_DE_Personal Facebook',
+    'personal_telegram': '_DE_Personal Telegram',
+    'personal_linkedin': '_DE_Personal Linkedin',
     'nationality': {
       'american': '_DE_American',
       'korean': '_DE_Korean',

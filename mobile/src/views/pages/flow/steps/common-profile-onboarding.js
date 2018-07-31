@@ -17,7 +17,9 @@ class CommonProfileOnboarding extends React.Component {
       title: this.props.title,
       company: this.props.company,
       twitter: this.props.twitter,
-      facebook: this.props.facebook
+      facebook: this.props.facebook,
+      telegram: this.props.telegram,
+      linkedin: this.props.linkedin
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -48,7 +50,9 @@ class CommonProfileOnboarding extends React.Component {
       title: this.state.title,
       company: this.state.company,
       twitter: this.state.twitter,
-      facebook: this.state.facebook
+      facebook: this.state.facebook,
+      telegram: this.state.telegram,
+      linkedin: this.state.linkedin
     })
     this.props.onFill({ nextStep: CommonProfileType })
   }
@@ -92,7 +96,7 @@ class CommonProfileOnboarding extends React.Component {
           </Item>
           <Item floatingLabel>
             <Icon active name='logo-twitter'/>
-            <Label>{ I18n.t('common.twitter') }</Label>
+            <Label>{ I18n.t('common.personal_twitter') }</Label>
             <Input
               onChangeText={ text => this.handleFieldChange(text, 'twitter')}
               value={ this.state.twitter }
@@ -100,10 +104,26 @@ class CommonProfileOnboarding extends React.Component {
           </Item>
           <Item floatingLabel>
             <Icon active name='logo-facebook'/>
-            <Label>{ I18n.t('common.facebook') }</Label>
+            <Label>{ I18n.t('common.personal_facebook') }</Label>
             <Input
               onChangeText={ text => this.handleFieldChange(text, 'facebook')}
               value={ this.state.facebook }
+            />
+          </Item>
+          <Item floatingLabel>
+            <Icon active name='paper-plane'/>
+            <Label>{ I18n.t('common.personal_telegram') }</Label>
+            <Input
+              onChangeText={ text => this.handleFieldChange(text, 'telegram')}
+              value={ this.state.telegram }
+            />
+          </Item>
+          <Item floatingLabel>
+            <Icon active name='logo-linkedin'/>
+            <Label>{ I18n.t('common.personal_linkedin') }</Label>
+            <Input
+              onChangeText={ text => this.handleFieldChange(text, 'linkedin')}
+              value={ this.state.linkedin }
             />
           </Item>
         </Form>
@@ -131,7 +151,9 @@ const mapStateToProps = state => {
     title: state.signUp.profile.title,
     company: state.signUp.profile.company,
     twitter: state.signUp.profile.twitter,
-    facebook: state.signUp.profile.facebook
+    facebook: state.signUp.profile.facebook,
+    telegram: state.signUp.profile.telegram,
+    linkedin: state.signUp.profile.linkedin
   }
 }
 

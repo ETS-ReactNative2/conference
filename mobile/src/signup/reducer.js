@@ -14,6 +14,8 @@ const initialState = {
     company: '',
     twitter: '',
     facebook: '',
+    telegram: '',
+    linkedin: '',
     type: ''
   },
   investor: {
