@@ -17,10 +17,10 @@ export async function fetchInvestors() {
   return axios.get('/api/investors')
 }
 
-export async function createConferenceUser ({ name, title, company, twitter, facebook }) {
-  return axios.post('/api/users/', {
-    name, title, company, twitter, facebook
-  })
+export async function createConferenceUser ({ firstName, lastName, title, company, twitter, facebook }) {
+  return axios.post('/api/users/', decamelizeKeys({
+    firstName, lastName, title, company, twitter, facebook
+  }))
 }
 
 export async function createInvestee ({

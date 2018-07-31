@@ -6,7 +6,8 @@ import { SAVE_PROFILE_INFO,
 
 const initialState = {
   profile: {
-    name: '',
+    firstName: '',
+    lastName: '',
     title: '',
     company: '',
     twitter: '',

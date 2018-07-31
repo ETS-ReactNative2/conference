@@ -130,7 +130,8 @@ export default {
     'common': {
       'profile_onboarding': {
         'title': 'Profile Onboarding',
-        'name': 'Name',
+        'first_name': 'First name',
+        'last_name': 'Last name',
         'titleField': 'Title',
         'company': 'Company'
       },
@@ -165,16 +166,6 @@ export default {
       'polish': 'Polish'
     },
     'country': {
-      'usa': 'USA',
-      'korea': 'Korea',
-      'poland': 'Poland',
-      'north_america': 'North America',
-      'south_america': 'South America',
-      'africa': 'Africa',
-      'asia': 'Asia',
-      'europe': 'Europe'
-    },
-    'region': {
       'usa': 'USA',
       'korea': 'Korea',
       'poland': 'Poland',
@@ -232,7 +223,8 @@ export default {
       'incorrect_email': 'Please enter correct email address',
       'incorrect_password': 'Password must be at least 8 characters long',
       'incorrect_phone_number': 'Please enter correct phone number',
-      'incorrect_profile_name': 'Name must be at least 4 characters long',
+      'incorrect_profile_first_name': 'First name must be at least 3 characters long',
+      'incorrect_profile_last_name': 'Last name must be at least 3 characters long',
       'incorrect_project_name': 'Project name must be at least 3 characters long',
       'incorrect_project_tagline': 'Please enter project tagline',
       'incorrect_project_description': 'Plesae enter project description',

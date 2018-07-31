@@ -12,7 +12,8 @@ class CommonProfileOnboarding extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      name: this.props.name,
+      firstName: this.props.firstName,
+      lastName: this.props.lastName,
       title: this.props.title,
       company: this.props.company,
       twitter: this.props.twitter,
@@ -21,12 +22,16 @@ class CommonProfileOnboarding extends React.Component {
     this.state.isFormValid = this.isFormValid()
   }
 
-  validateProfileName = (profileName) => {
-    return validator.isLength(this.state.name, { min: 4, max: undefined })
+  validateProfileFirstName = () => {
+    return validator.isLength(this.state.firstName, { min: 3, max: undefined })
+  }
+
+  validateProfileLastName = () => {
+    return validator.isLength(this.state.lastName, { min: 3, max: undefined })
   }
 
   isFormValid = () => {
-    const isNameCorrect = this.validateProfileName(this.state.name)
+    const isNameCorrect = this.validateProfileFirstName() && this.validateProfileLastName()
     const isFormValid = isNameCorrect
     return isFormValid
   }
@@ -38,7 +43,8 @@ class CommonProfileOnboarding extends React.Component {
 
   handleSubmit = () => {
     this.props.saveProfileInfo({
-      name: this.state.name,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
       title: this.state.title,
       company: this.state.company,
       twitter: this.state.twitter,
@@ -59,11 +65,17 @@ class CommonProfileOnboarding extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.common.profile_onboarding.title') }</Text>
         <Form>
           <ValidatedInput floatingLabel
-                          value={ this.state.name }
-                          labelText={I18n.t('flow_page.common.profile_onboarding.name')}
-                          isError={!this.validateProfileName(this.state.name)}
-                          errorMessage={I18n.t('common.errors.incorrect_profile_name')}
-                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'name')} />
+                          value={ this.state.firstName }
+                          labelText={I18n.t('flow_page.common.profile_onboarding.first_name')}
+                          isError={!this.validateProfileFirstName(this.state.firstName)}
+                          errorMessage={I18n.t('common.errors.incorrect_profile_first_name')}
+                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'firstName')} />
+          <ValidatedInput floatingLabel
+                          value={ this.state.lastName }
+                          labelText={I18n.t('flow_page.common.profile_onboarding.last_name')}
+                          isError={!this.validateProfileLastName(this.state.lastName)}
+                          errorMessage={I18n.t('common.errors.incorrect_profile_last_name')}
+                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'lastName')} />
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.common.profile_onboarding.titleField') }</Label>
             <Input
@@ -114,7 +126,8 @@ CommonProfileOnboarding.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    name: state.signUp.profile.name,
+    firstName: state.signUp.profile.firstName,
+    lastName: state.signUp.profile.lastName,
     title: state.signUp.profile.title,
     company: state.signUp.profile.company,
     twitter: state.signUp.profile.twitter,

@@ -130,7 +130,8 @@ export default {
     'common': {
       'profile_onboarding': {
         'title': '_DE_Profile Onboarding',
-        'name': '_DE_Name',
+        'first_name': '_DE_First name',
+        'last_name': '_DE_Last name',
         'titleField': '_DE_Title',
         'company': '_DE_Company'
       },
@@ -196,7 +197,8 @@ export default {
       'incorrect_email': '_DE_Please enter correct email address',
       'incorrect_password': '_DE_Password must be at least 8 characters long',
       'incorrect_phone_number': '_DE_Please enter correct phone number',
-      'incorrect_profile_name': '_DE_Name must be at least 4 characters long',
+      'incorrect_profile_first_name': '_DE_First name must be at least 3 characters long',
+      'incorrect_profile_last_name': '_DE_Last name must be at least 3 characters long',
       'incorrect_project_name': '_DE_Project name must be at least 3 characters long',
       'incorrect_project_tagline': '_DE_Please enter project tagline',
       'incorrect_project_description': '_DE_Plesae enter project description',
