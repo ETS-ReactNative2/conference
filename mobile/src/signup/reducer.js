@@ -2,11 +2,18 @@ import {
   SAVE_EMPLOYEE,
   SAVE_INVESTOR,
   SAVE_PROFILE_EMPLOYER,
+  SAVE_PROFILE_INVESTEE,
   SAVE_PROFILE_INFO,
-  SAVE_PROFILE_INVESTEE
-} from './action-types'
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR } from './action-types'
 
 const initialState = {
+  auth: {
+    login: {
+      isError: false,
+      errorMessage: ''
+    }
+  },
   profile: {
     firstName: '',
     lastName: '',
@@ -64,6 +71,31 @@ const initialState = {
 export function signUpReducer (state = initialState, action) {
   console.log(action.profileInfo)
   switch (action.type) {
+    case LOGIN_USER_SUCCESS:
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          login: {
+            ...state.auth.login,
+            isError: false,
+            errorMessage: ''
+          }
+        }
+      }
+    case LOGIN_USER_ERROR: {
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          login: {
+            ...state.auth.login,
+            isError: true,
+            errorMessage: action.error
+          }
+        }
+      }
+    }
     case SAVE_PROFILE_INFO:
       return {
         ...state,

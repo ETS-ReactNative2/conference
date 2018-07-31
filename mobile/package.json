@@ -11,7 +11,8 @@
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.4.1",
     "react-native-mock": "^0.3.1",
-    "react-test-renderer": "16.3.1"
+    "react-test-renderer": "16.3.1",
+    "redux-mock-store": "^1.5.3"
   },
   "scripts": {
     "start": "react-native start",
@@ -65,6 +66,7 @@
     "react-native-languages": "2.0.0",
     "react-native-material-selectize": "^1.9.0",
     "react-native-responsive-layout": "^1.1.0",
+    "react-native-sensitive-info": "5.2.4",
     "react-navigation": "2.5.3",
     "react-redux": "5.0.7",
     "redux": "4.0.0",

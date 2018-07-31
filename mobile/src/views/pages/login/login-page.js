@@ -1,10 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types'
-import { Button, Card, Content, Container, Form, Text } from 'native-base';
-import validator from 'validator';
-import EStyleSheet from 'react-native-extended-stylesheet';
-import I18n from '../../../../locales/i18n';
+import React from 'react'
+import { View } from 'react-native'
+import { Button, Card, Content, Container, Form, Text } from 'native-base'
+import { connect } from 'react-redux'
+import validator from 'validator'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import I18n from '../../../../locales/i18n'
 import ValidatedInput from '../../components/validated-input/validated-input'
+import ErrorMessage from '../../components/error-message/error-message'
+import { signUpActions } from '../../../signup';
 
 class LoginPage extends React.Component {
   constructor (props) {
@@ -33,7 +36,7 @@ class LoginPage extends React.Component {
 
   handleSubmit = () => {
     if (this.state.isFormValid) {
-      this.props.onSubmit(this.state);
+      this.props.loginUser(this.state.email, this.state.password)
     }
   };
 
@@ -47,6 +50,9 @@ class LoginPage extends React.Component {
     return (
       <Container>
         <Content padder>
+          {this.props.isError && this.props.errorMessage && (
+            <ErrorMessage message={this.props.errorMessage} onRetry={this.handleSubmit} />
+          )}
         <Card style={ { padding: 8 } }>
             <Form>
               <ValidatedInput floatingLabel
@@ -88,8 +94,18 @@ const styles = EStyleSheet.create({
   }
 });
 
-LoginPage.propTypes = {
-  // onSubmit: PropTypes.func.isRequired
+
+const mapStateToProps = state => {
+  return {
+    isError: state.signUp.auth.login.isError,
+    errorMessage: state.signUp.auth.login.errorMessage
+  }
 }
 
-export default LoginPage;
+const mapDispatchToProps = dispatch => {
+  return {
+    loginUser: (email, password) => dispatch(signUpActions.login(email, password))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
