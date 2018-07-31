@@ -80,9 +80,21 @@ export default {
       'role': {
         'title': '_DE_Role'
       },
-      'keyword': {
-        'title': '_DE_Keywords',
-        'placeholder': '_DE_Select your skills'
+      'skills': {
+        'header': '_DE_What are your top 3 skills?',
+        'title': '_DE_Skills',
+        'placeholder': '_DE_What are your top 3 skills?',
+        'error': '_DE_Please select from 1 to 3 skills'
+      },
+      'traits': {
+        'header': '_DE_What are your top 3 traits?',
+        'title': '_DE_Traits',
+        'placeholder': '_DE_What are your top 3 traits?',
+        'error': '_DE_Please select from 1 to 3 traits'
+      },
+      'most_info': {
+        'label': '_DE_What do you know the most about?',
+        'error': '_DE_Please enter info'
       }
     },
     'employer': {

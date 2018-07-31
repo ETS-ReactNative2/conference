@@ -85,9 +85,21 @@ export default {
       'role': {
         'title': 'Role'
       },
-      'keyword': {
-        'title': 'Keywords',
-        'placeholder': 'Select your skills'
+      'skills': {
+        'header': 'What are your top 3 skills?',
+        'title': 'Skills',
+        'placeholder': 'What are your top 3 skills?',
+        'error': 'Please select from 1 to 3 skills'
+      },
+      'traits': {
+        'header': 'What are your top 3 traits?',
+        'title': 'Traits',
+        'placeholder': 'What are your top 3 traits?',
+        'error': 'Please select from 1 to 3 traits'
+      },
+      'most_info': {
+        'label': 'What do you know the most about?',
+        'error': 'Please enter info'
       }
     },
     'employer': {

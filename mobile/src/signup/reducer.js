@@ -55,7 +55,9 @@ const initialState = {
   },
   employee: {
     role: '',
-    keywords: []
+    skills: [],
+    traits: [],
+    mostInfo: ''
   }
 }
 
