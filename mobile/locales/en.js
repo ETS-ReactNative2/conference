@@ -85,9 +85,21 @@ export default {
       'role': {
         'title': 'Role'
       },
-      'keyword': {
-        'title': 'Keywords',
-        'placeholder': 'Select your skills'
+      'skills': {
+        'header': 'What are your top 3 skills?',
+        'title': 'Skills',
+        'placeholder': 'What are your top 3 skills?',
+        'error': 'Please select from 1 to 3 skills'
+      },
+      'traits': {
+        'header': 'What are your top 3 traits?',
+        'title': 'Traits',
+        'placeholder': 'What are your top 3 traits?',
+        'error': 'Please select from 1 to 3 traits'
+      },
+      'most_info': {
+        'label': 'What do you know the most about?',
+        'error': 'Please enter info'
       }
     },
     'employer': {
@@ -130,7 +142,8 @@ export default {
     'common': {
       'profile_onboarding': {
         'title': 'Profile Onboarding',
-        'name': 'Name',
+        'first_name': 'First name',
+        'last_name': 'Last name',
         'titleField': 'Title',
         'company': 'Company'
       },
@@ -159,22 +172,18 @@ export default {
     },
     'twitter': 'Twitter',
     'facebook': 'Facebook',
+    'telegram': 'Telegram',
+    'linkedin': 'Linkedin',
+    'personal_twitter': 'Personal Twitter',
+    'personal_facebook': 'Personal Facebook',
+    'personal_telegram': 'Personal Telegram',
+    'personal_linkedin': 'Personal Linkedin',
     'nationality': {
       'american': 'American',
       'korean': 'Korean',
       'polish': 'Polish'
     },
     'country': {
-      'usa': 'USA',
-      'korea': 'Korea',
-      'poland': 'Poland',
-      'north_america': 'North America',
-      'south_america': 'South America',
-      'africa': 'Africa',
-      'asia': 'Asia',
-      'europe': 'Europe'
-    },
-    'region': {
       'usa': 'USA',
       'korea': 'Korea',
       'poland': 'Poland',
@@ -232,7 +241,8 @@ export default {
       'incorrect_email': 'Please enter correct email address',
       'incorrect_password': 'Password must be at least 8 characters long',
       'incorrect_phone_number': 'Please enter correct phone number',
-      'incorrect_profile_name': 'Name must be at least 4 characters long',
+      'incorrect_profile_first_name': 'First name must be at least 3 characters long',
+      'incorrect_profile_last_name': 'Last name must be at least 3 characters long',
       'incorrect_project_name': 'Project name must be at least 3 characters long',
       'incorrect_project_tagline': 'Please enter project tagline',
       'incorrect_project_description': 'Plesae enter project description',

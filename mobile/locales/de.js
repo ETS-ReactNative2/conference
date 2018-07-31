@@ -80,9 +80,21 @@ export default {
       'role': {
         'title': '_DE_Role'
       },
-      'keyword': {
-        'title': '_DE_Keywords',
-        'placeholder': '_DE_Select your skills'
+      'skills': {
+        'header': '_DE_What are your top 3 skills?',
+        'title': '_DE_Skills',
+        'placeholder': '_DE_What are your top 3 skills?',
+        'error': '_DE_Please select from 1 to 3 skills'
+      },
+      'traits': {
+        'header': '_DE_What are your top 3 traits?',
+        'title': '_DE_Traits',
+        'placeholder': '_DE_What are your top 3 traits?',
+        'error': '_DE_Please select from 1 to 3 traits'
+      },
+      'most_info': {
+        'label': '_DE_What do you know the most about?',
+        'error': '_DE_Please enter info'
       }
     },
     'employer': {
@@ -130,7 +142,8 @@ export default {
     'common': {
       'profile_onboarding': {
         'title': '_DE_Profile Onboarding',
-        'name': '_DE_Name',
+        'first_name': '_DE_First name',
+        'last_name': '_DE_Last name',
         'titleField': '_DE_Title',
         'company': '_DE_Company'
       },
@@ -158,6 +171,12 @@ export default {
     },
     'twitter': '_DE_Twitter',
     'facebook': '_DE_Facebook',
+    'telegram': '_DE_Telegram',
+    'linkedin': '_DE_Linkedin',
+    'personal_twitter': '_DE_Personal Twitter',
+    'personal_facebook': '_DE_Personal Facebook',
+    'personal_telegram': '_DE_Personal Telegram',
+    'personal_linkedin': '_DE_Personal Linkedin',
     'nationality': {
       'american': '_DE_American',
       'korean': '_DE_Korean',
@@ -196,7 +215,8 @@ export default {
       'incorrect_email': '_DE_Please enter correct email address',
       'incorrect_password': '_DE_Password must be at least 8 characters long',
       'incorrect_phone_number': '_DE_Please enter correct phone number',
-      'incorrect_profile_name': '_DE_Name must be at least 4 characters long',
+      'incorrect_profile_first_name': '_DE_First name must be at least 3 characters long',
+      'incorrect_profile_last_name': '_DE_Last name must be at least 3 characters long',
       'incorrect_project_name': '_DE_Project name must be at least 3 characters long',
       'incorrect_project_tagline': '_DE_Please enter project tagline',
       'incorrect_project_description': '_DE_Plesae enter project description',

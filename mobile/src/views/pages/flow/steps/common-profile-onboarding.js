@@ -12,21 +12,28 @@ class CommonProfileOnboarding extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      name: this.props.name,
+      firstName: this.props.firstName,
+      lastName: this.props.lastName,
       title: this.props.title,
       company: this.props.company,
       twitter: this.props.twitter,
-      facebook: this.props.facebook
+      facebook: this.props.facebook,
+      telegram: this.props.telegram,
+      linkedin: this.props.linkedin
     }
     this.state.isFormValid = this.isFormValid()
   }
 
-  validateProfileName = (profileName) => {
-    return validator.isLength(this.state.name, { min: 4, max: undefined })
+  validateProfileFirstName = () => {
+    return validator.isLength(this.state.firstName, { min: 3, max: undefined })
+  }
+
+  validateProfileLastName = () => {
+    return validator.isLength(this.state.lastName, { min: 3, max: undefined })
   }
 
   isFormValid = () => {
-    const isNameCorrect = this.validateProfileName(this.state.name)
+    const isNameCorrect = this.validateProfileFirstName() && this.validateProfileLastName()
     const isFormValid = isNameCorrect
     return isFormValid
   }
@@ -38,11 +45,14 @@ class CommonProfileOnboarding extends React.Component {
 
   handleSubmit = () => {
     this.props.saveProfileInfo({
-      name: this.state.name,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
       title: this.state.title,
       company: this.state.company,
       twitter: this.state.twitter,
-      facebook: this.state.facebook
+      facebook: this.state.facebook,
+      telegram: this.state.telegram,
+      linkedin: this.state.linkedin
     })
     this.props.onFill({ nextStep: CommonProfileType })
   }
@@ -59,11 +69,17 @@ class CommonProfileOnboarding extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.common.profile_onboarding.title') }</Text>
         <Form>
           <ValidatedInput floatingLabel
-                          value={ this.state.name }
-                          labelText={I18n.t('flow_page.common.profile_onboarding.name')}
-                          isError={!this.validateProfileName(this.state.name)}
-                          errorMessage={I18n.t('common.errors.incorrect_profile_name')}
-                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'name')} />
+                          value={ this.state.firstName }
+                          labelText={I18n.t('flow_page.common.profile_onboarding.first_name')}
+                          isError={!this.validateProfileFirstName(this.state.firstName)}
+                          errorMessage={I18n.t('common.errors.incorrect_profile_first_name')}
+                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'firstName')} />
+          <ValidatedInput floatingLabel
+                          value={ this.state.lastName }
+                          labelText={I18n.t('flow_page.common.profile_onboarding.last_name')}
+                          isError={!this.validateProfileLastName(this.state.lastName)}
+                          errorMessage={I18n.t('common.errors.incorrect_profile_last_name')}
+                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'lastName')} />
           <Item floatingLabel>
             <Label>{ I18n.t('flow_page.common.profile_onboarding.titleField') }</Label>
             <Input
@@ -80,7 +96,7 @@ class CommonProfileOnboarding extends React.Component {
           </Item>
           <Item floatingLabel>
             <Icon active name='logo-twitter'/>
-            <Label>{ I18n.t('common.twitter') }</Label>
+            <Label>{ I18n.t('common.personal_twitter') }</Label>
             <Input
               onChangeText={ text => this.handleFieldChange(text, 'twitter')}
               value={ this.state.twitter }
@@ -88,10 +104,26 @@ class CommonProfileOnboarding extends React.Component {
           </Item>
           <Item floatingLabel>
             <Icon active name='logo-facebook'/>
-            <Label>{ I18n.t('common.facebook') }</Label>
+            <Label>{ I18n.t('common.personal_facebook') }</Label>
             <Input
               onChangeText={ text => this.handleFieldChange(text, 'facebook')}
               value={ this.state.facebook }
+            />
+          </Item>
+          <Item floatingLabel>
+            <Icon active name='paper-plane'/>
+            <Label>{ I18n.t('common.personal_telegram') }</Label>
+            <Input
+              onChangeText={ text => this.handleFieldChange(text, 'telegram')}
+              value={ this.state.telegram }
+            />
+          </Item>
+          <Item floatingLabel>
+            <Icon active name='logo-linkedin'/>
+            <Label>{ I18n.t('common.personal_linkedin') }</Label>
+            <Input
+              onChangeText={ text => this.handleFieldChange(text, 'linkedin')}
+              value={ this.state.linkedin }
             />
           </Item>
         </Form>
@@ -114,11 +146,14 @@ CommonProfileOnboarding.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    name: state.signUp.profile.name,
+    firstName: state.signUp.profile.firstName,
+    lastName: state.signUp.profile.lastName,
     title: state.signUp.profile.title,
     company: state.signUp.profile.company,
     twitter: state.signUp.profile.twitter,
-    facebook: state.signUp.profile.facebook
+    facebook: state.signUp.profile.facebook,
+    telegram: state.signUp.profile.telegram,
+    linkedin: state.signUp.profile.linkedin
   }
 }
 

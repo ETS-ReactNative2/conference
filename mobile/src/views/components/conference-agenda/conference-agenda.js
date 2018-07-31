@@ -24,7 +24,7 @@ class ConferenceAgenda extends Component {
               <View style={styles.sectionHeaderContainer}>{this.renderSectionHeader(singleSection.title)}</View>
               {singleSection.days.map(singleDayInSection => {
                 return (
-                  <ConferenceDay day={singleDayInSection} />
+                  <ConferenceDay key={`section-${singleSection.title}-date-${singleDayInSection.date}`} day={singleDayInSection} />
                 )
               })}
             </React.Fragment>
