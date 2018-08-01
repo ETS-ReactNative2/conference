@@ -46,6 +46,15 @@ export const PRODUCT_STAGES = [
   }
 ]
 
+export const ROLES = [
+  { slug: 'developer' },
+  { slug: 'founder' },
+  { slug: 'ceo' },
+  { slug: 'marketing' },
+  { slug: 'sales' }
+
+]
+
 export const REGION = [
   { slug: 'korea' },
   { slug: 'north_america' },
@@ -53,6 +62,12 @@ export const REGION = [
   { slug: 'africa' },
   { slug: 'asia' },
   { slug: 'europe' }
+]
+
+export const PAYMENTS = [
+  { slug: 'fiat'},
+  { slug: 'tokens'},
+  { slug: 'equity'}
 ]
 
 export const INVESTOR_NATIONALITY = [

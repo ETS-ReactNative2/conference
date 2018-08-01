@@ -111,7 +111,11 @@ export default {
       },
       'keyword': {
         'title': '_DE_Keywords',
-        'placeholder': '_DE_Select your skills'
+        'placeholder': '_DE_Select your skills',
+        'full_time': '_DE_Part time possible?'
+      },
+      'payment': {
+        'title': '_DE_Type of payment'
       },
       'job': {
         'title': '_DE_Job',
@@ -179,6 +183,13 @@ export default {
       },
       'founder': '_DE_Founder'
     },
+    'roles_job': {
+      'developer': '_DE_Developer job listing',
+      'marketing': '_DE_Marketing job listing',
+      'ceo': '_DE_CEO job listing',
+      'sales': '_DE_Sales job listing',
+      'founder': '_DE_Founder job listing'
+    },
     'twitter': '_DE_Twitter',
     'facebook': '_DE_Facebook',
     'telegram': '_DE_Telegram',
@@ -213,6 +224,11 @@ export default {
       'seed': '_DE_Seed',
       'pre': '_DE_Pre ICO',
       'post': '_DE_Post ICO'
+    },
+    'payment': {
+      'fiat': '_DE_Fiat money',
+      'tokens': '_DE_Tokens',
+      'equity': '_DE_Equity'
     },
     'months': {
       '0': 'Januar',

@@ -4,21 +4,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { EmployerKeywords } from './index'
-
-const roles = [
-  'developer',
-  'founder',
-  'ceo',
-  'marketing',
-  'sales'
-]
+import { EmployerJobs } from './index'
+import {ROLES} from '../../../../enums'
 
 class EmployerRole extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: this.props.employer.role
+      roles: this.props.employer.roles
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -29,16 +22,17 @@ class EmployerRole extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employer.role.title') }</Text>
         <Content>
           {
-            roles.map((option, index) => {
+            ROLES.map((option, index) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option } onPress={ () => this.handleChange(index) }>
+                <ListItem style={ { width: '100%' } } key={ option.slug }
+                          onPress={ () => this.handleCheckboxClick(index) }>
                   <Left>
-                    <Text>{ I18n.t(`common.roles.${option}`) }</Text>
+                    <Text>{ I18n.t(`common.roles.${option.slug}`) }</Text>
                   </Left>
                   <Right>
                     <Radio
-                      onPress={ () => this.handleChange(index) }
-                      selected={ this.state.selected === index }/>
+                      onPress={ () => this.handleCheckboxClick(index) }
+                      selected={ this.isCheckboxSelected(index) }/>
                   </Right>
                 </ListItem>
               )
@@ -58,9 +52,7 @@ class EmployerRole extends React.Component {
   }
 
   isFormValid = () => {
-    const { selected } = this.state
-
-    return selected !== -1
+    return this.state.roles.length > 0
   }
 
   validateForm = () => {
@@ -70,16 +62,25 @@ class EmployerRole extends React.Component {
 
   handleSubmit = () => {
     this.props.save({
-      role: this.state.selected
+      roles: this.state.roles
     })
     this.props.onFill({
-      nextStep: EmployerKeywords
+      nextStep: EmployerJobs
     })
   }
-  handleChange = (index) => {
-    this.setState({
-      selected: index
-    }, this.validateForm)
+  handleCheckboxClick = index => {
+    let roles = [ ...this.state.roles ]
+    const roleIndex = roles.indexOf(index)
+    if (roleIndex !== -1) {
+      roles = roles.filter(role => role !== index)
+    } else {
+      roles.push(index)
+    }
+    this.setState({ roles }, this.validateForm)
+  }
+
+  isCheckboxSelected = index => {
+    return this.state.roles.indexOf(index) !== -1
   }
 }
 

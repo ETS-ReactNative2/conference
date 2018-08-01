@@ -111,7 +111,11 @@ export default {
       },
       'keyword': {
         'title': '_PL_Keywords',
-        'placeholder': '_PL_Select your skills'
+        'placeholder': '_PL_Select your skills',
+        'full_time': '_PL_Part time possible?'
+      },
+      'payment': {
+        'title': '_PL_Type of payment'
       },
       'job': {
         'title': '_PL_Job',
@@ -177,6 +181,13 @@ export default {
       'sales': '_PL_Sales',
       'founder': '_PL_Founder'
     },
+    'roles_job': {
+      'developer': '_PL_Developer job listing',
+      'marketing': '_PL_Marketing job listing',
+      'ceo': '_PL_CEO job listing',
+      'sales': '_PL_Sales job listing',
+      'founder': '_PL_Founder job listing'
+    },
     'twitter': '_PL_Twitter',
     'facebook': '_PL_Facebook',
     'telegram': '_PL_Telegram',
@@ -191,6 +202,11 @@ export default {
       'american': '_PL_American',
       'korean': '_PL_Korean',
       'polish': '_PL_Polish'
+    },
+    'payment': {
+      'fiat': '_PL_Fiat money',
+      'tokens': '_PL_Tokens',
+      'equity': '_PL_Equity'
     },
     'investor_nationality': {
       'anywhere': '_PL_Anywhere',

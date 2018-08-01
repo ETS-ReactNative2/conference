@@ -112,11 +112,15 @@ export default {
     },
     'employer': {
       'role': {
-        'title': 'Role'
+        'title': 'Select the roles for which you\'re hiring'
       },
       'keyword': {
         'title': 'Keywords',
-        'placeholder': 'Select your skills'
+        'placeholder': 'Select skills for job listing',
+        'full_time': 'Part time possible?'
+      },
+      'payment': {
+        'title': 'Type of payment'
       },
       'job': {
         'title': 'Job',
@@ -178,6 +182,13 @@ export default {
       'sales': 'Sales',
       'founder': 'Founder'
     },
+    'roles_job': {
+      'developer': 'Developer job listing',
+      'marketing': 'Marketing job listing',
+      'ceo': 'CEO job listing',
+      'sales': 'Sales job listing',
+      'founder': 'Founder job listing'
+    },
     'twitter': 'Twitter',
     'facebook': 'Facebook',
     'telegram': 'Telegram',
@@ -227,6 +238,11 @@ export default {
       'token': 'Tokens',
       'equity': 'Equity',
       'both': 'Both'
+    },
+    'payment': {
+      'fiat': 'Fiat money',
+      'tokens': 'Tokens',
+      'equity': 'Equity'
     },
     'months': {
       '0': 'January',

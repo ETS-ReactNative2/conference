@@ -79,7 +79,7 @@ export function saveProfileEmployer (employerInfo) {
 export function saveInvestor (investorData) {
   return {
     type: SAVE_INVESTOR,
-    data: investorData
+    investorData
   }
 }
 

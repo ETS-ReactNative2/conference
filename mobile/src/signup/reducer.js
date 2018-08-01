@@ -1,3 +1,4 @@
+import { ROLES } from '../enums'
 import {
   SAVE_EMPLOYEE,
   SAVE_INVESTOR,
@@ -54,12 +55,7 @@ const initialState = {
     investorNationality: 0
   },
   employer: {
-    role: -1,
-    keywords: [],
-    link: '',
-    description: '',
-    min: '0',
-    max: '0'
+    roles: []
   },
   employee: {
     role: '',
@@ -114,7 +110,7 @@ export function signUpReducer (state = initialState, action) {
         ...state,
         investor: {
           ...state.investor,
-          ...action.data
+          ...action.investorData
         }
       }
     case SAVE_PROFILE_INVESTEE:
@@ -126,6 +122,29 @@ export function signUpReducer (state = initialState, action) {
         }
       }
     case SAVE_PROFILE_EMPLOYER:
+      if (action.employerInfo.roles) {
+        const jobs = {}
+        action.employerInfo.roles.forEach(role => {
+          const jobName = ROLES[ role ].slug
+          jobs[ jobName ] = state.employer[ jobName ] ? state.employer[ jobName ] : {
+            keywords: [],
+            link: '',
+            description: '',
+            partTime: false,
+            payments: []
+          }
+        })
+
+        return {
+          ...state,
+          employer: {
+            ...jobs,
+            ...state.employer,
+            roles: action.employerInfo.roles
+          }
+        }
+      }
+
       return {
         ...state,
         employer: {
