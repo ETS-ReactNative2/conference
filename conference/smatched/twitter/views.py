@@ -23,13 +23,13 @@ def screen_names(request):
     print screen_name
 
     # Delete existing tweets
-    models.Status.objects.filter(user_screen_name=screen_name).delete()
+    models.TwitterStatus.objects.filter(user_screen_name=screen_name).delete()
 
     tweets = get_tweets.getTweets(screen_name)
 
     for tweet in tweets:
         print tweet
-        models.Status.objects.create(
+        models.TwitterStatus.objects.create(
             id_str=tweet[0],
             text=tweet[2],
             user_screen_name=screen_name,

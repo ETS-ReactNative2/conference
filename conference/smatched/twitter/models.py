@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-class Status(models.Model):
+class TwitterStatus(models.Model):
 
     id_str = models.CharField(primary_key=True, max_length=18)
 
