@@ -45,6 +45,20 @@ class ProductStage(models.Model):
         return self.name
 
 
+class TicketSize(models.Model):
+
+    POSITIVE_INFINITY = 2147483647
+
+    id = models.IntegerField(primary_key=True, verbose_name='ID')
+
+    min = models.PositiveIntegerField()
+
+    max = models.PositiveIntegerField()
+
+    def __str__(self):
+        return '{} <= x < {}'.format(min, max)
+
+
 class TokenType(models.Model):
 
     id = models.IntegerField(primary_key=True, verbose_name='ID')
@@ -104,10 +118,8 @@ class Investor(Company):
 
     giveaways = models.ManyToManyField(Giveaway, blank=True)
 
-    max_ticket = models.DecimalField(db_index=True, max_digits=12, decimal_places=0, null=True, blank=True)
-
-    min_ticket = models.DecimalField(db_index=True, max_digits=12, decimal_places=0, null=True, blank=True)
-
     product_stages = models.ManyToManyField(ProductStage, blank=True)
+
+    ticket_sizes = models.ManyToManyField(TicketSize, blank=True)
 
     token_types = models.ManyToManyField(TokenType, blank=True)

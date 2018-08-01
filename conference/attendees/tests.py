@@ -55,11 +55,10 @@ class InvestorsViewTest(AuthMixin, SharedListViewMixin):
                 'description': 'aaaaaaaa',
                 'funding_stages': [1, 2, 3],
                 'giveaways': [1, 2, 3],
-                'max_ticket': 999999999999,
-                'min_ticket': 999999999999,
                 'name': 'aaaaaaaa',
                 'product_stages': [1, 2, 3],
                 'tagline': 'aaaaaaaa',
+                'ticket_sizes': [1, 2, 3, 4, 5, 6],
                 'token_types': [1, 2, 3],
             }),
             content_type='application/json',
@@ -77,14 +76,13 @@ class InvestorsIdViewTest(AuthMixin, SharedDetailViewMixin):
         investor = models.Investor.objects.create(
             country='DE',
             description='aaaaaaaa',
-            max_ticket=999999999999,
-            min_ticket=999999999999,
             name='aaaaaaaa',
             tagline='aaaaaaaa',
         )
         investor.funding_stages = models.FundingStage.objects.all()
         investor.giveaways = models.Giveaway.objects.all()
         investor.product_stages = models.ProductStage.objects.all()
+        investor.ticket_sizes = models.TicketSize.objects.all()
         investor.token_types = models.TokenType.objects.all()
         investor.save()
         response = self.client.get(reverse(self.view(), kwargs={'pk': investor.id}), **self.header)
@@ -95,11 +93,10 @@ class InvestorsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('description'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('funding_stages'), [1, 2, 3])
         self.assertEqual(response_dict.get('giveaways'), [1, 2, 3])
-        self.assertEqual(response_dict.get('max_ticket'), '999999999999')
-        self.assertEqual(response_dict.get('min_ticket'), '999999999999')
         self.assertEqual(response_dict.get('name'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('product_stages'), [1, 2, 3])
         self.assertEqual(response_dict.get('tagline'), 'aaaaaaaa')
+        self.assertEqual(response_dict.get('ticket_sizes'), [1, 2, 3, 4, 5, 6])
         self.assertEqual(response_dict.get('token_types'), [1, 2, 3])
 
 
