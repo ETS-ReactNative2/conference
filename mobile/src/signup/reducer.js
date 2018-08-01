@@ -41,12 +41,17 @@ const initialState = {
     whitepaper: '',
     telegram: '',
     twitter: '',
+    github: '',
+    news: '',
     productStage: -1,
     fundingStage: -1,
     hiring: false,
     teamMembers: '',
     money: false,
-    amount: ''
+    amount: '',
+    tokenType: -1,
+    giveaway: -1,
+    investorNationality: 0
   },
   employer: {
     role: -1,

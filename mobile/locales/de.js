@@ -59,10 +59,17 @@ export default {
     'funding_stage': {
       'title': '_DE_Funding stage'
     },
+    'token_type': {
+      'title': '_DE_Token type'
+    },
+    'giveaway': {
+      'title': '_DE_Giveaway'
+    },
     'money': {
       'title': '_DE__Money source',
       'need_money': '_DE__Are you looking for money?',
-      'amount': '_DE__How much money are you looking for?'
+      'amount': '_DE__How much money are you looking for?',
+      'nationality': '_DE_Investor nationality'
     },
     'ico': {
       'title': '_DE__ICO',
@@ -167,7 +174,9 @@ export default {
       'developer': '_DE_Developer',
       'marketing': '_DE_Marketing',
       'ceo': '_DE_CEO',
-      'sales': '_DE_Sales',
+      'sales': '_DE_Sales','token_type': {
+        'title': 'Token type'
+      },
       'founder': '_DE_Founder'
     },
     'twitter': '_DE_Twitter',
@@ -178,6 +187,8 @@ export default {
     'personal_facebook': '_DE_Personal Facebook',
     'personal_telegram': '_DE_Personal Telegram',
     'personal_linkedin': '_DE_Personal Linkedin',
+    'github': '_DE_Github',
+    'news': '_DE_News publication about your project',
     'nationality': {
       'american': '_DE_American',
       'korean': '_DE_Korean',
@@ -192,6 +203,11 @@ export default {
       'africa': 'Africa',
       'asia': 'Asia',
       'europe': 'Europe'
+    },
+    'investor_nationality': {
+      'anywhere': '_DE_Anywhere',
+      'exclude_us': '_DE_Exclude US',
+      'korea_only': '_DE_Korea only'
     },
     'funding_stages': {
       'seed': '_DE_Seed',

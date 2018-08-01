@@ -64,10 +64,17 @@ export default {
     'funding_stage': {
       'title': 'Funding stage'
     },
+    'token_type': {
+      'title': 'Token type'
+    },
+    'giveaway': {
+      'title': 'Giveaway'
+    },
     'money': {
       'title': 'Money source',
       'need_money': 'Are you looking for money?',
-      'amount': 'How much money are you looking for?'
+      'amount': 'How much money are you looking for?',
+      'nationality': 'Investor nationality'
     },
     'ico': {
       'title': 'ICO',
@@ -179,22 +186,19 @@ export default {
     'personal_facebook': 'Personal Facebook',
     'personal_telegram': 'Personal Telegram',
     'personal_linkedin': 'Personal Linkedin',
+    'github': 'Github',
+    'news': 'News publication about your project',
     'nationality': {
       'american': 'American',
       'korean': 'Korean',
       'polish': 'Polish'
     },
-    'country': {
-      'usa': 'USA',
-      'korea': 'Korea',
-      'poland': 'Poland',
-      'north_america': 'North America',
-      'south_america': 'South America',
-      'africa': 'Africa',
-      'asia': 'Asia',
-      'europe': 'Europe'
+    'investor_nationality': {
+      'anywhere': 'Anywhere',
+      'exclude_us': 'Exclude US',
+      'korea_only': 'Korea only'
     },
-    'region': {
+    'country': {
       'usa': 'USA',
       'korea': 'Korea',
       'poland': 'Poland',

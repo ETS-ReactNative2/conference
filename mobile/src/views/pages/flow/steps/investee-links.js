@@ -4,13 +4,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { InvesteeProductStage } from './index'
+import { InvesteeProductStage, InvesteeTokenType } from './index'
 
 class InvesteeLinks extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      ...{ website, whitepaper, telegram, twitter } = this.props.investee
+      ...{ website, whitepaper, telegram, twitter, github, news } = this.props.investee
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -50,7 +50,22 @@ class InvesteeLinks extends React.Component {
               value={ this.state.twitter }
             />
           </Item>
-
+          <Item floatingLabel>
+            <Icon active name='logo-github'/>
+            <Label>{ I18n.t('common.github') }</Label>
+            <Input
+              onChangeText={ text => this.handleFieldChange(text, 'github') }
+              value={ this.state.github }
+            />
+          </Item>
+          <Item floatingLabel>
+            <Icon active name='paper'/>
+            <Label>{ I18n.t('common.news') }</Label>
+            <Input
+              onChangeText={ text => this.handleFieldChange(text, 'news') }
+              value={ this.state.news }
+            />
+          </Item>
         </Form>
         <Button success
                 rounded
@@ -76,7 +91,7 @@ class InvesteeLinks extends React.Component {
   handleSubmit = () => {
     this.props.save(this.state)
     this.props.onFill({
-      nextStep: InvesteeProductStage
+      nextStep: InvesteeTokenType
     })
   }
 

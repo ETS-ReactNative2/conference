@@ -33,12 +33,12 @@ export function uploadProfile () {
           country: '',
           description: investee.projectDescription,
           fundingStage: investee.fundingStage,
-          giveaway: '',
+          giveaway: investee.giveaway,
           notable: investee.teamMembers,
           name: investee.projectName,
           productStage: investee.productStage,
           tagline: investee.projectTagline,
-          tokenType: ''
+          tokenType: investee.tokenType
         })
       case 'investor':
         return await api.createInvestor({

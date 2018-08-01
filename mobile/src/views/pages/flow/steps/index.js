@@ -12,6 +12,8 @@ export { default as InvesteeTeamMembers } from './investee-team-members'
 export { default as InvesteeMoneySource } from './investee-money-source'
 export { default as InvesteeProjectSetup } from './investee-project-setup'
 export { default as InvesteeHiring } from './investee-hiring'
+export { default as InvesteeTokenType } from './investee-token-type'
+export { default as InvesteeGiveaway } from './investee-giveaway'
 
 export { default as CommonProfileOnboarding } from './common-profile-onboarding'
 export { default as CommonProfileType } from './common-profile-type'

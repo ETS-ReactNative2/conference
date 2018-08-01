@@ -55,6 +55,12 @@ export const REGION = [
   { slug: 'europe' }
 ]
 
+export const INVESTOR_NATIONALITY = [
+  { slug: 'anywhere' },
+  { slug: 'exclude_us' },
+  { slug: 'korea_only' }
+]
+
 export const TICKET_SIZES = [
   { id: 1, min: '0', max: '5000', label: '<5k' },
   { id: 2, min: '5000', max: '25000', label: '5k-25k' },
