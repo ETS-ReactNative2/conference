@@ -6,6 +6,33 @@
 	},
 	"item": [
 		{
+			"name": "/api-token-auth/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"foo@bar.baz\",\n    \"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api-token-auth/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api-token-auth",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/investors/",
 			"request": {
 				"method": "POST",
@@ -64,6 +91,9 @@
 		{
 			"name": "/users/",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -132,27 +162,6 @@
 			"response": []
 		},
 		{
-			"name": "/users/<id>/",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "{{HOST}}/api/users/1/",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"api",
-						"users",
-						"1",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "/schedule/",
 			"request": {
 				"method": "GET",
@@ -175,6 +184,38 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6bbb4974-d7bf-4bf1-a88a-d9e1b3d2e6f9",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "37abf6a4-ce8c-4027-9cf0-9adf8b945634",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

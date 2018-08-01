@@ -5,7 +5,6 @@ from django.http import HttpResponse
 from urlparse import parse_qs
 from . import models
 import logging
-import re
 
 log = logging.getLogger(__name__)
 

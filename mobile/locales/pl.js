@@ -11,7 +11,8 @@ export default {
     'title': '_PL_Login',
     'email_placeholder': '_PL_Enter email',
     'password_placeholder': '_PL_Enter password',
-    'button': '_PL_Log in'
+    'button': '_PL_Log in',
+    'spinner_text': '_PL_Logging you in... Please wait'
   },
   'investor_page': {
     'title': '_PL_Investor details'
@@ -50,18 +51,22 @@ export default {
       'telegram': '_PL_Telegram'
     },
     'product_stage': {
-      'title': '_PL_Product stage',
-      'pre': '_PL_Pre-product',
-      'live': '_PL_Live product',
-      'revenue': '_PL_Live product + $ Revenue'
+      'title': '_PL_Product stage'
     },
     'funding_stage': {
       'title': '_PL_Funding stage'
     },
+    'token_type': {
+      'title': '_PL_Token type'
+    },
+    'giveaway': {
+      'title': '_PL_Giveaway'
+    },
     'money': {
       'title': '_PL_Money source',
       'need_money': '_PL_Are you looking for money?',
-      'amount': '_PL_How much money are you looking for?'
+      'amount': '_PL_How much money are you looking for?',
+      'nationality': '_PL_Investor nationality'
     },
     'ico': {
       'title': '_PL_ICO',
@@ -80,9 +85,21 @@ export default {
       'role': {
         'title': '_PL_Role'
       },
-      'keyword': {
-        'title': '_PL_Keywords',
-        'placeholder': '_PL_Select your skills'
+      'skills': {
+        'header': '_PL_What are your top 3 skills?',
+        'title': '_PL_Skills',
+        'placeholder': '_PL_What are your top 3 skills?',
+        'error': '_PL_Please select from 1 to 3 skills'
+      },
+      'traits': {
+        'header': '_PL_What are your top 3 traits?',
+        'title': '_PL_Traits',
+        'placeholder': '_PL_What are your top 3 traits?',
+        'error': '_PL_Please select from 1 to 3 traits'
+      },
+      'most_info': {
+        'label': '_PL_What do you know the most about?',
+        'error': '_PL_Please enter info'
       }
     },
     'employer': {
@@ -91,7 +108,11 @@ export default {
       },
       'keyword': {
         'title': '_PL_Keywords',
-        'placeholder': '_PL_Select your skills'
+        'placeholder': '_PL_Select your skills',
+        'full_time': '_PL_Part time possible?'
+      },
+      'payment': {
+        'title': '_PL_Type of payment'
       },
       'job': {
         'title': '_PL_Job',
@@ -124,13 +145,23 @@ export default {
         'title': '_PL_Funding slot for companies:'
       },
       'market_location': {
-        'title': '_PL_The companies should be based in:'
+        'title': '_PL_Where should the company be located?'
+      },
+      'giveaways': {
+        'title': '_PL_Giveaways'
+      },
+      'product_stage': {
+        'title': '_PL_Product stage'
+      },
+      'industries': {
+        'title': '_PL_Which industries you\'re instrested in?'
       }
     },
     'common': {
       'profile_onboarding': {
         'title': '_PL_Profile Onboarding',
-        'name': '_PL_Name',
+        'first_name': '_PL_First name',
+        'last_name': '_PL_Last name',
         'titleField': '_PL_Title',
         'company': '_PL_Company'
       },
@@ -156,12 +187,37 @@ export default {
       'sales': '_PL_Sales',
       'founder': '_PL_Founder'
     },
+    'roles_job': {
+      'developer': '_PL_Developer job listing',
+      'marketing': '_PL_Marketing job listing',
+      'ceo': '_PL_CEO job listing',
+      'sales': '_PL_Sales job listing',
+      'founder': '_PL_Founder job listing'
+    },
     'twitter': '_PL_Twitter',
     'facebook': '_PL_Facebook',
+    'telegram': '_PL_Telegram',
+    'linkedin': '_PL_Linkedin',
+    'personal_twitter': '_PL_Personal Twitter',
+    'personal_facebook': '_PL_Personal Facebook',
+    'personal_telegram': '_PL_Personal Telegram',
+    'personal_linkedin': '_PL_Personal Linkedin',
+    'github': '_PL_Github',
+    'news': '_PL_News publication about your project',
     'nationality': {
       'american': '_PL_American',
       'korean': '_PL_Korean',
       'polish': '_PL_Polish'
+    },
+    'regions': {
+      'anywhere': '_PL_Anywhere',
+      'anywhere_except_us': '_PL_Anywhere except US',
+      'korea_only': '_PL_Korea only'
+    },
+    'payment': {
+      'fiat': '_PL_Fiat money',
+      'tokens': '_PL_Tokens',
+      'equity': '_PL_Equity'
     },
     'country': {
       'usa': 'USA',
@@ -177,6 +233,59 @@ export default {
       'seed': '_PL_Seed',
       'pre': '_PL_Pre ICO',
       'post': '_PL_Post ICO'
+    },
+    'product_stages': {
+      'pre': '_PL_Pre-product',
+      'live': '_PL_Live product',
+      'revenue': '_PL_Live product + $ Revenue'
+    },
+    'giveaways': {
+      'token': '_PL_Token',
+      'equity': '_PL_Equity',
+      'both': '_PL_Both'
+    },
+    'industries': {
+      'accounting': 'Accounting',
+      'agriculture': 'Agriculture',
+      'airlines': 'Airlines',
+      'architecture': 'Architecture',
+      'art': 'Art',
+      'automotive': 'Automotive',
+      'banking': 'Banking',
+      'bars_restaurants': 'Bars & Restaurants',
+      'broadcasting': 'Broadcasting',
+      'casinos': 'Casinos / Gambling',
+      'construction': 'Construction',
+      'defense': 'Defense',
+      'education': 'Education',
+      'electronics': 'Electronics',
+      'energy': 'Energy',
+      'entertainment': 'Entertainment',
+      'environment': 'Environment',
+      'finance': 'Finance',
+      'green_energy': 'Green Energy',
+      'hardware': 'Hardware',
+      'health': 'Health',
+      'human_resources': 'Human Resources',
+      'human_rights': 'Human Rights',
+      'insurance': 'Insurance',
+      'internet': 'Internet',
+      'legal': 'Legal',
+      'manufacturing': 'Manufacturing',
+      'marketing': 'Marketing',
+      'non_profit': 'Non-Profit',
+      'pharmaceuticals': 'Pharmaceuticals',
+      'policy': 'Policy',
+      'public_relations': 'Public Relations',
+      'publishing': 'Publishing',
+      'real_estate': 'Real Estate',
+      'retail': 'Retail',
+      'sales': 'Sales',
+      'sports': 'Sports',
+      'supply_chain': 'Supply Chain',
+      'transportation': 'Transportation',
+      'venture_capital': 'Venture Capital',
+      'other': 'Other'
     },
     'months': {
       '0': 'Styczeń',
@@ -196,7 +305,8 @@ export default {
       'incorrect_email': '_PL_Please enter correct email address',
       'incorrect_password': '_PL_Password must be at least 8 characters long',
       'incorrect_phone_number': '_PL_Please enter correct phone number',
-      'incorrect_profile_name': '_PL_Name must be at least 4 characters long',
+      'incorrect_profile_first_name': '_PL_First name must be at least 3 characters long',
+      'incorrect_profile_last_name': '_PL_Last name must be at least 3 characters long',
       'incorrect_project_name': '_PL_Project name must be at least 3 characters long',
       'incorrect_project_tagline': '_PL_Please enter project tagline',
       'incorrect_project_description': '_PL_Plesae enter project description',

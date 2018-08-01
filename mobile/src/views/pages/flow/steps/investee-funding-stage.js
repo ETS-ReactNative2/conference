@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { FUNDING_STAGES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
-import { InvesteeTeamMembers } from './index'
+import { InvesteeGiveaway, InvesteeTeamMembers } from './index'
 
 class InvesteeFundingStage extends React.Component {
   constructor (props) {
@@ -64,7 +64,7 @@ class InvesteeFundingStage extends React.Component {
       fundingStage: this.state.selected
     })
     this.props.onFill({
-      nextStep: InvesteeTeamMembers
+      nextStep: InvesteeGiveaway
     })
   }
 

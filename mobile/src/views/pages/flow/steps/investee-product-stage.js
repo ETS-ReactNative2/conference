@@ -26,7 +26,7 @@ class InvesteeProductStage extends React.Component {
               return (
                 <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(index) }>
                   <Left>
-                    <Text>{ I18n.t(`flow_page.product_stage.${option.slug}`) }</Text>
+                    <Text>{ I18n.t(`common.product_stages.${option.slug}`) }</Text>
                   </Left>
                   <Right>
                     <Radio

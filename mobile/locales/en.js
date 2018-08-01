@@ -11,7 +11,8 @@ export default {
     'title': 'Login',
     'email_placeholder': 'Enter email',
     'password_placeholder': 'Enter password',
-    'button': 'Log in'
+    'button': 'Log in',
+    'spinner_text': 'Logging you in... Please wait'
   },
   'investor_page': {
     'title': 'Investor details'
@@ -55,18 +56,22 @@ export default {
       'telegram': 'Telegram'
     },
     'product_stage': {
-      'title': 'Product stage',
-      'pre': 'Pre-product',
-      'live': 'Live product',
-      'revenue': 'Live product + $ Revenue'
+      'title': 'Product stage'
     },
     'funding_stage': {
       'title': 'Funding stage'
     },
+    'token_type': {
+      'title': 'Token type'
+    },
+    'giveaway': {
+      'title': 'Giveaway'
+    },
     'money': {
       'title': 'Money source',
       'need_money': 'Are you looking for money?',
-      'amount': 'How much money are you looking for?'
+      'amount': 'How much money are you looking for?',
+      'nationality': 'Investor nationality'
     },
     'ico': {
       'title': 'ICO',
@@ -85,18 +90,34 @@ export default {
       'role': {
         'title': 'Role'
       },
-      'keyword': {
-        'title': 'Keywords',
-        'placeholder': 'Select your skills'
+      'skills': {
+        'header': 'What are your top 3 skills?',
+        'title': 'Skills',
+        'placeholder': 'What are your top 3 skills?',
+        'error': 'Please select from 1 to 3 skills'
+      },
+      'traits': {
+        'header': 'What are your top 3 traits?',
+        'title': 'Traits',
+        'placeholder': 'What are your top 3 traits?',
+        'error': 'Please select from 1 to 3 traits'
+      },
+      'most_info': {
+        'label': 'What do you know the most about?',
+        'error': 'Please enter info'
       }
     },
     'employer': {
       'role': {
-        'title': 'Role'
+        'title': 'Select the roles for which you\'re hiring'
       },
       'keyword': {
         'title': 'Keywords',
-        'placeholder': 'Select your skills'
+        'placeholder': 'Select skills for job listing',
+        'full_time': 'Part time possible?'
+      },
+      'payment': {
+        'title': 'Type of payment'
       },
       'job': {
         'title': 'Job',
@@ -124,13 +145,23 @@ export default {
         'title': 'What is your funding stage?'
       },
       'market_location': {
-        'title': 'The companies should be based in:'
+        'title': 'Where should the company be located?'
+      },
+      'giveaways': {
+        'title': 'Giveaways'
+      },
+      'product_stage': {
+        'title': 'Product stage'
+      },
+      'industries': {
+        'title': 'Which industries you\'re instrested in?'
       }
     },
     'common': {
       'profile_onboarding': {
         'title': 'Profile Onboarding',
-        'name': 'Name',
+        'first_name': 'First name',
+        'last_name': 'Last name',
         'titleField': 'Title',
         'company': 'Company'
       },
@@ -157,34 +188,34 @@ export default {
       'sales': 'Sales',
       'founder': 'Founder'
     },
+    'roles_job': {
+      'developer': 'Developer job listing',
+      'marketing': 'Marketing job listing',
+      'ceo': 'CEO job listing',
+      'sales': 'Sales job listing',
+      'founder': 'Founder job listing'
+    },
     'twitter': 'Twitter',
     'facebook': 'Facebook',
+    'telegram': 'Telegram',
+    'linkedin': 'Linkedin',
+    'personal_twitter': 'Personal Twitter',
+    'personal_facebook': 'Personal Facebook',
+    'personal_telegram': 'Personal Telegram',
+    'personal_linkedin': 'Personal Linkedin',
+    'github': 'Github',
+    'news': 'News publication about your project',
     'nationality': {
       'american': 'American',
       'korean': 'Korean',
       'polish': 'Polish'
     },
+    'regions': {
+      'anywhere': '_PL_Anywhere',
+      'anywhere_except_us': '_PL_Anywhere except US',
+      'korea_only': '_PL_Korea only'
+    },
     'country': {
-      'usa': 'USA',
-      'korea': 'Korea',
-      'poland': 'Poland',
-      'north_america': 'North America',
-      'south_america': 'South America',
-      'africa': 'Africa',
-      'asia': 'Asia',
-      'europe': 'Europe'
-    },
-    'region': {
-      'usa': 'USA',
-      'korea': 'Korea',
-      'poland': 'Poland',
-      'north_america': 'North America',
-      'south_america': 'South America',
-      'africa': 'Africa',
-      'asia': 'Asia',
-      'europe': 'Europe'
-    },
-    'region': {
       'usa': 'USA',
       'korea': 'Korea',
       'poland': 'Poland',
@@ -199,6 +230,11 @@ export default {
       'pre': 'Pre ICO',
       'post': 'Post ICO'
     },
+    'giveaways': {
+      'token': 'Token',
+      'equity': 'Equity',
+      'both': 'Both'
+    },
     'product_stages': {
       'pre': 'Pre-product',
       'live': 'Live product',
@@ -209,10 +245,53 @@ export default {
       'app_tokens': 'App Tokens',
       'security_tokens': 'Security Tokens'
     },
-    'giveaway': {
-      'token': 'Tokens',
-      'equity': 'Equity',
-      'both': 'Both'
+    'industries': {
+      'accounting': 'Accounting',
+      'agriculture': 'Agriculture',
+      'airlines': 'Airlines',
+      'architecture': 'Architecture',
+      'art': 'Art',
+      'automotive': 'Automotive',
+      'banking': 'Banking',
+      'bars_restaurants': 'Bars & Restaurants',
+      'broadcasting': 'Broadcasting',
+      'casinos': 'Casinos / Gambling',
+      'construction': 'Construction',
+      'defense': 'Defense',
+      'education': 'Education',
+      'electronics': 'Electronics',
+      'energy': 'Energy',
+      'entertainment': 'Entertainment',
+      'environment': 'Environment',
+      'finance': 'Finance',
+      'green_energy': 'Green Energy',
+      'hardware': 'Hardware',
+      'health': 'Health',
+      'human_resources': 'Human Resources',
+      'human_rights': 'Human Rights',
+      'insurance': 'Insurance',
+      'internet': 'Internet',
+      'legal': 'Legal',
+      'manufacturing': 'Manufacturing',
+      'marketing': 'Marketing',
+      'non_profit': 'Non-Profit',
+      'pharmaceuticals': 'Pharmaceuticals',
+      'policy': 'Policy',
+      'public_relations': 'Public Relations',
+      'publishing': 'Publishing',
+      'real_estate': 'Real Estate',
+      'retail': 'Retail',
+      'sales': 'Sales',
+      'sports': 'Sports',
+      'supply_chain': 'Supply Chain',
+      'transportation': 'Transportation',
+      'venture_capital': 'Venture Capital',
+      'other': 'Other'
+    },
+    'payment': {
+      'fiat': 'Fiat money',
+      'tokens': 'Tokens',
+      'equity': 'Equity'
     },
     'months': {
       '0': 'January',
@@ -232,7 +311,8 @@ export default {
       'incorrect_email': 'Please enter correct email address',
       'incorrect_password': 'Password must be at least 8 characters long',
       'incorrect_phone_number': 'Please enter correct phone number',
-      'incorrect_profile_name': 'Name must be at least 4 characters long',
+      'incorrect_profile_first_name': 'First name must be at least 3 characters long',
+      'incorrect_profile_last_name': 'Last name must be at least 3 characters long',
       'incorrect_project_name': 'Project name must be at least 3 characters long',
       'incorrect_project_tagline': 'Please enter project tagline',
       'incorrect_project_description': 'Plesae enter project description',

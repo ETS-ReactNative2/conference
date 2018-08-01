@@ -1,29 +1,41 @@
-import { SAVE_PROFILE_INFO,
+import { ROLES } from '../enums'
+import {
+  SAVE_EMPLOYEE,
   SAVE_INVESTOR,
   SAVE_PROFILE_EMPLOYER,
   SAVE_PROFILE_INVESTEE,
-  SAVE_EMPLOYEE } from './action-types'
+  SAVE_PROFILE_INFO,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR } from './action-types'
 
 const initialState = {
+  auth: {
+    login: {
+      isError: false,
+      errorMessage: ''
+    }
+  },
   profile: {
-    name: '',
+    firstName: '',
+    lastName: '',
     title: '',
     company: '',
     twitter: '',
     facebook: '',
+    telegram: '',
+    linkedin: '',
     type: ''
   },
   investor: {
+    productStages: [],
+    giveaways: [],
     companyLocation: '',
     nationality: '',
     investments: [],
-    ticketSize: {
-      id: -1,
-      min: '',
-      max: ''
-    },
+    ticketSizes: [],
     stages: [],
-    marketLocations: []
+    marketLocation: -1,
+    industries: []
   },
   investee: {
     projectName: '',
@@ -33,35 +45,66 @@ const initialState = {
     whitepaper: '',
     telegram: '',
     twitter: '',
+    github: '',
+    news: '',
     productStage: -1,
     fundingStage: -1,
     hiring: false,
     teamMembers: '',
     money: false,
-    amount: ''
+    amount: '',
+    tokenType: -1,
+    giveaway: -1,
+    investorNationality: 0
   },
   employer: {
-    role: -1,
-    keywords: [],
-    link: '',
-    description: '',
-    min: '0',
-    max: '0'
+    roles: []
   },
   employee: {
     role: '',
-    keywords: []
+    skills: [],
+    traits: [],
+    mostInfo: ''
   }
 }
 
 export function signUpReducer (state = initialState, action) {
   switch (action.type) {
+    case LOGIN_USER_SUCCESS:
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          login: {
+            ...state.auth.login,
+            isError: false,
+            errorMessage: ''
+          }
+        }
+      }
+    case LOGIN_USER_ERROR: {
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          login: {
+            ...state.auth.login,
+            isError: true,
+            errorMessage: action.error
+          }
+        }
+      }
+    }
     case SAVE_PROFILE_INFO:
       return {
         ...state,
         profile: {
           ...state.profile,
           ...action.profileInfo
+        },
+        investee: {
+          ...state.investee,
+          projectName: action.profileInfo.company ? action.profileInfo.company : state.investee.projectName
         }
       }
     case SAVE_INVESTOR:
@@ -69,7 +112,7 @@ export function signUpReducer (state = initialState, action) {
         ...state,
         investor: {
           ...state.investor,
-          ...action.data
+          ...action.investorData
         }
       }
     case SAVE_PROFILE_INVESTEE:
@@ -81,6 +124,29 @@ export function signUpReducer (state = initialState, action) {
         }
       }
     case SAVE_PROFILE_EMPLOYER:
+      if (action.employerInfo.roles) {
+        const jobs = {}
+        action.employerInfo.roles.forEach(role => {
+          const jobName = ROLES[ role ].slug
+          jobs[ jobName ] = state.employer[ jobName ] ? state.employer[ jobName ] : {
+            keywords: [],
+            link: '',
+            description: '',
+            partTime: false,
+            payments: []
+          }
+        })
+
+        return {
+          ...state,
+          employer: {
+            ...jobs,
+            ...state.employer,
+            roles: action.employerInfo.roles
+          }
+        }
+      }
+
       return {
         ...state,
         employer: {
@@ -97,6 +163,6 @@ export function signUpReducer (state = initialState, action) {
         }
       }
     default:
-      return state;
+      return state
   }
 }

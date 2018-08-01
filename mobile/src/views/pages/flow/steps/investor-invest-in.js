@@ -39,18 +39,18 @@ class InvestorInvestIn extends React.Component {
     return (
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.invest_in.title') }</Text>
-        { TOKEN_TYPES.map((singleInvestment, index) => {
+        { TOKEN_TYPES.map((singleInvestment) => {
           return (
             <ListItem
-              onPress={ () => this.handleCheckboxClick(singleInvestment.slug) }
+              onPress={ () => this.handleCheckboxClick(singleInvestment.index) }
               key={ `investment-item-${singleInvestment.slug}` }>
               <Left>
                 <Text>{ I18n.t(`common.token_types.${singleInvestment.slug}`) }</Text>
               </Left>
               <Right>
                 <Radio
-                  onPress={ () => this.handleCheckboxClick(singleInvestment.slug) }
-                  selected={ this.isCheckboxSelected(singleInvestment.slug) }/>
+                  onPress={ () => this.handleCheckboxClick(singleInvestment.index) }
+                  selected={ this.isCheckboxSelected(singleInvestment.index) }/>
               </Right>
             </ListItem>
           )

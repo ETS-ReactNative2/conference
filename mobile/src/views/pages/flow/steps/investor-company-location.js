@@ -8,18 +8,6 @@ import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { InvestorInvestIn } from './index'
 
-const locationOptions = [
-  'usa',
-  'korea',
-  'poland'
-]
-
-const nationalityOptions = [
-  'american',
-  'korean',
-  'polish'
-]
-
 class InvestorCompanyLocation extends React.Component {
   constructor (props) {
     super(props)
@@ -44,7 +32,6 @@ class InvestorCompanyLocation extends React.Component {
         <Text style={ { marginTop: 16, marginBottom: 16 } }>{ I18n.t('flow_page.investor.company_location.localization') }</Text>
         <CountryPicker
           onChange={ value => {
-            console.log({ value })
             this.setState({ location: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
           } }
           filterable

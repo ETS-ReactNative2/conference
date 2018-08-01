@@ -9,37 +9,37 @@ class Filters extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      fundingStages: {
-        show: this.props.defaults.fundingStages ? this.props.defaults.fundingStages.length > 0 : false,
-        values: this.props.defaults.fundingStages ? this.props.defaults.fundingStages : []
+      fundingStage: {
+        show: this.props.defaults.fundingStage ? this.props.defaults.fundingStage.length > 0 : false,
+        values: this.props.defaults.fundingStage ? this.props.defaults.fundingStage : []
       },
       giveaway: {
         show: this.props.defaults.giveaway ? this.props.defaults.giveaway.length > 0 : false,
         values: this.props.defaults.giveaway ? this.props.defaults.giveaway : []
       },
-      productStages: {
-        show: this.props.defaults.productStages ? this.props.defaults.productStages.length > 0 : false,
-        values: this.props.defaults.productStages ? this.props.defaults.productStages : []
+      productStage: {
+        show: this.props.defaults.productStage ? this.props.defaults.productStage.length > 0 : false,
+        values: this.props.defaults.productStage ? this.props.defaults.productStage : []
       },
-      tokenTypes: {
-        show: this.props.defaults.tokenTypes ? this.props.defaults.tokenTypes.length > 0 : false,
-        values: this.props.defaults.tokenTypes ? this.props.defaults.tokenTypes : []
+      tokenType: {
+        show: this.props.defaults.tokenType ? this.props.defaults.tokenType.length > 0 : false,
+        values: this.props.defaults.tokenType ? this.props.defaults.tokenType : []
       },
       region: {
-        show: this.props.defaults ? this.props.defaults.region.length > 0 : false,
-        values: this.props.defaults ? this.props.defaults.region : []
+        show: this.props.defaults.region ? this.props.defaults.region.length > 0 : false,
+        values: this.props.defaults.region ? this.props.defaults.region : []
       }
     }
   }
 
   handleSubmit = () => {
-    const { region, tokenTypes, productStages, giveaway, fundingStages } = this.state
+    const { region, tokenType, productStage, giveaway, fundingStage } = this.state
     this.props.onSearch({
       region: region.show ? region.values : [],
-      tokenTypes: tokenTypes.show ? tokenTypes.values : [],
-      productStages: productStages.show ? productStages.values : [],
+      tokenType: tokenType.show ? tokenType.values : [],
+      productStage: productStage.show ? productStage.values : [],
       giveaway: giveaway.show ? giveaway.values : [],
-      fundingStages: fundingStages.show ? fundingStages.values : []
+      fundingStage: fundingStage.show ? fundingStage.values : []
     })
   }
 
@@ -87,17 +87,17 @@ class Filters extends React.Component {
           </Right>
         </ListItem>
         { filter.show &&
-        options.map((option, index) => {
+        options.map((option) => {
           return (
             <ListItem style={ { width: '100%' } }
-                      onPress={ () => this.handleCheckboxClick(field, index) }
-                      key={ `${field}}.${option.slug}` }>
+                      onPress={ () => this.handleCheckboxClick(field, option.index) }
+                      key={ `${field}.${option.slug}` }>
               <Left>
                 <Text>{ I18n.t(`common.${label}.${option.slug}`) }</Text>
               </Left>
               <Right>
                 <Radio
-                  selected={ this.isSelected(field, index) }/>
+                  selected={ this.isSelected(field, option.index) }/>
               </Right>
             </ListItem>
           )
@@ -110,13 +110,13 @@ class Filters extends React.Component {
   render () {
     return (
       <View>
-        { this.renderFilter('fundingStages',
+        { this.renderFilter('fundingStage',
           { options: FUNDING_STAGES, title: 'Funding stage', label: 'funding_stages' }) }
         { this.renderFilter('giveaway',
           { options: GIVEAWAY_TYPES, title: 'Giveaway', label: 'giveaway' }) }
-        { this.renderFilter('productStages',
+        { this.renderFilter('productStage',
           { options: PRODUCT_STAGES, title: 'Product stages', label: 'product_stages' }) }
-        { this.renderFilter('tokenTypes',
+        { this.renderFilter('tokenType',
           { options: TOKEN_TYPES, title: 'Token types', label: 'token_types' }) }
         { this.renderFilter('region',
           { options: REGION, title: 'Region', label: 'region' }) }

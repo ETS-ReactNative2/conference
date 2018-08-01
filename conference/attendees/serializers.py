@@ -11,11 +11,10 @@ class InvestorSerializer(serializers.ModelSerializer):
             'description',
             'funding_stages',
             'giveaways',
-            'max_ticket',
-            'min_ticket',
             'name',
             'product_stages',
             'tagline',
+            'ticket_sizes',
             'token_types',
         )
 

@@ -11,7 +11,8 @@ export default {
     'title': 'Einloggen',
     'email_placeholder': '_DE_Enter email',
     'password_placeholder': '_DE_Enter password',
-    'button': '_DE_Log in'
+    'button': '_DE_Log in',
+    'spinner_text': '_DE_Logging you in... Please wait'
   },
   'investor_page': {
     'title': '_DE_Investor details'
@@ -50,18 +51,22 @@ export default {
       'telegram': '_DE_Telegram'
     },
     'product_stage': {
-      'title': '_DE_Product stage',
-      'pre': '_DE_Pre-product',
-      'live': '_DE_Live product',
-      'revenue': '_DE_Live product + $ Revenue'
+      'title': '_DE_Product stage'
     },
     'funding_stage': {
       'title': '_DE_Funding stage'
     },
+    'token_type': {
+      'title': '_DE_Token type'
+    },
+    'giveaway': {
+      'title': '_DE_Giveaway'
+    },
     'money': {
       'title': '_DE__Money source',
       'need_money': '_DE__Are you looking for money?',
-      'amount': '_DE__How much money are you looking for?'
+      'amount': '_DE__How much money are you looking for?',
+      'nationality': '_DE_Investor nationality'
     },
     'ico': {
       'title': '_DE__ICO',
@@ -80,9 +85,21 @@ export default {
       'role': {
         'title': '_DE_Role'
       },
-      'keyword': {
-        'title': '_DE_Keywords',
-        'placeholder': '_DE_Select your skills'
+      'skills': {
+        'header': '_DE_What are your top 3 skills?',
+        'title': '_DE_Skills',
+        'placeholder': '_DE_What are your top 3 skills?',
+        'error': '_DE_Please select from 1 to 3 skills'
+      },
+      'traits': {
+        'header': '_DE_What are your top 3 traits?',
+        'title': '_DE_Traits',
+        'placeholder': '_DE_What are your top 3 traits?',
+        'error': '_DE_Please select from 1 to 3 traits'
+      },
+      'most_info': {
+        'label': '_DE_What do you know the most about?',
+        'error': '_DE_Please enter info'
       }
     },
     'employer': {
@@ -91,7 +108,11 @@ export default {
       },
       'keyword': {
         'title': '_DE_Keywords',
-        'placeholder': '_DE_Select your skills'
+        'placeholder': '_DE_Select your skills',
+        'full_time': '_DE_Part time possible?'
+      },
+      'payment': {
+        'title': '_DE_Type of payment'
       },
       'job': {
         'title': '_DE_Job',
@@ -124,13 +145,23 @@ export default {
         'title': '_DE_Funding slot for companies:'
       },
       'market_location': {
-        'title': '_DE_The companies should be based in:'
+        'title': '_DE_Where should the company be located?'
+      },
+      'giveaways': {
+        'title': '_DE_Giveaways'
+      },
+      'product_stage': {
+        'title': '_DE_Product stage'
+      },
+      'industries': {
+        'title': '_DE_Which industries you\'re instrested in?'
       }
     },
     'common': {
       'profile_onboarding': {
         'title': '_DE_Profile Onboarding',
-        'name': '_DE_Name',
+        'first_name': '_DE_First name',
+        'last_name': '_DE_Last name',
         'titleField': '_DE_Title',
         'company': '_DE_Company'
       },
@@ -153,15 +184,37 @@ export default {
       'developer': '_DE_Developer',
       'marketing': '_DE_Marketing',
       'ceo': '_DE_CEO',
-      'sales': '_DE_Sales',
+      'sales': '_DE_Sales','token_type': {
+        'title': 'Token type'
+      },
       'founder': '_DE_Founder'
+    },
+    'roles_job': {
+      'developer': '_DE_Developer job listing',
+      'marketing': '_DE_Marketing job listing',
+      'ceo': '_DE_CEO job listing',
+      'sales': '_DE_Sales job listing',
+      'founder': '_DE_Founder job listing'
     },
     'twitter': '_DE_Twitter',
     'facebook': '_DE_Facebook',
+    'telegram': '_DE_Telegram',
+    'linkedin': '_DE_Linkedin',
+    'personal_twitter': '_DE_Personal Twitter',
+    'personal_facebook': '_DE_Personal Facebook',
+    'personal_telegram': '_DE_Personal Telegram',
+    'personal_linkedin': '_DE_Personal Linkedin',
+    'github': '_DE_Github',
+    'news': '_DE_News publication about your project',
     'nationality': {
       'american': '_DE_American',
       'korean': '_DE_Korean',
       'polish': '_DE_Polish'
+    },
+    'regions': {
+      'anywhere': '_DE_Anywhere',
+      'anywhere_except_us': '_DE_Anywhere except US',
+      'korea_only': '_DE_Korea only'
     },
     'country': {
       'usa': 'USA',
@@ -177,6 +230,64 @@ export default {
       'seed': '_DE_Seed',
       'pre': '_DE_Pre ICO',
       'post': '_DE_Post ICO'
+    },
+    'product_stages': {
+      'pre': '_DE_Pre-product',
+      'live': '_DE_Live product',
+      'revenue': '_DE_Live product + $ Revenue'
+    },
+    'giveaways': {
+      'token': '_DE_Token',
+      'equity': '_DE_Equity',
+      'both': '_DE_Both'
+    },
+    'industries': {
+      'accounting': 'Accounting',
+      'agriculture': 'Agriculture',
+      'airlines': 'Airlines',
+      'architecture': 'Architecture',
+      'art': 'Art',
+      'automotive': 'Automotive',
+      'banking': 'Banking',
+      'bars_restaurants': 'Bars & Restaurants',
+      'broadcasting': 'Broadcasting',
+      'casinos': 'Casinos / Gambling',
+      'construction': 'Construction',
+      'defense': 'Defense',
+      'education': 'Education',
+      'electronics': 'Electronics',
+      'energy': 'Energy',
+      'entertainment': 'Entertainment',
+      'environment': 'Environment',
+      'finance': 'Finance',
+      'green_energy': 'Green Energy',
+      'hardware': 'Hardware',
+      'health': 'Health',
+      'human_resources': 'Human Resources',
+      'human_rights': 'Human Rights',
+      'insurance': 'Insurance',
+      'internet': 'Internet',
+      'legal': 'Legal',
+      'manufacturing': 'Manufacturing',
+      'marketing': 'Marketing',
+      'non_profit': 'Non-Profit',
+      'pharmaceuticals': 'Pharmaceuticals',
+      'policy': 'Policy',
+      'public_relations': 'Public Relations',
+      'publishing': 'Publishing',
+      'real_estate': 'Real Estate',
+      'retail': 'Retail',
+      'sales': 'Sales',
+      'sports': 'Sports',
+      'supply_chain': 'Supply Chain',
+      'transportation': 'Transportation',
+      'venture_capital': 'Venture Capital',
+      'other': 'Other'
+    },
+    'payment': {
+      'fiat': '_DE_Fiat money',
+      'tokens': '_DE_Tokens',
+      'equity': '_DE_Equity'
     },
     'months': {
       '0': 'Januar',
@@ -196,7 +307,8 @@ export default {
       'incorrect_email': '_DE_Please enter correct email address',
       'incorrect_password': '_DE_Password must be at least 8 characters long',
       'incorrect_phone_number': '_DE_Please enter correct phone number',
-      'incorrect_profile_name': '_DE_Name must be at least 4 characters long',
+      'incorrect_profile_first_name': '_DE_First name must be at least 3 characters long',
+      'incorrect_profile_last_name': '_DE_Last name must be at least 3 characters long',
       'incorrect_project_name': '_DE_Project name must be at least 3 characters long',
       'incorrect_project_tagline': '_DE_Please enter project tagline',
       'incorrect_project_description': '_DE_Plesae enter project description',

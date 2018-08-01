@@ -10,9 +10,11 @@ import FlowPage from '../views/pages/flow/flow-page'
 import InvestorPage from '../views/pages/investor/investor-page'
 import LoginPage from '../views/pages/login/login-page'
 import NotificationsPage from '../views/pages/notifications/notifications-page'
+import ProjectPage from '../views/pages/project/project-page'
 import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
+import { navigationService } from '../services'
 
 const PAGES_NAMES = {
   WELCOME_PAGE: 'WELCOME_PAGE',
@@ -112,7 +114,7 @@ const AppStackNavigator = createStackNavigator({
     })
   },
   PROJECT_PAGE: {
-  screen: InvestorPage,
+    screen: ProjectPage,
     navigationOptions: () => ({
     title: I18n.t('project_page.title'),
     ...commonNavBarStyle
@@ -123,7 +125,7 @@ const AppStackNavigator = createStackNavigator({
 const AppStackNavigatorWithSpinner = ({ isLoading, message }) => {
   return (
     <Container style={ styles.container }>
-      <AppStackNavigator styles={ { position: 'absolute' } }/>
+      <AppStackNavigator ref={navigatorRef => { navigationService.setTopLevelNavigator(navigatorRef) }} styles={ { position: 'absolute' } }/>
       { isLoading && (
         <View style={ styles.spinnerContainer }>
           <Spinner color={ '#603695' }/>

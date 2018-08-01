@@ -4,68 +4,50 @@ import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-
-const locations = [
-  'korea',
-  'africa',
-  'asia',
-  'europe',
-  'north_america',
-  'south_america'
-]
+import { REGIONS } from '../../../../enums'
+import { InvestorIndustries } from './index'
 
 class InvestorMarketLocation extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      locations: this.props.marketLocations
+      location: this.props.marketLocation
     }
   }
 
   handleSubmit = () => {
-    this.props.saveInvestor({ marketLocations: this.state.locations })
-    this.props.onFill({ done: true })
+    this.props.saveInvestor({ marketLocation: this.state.location })
+    this.props.onFill({ nextStep: InvestorIndustries })
   }
 
-  handleCheckboxClick = fieldName => {
-    let locations = [ ...this.state.locations ]
-    const locationIndex = locations.indexOf(fieldName)
-    if (locationIndex !== -1) {
-      locations = locations.filter(singleLocation => singleLocation !== fieldName)
-    } else {
-      locations.push(fieldName)
-    }
-    this.setState({ locations })
-  }
-
-  isCheckboxSelected = fieldName => {
-    return this.state.locations.indexOf(fieldName) !== -1
+  handleCheckboxClick = newValue => {
+    this.setState({ location: newValue});
   }
 
   render () {
     return (
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.market_location.title') }</Text>
-        { locations.map(singleLocation => {
+        { REGIONS.map((singleRegion) => {
           return (
             <ListItem
-              onPress={ () => this.handleCheckboxClick(singleLocation) }
-              key={ `location-item-${singleLocation}` }>
+              onPress={ () => this.handleCheckboxClick(singleRegion.index) }
+              key={ `market-location-${singleRegion.slug}`}>
               <Left>
-                <Text>{ I18n.t(`common.country.${singleLocation}`) }</Text>
+                <Text>{ I18n.t(`common.regions.${singleRegion.slug}`) }</Text>
               </Left>
               <Right>
                 <Radio
-                  onPress={ () => this.handleCheckboxClick(singleLocation) }
-                  selected={ this.isCheckboxSelected(singleLocation) }/>
+                  onPress={ () => this.handleCheckboxClick(singleRegion.index) }
+                  selected={ this.state.location === singleRegion.index }/>
               </Right>
             </ListItem>
-          )
-        }) }
+          )})
+        }
         <Button success
                 rounded
                 block
-                disabled={ this.state.locations.length === 0 }
+                disabled={ this.state.location === -1}
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
@@ -81,7 +63,7 @@ InvestorMarketLocation.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    marketLocations: state.signUp.investor.marketLocations
+    marketLocation: state.signUp.investor.marketLocation
   }
 }
 

@@ -25,7 +25,7 @@ class FlowPage extends React.Component {
       PreviousSteps: []
     };
     BackHandler.addEventListener(
-      "hardwareBackPress",
+      'hardwareBackPress',
       this.onBackButtonPressAndroid
     );
   }

@@ -62,10 +62,10 @@ class SearchPage extends React.Component {
         <Tabs
           onChangeTab={ this.onTabChange }>
           <Tab heading={ I18n.t('search_page.investor_header') }>
-            <InvestorsList profiles={ investors } onClick={ this.handleInvestorClick } onMark={ () => {} }/>
+            <InvestorsList onClick={ this.handleInvestorClick }/>
           </Tab>
           <Tab heading={ I18n.t('search_page.projects_header') }>
-            <ProjectsList profiles={ projects } onMark={() => {}} onClick={ this.handleProjectClick}/>
+            <ProjectsList onClick={ this.handleProjectClick }/>
           </Tab>
         </Tabs>
       </Container>

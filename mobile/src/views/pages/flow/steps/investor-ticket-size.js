@@ -3,23 +3,15 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { TICKET_SIZES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { InvestorCompanyFundingStage } from './index'
-
-const ticketSizes = [
-  { id: 0, min: '0', max: '5000', label: '<5k' },
-  { id: 1, min: '5000', max: '25000', label: '5k-25k' },
-  { id: 2, min: '25000', max: '100000', label: '25k-100k' },
-  { id: 3, min: '100000', max: '500000', label: '100k-500k' },
-  { id: 4, min: '500000', max: '1000000', label: '500k-1000k' },
-  { id: 5, min: '1000000', max: Number.POSITIVE_INFINITY, label: '>1000k' }
-]
 
 class InvestorTicketSize extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: this.props.ticketSize || -1
+      ticketSizes: this.props.ticketSizes || []
     }
   }
 
@@ -29,16 +21,16 @@ class InvestorTicketSize extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.ticket_size.title') }</Text>
         <Content>
           {
-            ticketSizes.map((option, index) => {
+            TICKET_SIZES.map(({index, label}) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.id } onPress={ () => this.handleChange(index) }>
+                <ListItem style={ { width: '100%' } } key={ index } onPress={ () => this.handleCheckboxClick(index) }>
                   <Left>
-                    <Text>{ option.label }</Text>
+                    <Text>{ label }</Text>
                   </Left>
                   <Right>
                     <Radio
-                      onPress={ () => this.handleChange(index) }
-                      selected={ this.state.selected === index }/>
+                      onPress={ () => this.handleCheckboxClick(index) }
+                      selected={ this.isCheckboxSelected(index) }/>
                   </Right>
                 </ListItem>
               )
@@ -57,15 +49,25 @@ class InvestorTicketSize extends React.Component {
     )
   }
 
-  handleSubmit = () => {
-    this.props.saveInvestor({ ticketSize: ticketSizes.find(size => size.id === this.state.selected) })
-    this.props.onFill({ nextStep: InvestorCompanyFundingStage })
+  handleCheckboxClick = id => {
+    let ticketSizes = [ ...this.state.ticketSizes ]
+    const ticketIndex = ticketSizes.indexOf(id)
+    if (ticketIndex !== -1) {
+      ticketSizes = ticketSizes.filter(size => size !== id)
+    } else {
+      ticketSizes.push(id)
+    }
+    this.setState({ ticketSizes })
   }
 
-  handleChange = (index) => {
-    this.setState({
-      selected: index
-    })
+  isCheckboxSelected = id => {
+    console.log(this.state)
+    return this.state.ticketSizes.indexOf(id) !== -1
+  }
+
+  handleSubmit = () => {
+    this.props.saveInvestor({ ticketSizes: this.state.ticketSizes })
+    this.props.onFill({ nextStep: InvestorCompanyFundingStage })
   }
 }
 
@@ -75,13 +77,13 @@ InvestorTicketSize.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    ticketSize: state.signUp.investor.ticketSize
+    ticketSizes: state.signUp.investor.ticketSizes
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveInvestor: ticketSize => dispatch(signUpActions.saveInvestor(ticketSize))
+    saveInvestor: ticketSizes => dispatch(signUpActions.saveInvestor(ticketSizes))
   }
 }
 

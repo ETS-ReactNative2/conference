@@ -1,32 +1,20 @@
-import {
-  Body,
-  Button,
-  Card,
-  CheckBox,
-  Form,
-  Icon,
-  Input,
-  Item,
-  Label, Left,
-  ListItem,
-  Radio,
-  Right,
-  Switch,
-  Text
-} from 'native-base'
+import { Button, Card, Form, Icon, Input, Item, Label, Left, ListItem, Radio, Right, Switch, Text } from 'native-base'
 import React from 'react'
 import { connect } from 'react-redux'
+import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
+import { REGIONS } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { InvesteeHiring } from './index'
-import validator from 'validator'
 
 class InvesteeMoneySource extends React.Component {
+  
   constructor (props) {
     super(props)
     this.state = {
       lookingForMoney: this.props.investee.money,
-      amount: this.props.investee.amount
+      amount: this.props.investee.amount,
+      nationality: this.props.investee.investorNationality
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -40,22 +28,41 @@ class InvesteeMoneySource extends React.Component {
             <Switch
               onValueChange={ () => this.handleCheck() }
               value={ this.state.lookingForMoney }/>
-            <Text style={{ marginLeft: 8 }}>{ I18n.t('flow_page.money.need_money') }</Text>
+            <Text style={ { marginLeft: 8 } }>{ I18n.t('flow_page.money.need_money') }</Text>
           </Left>
         </ListItem>
         {
           this.state.lookingForMoney && (
-            <Form>
-              <Item floatingLabel>
-                <Icon active name='cash'/>
-                <Label>{ I18n.t('flow_page.money.amount') }</Label>
-                <Input
-                  keyboardType={ 'numeric' }
-                  onChangeText={ text => this.handleFieldChange(text, 'amount') }
-                  value={ this.state.amount }
-                />
-              </Item>
-            </Form>
+            <React.Fragment>
+              <Form>
+                <Item floatingLabel>
+                  <Icon active name='cash'/>
+                  <Label>{ I18n.t('flow_page.money.amount') }</Label>
+                  <Input
+                    keyboardType={ 'numeric' }
+                    onChangeText={ text => this.handleFieldChange(text, 'amount') }
+                    value={ this.state.amount }
+                  />
+                </Item>
+              </Form>
+              <Text style={ { fontSize: 24, marginTop: 16 } }>{ I18n.t('flow_page.money.nationality') }</Text>
+              { REGIONS.map((nationality) => {
+                return (
+                  <ListItem
+                    onPress={ () => this.handleChange(nationality.index) }
+                    key={ `nationality-${nationality.slug}` }>
+                    <Left>
+                      <Text>{ I18n.t(`common.regions.${nationality.slug}`) }</Text>
+                    </Left>
+                    <Right>
+                      <Radio
+                        onPress={ () => this.handleChange(nationality.index) }
+                        selected={ this.state.nationality === nationality.index }/>
+                    </Right>
+                  </ListItem>
+                )
+              }) }
+            </React.Fragment>
           )
         }
         <Button success
@@ -87,6 +94,12 @@ class InvesteeMoneySource extends React.Component {
     this.setState({ lookingForMoney: !this.state.lookingForMoney }, this.validateForm)
   }
 
+  handleChange = (index) => {
+    this.setState({
+      nationality: index
+    }, this.validateForm)
+  }
+
   handleFieldChange = (text, name) => {
     this.setState({
       [ name ]: text
@@ -94,10 +107,11 @@ class InvesteeMoneySource extends React.Component {
   }
 
   handleSubmit = () => {
-    const { lookingForMoney, amount } = this.state
+    const { lookingForMoney, amount, nationality } = this.state
     this.props.save({
       money: lookingForMoney,
-      amount: amount
+      amount: amount,
+      investorNationality: nationality
     })
     this.props.onFill({
       nextStep: InvesteeHiring

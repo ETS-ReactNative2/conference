@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { FUNDING_STAGES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
-import { InvestorMarketLocation } from './index'
+import { InvestorGiveaways } from './index'
 
 class InvestorCompanyFundingStage extends React.Component {
   constructor (props) {
@@ -17,7 +17,7 @@ class InvestorCompanyFundingStage extends React.Component {
 
   handleSubmit = () => {
     this.props.saveInvestor({ stages: this.state.stages })
-    this.props.onFill({ nextStep: InvestorMarketLocation })
+    this.props.onFill({ nextStep: InvestorGiveaways })
   }
 
   handleCheckboxClick = fieldName => {
@@ -42,15 +42,15 @@ class InvestorCompanyFundingStage extends React.Component {
         { FUNDING_STAGES.map(singleStage => {
           return (
             <ListItem
-              onPress={ () => this.handleCheckboxClick(singleStage.slug) }
+              onPress={ () => this.handleCheckboxClick(singleStage.index) }
               key={ `funding-item-${singleStage.slug}` }>
               <Left>
                 <Text>{ I18n.t(`common.funding_stages.${singleStage.slug}`) }</Text>
               </Left>
               <Right>
                 <Radio
-                  onPress={ () => this.handleCheckboxClick(singleStage.slug) }
-                  selected={ this.isCheckboxSelected(singleStage.slug) }/>
+                  onPress={ () => this.handleCheckboxClick(singleStage.index) }
+                  selected={ this.isCheckboxSelected(singleStage.index) }/>
               </Right>
             </ListItem>
           )

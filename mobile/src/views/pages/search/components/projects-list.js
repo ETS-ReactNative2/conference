@@ -2,6 +2,8 @@ import { Body, Button, Col, Container, Grid, Header, Icon, Left, List, ListItem,
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
+import {connect} from 'react-redux'
+import * as searchActions from '../../../../search/actions'
 import Filters from './filters'
 
 class ProjectsList extends React.Component {
@@ -10,9 +12,6 @@ class ProjectsList extends React.Component {
     this.state = {
       showFilters: false,
       defaults: {
-        region: [ 0, 1, 2 ],
-        tokenTypes: [ 2, 3 ],
-        productStages: [ 0 ]
       }
     }
   }
@@ -24,17 +23,13 @@ class ProjectsList extends React.Component {
   }
 
   handleSearch = newDefaults => {
-    console.log({
-      defaults: this.state.defaults,
-      newDefaults
-    })
     this.setState({
       showFilters: false,
       defaults: {
         ...this.state.defaults,
         ...newDefaults
       }
-    })
+    }, () => this.props.updateProjects(newDefaults))
   }
 
   render () {
@@ -101,7 +96,19 @@ function ProjectItem ({ project, onMark, onClick }) {
 ProjectsList.propTypes = {
   profiles: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
-  onMark: PropTypes.func.isRequired
+  updateProjects: PropTypes.func.isRequired
 }
 
-export default ProjectsList
+const mapStateToProps = state => {
+  return {
+    profiles: state.search.investors
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateProjects: filters => dispatch(searchActions.updateProjects(filters))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectsList)

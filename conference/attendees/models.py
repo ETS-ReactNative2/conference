@@ -1,8 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
 
 class FundingStage(models.Model):
@@ -33,6 +43,20 @@ class ProductStage(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TicketSize(models.Model):
+
+    POSITIVE_INFINITY = 2147483647
+
+    id = models.IntegerField(primary_key=True, verbose_name='ID')
+
+    min = models.PositiveIntegerField()
+
+    max = models.PositiveIntegerField()
+
+    def __str__(self):
+        return '{} <= x < {}'.format(min, max)
 
 
 class TokenType(models.Model):
@@ -94,10 +118,8 @@ class Investor(Company):
 
     giveaways = models.ManyToManyField(Giveaway, blank=True)
 
-    max_ticket = models.DecimalField(db_index=True, max_digits=12, decimal_places=0, null=True, blank=True)
-
-    min_ticket = models.DecimalField(db_index=True, max_digits=12, decimal_places=0, null=True, blank=True)
-
     product_stages = models.ManyToManyField(ProductStage, blank=True)
+
+    ticket_sizes = models.ManyToManyField(TicketSize, blank=True)
 
     token_types = models.ManyToManyField(TokenType, blank=True)
