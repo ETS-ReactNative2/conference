@@ -8,18 +8,6 @@ import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { InvestorInvestIn } from './index'
 
-const locationOptions = [
-  'usa',
-  'korea',
-  'poland'
-]
-
-const nationalityOptions = [
-  'american',
-  'korean',
-  'polish'
-]
-
 class InvestorCompanyLocation extends React.Component {
   constructor (props) {
     super(props)

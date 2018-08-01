@@ -51,10 +51,7 @@ export default {
       'telegram': '_DE_Telegram'
     },
     'product_stage': {
-      'title': '_DE_Product stage',
-      'pre': '_DE_Pre-product',
-      'live': '_DE_Live product',
-      'revenue': '_DE_Live product + $ Revenue'
+      'title': '_DE_Product stage'
     },
     'funding_stage': {
       'title': '_DE_Funding stage'
@@ -148,7 +145,16 @@ export default {
         'title': '_DE_Funding slot for companies:'
       },
       'market_location': {
-        'title': '_DE_The companies should be based in:'
+        'title': '_DE_Where should the company be located?'
+      },
+      'giveaways': {
+        'title': '_DE_Giveaways'
+      },
+      'product_stage': {
+        'title': '_DE_Product stage'
+      },
+      'industries': {
+        'title': '_DE_Which industries you\'re instrested in?'
       }
     },
     'common': {
@@ -205,6 +211,11 @@ export default {
       'korean': '_DE_Korean',
       'polish': '_DE_Polish'
     },
+    'regions': {
+      'anywhere': '_DE_Anywhere',
+      'anywhere_except_us': '_DE_Anywhere except US',
+      'korea_only': '_DE_Korea only'
+    },
     'country': {
       'usa': 'USA',
       'korea': 'Korea',
@@ -215,15 +226,63 @@ export default {
       'asia': 'Asia',
       'europe': 'Europe'
     },
-    'investor_nationality': {
-      'anywhere': '_DE_Anywhere',
-      'exclude_us': '_DE_Exclude US',
-      'korea_only': '_DE_Korea only'
-    },
     'funding_stages': {
       'seed': '_DE_Seed',
       'pre': '_DE_Pre ICO',
       'post': '_DE_Post ICO'
+    },
+    'product_stages': {
+      'pre': '_DE_Pre-product',
+      'live': '_DE_Live product',
+      'revenue': '_DE_Live product + $ Revenue'
+    },
+    'giveaways': {
+      'token': '_DE_Token',
+      'equity': '_DE_Equity',
+      'both': '_DE_Both'
+    },
+    'industries': {
+      'accounting': 'Accounting',
+      'agriculture': 'Agriculture',
+      'airlines': 'Airlines',
+      'architecture': 'Architecture',
+      'art': 'Art',
+      'automotive': 'Automotive',
+      'banking': 'Banking',
+      'bars_restaurants': 'Bars & Restaurants',
+      'broadcasting': 'Broadcasting',
+      'casinos': 'Casinos / Gambling',
+      'construction': 'Construction',
+      'defense': 'Defense',
+      'education': 'Education',
+      'electronics': 'Electronics',
+      'energy': 'Energy',
+      'entertainment': 'Entertainment',
+      'environment': 'Environment',
+      'finance': 'Finance',
+      'green_energy': 'Green Energy',
+      'hardware': 'Hardware',
+      'health': 'Health',
+      'human_resources': 'Human Resources',
+      'human_rights': 'Human Rights',
+      'insurance': 'Insurance',
+      'internet': 'Internet',
+      'legal': 'Legal',
+      'manufacturing': 'Manufacturing',
+      'marketing': 'Marketing',
+      'non_profit': 'Non-Profit',
+      'pharmaceuticals': 'Pharmaceuticals',
+      'policy': 'Policy',
+      'public_relations': 'Public Relations',
+      'publishing': 'Publishing',
+      'real_estate': 'Real Estate',
+      'retail': 'Retail',
+      'sales': 'Sales',
+      'sports': 'Sports',
+      'supply_chain': 'Supply Chain',
+      'transportation': 'Transportation',
+      'venture_capital': 'Venture Capital',
+      'other': 'Other'
     },
     'payment': {
       'fiat': '_DE_Fiat money',

@@ -27,12 +27,15 @@ const initialState = {
     type: ''
   },
   investor: {
+    productStages: [],
+    giveaways: [],
     companyLocation: '',
     nationality: '',
     investments: [],
     ticketSizes: [],
     stages: [],
-    marketLocations: []
+    marketLocation: -1,
+    industries: []
   },
   investee: {
     projectName: '',
@@ -66,7 +69,6 @@ const initialState = {
 }
 
 export function signUpReducer (state = initialState, action) {
-  console.log(action.profileInfo)
   switch (action.type) {
     case LOGIN_USER_SUCCESS:
       return {

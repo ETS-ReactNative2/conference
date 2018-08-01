@@ -32,18 +32,18 @@ class InvesteeGiveaway extends React.Component {
     return (
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.giveaway.title') }</Text>
-        { GIVEAWAY_TYPES.map((giveaway, index) => {
+        { GIVEAWAY_TYPES.map((giveaway) => {
           return (
             <ListItem
-              onPress={ () => this.handleChange(index) }
+              onPress={ () => this.handleChange(giveaway.index) }
               key={ `investment-item-${giveaway.slug}` }>
               <Left>
-                <Text>{ I18n.t(`common.giveaway.${giveaway.slug}`) }</Text>
+                <Text>{ I18n.t(`common.giveaways.${giveaway.slug}`) }</Text>
               </Left>
               <Right>
                 <Radio
-                  onPress={ () => this.handleChange(index) }
-                  selected={ this.state.giveaway === index }/>
+                  onPress={ () => this.handleChange(giveaway.index) }
+                  selected={ this.state.giveaway === giveaway.index }/>
               </Right>
             </ListItem>
           )

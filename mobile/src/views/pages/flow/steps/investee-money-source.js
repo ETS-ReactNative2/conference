@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
-import { INVESTOR_NATIONALITY } from '../../../../enums'
+import { REGIONS } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { InvesteeHiring } from './index'
 
@@ -46,18 +46,18 @@ class InvesteeMoneySource extends React.Component {
                 </Item>
               </Form>
               <Text style={ { fontSize: 24, marginTop: 16 } }>{ I18n.t('flow_page.money.nationality') }</Text>
-              { INVESTOR_NATIONALITY.map((nationality, index) => {
+              { REGIONS.map((nationality) => {
                 return (
                   <ListItem
-                    onPress={ () => this.handleChange(index) }
+                    onPress={ () => this.handleChange(nationality.index) }
                     key={ `nationality-${nationality.slug}` }>
                     <Left>
-                      <Text>{ I18n.t(`common.investor_nationality.${nationality.slug}`) }</Text>
+                      <Text>{ I18n.t(`common.regions.${nationality.slug}`) }</Text>
                     </Left>
                     <Right>
                       <Radio
-                        onPress={ () => this.handleChange(index) }
-                        selected={ this.state.nationality === index }/>
+                        onPress={ () => this.handleChange(nationality.index) }
+                        selected={ this.state.nationality === nationality.index }/>
                     </Right>
                   </ListItem>
                 )

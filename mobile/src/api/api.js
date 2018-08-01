@@ -64,18 +64,15 @@ export async function createInvestee ({
 }
 
 export async function createInvestor ({
-  country, description, fundingStage, ticketSizes, name, productStages, tagline, tokenTypes
+  fundingStages, ticketSizes, productStages, tokenTypes, giveaways
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.post('/api/investors/', decamelizeKeys({
-    country,
-    description,
-    fundingStage,
+    fundingStages,
     ticketSizes,
-    name,
     productStages,
-    tagline,
-    tokenTypes
+    tokenTypes,
+    giveaways
   }), {
     headers: {
       Accept: 'application/json',

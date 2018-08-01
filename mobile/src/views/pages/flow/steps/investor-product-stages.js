@@ -5,13 +5,14 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { PRODUCT_STAGES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
-import { InvesteeFundingStage } from './index'
+import { InvestorMarketLocation } from './index'
 
-class InvesteeProductStage extends React.Component {
+
+class InvestorProductStages extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: this.props.investee.productStage
+      productStages: this.props.investor.productStages
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -19,19 +20,19 @@ class InvesteeProductStage extends React.Component {
   render () {
     return (
       <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.product_stage.title') }</Text>
+        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.product_stage.title') }</Text>
         <Content>
           {
-            PRODUCT_STAGES.map((option, index) => {
+            PRODUCT_STAGES.map((option) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(index) }>
+                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(option.index) }>
                   <Left>
                     <Text>{ I18n.t(`common.product_stages.${option.slug}`) }</Text>
                   </Left>
                   <Right>
                     <Radio
-                      onPress={ () => this.handleChange(index) }
-                      selected={ this.state.selected === index }/>
+                      onPress={ () => this.handleChange(option.index) }
+                      selected={ this.state.productStages.indexOf(option.index) !== -1 }/>
                   </Right>
                 </ListItem>
               )
@@ -51,7 +52,7 @@ class InvesteeProductStage extends React.Component {
   }
 
   isFormValid = () => {
-    return this.state.selected !== -1
+    return this.state.productStages.length > 0;
   }
 
   validateForm = () => {
@@ -61,34 +62,41 @@ class InvesteeProductStage extends React.Component {
 
   handleSubmit = () => {
     this.props.save({
-      productStage: this.state.selected
+      productStages: this.state.productStages
     })
     this.props.onFill({
-      nextStep: InvesteeFundingStage
+      nextStep: InvestorMarketLocation
     })
   }
 
   handleChange = (index) => {
+    const selectedProductStagesCopy = [...this.state.productStages]
+    const clickedItemIndex = selectedProductStagesCopy.indexOf(index);
+    if (clickedItemIndex === -1) {
+      selectedProductStagesCopy.push(index);
+    } else {
+      selectedProductStagesCopy.splice(clickedItemIndex, 1);
+    }
     this.setState({
-      selected: index
+      productStages: selectedProductStagesCopy
     }, this.validateForm)
   }
 }
 
-InvesteeProductStage.propTypes = {
+InvestorProductStages.propTypes = {
   onFill: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
   return {
-    investee: state.signUp.investee
+    investor: state.signUp.investor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    save: investeeInfo => dispatch(signUpActions.saveProfileInvestee(investeeInfo))
+    save: investorInfo => dispatch(signUpActions.saveInvestor(investorInfo))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InvesteeProductStage)
+export default connect(mapStateToProps, mapDispatchToProps)(InvestorProductStages)

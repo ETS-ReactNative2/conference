@@ -51,10 +51,7 @@ export default {
       'telegram': '_PL_Telegram'
     },
     'product_stage': {
-      'title': '_PL_Product stage',
-      'pre': '_PL_Pre-product',
-      'live': '_PL_Live product',
-      'revenue': '_PL_Live product + $ Revenue'
+      'title': '_PL_Product stage'
     },
     'funding_stage': {
       'title': '_PL_Funding stage'
@@ -148,7 +145,16 @@ export default {
         'title': '_PL_Funding slot for companies:'
       },
       'market_location': {
-        'title': '_PL_The companies should be based in:'
+        'title': '_PL_Where should the company be located?'
+      },
+      'giveaways': {
+        'title': '_PL_Giveaways'
+      },
+      'product_stage': {
+        'title': '_PL_Product stage'
+      },
+      'industries': {
+        'title': '_PL_Which industries you\'re instrested in?'
       }
     },
     'common': {
@@ -203,15 +209,15 @@ export default {
       'korean': '_PL_Korean',
       'polish': '_PL_Polish'
     },
+    'regions': {
+      'anywhere': '_PL_Anywhere',
+      'anywhere_except_us': '_PL_Anywhere except US',
+      'korea_only': '_PL_Korea only'
+    },
     'payment': {
       'fiat': '_PL_Fiat money',
       'tokens': '_PL_Tokens',
       'equity': '_PL_Equity'
-    },
-    'investor_nationality': {
-      'anywhere': '_PL_Anywhere',
-      'exclude_us': '_PL_Exclude US',
-      'korea_only': '_PL_Korea only'
     },
     'country': {
       'usa': 'USA',
@@ -227,6 +233,59 @@ export default {
       'seed': '_PL_Seed',
       'pre': '_PL_Pre ICO',
       'post': '_PL_Post ICO'
+    },
+    'product_stages': {
+      'pre': '_PL_Pre-product',
+      'live': '_PL_Live product',
+      'revenue': '_PL_Live product + $ Revenue'
+    },
+    'giveaways': {
+      'token': '_PL_Token',
+      'equity': '_PL_Equity',
+      'both': '_PL_Both'
+    },
+    'industries': {
+      'accounting': 'Accounting',
+      'agriculture': 'Agriculture',
+      'airlines': 'Airlines',
+      'architecture': 'Architecture',
+      'art': 'Art',
+      'automotive': 'Automotive',
+      'banking': 'Banking',
+      'bars_restaurants': 'Bars & Restaurants',
+      'broadcasting': 'Broadcasting',
+      'casinos': 'Casinos / Gambling',
+      'construction': 'Construction',
+      'defense': 'Defense',
+      'education': 'Education',
+      'electronics': 'Electronics',
+      'energy': 'Energy',
+      'entertainment': 'Entertainment',
+      'environment': 'Environment',
+      'finance': 'Finance',
+      'green_energy': 'Green Energy',
+      'hardware': 'Hardware',
+      'health': 'Health',
+      'human_resources': 'Human Resources',
+      'human_rights': 'Human Rights',
+      'insurance': 'Insurance',
+      'internet': 'Internet',
+      'legal': 'Legal',
+      'manufacturing': 'Manufacturing',
+      'marketing': 'Marketing',
+      'non_profit': 'Non-Profit',
+      'pharmaceuticals': 'Pharmaceuticals',
+      'policy': 'Policy',
+      'public_relations': 'Public Relations',
+      'publishing': 'Publishing',
+      'real_estate': 'Real Estate',
+      'retail': 'Retail',
+      'sales': 'Sales',
+      'sports': 'Sports',
+      'supply_chain': 'Supply Chain',
+      'transportation': 'Transportation',
+      'venture_capital': 'Venture Capital',
+      'other': 'Other'
     },
     'months': {
       '0': 'Styczeń',

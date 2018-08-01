@@ -21,3 +21,6 @@ export { default as InvestorInvestIn } from './investor-invest-in'
 export { default as InvestorTicketSize } from './investor-ticket-size'
 export { default as InvestorCompanyFundingStage } from './investor-company-funding-stage'
 export { default as InvestorMarketLocation } from './investor-market-location'
+export { default as InvestorGiveaways } from './investor-giveaways'
+export { default as InvestorProductStages } from './investor-product-stages';
+export { default as InvestorIndustries } from './investor-industries';

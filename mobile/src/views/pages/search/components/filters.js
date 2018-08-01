@@ -87,17 +87,17 @@ class Filters extends React.Component {
           </Right>
         </ListItem>
         { filter.show &&
-        options.map((option, index) => {
+        options.map((option) => {
           return (
             <ListItem style={ { width: '100%' } }
-                      onPress={ () => this.handleCheckboxClick(field, index) }
-                      key={ `${field}}.${option.slug}` }>
+                      onPress={ () => this.handleCheckboxClick(field, option.index) }
+                      key={ `${field}.${option.slug}` }>
               <Left>
                 <Text>{ I18n.t(`common.${label}.${option.slug}`) }</Text>
               </Left>
               <Right>
                 <Radio
-                  selected={ this.isSelected(field, index) }/>
+                  selected={ this.isSelected(field, option.index) }/>
               </Right>
             </ListItem>
           )

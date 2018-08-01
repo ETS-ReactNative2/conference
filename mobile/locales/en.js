@@ -56,10 +56,7 @@ export default {
       'telegram': 'Telegram'
     },
     'product_stage': {
-      'title': 'Product stage',
-      'pre': 'Pre-product',
-      'live': 'Live product',
-      'revenue': 'Live product + $ Revenue'
+      'title': 'Product stage'
     },
     'funding_stage': {
       'title': 'Funding stage'
@@ -148,7 +145,16 @@ export default {
         'title': 'What is your funding stage?'
       },
       'market_location': {
-        'title': 'The companies should be based in:'
+        'title': 'Where should the company be located?'
+      },
+      'giveaways': {
+        'title': 'Giveaways'
+      },
+      'product_stage': {
+        'title': 'Product stage'
+      },
+      'industries': {
+        'title': 'Which industries you\'re instrested in?'
       }
     },
     'common': {
@@ -204,10 +210,10 @@ export default {
       'korean': 'Korean',
       'polish': 'Polish'
     },
-    'investor_nationality': {
-      'anywhere': 'Anywhere',
-      'exclude_us': 'Exclude US',
-      'korea_only': 'Korea only'
+    'regions': {
+      'anywhere': '_PL_Anywhere',
+      'anywhere_except_us': '_PL_Anywhere except US',
+      'korea_only': '_PL_Korea only'
     },
     'country': {
       'usa': 'USA',
@@ -224,6 +230,11 @@ export default {
       'pre': 'Pre ICO',
       'post': 'Post ICO'
     },
+    'giveaways': {
+      'token': 'Token',
+      'equity': 'Equity',
+      'both': 'Both'
+    },
     'product_stages': {
       'pre': 'Pre-product',
       'live': 'Live product',
@@ -234,10 +245,48 @@ export default {
       'app_tokens': 'App Tokens',
       'security_tokens': 'Security Tokens'
     },
-    'giveaway': {
-      'token': 'Tokens',
-      'equity': 'Equity',
-      'both': 'Both'
+    'industries': {
+      'accounting': 'Accounting',
+      'agriculture': 'Agriculture',
+      'airlines': 'Airlines',
+      'architecture': 'Architecture',
+      'art': 'Art',
+      'automotive': 'Automotive',
+      'banking': 'Banking',
+      'bars_restaurants': 'Bars & Restaurants',
+      'broadcasting': 'Broadcasting',
+      'casinos': 'Casinos / Gambling',
+      'construction': 'Construction',
+      'defense': 'Defense',
+      'education': 'Education',
+      'electronics': 'Electronics',
+      'energy': 'Energy',
+      'entertainment': 'Entertainment',
+      'environment': 'Environment',
+      'finance': 'Finance',
+      'green_energy': 'Green Energy',
+      'hardware': 'Hardware',
+      'health': 'Health',
+      'human_resources': 'Human Resources',
+      'human_rights': 'Human Rights',
+      'insurance': 'Insurance',
+      'internet': 'Internet',
+      'legal': 'Legal',
+      'manufacturing': 'Manufacturing',
+      'marketing': 'Marketing',
+      'non_profit': 'Non-Profit',
+      'pharmaceuticals': 'Pharmaceuticals',
+      'policy': 'Policy',
+      'public_relations': 'Public Relations',
+      'publishing': 'Publishing',
+      'real_estate': 'Real Estate',
+      'retail': 'Retail',
+      'sales': 'Sales',
+      'sports': 'Sports',
+      'supply_chain': 'Supply Chain',
+      'transportation': 'Transportation',
+      'venture_capital': 'Venture Capital',
+      'other': 'Other'
     },
     'payment': {
       'fiat': 'Fiat money',

@@ -42,13 +42,10 @@ export function uploadProfile () {
         })
       case 'investor':
         return await api.createInvestor({
-          country: investor.companyLocation,
-          description: '',
-          fundingStage: investor.stages,
+          giveaways: investor.giveaways,
+          fundingStages: investor.stages,
+          productStages: investor.productStages,
           ticketSizes: investor.ticketSizes,
-          name: '',
-          productStages: [],
-          tagline: '',
           tokenTypes: investor.investments
         })
     }

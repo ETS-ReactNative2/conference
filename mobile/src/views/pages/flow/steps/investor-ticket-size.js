@@ -21,16 +21,16 @@ class InvestorTicketSize extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.ticket_size.title') }</Text>
         <Content>
           {
-            TICKET_SIZES.map(({id, label}) => {
+            TICKET_SIZES.map(({index, label}) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ id } onPress={ () => this.handleCheckboxClick(id) }>
+                <ListItem style={ { width: '100%' } } key={ index } onPress={ () => this.handleCheckboxClick(index) }>
                   <Left>
                     <Text>{ label }</Text>
                   </Left>
                   <Right>
                     <Radio
-                      onPress={ () => this.handleCheckboxClick(id) }
-                      selected={ this.isCheckboxSelected(id) }/>
+                      onPress={ () => this.handleCheckboxClick(index) }
+                      selected={ this.isCheckboxSelected(index) }/>
                   </Right>
                 </ListItem>
               )
