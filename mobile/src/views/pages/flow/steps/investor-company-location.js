@@ -44,7 +44,6 @@ class InvestorCompanyLocation extends React.Component {
         <Text style={ { marginTop: 16, marginBottom: 16 } }>{ I18n.t('flow_page.investor.company_location.localization') }</Text>
         <CountryPicker
           onChange={ value => {
-            console.log({ value })
             this.setState({ location: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
           } }
           filterable

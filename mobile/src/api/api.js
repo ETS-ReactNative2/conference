@@ -1,16 +1,18 @@
 import axios from 'axios'
 import { decamelizeKeys } from 'humps'
-import { storageService } from '../services';
+import { storageService } from '../services'
 
-const TOKEN_NAME = 'AUTH-TOKEN';
+const TOKEN_NAME = 'AUTH-TOKEN'
 
 export async function signup ({ email, password, phone }) {
   return axios.post('/api/users/', { email, password, phone })
 }
 
-export async function fetchProjects() {
-  const token = await storageService.getItem(TOKEN_NAME);
+export async function fetchProjects (filters) {
+  const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/projects', {
+    params: filters,
+    paramsSerializer: params => transformRequestOptions(params),
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -19,9 +21,11 @@ export async function fetchProjects() {
   })
 }
 
-export async function fetchInvestors() {
-  const token = await storageService.getItem(TOKEN_NAME);
+export async function fetchInvestors (filters) {
+  const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/investors', {
+    params: filters,
+    paramsSerializer: params => transformRequestOptions(params),
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -39,7 +43,7 @@ export async function createConferenceUser ({ firstName, lastName, title, compan
 export async function createInvestee ({
   country, description, fundingStage, giveaway, notable, name, productStage, tagline, tokenType
 }) {
-  const token = await storageService.getItem(TOKEN_NAME);
+  const token = await storageService.getItem(TOKEN_NAME)
   return axios.post('/api/projects/', decamelizeKeys({
     country,
     description,
@@ -62,7 +66,7 @@ export async function createInvestee ({
 export async function createInvestor ({
   country, description, fundingStage, ticketSizes, name, productStages, tagline, tokenTypes
 }) {
-  const token = await storageService.getItem(TOKEN_NAME);
+  const token = await storageService.getItem(TOKEN_NAME)
   return axios.post('/api/investors/', decamelizeKeys({
     country,
     description,
@@ -109,19 +113,37 @@ export async function fetchNotifications () {
   })
 }
 
-export async function fetchConferenceSchedule() {
-  return axios.get('/schedule', { headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  }})
+const transformRequestOptions = params => {
+  let options = ''
+  for (const key in params) {
+    if (typeof params[ key ] !== 'object') {
+      options += `${key}=${params[ key ]}&`
+    } else if (typeof params[ key ] === 'object' && params[ key ].length) {
+      params[ key ].forEach(el => {
+        options += `${key}=${el}&`
+      })
+    }
+  }
+  return options ? options.slice(0, -1) : options
 }
 
-export async function login(username, password) {
+export async function fetchConferenceSchedule () {
+  return axios.get('/schedule', {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    }
+  })
+}
+
+export async function login (username, password) {
   return axios.post('/api-token-auth/', {
     username,
     password
-  }, { headers: {
-     Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }})
+  }, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
 }

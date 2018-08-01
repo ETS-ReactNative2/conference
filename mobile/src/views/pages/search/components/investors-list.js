@@ -2,6 +2,8 @@ import { Body, Button, Col, Container, Grid, Header, Icon, Left, List, ListItem,
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
+import {connect} from 'react-redux'
+import * as searchActions from '../../../../search/actions'
 import Filters from './filters'
 
 class InvestorsList extends React.Component {
@@ -9,11 +11,7 @@ class InvestorsList extends React.Component {
     super(props)
     this.state = {
       showFilters: false,
-      defaults: {
-        region: [ 0, 1, 2 ],
-        tokenTypes: [ 2, 3 ],
-        productStages: [ 0 ]
-      }
+      defaults: {}
     }
   }
 
@@ -24,16 +22,14 @@ class InvestorsList extends React.Component {
   }
 
   handleSearch = newDefaults => {
-    console.log({
-      defaults: this.state.defaults,
-      newDefaults
-    })
     this.setState({
       showFilters: false,
       defaults: {
         ...this.state.defaults,
         ...newDefaults
       }
+    }, () => {
+      this.props.updateInvestors(newDefaults)
     })
   }
 
@@ -103,7 +99,19 @@ function InvestorItem ({ investor, onMark, onClick }) {
 InvestorsList.propTypes = {
   profiles: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
-  onMark: PropTypes.func.isRequired
+  updateInvestors: PropTypes.func.isRequired
 }
 
-export default InvestorsList
+const mapStateToProps = state => {
+  return {
+    profiles: state.search.investors
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateInvestors: filters => dispatch(searchActions.updateInvestors(filters))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvestorsList)
