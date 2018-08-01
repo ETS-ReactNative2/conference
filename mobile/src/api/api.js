@@ -60,15 +60,14 @@ export async function createInvestee ({
 }
 
 export async function createInvestor ({
-  country, description, fundingStage, maxTickets, minTickets, name, productStages, tagline, tokenTypes
+  country, description, fundingStage, ticketSizes, name, productStages, tagline, tokenTypes
 }) {
   const token = await storageService.getItem(TOKEN_NAME);
   return axios.post('/api/investors/', decamelizeKeys({
     country,
     description,
     fundingStage,
-    maxTickets,
-    minTickets,
+    ticketSizes,
     name,
     productStages,
     tagline,

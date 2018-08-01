@@ -29,11 +29,7 @@ const initialState = {
     companyLocation: '',
     nationality: '',
     investments: [],
-    ticketSize: {
-      id: -1,
-      min: '',
-      max: ''
-    },
+    ticketSizes: [],
     stages: [],
     marketLocations: []
   },
