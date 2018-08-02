@@ -35,6 +35,16 @@ class Giveaway(models.Model):
         return self.name
 
 
+class Industry(models.Model):
+
+    id = models.IntegerField(primary_key=True, verbose_name='ID')
+
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
 class ProductStage(models.Model):
 
     id = models.IntegerField(primary_key=True, verbose_name='ID')
@@ -77,39 +87,50 @@ class ConferenceUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
 
-class Company(models.Model):
-    """
-    Abstract superclass of Project and Investor.
-    """
-
-    country = models.CharField(max_length=3, blank=True, default='')
-
-    description = models.TextField(blank=True, default='')
-
-    name = models.CharField(max_length=255, blank=True, default='')
-
-    tagline = models.CharField(max_length=255, blank=True, default='')
-
-
-class Project(Company):
+class Project(models.Model):
     """
     A company potentially raising funds.
     """
+
+    # 39 characters user/organization + slash + 100 characters repo
+    GITHUB_MAX_LENGTH = 140
+
+    TELEGRAM_MAX_LENGTH = 32
+
+    TWITTER_MAX_LENGTH = 15
+
+    description = models.TextField(blank=True, default='')
 
     funding_stage = models.ForeignKey(FundingStage, db_index=True, null=True, blank=True)
 
     fundraising_amount = models.DecimalField(db_index=True, max_digits=12, decimal_places=0, null=True, blank=True)
 
+    github = models.CharField(max_length=GITHUB_MAX_LENGTH, blank=True, default='')
+
     giveaway = models.ForeignKey(Giveaway, db_index=True, null=True, blank=True)
+
+    name = models.CharField(max_length=255, blank=True, default='')
+
+    news = models.URLField(blank=True, default='')
 
     notable = models.TextField(blank=True, default='')
 
     product_stage = models.ForeignKey(ProductStage, db_index=True, null=True, blank=True)
 
+    tagline = models.CharField(max_length=255, blank=True, default='')
+
+    telegram = models.CharField(max_length=TELEGRAM_MAX_LENGTH, default='')
+
     token_type = models.ForeignKey(TokenType, db_index=True, null=True, blank=True)
 
+    twitter = models.CharField(max_length=TWITTER_MAX_LENGTH, blank=True, default='')
 
-class Investor(Company):
+    website = models.URLField(blank=True, default='')
+
+    whitepaper = models.URLField(blank=True, default='')
+
+
+class Investor(models.Model):
     """
     A company doing investing.
     """
@@ -117,6 +138,8 @@ class Investor(Company):
     funding_stages = models.ManyToManyField(FundingStage, blank=True)
 
     giveaways = models.ManyToManyField(Giveaway, blank=True)
+
+    industries = models.ManyToManyField(Industry, blank=True)
 
     product_stages = models.ManyToManyField(ProductStage, blank=True)
 

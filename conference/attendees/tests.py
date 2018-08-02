@@ -51,13 +51,16 @@ class InvestorsViewTest(AuthMixin, SharedListViewMixin):
         response = self.client.post(
             reverse(self.view()),
             json.dumps({
-                'country': 'DE',
-                'description': 'aaaaaaaa',
                 'funding_stages': [1, 2, 3],
                 'giveaways': [1, 2, 3],
-                'name': 'aaaaaaaa',
+                'industries': [
+                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                    21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                    31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                    41,
+                ],
                 'product_stages': [1, 2, 3],
-                'tagline': 'aaaaaaaa',
                 'ticket_sizes': [1, 2, 3, 4, 5, 6],
                 'token_types': [1, 2, 3],
             }),
@@ -74,13 +77,10 @@ class InvestorsIdViewTest(AuthMixin, SharedDetailViewMixin):
 
     def test_get(self):
         investor = models.Investor.objects.create(
-            country='DE',
-            description='aaaaaaaa',
-            name='aaaaaaaa',
-            tagline='aaaaaaaa',
         )
         investor.funding_stages = models.FundingStage.objects.all()
         investor.giveaways = models.Giveaway.objects.all()
+        investor.industries = models.Industry.objects.all()
         investor.product_stages = models.ProductStage.objects.all()
         investor.ticket_sizes = models.TicketSize.objects.all()
         investor.token_types = models.TokenType.objects.all()
@@ -89,13 +89,19 @@ class InvestorsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEquals(response.status_code, 200)
         response_dict = json.loads(response.content)
         self.assertEqual(response_dict.get('id'), investor.id)
-        self.assertEqual(response_dict.get('country'), 'DE')
-        self.assertEqual(response_dict.get('description'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('funding_stages'), [1, 2, 3])
         self.assertEqual(response_dict.get('giveaways'), [1, 2, 3])
-        self.assertEqual(response_dict.get('name'), 'aaaaaaaa')
+        self.assertEqual(
+            response_dict.get('industries'),
+            [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                41,
+            ],
+        )
         self.assertEqual(response_dict.get('product_stages'), [1, 2, 3])
-        self.assertEqual(response_dict.get('tagline'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('ticket_sizes'), [1, 2, 3, 4, 5, 6])
         self.assertEqual(response_dict.get('token_types'), [1, 2, 3])
 
@@ -109,15 +115,21 @@ class ProjectsViewTest(AuthMixin, SharedListViewMixin):
         response = self.client.post(
             reverse(self.view()),
             json.dumps({
-                'country': 'DE',
                 'description': 'aaaaaaaa',
                 'funding_stage': 1,
+                'fundraising_amount': 2147483647,
+                'github': 'aaaaaaaa',
                 'giveaway': 1,
                 'name': 'aaaaaaaa',
+                'news': 'http://www.example.com',
                 'notable': 'aaaaaaaa',
                 'product_stage': 1,
                 'tagline': 'aaaaaaaa',
+                'telegram': 'aaaaaaaa',
                 'token_type': 1,
+                'twitter': 'aaaaaaaa',
+                'website': 'http://www.example.com',
+                'whitepaper': 'http://www.example.com',
             }),
             content_type='application/json',
             **self.header
@@ -132,29 +144,40 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
 
     def test_get(self):
         project = models.Project.objects.create(
-            country='DE',
             description='aaaaaaaa',
             funding_stage=models.FundingStage.objects.get(id=1),
+            fundraising_amount=2147483647,
+            github='http://www.example.com',
             giveaway=models.Giveaway.objects.get(id=1),
             name='aaaaaaaa',
+            news='http://www.example.com',
             notable='aaaaaaaa',
             product_stage=models.ProductStage.objects.get(id=1),
             tagline='aaaaaaaa',
+            telegram='aaaaaaaa',
             token_type=models.TokenType.objects.get(id=1),
+            twitter='aaaaaaaa',
+            website='http://www.example.com',
+            whitepaper='http://www.example.com',
         )
         response = self.client.get(reverse(self.view(), kwargs={'pk': project.id}), **self.header)
         self.assertEquals(response.status_code, 200)
         response_dict = json.loads(response.content)
         self.assertEqual(response_dict.get('id'), project.id)
-        self.assertEqual(response_dict.get('country'), 'DE')
         self.assertEqual(response_dict.get('description'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('funding_stage'), 1)
+        self.assertEqual(response_dict.get('github'), 'http://www.example.com')
         self.assertEqual(response_dict.get('giveaway'), 1)
         self.assertEqual(response_dict.get('name'), 'aaaaaaaa')
+        self.assertEqual(response_dict.get('news'), 'http://www.example.com')
         self.assertEqual(response_dict.get('notable'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('product_stage'), 1)
         self.assertEqual(response_dict.get('tagline'), 'aaaaaaaa')
+        self.assertEqual(response_dict.get('telegram'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('token_type'), 1)
+        self.assertEqual(response_dict.get('twitter'), 'aaaaaaaa')
+        self.assertEqual(response_dict.get('website'), 'http://www.example.com')
+        self.assertEqual(response_dict.get('whitepaper'), 'http://www.example.com')
 
 
 class UsersViewTest(AuthMixin):

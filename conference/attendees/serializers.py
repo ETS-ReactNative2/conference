@@ -7,13 +7,10 @@ class InvestorSerializer(serializers.ModelSerializer):
         model = models.Investor
         fields = (
             'id',
-            'country',
-            'description',
             'funding_stages',
             'giveaways',
-            'name',
+            'industries',
             'product_stages',
-            'tagline',
             'ticket_sizes',
             'token_types',
         )
@@ -24,15 +21,21 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = models.Project
         fields = (
             'id',
-            'country',
             'description',
             'funding_stage',
+            'fundraising_amount',
+            'github',
             'giveaway',
             'name',
+            'news',
             'notable',
             'product_stage',
             'tagline',
+            'telegram',
             'token_type',
+            'twitter',
+            'website',
+            'whitepaper',
         )
 
 
