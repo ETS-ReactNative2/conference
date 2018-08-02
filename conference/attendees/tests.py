@@ -192,7 +192,7 @@ class UsersViewTest(AuthMixin):
         self.assertEqual(response.status_code, 409)
         self.assertEqual(response.data, 'email_exists')
         self.assertEqual(models.User.objects.count(), 2)
-        self.assertEqual(models.ConferenceUser.objects.count(), 1)
+        self.assertEqual(models.ConferenceUser.objects.count(), 0)
 
     def test_post_max(self):
         response = self.client.post(
@@ -214,15 +214,15 @@ class UsersViewTest(AuthMixin):
         self.assertNotIn('password', response.data)
         self.assertNotIn('username', response.data)
 
+        self.assertEqual(models.User.objects.count(), 2)
+        self.assertEqual(models.ConferenceUser.objects.count(), 0)
+
         user = models.User.objects.get(email='a@b.cc')
         self.assertEqual(user.email, 'a@b.cc')
         self.assertEqual(user.first_name, 'Foo')
         self.assertEqual(user.last_name, 'Bar')
         self.assertEqual(user.username, 'a@b.cc')
         self.assertIsNotNone(user.password)
-
-        conference_user = models.ConferenceUser.objects.get()
-        self.assertEqual(conference_user.user, user)
 
     def test_post_min(self):
         response = self.client.post(
@@ -242,15 +242,15 @@ class UsersViewTest(AuthMixin):
         self.assertNotIn('password', response.data)
         self.assertNotIn('username', response.data)
 
+        self.assertEqual(models.User.objects.count(), 2)
+        self.assertEqual(models.ConferenceUser.objects.count(), 0)
+
         user = models.User.objects.get(email='a@b.cc')
         self.assertEqual(user.email, 'a@b.cc')
         self.assertEqual(user.first_name, '')
         self.assertEqual(user.last_name, '')
         self.assertEqual(user.username, 'a@b.cc')
         self.assertIsNotNone(user.password)
-
-        conference_user = models.ConferenceUser.objects.get()
-        self.assertEqual(conference_user.user, user)
 
     def test_post_email_none(self):
         response = self.client.post(

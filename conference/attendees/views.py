@@ -95,9 +95,6 @@ class ListCreateUser(APIView):
             password=make_password(password),
             username=clean_email,
         )
-        models.ConferenceUser.objects.create(
-            user=user,
-        )
         serializer = serializers.UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
