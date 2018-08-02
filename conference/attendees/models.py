@@ -105,7 +105,31 @@ class ConferenceUser(models.Model):
     Extra information about a user that's not related to the authentication process.
     """
 
+    FIRST_NAME_MAX_LENGTH = 30
+
+    LAST_NAME_MAX_LENGTH = 30
+
+    TWITTER_MAX_LENGTH = 15
+
+    FACEBOOK_MAX_LENGTH = 50
+
+    TELEGRAM_MAX_LENGTH = 32
+
+    LINKEDIN_MAX_LENGTH = 50
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+
+    title = models.TextField(blank=True)
+
+    company = models.TextField(blank=True)
+
+    twitter = models.CharField(max_length=TWITTER_MAX_LENGTH, blank=True)
+
+    facebook = models.CharField(max_length=FACEBOOK_MAX_LENGTH, blank=True)
+
+    telegram = models.CharField(max_length=TELEGRAM_MAX_LENGTH, blank=True)
+
+    linkedin = models.CharField(max_length=LINKEDIN_MAX_LENGTH, blank=True)
 
 
 class Project(models.Model):

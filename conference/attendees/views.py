@@ -15,6 +15,65 @@ from . import serializers
 import json
 
 
+class CreatePerson(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        json_body = request.data
+
+        user_id = json_body.get('user_id')
+        try:
+            user = models.User.objects.get(pk=user_id)
+        except:
+            return Response('user_id_invalid', status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+        first_name = json_body.get('first_name')
+        clean_first_name = first_name[:models.ConferenceUser.FIRST_NAME_MAX_LENGTH] if first_name is not None else ''
+
+        last_name = json_body.get('last_name')
+        clean_last_name = last_name[:models.ConferenceUser.LAST_NAME_MAX_LENGTH] if last_name is not None else ''
+
+        user.first_name = clean_first_name
+        user.last_name = clean_last_name
+        user.save()
+
+        title = json_body.get('title')
+        clean_title = title
+
+        company = json_body.get('company')
+        clean_company = company
+
+        twitter = json_body.get('twitter')
+        clean_twitter = twitter[:models.ConferenceUser.TWITTER_MAX_LENGTH]
+
+        facebook = json_body.get('facebook')
+        clean_facebook = facebook[:models.ConferenceUser.FACEBOOK_MAX_LENGTH]
+
+        telegram = json_body.get('telegram')
+        clean_telegram = telegram[:models.ConferenceUser.TELEGRAM_MAX_LENGTH]
+
+        linkedin = json_body.get('linkedin')
+        clean_linkedin = linkedin[:models.ConferenceUser.LINKEDIN_MAX_LENGTH]
+
+        if models.ConferenceUser.objects.filter(user=user).exists():
+            conference_user = models.ConferenceUser.objects.get(user=user)
+        else:
+            conference_user = models.ConferenceUser()
+
+        conference_user.user = user
+        conference_user.title = clean_title
+        conference_user.company = clean_company
+        conference_user.twitter = clean_twitter
+        conference_user.facebook = clean_facebook
+        conference_user.telegram = clean_telegram
+        conference_user.linkedin = clean_linkedin
+
+        conference_user.save()
+
+        serializer = serializers.ConferenceUserSerializer(conference_user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 class ListCreateInvestor(generics.ListCreateAPIView):
     queryset = models.Investor.objects.all()
     serializer_class = serializers.InvestorSerializer
@@ -77,8 +136,6 @@ class ListCreateUser(APIView):
     def post(self, request, format=None):
         json_body = request.data
         email = json_body.get('email')
-        first_name = json_body.get('first_name')
-        last_name = json_body.get('last_name')
         password = json_body.get('password')
 
         # email None or ''
@@ -97,14 +154,10 @@ class ListCreateUser(APIView):
         if models.User.objects.filter(username=clean_email).exists():
             return Response('username_exists', status=status.HTTP_409_CONFLICT)
 
-        clean_first_name = first_name if first_name is not None else ''
-
-        clean_last_name = last_name if last_name is not None else ''
-
         user = models.User.objects.create(
             email=clean_email,
-            first_name=clean_first_name,
-            last_name=clean_last_name,
+            first_name='',
+            last_name='',
             password=make_password(password),
             username=clean_email,
         )

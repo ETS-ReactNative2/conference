@@ -61,6 +61,34 @@
 			"response": []
 		},
 		{
+			"name": "/persons/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\": 1,\n    \"first_name\": \"Foo\",\n    \"last_name\": \"Bar\",\n    \"title\": \"Title\",\n    \"company\": \"Company\",\n    \"twitter\": \"Twitter\",\n    \"facebook\": \"Facebook\",\n    \"telegram\": \"Telegram\",\n    \"linkedin\": \"Linkedin\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/persons/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"persons",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/projects/",
 			"request": {
 				"method": "POST",
@@ -103,7 +131,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"foo@bar.baz\",\n\t\"first_name\": \"Foo\",\n\t\"last_name\": \"Bar\",\n\t\"password\": \"password\"\n}"
+					"raw": "{\n\t\"email\": \"foo@bar.baz\",\n\t\"password\": \"password\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/users/",

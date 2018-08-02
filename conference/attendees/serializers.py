@@ -2,6 +2,20 @@ from rest_framework import serializers
 from . import models
 
 
+class ConferenceUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ConferenceUser
+        fields = (
+            'user',
+            'title',
+            'company',
+            'twitter',
+            'facebook',
+            'telegram',
+            'linkedin',
+        )
+
+
 class InvestorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Investor
@@ -49,6 +63,4 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'email',
-            'first_name',
-            'last_name',
         )

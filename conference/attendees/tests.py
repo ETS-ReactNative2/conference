@@ -192,6 +192,54 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('whitepaper'), 'http://www.example.com')
 
 
+class PersonsViewTest(AuthMixin):
+
+    def view(self):
+        return 'person_create'
+
+    def test_get(self):
+        response = self.client.get(reverse(self.view()), **self.header)
+        self.assertEqual(response.status_code, 405)
+
+    def test_post(self):
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'user_id': self.user.id,
+                'title': 'aaaaaaaa',
+                'company': 'aaaaaaaa',
+                'twitter': 'aaaaaaaa',
+                'facebook': 'aaaaaaaa',
+                'telegram': 'aaaaaaaa',
+                'linkedin': 'aaaaaaaa',
+            }),
+            content_type='application/json',
+            **self.header
+        )
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data.get('user'), self.user.id)
+        self.assertEqual(response.data.get('title'), 'aaaaaaaa')
+        self.assertEqual(response.data.get('company'), 'aaaaaaaa')
+        self.assertEqual(response.data.get('twitter'), 'aaaaaaaa')
+        self.assertEqual(response.data.get('facebook'), 'aaaaaaaa')
+        self.assertEqual(response.data.get('telegram'), 'aaaaaaaa')
+        self.assertEqual(response.data.get('linkedin'), 'aaaaaaaa')
+        self.assertNotIn('id', response.data)
+
+        user = models.ConferenceUser.objects.get(pk=self.user.id)
+        self.assertEqual(user.user, self.user)
+        self.assertEqual(user.title, 'aaaaaaaa')
+        self.assertEqual(user.company, 'aaaaaaaa')
+        self.assertEqual(user.twitter, 'aaaaaaaa')
+        self.assertEqual(user.facebook, 'aaaaaaaa')
+        self.assertEqual(user.telegram, 'aaaaaaaa')
+        self.assertEqual(user.linkedin, 'aaaaaaaa')
+
+    def test_post_no_data(self):
+        response = self.client.post(reverse(self.view()), **self.header)
+        self.assertEqual(response.status_code, 422)
+
+
 class UsersViewTest(AuthMixin):
 
     def view(self):
@@ -206,8 +254,6 @@ class UsersViewTest(AuthMixin):
             reverse(self.view()),
             json.dumps({
                 'email': 'A@b.Cc',
-                'first_name': 'Foo',
-                'last_name': 'Bar',
                 'password': 'aaaaaaaa',
             }),
             content_type='application/json',
@@ -217,8 +263,6 @@ class UsersViewTest(AuthMixin):
             reverse(self.view()),
             json.dumps({
                 'email': 'a@B.cC',
-                'first_name': 'Foo',
-                'last_name': 'Bar',
                 'password': 'aaaaaaaa',
             }),
             content_type='application/json',
@@ -229,37 +273,7 @@ class UsersViewTest(AuthMixin):
         self.assertEqual(models.User.objects.count(), 2)
         self.assertEqual(models.ConferenceUser.objects.count(), 0)
 
-    def test_post_max(self):
-        response = self.client.post(
-            reverse(self.view()),
-            json.dumps({
-                'email': 'A@b.Cc',
-                'first_name': 'Foo',
-                'last_name': 'Bar',
-                'password': 'aaaaaaaa',
-            }),
-            content_type='application/json',
-            **self.header
-        )
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.data.get('email'), 'a@b.cc')
-        self.assertEqual(response.data.get('first_name'), 'Foo')
-        self.assertEqual(response.data.get('last_name'), 'Bar')
-        self.assertIn('id', response.data)
-        self.assertNotIn('password', response.data)
-        self.assertNotIn('username', response.data)
-
-        self.assertEqual(models.User.objects.count(), 2)
-        self.assertEqual(models.ConferenceUser.objects.count(), 0)
-
-        user = models.User.objects.get(email='a@b.cc')
-        self.assertEqual(user.email, 'a@b.cc')
-        self.assertEqual(user.first_name, 'Foo')
-        self.assertEqual(user.last_name, 'Bar')
-        self.assertEqual(user.username, 'a@b.cc')
-        self.assertIsNotNone(user.password)
-
-    def test_post_min(self):
+    def test_post(self):
         response = self.client.post(
             reverse(self.view()),
             json.dumps({
@@ -271,9 +285,9 @@ class UsersViewTest(AuthMixin):
         )
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.get('email'), 'a@b.cc')
-        self.assertEqual(response.data.get('first_name'), '')
-        self.assertEqual(response.data.get('last_name'), '')
         self.assertIn('id', response.data)
+        self.assertNotIn('first_name', response.data)
+        self.assertNotIn('last_name', response.data)
         self.assertNotIn('password', response.data)
         self.assertNotIn('username', response.data)
 
