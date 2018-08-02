@@ -10,7 +10,9 @@ class InvestorSerializer(serializers.ModelSerializer):
             'funding_stages',
             'giveaways',
             'industries',
+            'nationality',
             'product_stages',
+            'region',
             'ticket_sizes',
             'token_types',
         )
@@ -26,6 +28,8 @@ class ProjectSerializer(serializers.ModelSerializer):
             'fundraising_amount',
             'github',
             'giveaway',
+            'legal_country',
+            'main_country',
             'name',
             'news',
             'notable',

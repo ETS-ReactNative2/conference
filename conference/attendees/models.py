@@ -58,6 +58,24 @@ class ProductStage(models.Model):
         return self.name
 
 
+class Region(models.Model):
+
+    ANYWHERE_EXCEPT_UNITED_STATES = 2
+
+    SOUTH_KOREA_ONLY = 3
+
+    COUNTRY_SOUTH_KOREA = 'KR'
+
+    COUNTRY_UNITED_STATES = 'US'
+
+    id = models.IntegerField(primary_key=True, verbose_name='ID')
+
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
 class TicketSize(models.Model):
 
     POSITIVE_INFINITY = 2147483647
@@ -112,6 +130,10 @@ class Project(models.Model):
 
     giveaway = models.ForeignKey(Giveaway, db_index=True, null=True, blank=True)
 
+    legal_country = models.CharField(max_length=2, blank=True, default='')
+
+    main_country = models.CharField(max_length=2, blank=True, default='')
+
     name = models.CharField(max_length=255, blank=True, default='')
 
     news = models.URLField(blank=True, default='')
@@ -144,7 +166,13 @@ class Investor(models.Model):
 
     industries = models.ManyToManyField(Industry, blank=True)
 
+    # The investor's own nationality.
+    nationality = models.CharField(max_length=2, blank=True, default='')
+
     product_stages = models.ManyToManyField(ProductStage, blank=True)
+
+    # The desired region of projects.
+    region = models.ForeignKey(Region, null=True, blank=True, default='')
 
     ticket_sizes = models.ManyToManyField(TicketSize, blank=True)
 

@@ -60,7 +60,9 @@ class InvestorsViewTest(AuthMixin, SharedListViewMixin):
                     31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
                     41,
                 ],
+                'nationality': 'us',
                 'product_stages': [1, 2, 3],
+                'region': 1,
                 'ticket_sizes': [1, 2, 3, 4, 5, 6],
                 'token_types': [1, 2, 3],
             }),
@@ -77,11 +79,13 @@ class InvestorsIdViewTest(AuthMixin, SharedDetailViewMixin):
 
     def test_get(self):
         investor = models.Investor.objects.create(
+            nationality='us',
         )
         investor.funding_stages = models.FundingStage.objects.all()
         investor.giveaways = models.Giveaway.objects.all()
         investor.industries = models.Industry.objects.all()
         investor.product_stages = models.ProductStage.objects.all()
+        investor.region = models.Region.objects.get(pk=1)
         investor.ticket_sizes = models.TicketSize.objects.all()
         investor.token_types = models.TokenType.objects.all()
         investor.save()
@@ -101,7 +105,9 @@ class InvestorsIdViewTest(AuthMixin, SharedDetailViewMixin):
                 41,
             ],
         )
+        self.assertEqual(response_dict.get('nationality'), 'us')
         self.assertEqual(response_dict.get('product_stages'), [1, 2, 3])
+        self.assertEqual(response_dict.get('region'), 1)
         self.assertEqual(response_dict.get('ticket_sizes'), [1, 2, 3, 4, 5, 6])
         self.assertEqual(response_dict.get('token_types'), [1, 2, 3])
 
@@ -120,6 +126,8 @@ class ProjectsViewTest(AuthMixin, SharedListViewMixin):
                 'fundraising_amount': 2147483647,
                 'github': 'aaaaaaaa',
                 'giveaway': 1,
+                'legal_country': 'us',
+                'main_country': 'us',
                 'name': 'aaaaaaaa',
                 'news': 'http://www.example.com',
                 'notable': 'aaaaaaaa',
@@ -149,6 +157,8 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
             fundraising_amount=2147483647,
             github='http://www.example.com',
             giveaway=models.Giveaway.objects.get(id=1),
+            legal_country='us',
+            main_country='us',
             name='aaaaaaaa',
             news='http://www.example.com',
             notable='aaaaaaaa',
@@ -168,6 +178,8 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('funding_stage'), 1)
         self.assertEqual(response_dict.get('github'), 'http://www.example.com')
         self.assertEqual(response_dict.get('giveaway'), 1)
+        self.assertEqual(response_dict.get('legal_country'), 'us')
+        self.assertEqual(response_dict.get('main_country'), 'us')
         self.assertEqual(response_dict.get('name'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('news'), 'http://www.example.com')
         self.assertEqual(response_dict.get('notable'), 'aaaaaaaa')

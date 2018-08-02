@@ -21,6 +21,7 @@ class ListCreateInvestor(generics.ListCreateAPIView):
 
     def get_queryset(self):
         filters = {}
+        excludes = {}
         funding_stages = self.request.GET.getlist('funding_stage')
         if funding_stages:
             filters['funding_stages__in'] = funding_stages
@@ -30,10 +31,15 @@ class ListCreateInvestor(generics.ListCreateAPIView):
         product_stages = self.request.GET.getlist('product_stage')
         if product_stages:
             filters['product_stages__in'] = product_stages
+        region = self.request.GET.get('region')
+        if region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
+            excludes['nationality'] = models.Region.COUNTRY_UNITED_STATES
+        elif region == models.Region.SOUTH_KOREA_ONLY:
+            filters['nationality'] = models.Region.COUNTRY_SOUTH_KOREA
         token_types = self.request.GET.getlist('token_type')
         if token_types:
             filters['token_types__in'] = token_types
-        return models.Investor.objects.filter(**filters)
+        return models.Investor.objects.filter(**filters).exclude(**excludes)
 
 
 class ListCreateProject(generics.ListCreateAPIView):
@@ -42,6 +48,7 @@ class ListCreateProject(generics.ListCreateAPIView):
 
     def get_queryset(self):
         filters = {}
+        excludes = {}
         funding_stages = self.request.GET.getlist('funding_stage')
         if funding_stages:
             filters['funding_stage__in'] = funding_stages
@@ -53,10 +60,14 @@ class ListCreateProject(generics.ListCreateAPIView):
         product_stages = self.request.GET.getlist('product_stage')
         if product_stages:
             filters['product_stage__in'] = product_stages
+        region = self.request.GET.get('region')
+        if region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
+            excludes['legal_country'] = models.Region.COUNTRY_UNITED_STATES
+            excludes['main_country'] = models.Region.COUNTRY_UNITED_STATES
         token_types = self.request.GET.getlist('token_type')
         if token_types:
             filters['token_types__in'] = token_types
-        return models.Project.objects.filter(**filters)
+        return models.Project.objects.filter(**filters).exclude(**excludes)
 
 
 class ListCreateUser(APIView):

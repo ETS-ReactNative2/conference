@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9b34f730-797f-4584-aa2a-d9a7e11dd3e5",
+		"_postman_id": "1fa319f4-81fa-4d61-be6c-feac68257753",
 		"name": "Conference",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -44,7 +44,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"country\": \"DE\",\n    \"description\": \"aaaaaaaa\",\n    \"funding_stages\": [1, 2, 3],\n    \"max_ticket\": 999999999999,\n    \"min_ticket\": 999999999999,\n    \"name\": \"aaaaaaaa\",\n    \"product_stages\": [1, 2, 3],\n    \"tagline\": \"aaaaaaaa\",\n    \"token_types\": [1, 2, 3]\n}"
+					"raw": "{\n    \"funding_stages\": [1, 2, 3],\n    \"giveaways\": [1, 2],\n    \"industries\": [\n    \t1, 2, 3, 4, 5, 6, 7, 8, 9, 10,\n        11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\n        21, 22, 23, 24, 25, 26, 27, 28, 29, 30,\n        31, 32, 33, 34, 35, 36, 37, 38, 39, 40,\n        41\n    ],\n    \"nationality\": \"us\",\n    \"product_stages\": [1, 2, 3],\n    \"region\": 1,\n    \"ticket_sizes\": [1, 2, 3, 4, 5, 6],\n    \"token_types\": [1, 2, 3]\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/investors/",
@@ -72,7 +72,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"country\": \"DE\",\n    \"description\": \"aaaaaaaa\",\n    \"funding_stage\": 1,\n    \"giveaway\": 1,\n    \"name\": \"aaaaaaaa\",\n    \"notable\": \"aaaaaaaa\",\n    \"product_stage\": 1,\n    \"tagline\": \"aaaaaaaa\",\n    \"token_type\": 1\n}"
+					"raw": "{\n    \"description\": \"aaaaaaaa\",\n    \"funding_stage\": 1,\n    \"fundraising_amount\": 2147483647,\n    \"github\": \"http://www.example.com\",\n    \"giveaway\": 1,\n    \"legal_country\": \"us\",\n    \"main_country\": \"us\",\n    \"name\": \"aaaaaaaa\",\n    \"news\": \"http://www.example.com\",\n    \"notable\": \"aaaaaaaa\",\n    \"product_stage\": 1,\n    \"tagline\": \"aaaaaaaa\",\n    \"telegram\": \"aaaaaaaa\",\n    \"token_type\": 1,\n    \"twitter\": \"aaaaaaaa\",\n    \"website\": \"http://www.example.com\",\n    \"whitepaper\": \"http://www.example.com\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/projects/",
@@ -124,7 +124,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{HOST}}/api/investors/1/",
 					"host": [
@@ -145,7 +148,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{HOST}}/api/projects/1/",
 					"host": [
@@ -171,7 +177,10 @@
 						"value": "application/json"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{HOST}}/schedule/",
 					"host": [
@@ -191,7 +200,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "",
+				"value": "{{TOKEN}}",
 				"type": "string"
 			}
 		]
