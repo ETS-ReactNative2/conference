@@ -1,3 +1,0 @@
-[filter "update-fabric-keys"]
-	clean = clean.sh
-	smudge = smudge.sh

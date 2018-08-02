@@ -16,7 +16,7 @@ export function fetchMatches () {
         }
       })
     } catch (err) {
-      console.log(err)
+      console.log({err})
       dispatch({ type: LOAD_PROFILES_ERROR })
     }
   }

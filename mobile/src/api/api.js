@@ -14,9 +14,7 @@ export async function fetchProjects (filters) {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'X-Authorization': `Bearer ${token}`
     }
   })
 }
@@ -27,9 +25,7 @@ export async function fetchInvestors (filters) {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'X-Authorization': `Bearer ${token}`
     }
   })
 }
@@ -56,9 +52,7 @@ export async function createInvestee ({
     tokenType
   }), {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'X-Authorization': `Bearer ${token}`
     }
   })
 }
@@ -75,9 +69,7 @@ export async function createInvestor ({
     giveaways
   }), {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'X-Authorization': `Bearer ${token}`
     }
   })
 }
