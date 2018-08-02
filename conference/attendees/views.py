@@ -47,6 +47,8 @@ class ListCreateProject(generics.ListCreateAPIView):
             filters['funding_stage__in'] = funding_stages
         giveaways = self.request.GET.getlist('giveaway')
         if giveaways:
+            # Projects with giveaway BOTH are always found.
+            giveaways.append(models.Giveaway.BOTH)
             filters['giveaway__in'] = giveaways
         product_stages = self.request.GET.getlist('product_stage')
         if product_stages:

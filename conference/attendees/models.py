@@ -27,6 +27,9 @@ class FundingStage(models.Model):
 
 class Giveaway(models.Model):
 
+    # BOTH is a special value which only projects can use.
+    BOTH = 3
+
     id = models.IntegerField(primary_key=True, verbose_name='ID')
 
     name = models.CharField(max_length=40)
