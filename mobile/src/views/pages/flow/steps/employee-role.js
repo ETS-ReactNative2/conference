@@ -4,15 +4,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
+import { ROLES } from '../../../../enums'
 import { EmployeeKeywords } from './index'
 
-const roles = [
-  'developer',
-  'founder',
-  'ceo',
-  'marketing',
-  'sales'
-]
 
 class EmployeeRole extends React.Component {
   constructor (props) {
@@ -29,7 +23,7 @@ class EmployeeRole extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employee.role.title') }</Text>
         <Content>
           {
-            roles.map((option, index) => {
+            ROLES.map(({slug: option, index}) => {
               return (
                 <ListItem style={ { width: '100%' } } key={ option } onPress={ () => this.handleChange(index) }>
                   <Left>

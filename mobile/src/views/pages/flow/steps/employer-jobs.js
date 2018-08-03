@@ -109,7 +109,7 @@ class EmployerJobs extends React.Component {
     return (
       <React.Fragment>
         { this.props.employer.roles
-          .map(role => ROLES[ role ].slug)
+          .map(role => ROLES.find(job => job.index === role).slug)
           .map(role => {
             return (
               <Card key={ role } style={ { padding: 8, marginBottom: 16 } }>

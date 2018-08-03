@@ -22,12 +22,12 @@ class EmployerRole extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employer.role.title') }</Text>
         <Content>
           {
-            ROLES.map((option, index) => {
+            ROLES.map(({slug, index}) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.slug }
+                <ListItem style={ { width: '100%' } } key={ slug }
                           onPress={ () => this.handleCheckboxClick(index) }>
                   <Left>
-                    <Text>{ I18n.t(`common.roles.${option.slug}`) }</Text>
+                    <Text>{ I18n.t(`common.roles.${slug}`) }</Text>
                   </Left>
                   <Right>
                     <Radio

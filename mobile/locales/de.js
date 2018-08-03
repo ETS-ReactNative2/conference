@@ -181,20 +181,32 @@ export default {
     'no': 'Nein',
     'next': 'Weiter',
     'roles': {
-      'developer': '_DE_Developer',
+      'full_stack_developer': '_DE_Full Stack Developer',
       'marketing': '_DE_Marketing',
       'ceo': '_DE_CEO',
-      'sales': '_DE_Sales','token_type': {
-        'title': 'Token type'
-      },
-      'founder': '_DE_Founder'
+      'sales': '_DE_Sales',
+      'community_manager': '_DE_Community Manager',
+      'designer': '_DE_Designer',
+      'frontend_developer': '_DE_Frontend Developer',
+      'backend_developer': '_DE_Backend Developer',
+      'data_scientist': '_DE_Data Scientist',
+      'ml_engineer': '_DE_Machine Learning Engineer',
+      'qa_engineer': '_DE_Quality Assurance Engineer',
+      'other': '_DE_Other'
     },
     'roles_job': {
-      'developer': '_DE_Developer job listing',
+      'full_stack_developer': '_DE_Full Stack Developer job listing',
       'marketing': '_DE_Marketing job listing',
       'ceo': '_DE_CEO job listing',
       'sales': '_DE_Sales job listing',
-      'founder': '_DE_Founder job listing'
+      'community_manager': '_DE_Community Manager job listing',
+      'designer': '_DE_Designer job listing',
+      'frontend_developer': '_DE_Frontend Developer job listing',
+      'backend_developer': '_DE_Backend Developer job listing',
+      'data_scientist': '_DE_Data Scientist job listing',
+      'ml_engineer': '_DE_Machine Learning Engineer job listing',
+      'qa_engineer': '_DE_Quality Assurance Engineer job listing',
+      'other': '_DE_Other role job listing'
     },
     'twitter': '_DE_Twitter',
     'facebook': '_DE_Facebook',

@@ -55,11 +55,18 @@ export const PRODUCT_STAGES = [
 ]
 
 export const ROLES = [
-  { slug: 'developer' },
-  { slug: 'founder' },
-  { slug: 'ceo' },
-  { slug: 'marketing' },
-  { slug: 'sales' }
+  { index: 1, slug: 'ceo'},
+  { index: 2, slug: 'community_manager'},
+  { index: 3, slug: 'designer' },
+  { index: 4, slug: 'data_scientist'},
+  { index: 5, slug: 'backend_developer'},
+  { index: 6, slug: 'frontend_developer'},
+  { index: 7, slug: 'full_stack_developer' },
+  { index: 8, slug: 'marketing'},
+  { index: 9, slug: 'ml_engineer'},
+  { index: 10, slug: 'qa_engineer'},
+  { index: 11, slug: 'sales'},
+  { index: 12, slug: 'other'}
 ]
 
 //TODO: Remove as soon as search filter alogirthm uses REGIONS enum

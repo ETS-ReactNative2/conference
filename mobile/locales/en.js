@@ -182,18 +182,32 @@ export default {
     'no': 'No',
     'next': 'Next',
     'roles': {
-      'developer': 'Developer',
+      'full_stack_developer': 'Full Stack Developer',
       'marketing': 'Marketing',
       'ceo': 'CEO',
       'sales': 'Sales',
-      'founder': 'Founder'
+      'community_manager': 'Community Manager',
+      'designer': 'Designer',
+      'frontend_developer': 'Frontend Developer',
+      'backend_developer': 'Backend Developer',
+      'data_scientist': 'Data Scientist',
+      'ml_engineer': 'Machine Learning Engineer',
+      'qa_engineer': 'Quality Assurance Engineer',
+      'other': 'Other'
     },
     'roles_job': {
-      'developer': 'Developer job listing',
+      'full_stack_developer': 'Full Stack Developer job listing',
       'marketing': 'Marketing job listing',
       'ceo': 'CEO job listing',
       'sales': 'Sales job listing',
-      'founder': 'Founder job listing'
+      'community_manager': 'Community Manager job listing',
+      'designer': 'Designer job listing',
+      'frontend_developer': 'Frontend Developer job listing',
+      'backend_developer': 'Backend Developer job listing',
+      'data_scientist': 'Data Scientist job listing',
+      'ml_engineer': 'Machine Learning Engineer job listing',
+      'qa_engineer': 'Quality Assurance Engineer job listing',
+      'other': 'Other role job listing'
     },
     'twitter': 'Twitter',
     'facebook': 'Facebook',

@@ -127,7 +127,7 @@ export function signUpReducer (state = initialState, action) {
       if (action.employerInfo.roles) {
         const jobs = {}
         action.employerInfo.roles.forEach(role => {
-          const jobName = ROLES[ role ].slug
+          const jobName = ROLES.find(job => job.index === role).slug
           jobs[ jobName ] = state.employer[ jobName ] ? state.employer[ jobName ] : {
             keywords: [],
             link: '',

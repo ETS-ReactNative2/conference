@@ -181,18 +181,32 @@ export default {
     'no': 'Nie',
     'next': '_PL_Next',
     'roles': {
-      'developer': '_PL_Developer',
+      'full_stack_developer': '_PL_Full Stack Developer',
       'marketing': '_PL_Marketing',
       'ceo': '_PL_CEO',
       'sales': '_PL_Sales',
-      'founder': '_PL_Founder'
+      'community_manager': '_PL_Community Manager',
+      'designer': '_PL_Designer',
+      'frontend_developer': '_PL_Frontend Developer',
+      'backend_developer': '_PL_Backend Developer',
+      'data_scientist': '_PL_Data Scientist',
+      'ml_engineer': '_PL_Machine Learning Engineer',
+      'qa_engineer': '_PL_Quality Assurance Engineer',
+      'other': '_PL_Other'
     },
     'roles_job': {
-      'developer': '_PL_Developer job listing',
+      'full_stack_developer': '_PL_Full Stack Developer job listing',
       'marketing': '_PL_Marketing job listing',
       'ceo': '_PL_CEO job listing',
       'sales': '_PL_Sales job listing',
-      'founder': '_PL_Founder job listing'
+      'community_manager': '_PL_Community Manager job listing',
+      'designer': '_PL_Designer job listing',
+      'frontend_developer': '_PL_Frontend Developer job listing',
+      'backend_developer': '_PL_Backend Developer job listing',
+      'data_scientist': '_PL_Data Scientist job listing',
+      'ml_engineer': '_PL_Machine Learning Engineer job listing',
+      'qa_engineer': '_PL_Quality Assurance Engineer job listing',
+      'other': '_PL_Other role job listing'
     },
     'twitter': '_PL_Twitter',
     'facebook': '_PL_Facebook',
