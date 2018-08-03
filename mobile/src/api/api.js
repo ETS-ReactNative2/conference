@@ -10,6 +10,7 @@ export async function signup ({ email, password, phone }) {
 
 export async function fetchProjects (filters) {
   const token = await storageService.getItem(TOKEN_NAME)
+  console.log(token)
   return axios.get('/api/projects', {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
@@ -21,6 +22,7 @@ export async function fetchProjects (filters) {
 
 export async function fetchInvestors (filters) {
   const token = await storageService.getItem(TOKEN_NAME)
+  console.log(token)
   return axios.get('/api/investors', {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
@@ -43,19 +45,43 @@ export async function createConferenceUser ({ firstName, lastName, title, compan
 }
 
 export async function createInvestee ({
-  country, description, fundingStage, giveaway, notable, name, productStage, tagline, tokenType
+  description,
+  fundingStage,
+  giveaway,
+  notable,
+  name,
+  productStage,
+  tagline,
+  tokenType,
+  fundraisingAmount,
+  github,
+  legalCountry,
+  mainCountry,
+  news,
+  telegram,
+  twitter,
+  website,
+  whitepaper
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.post('/api/projects/', decamelizeKeys({
-    country,
     description,
     fundingStage,
+    fundraisingAmount,
+    legalCountry,
+    mainCountry,
+    github,
     giveaway,
     notable,
     name,
     productStage,
     tagline,
-    tokenType
+    tokenType,
+    news,
+    telegram,
+    twitter,
+    website,
+    whitepaper
   }), {
     headers: {
       'X-Authorization': `Bearer ${token}`
@@ -64,7 +90,7 @@ export async function createInvestee ({
 }
 
 export async function createInvestor ({
-  fundingStages, ticketSizes, productStages, tokenTypes, giveaways
+  fundingStages, ticketSizes, productStages, tokenTypes, giveaways, industries, region
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.post('/api/investors/', decamelizeKeys({
@@ -72,7 +98,9 @@ export async function createInvestor ({
     ticketSizes,
     productStages,
     tokenTypes,
-    giveaways
+    giveaways,
+    industries,
+    region
   }), {
     headers: {
       'X-Authorization': `Bearer ${token}`

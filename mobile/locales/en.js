@@ -225,9 +225,9 @@ export default {
       'polish': 'Polish'
     },
     'regions': {
-      'anywhere': '_PL_Anywhere',
-      'anywhere_except_us': '_PL_Anywhere except US',
-      'korea_only': '_PL_Korea only'
+      'anywhere': 'Anywhere',
+      'anywhere_except_us': 'Anywhere except US',
+      'korea_only': 'Korea only'
     },
     'country': {
       'usa': 'USA',

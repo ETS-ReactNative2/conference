@@ -35,15 +35,23 @@ export function uploadProfile () {
       switch (type) {
         case 'investee':
           return await api.createInvestee({
-            country: '',
             description: investee.projectDescription,
-            fundingStage: investee.fundingStage,
-            giveaway: investee.giveaway,
-            notable: investee.teamMembers,
             name: investee.projectName,
             productStage: investee.productStage,
+            fundingStage: investee.fundingStage,
+            fundraisingAmount: investee.amount,
+            giveaway: investee.giveaway,
+            notable: investee.teamMembers,
             tagline: investee.projectTagline,
-            tokenType: investee.tokenType
+            tokenType: investee.tokenType,
+            github: investee.github,
+            twitter: investee.twitter,
+            website: investee.website,
+            whitepaper: investee.whitepaper,
+            telegram: investee.telegram,
+            news: investee.news,
+            legalCountry: '',
+            mainCountry: ''
           })
         case 'investor':
           return await api.createInvestor({
@@ -51,7 +59,9 @@ export function uploadProfile () {
             fundingStages: investor.stages,
             productStages: investor.productStages,
             ticketSizes: investor.ticketSizes,
-            tokenTypes: investor.investments
+            tokenTypes: investor.investments,
+            industries: investor.industries,
+            region: investor.marketLocation
           })
       }
     } catch (err) {

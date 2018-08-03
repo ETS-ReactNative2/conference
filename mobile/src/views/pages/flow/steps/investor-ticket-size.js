@@ -61,7 +61,6 @@ class InvestorTicketSize extends React.Component {
   }
 
   isCheckboxSelected = id => {
-    console.log(this.state)
     return this.state.ticketSizes.indexOf(id) !== -1
   }
 

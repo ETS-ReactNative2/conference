@@ -198,7 +198,7 @@ class Project(models.Model):
 
     tagline = models.CharField(max_length=255, blank=True, default='')
 
-    telegram = models.CharField(max_length=TELEGRAM_MAX_LENGTH, default='')
+    telegram = models.CharField(max_length=TELEGRAM_MAX_LENGTH, default='', blank=True)
 
     token_type = models.ForeignKey(TokenType, db_index=True, null=True, blank=True)
 
