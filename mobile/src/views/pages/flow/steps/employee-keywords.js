@@ -5,20 +5,9 @@ import { StyleSheet } from 'react-native'
 import { Chip, Selectize } from 'react-native-material-selectize'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
+import { SKILLS, TRAITS } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import ValidatedInput from '../../../components/validated-input/validated-input'
-
-const skills = [
-  { id: 1, text: 'React' },
-  { id: 2, text: 'Ad Words' },
-  { id: 3, text: 'Blockchain' },
-  { id: 4, text: 'Shrimps' }
-]
-
-const traits = [
-  { id: 1, text: 'Dedicated'},
-  { id: 2, text: 'Passionate'}
-]
 
 class EmployeeKeywords extends React.Component {
   constructor (props) {
@@ -83,7 +72,7 @@ class EmployeeKeywords extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employee.skills.header') }</Text>
         <Selectize
           selectedItems={ this.state.skills }
-          items={ skills }
+          items={ SKILLS }
           label={ I18n.t('flow_page.employee.skills.title') }
           textInputProps={{
             placeholder: I18n.t('flow_page.employee.skills.placeholder')
@@ -109,7 +98,7 @@ class EmployeeKeywords extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employee.traits.header') }</Text>
         <Selectize
           selectedItems={ this.state.traits }
-          items={ traits }
+          items={ TRAITS }
           label={ I18n.t('flow_page.employee.traits.title') }
           textInputProps={{
             placeholder: I18n.t('flow_page.employee.traits.placeholder')

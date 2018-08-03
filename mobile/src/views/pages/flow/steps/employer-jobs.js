@@ -6,16 +6,9 @@ import { Chip, Selectize } from 'react-native-material-selectize'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
-import { PAYMENTS, ROLES } from '../../../../enums'
+import { PAYMENTS, ROLES, SKILLS } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import ValidatedInput from '../../../components/validated-input/validated-input'
-
-const items = [
-  { id: 1, text: 'React' },
-  { id: 2, text: 'Ad Words' },
-  { id: 3, text: 'Blockchain' },
-  { id: 4, text: 'Shrimps' }
-]
 
 class EmployerJobs extends React.Component {
   constructor (props) {
@@ -116,7 +109,7 @@ class EmployerJobs extends React.Component {
                 <Text style={ { fontSize: 24 } }>{ I18n.t(`common.roles_job.${role}`) }</Text>
                 <Selectize
                   selectedItems={ this.state[ role ] }
-                  items={ items }
+                  items={ SKILLS }
                   label={ I18n.t('flow_page.employer.keyword.title') }
                   textInputProps={ {
                     placeholder: I18n.t('flow_page.employer.keyword.placeholder')
