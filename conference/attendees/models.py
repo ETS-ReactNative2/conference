@@ -100,6 +100,16 @@ class TokenType(models.Model):
         return self.name
 
 
+class JobRole(models.Model):
+
+    id = models.IntegerField(primary_key=True, verbose_name='ID')
+
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
 class ConferenceUser(models.Model):
     """
     Extra information about a user that's not related to the authentication process.
