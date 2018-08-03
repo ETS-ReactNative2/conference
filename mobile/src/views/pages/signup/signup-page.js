@@ -56,7 +56,7 @@ export class SignupPage extends React.Component {
         })
         navigation.navigate(PAGES_NAMES.FLOW_PAGE)
       } catch (err) {
-        console.error(err)
+        console.log(err)
       }
     }
   }

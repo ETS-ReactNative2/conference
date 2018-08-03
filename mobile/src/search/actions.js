@@ -6,8 +6,8 @@ export function fetchMatches () {
   return async dispatch => {
     try {
       dispatch({ type: LOAD_PROFILES })
-      const projectResponse = await api.fetchProjects()
-      const investorResponse = await api.fetchInvestors()
+      const projectResponse = await api.fetchProjects({})
+      const investorResponse = await api.fetchInvestors({})
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {

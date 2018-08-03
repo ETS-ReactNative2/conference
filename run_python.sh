@@ -3,7 +3,9 @@
 echo ===== INSTALLING SYSTEM DEPENDENCIES =====
 apt-get update -qq \
 && apt-get upgrade -y -qq \
-&& apt-get install -y -qq gdal-bin python-gdal
+&& apt-get install -y -qq gdal-bin python-gdal gcc
+
+pip install --upgrade pip
 
 echo ===== INSTALLING PYTHON DEPENDENCIES =====
 cd conference

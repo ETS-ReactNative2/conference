@@ -30,10 +30,16 @@ export async function fetchInvestors (filters) {
   })
 }
 
-export async function createConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram }) {
-  return axios.post('/api/users/', decamelizeKeys({
-    firstName, lastName, title, company, twitter, facebook, linkedin, telegram
-  }))
+export async function createConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram, userId }) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post(
+    '/api/persons/',
+    decamelizeKeys({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram, userId }),
+    {
+      headers: {
+        'X-Authorization': `Bearer ${token}`
+      }
+    })
 }
 
 export async function createInvestee ({
