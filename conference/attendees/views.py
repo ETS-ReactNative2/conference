@@ -101,6 +101,11 @@ class ListCreateInvestor(generics.ListCreateAPIView):
         return models.Investor.objects.filter(**filters).exclude(**excludes)
 
 
+class CreateJob(generics.CreateAPIView):
+    queryset = models.JobListing.objects.all()
+    serializer_class = serializers.JobListingSerializer
+
+
 class ListCreateProject(generics.ListCreateAPIView):
     queryset = models.Project.objects.all()
     serializer_class = serializers.ProjectSerializer

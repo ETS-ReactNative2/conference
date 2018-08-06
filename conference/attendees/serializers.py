@@ -32,7 +32,28 @@ class InvestorSerializer(serializers.ModelSerializer):
         )
 
 
+class JobListingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.JobListing
+        fields = (
+            'id',
+            'role',
+            'role_other_text',
+            'skills',
+            'link',
+            'description',
+            'part_time',
+            'payments',
+            'local_remote_options',
+            'country',
+            'city',
+            'project',
+        )
+
+
 class ProjectSerializer(serializers.ModelSerializer):
+    job_listings = JobListingSerializer(many=True, read_only=True)
+
     class Meta:
         model = models.Project
         fields = (
@@ -54,6 +75,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             'twitter',
             'website',
             'whitepaper',
+            'job_listings',
         )
 
 

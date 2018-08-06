@@ -100,7 +100,27 @@ class TokenType(models.Model):
         return self.name
 
 
+class LocalRemoteOption(models.Model):
+
+    id = models.IntegerField(primary_key=True, verbose_name='ID')
+
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
 class JobRole(models.Model):
+
+    id = models.IntegerField(primary_key=True, verbose_name='ID')
+
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
+class Payment(models.Model):
 
     id = models.IntegerField(primary_key=True, verbose_name='ID')
 
@@ -231,3 +251,28 @@ class Investor(models.Model):
     ticket_sizes = models.ManyToManyField(TicketSize, blank=True)
 
     token_types = models.ManyToManyField(TokenType, blank=True)
+
+
+class JobListing(models.Model):
+
+    role = models.ForeignKey(JobRole)
+
+    role_other_text = models.CharField(max_length=40, blank=True, default='')
+
+    skills = models.ManyToManyField(Skill, blank=True)
+
+    link = models.URLField(blank=True, default='')
+
+    description = models.TextField(blank=True, default='')
+
+    part_time = models.BooleanField(default=False)
+
+    payments = models.ManyToManyField(Payment, blank=True)
+
+    local_remote_options = models.ManyToManyField(LocalRemoteOption)
+
+    country = models.CharField(max_length=2, blank=True, default='')
+
+    city = models.CharField(max_length=40, blank=True, default='')
+
+    project = models.ForeignKey(Project, related_name='job_listings')

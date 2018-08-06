@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1fa319f4-81fa-4d61-be6c-feac68257753",
+		"_postman_id": "359f44c6-fb79-4b40-bb33-972ee678b47e",
 		"name": "Conference",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -8,6 +8,9 @@
 		{
 			"name": "/api-token-auth/",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -54,6 +57,34 @@
 					"path": [
 						"api",
 						"investors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/jobs/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills\": [1, 2, 3],\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\",\n    \"project\": 1\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/jobs/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"jobs",
 						""
 					]
 				}
