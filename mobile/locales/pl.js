@@ -258,6 +258,11 @@ export default {
       'equity': '_PL_Equity',
       'both': '_PL_Both'
     },
+    'giveaway': {
+      'token': '_PL_Token',
+      'equity': '_PL_Equity',
+      'both': '_PL_Both'
+    },
     'industries': {
       'accounting': 'Accounting',
       'agriculture': 'Agriculture',

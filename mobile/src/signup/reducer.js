@@ -54,7 +54,7 @@ const initialState = {
     money: false,
     amount: '',
     tokenType: -1,
-    giveaway: -1,
+    giveaway: [],
     investorNationality: 0
   },
   employer: {

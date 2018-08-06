@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { GIVEAWAY_TYPES, TOKEN_TYPES } from '../../../../enums'
+import { GIVEAWAY_TYPES_PROJECT } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { InvesteeProductStage, InvesteeTeamMembers } from './index'
 
@@ -32,7 +32,7 @@ class InvesteeGiveaway extends React.Component {
     return (
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.giveaway.title') }</Text>
-        { GIVEAWAY_TYPES.map((giveaway) => {
+        { GIVEAWAY_TYPES_PROJECT.map((giveaway) => {
           return (
             <ListItem
               onPress={ () => this.handleChange(giveaway.index) }

@@ -253,6 +253,11 @@ export default {
       'equity': '_DE_Equity',
       'both': '_DE_Both'
     },
+    'giveaway': {
+      'token': '_DE_Token',
+      'equity': '_DE_Equity',
+      'both': '_DE_Both'
+    },
     'industries': {
       'accounting': 'Accounting',
       'agriculture': 'Agriculture',

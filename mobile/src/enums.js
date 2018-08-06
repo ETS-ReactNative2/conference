@@ -24,6 +24,21 @@ export const GIVEAWAY_TYPES = [
   }
 ]
 
+export const GIVEAWAY_TYPES_PROJECT = [
+    {
+        slug: 'token',
+        index: 1,
+    },
+    {
+        slug: 'equity',
+        index: 2,
+    },
+    {
+        slug: 'both',
+        index: 3,
+    }
+]
+
 export const TOKEN_TYPES = [
   {
     slug: 'protocols',

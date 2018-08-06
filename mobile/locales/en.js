@@ -249,6 +249,11 @@ export default {
       'equity': 'Equity',
       'both': 'Both'
     },
+    'giveaway': {
+      'token': 'Token',
+      'equity': 'Equity',
+      'both': 'Both'
+    },
     'product_stages': {
       'pre': 'Pre-product',
       'live': 'Live product',
