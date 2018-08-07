@@ -109,17 +109,20 @@ export default {
       'keyword': {
         'title': '_DE_Keywords',
         'placeholder': '_DE_Select your skills',
-        'full_time': '_DE_Part time possible?'
+        'full_time': '_DE_Part time possible?',
+        'remote': '_DE_Remote possible?'
       },
       'payment': {
         'title': '_DE_Type of payment'
       },
+
       'job': {
         'title': '_DE_Job',
         'link': '_DE_Link',
         'description': '_DE_Job description',
         'min': '_DE_Min. salary',
-        'max': '_DE_Max. salary'
+        'max': '_DE_Max. salary',
+        'city': '_DE_City'
       }
     },
     'investor': {
@@ -306,6 +309,10 @@ export default {
       'tokens': '_DE_Tokens',
       'equity': '_DE_Equity'
     },
+    'job_location': {
+      'local': '_DE_Local',
+      'remote': '_DE_Remote'
+    },
     'months': {
       '0': 'Januar',
       '1': 'Februar',
@@ -332,7 +339,8 @@ export default {
       'incorrect_job_link': '_DE_Please enter either job link or job description',
       'incorrect_job_description': '_DE_Please enter either job link or job description',
       'incorrect_job_min_salary': '_DE_Value should be greater or equal to 0',
-      'incorrect_job_max_salary': '_DE_Value should be greater or equal to 0 and greater than min salary if min salary is specified'
+      'incorrect_job_max_salary': '_DE_Value should be greater or equal to 0 and greater than min salary if min salary is specified',
+      'incorrect_job_city': '_DE_Please enter city'
     }
   }
 }

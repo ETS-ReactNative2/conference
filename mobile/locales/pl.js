@@ -109,17 +109,20 @@ export default {
       'keyword': {
         'title': '_PL_Keywords',
         'placeholder': '_PL_Select your skills',
-        'full_time': '_PL_Part time possible?'
+        'full_time': '_PL_Part time possible?',
+        'remote': '_PL_Remote possible?'
       },
       'payment': {
         'title': '_PL_Type of payment'
       },
+
       'job': {
         'title': '_PL_Job',
         'link': '_PL_Link',
         'description': '_PL_Job description',
         'min': '_PL_Min. salary',
-        'max': '_PL_Max. salary'
+        'max': '_PL_Max. salary',
+        'city': '_PL_City'
       }
     },
     'investor': {
@@ -233,6 +236,10 @@ export default {
       'tokens': '_PL_Tokens',
       'equity': '_PL_Equity'
     },
+    'job_location': {
+      'local': '_DE_Local',
+      'remote': '_DE_Remote'
+    },
     'country': {
       'usa': 'USA',
       'korea': 'Korea',
@@ -332,7 +339,8 @@ export default {
       'incorrect_job_link': '_PL_Please enter either job link or job description',
       'incorrect_job_description': '_PL_Please enter either job link or job description',
       'incorrect_job_min_salary': '_PL_Value should be greater or equal to 0',
-      'incorrect_job_max_salary': '_PL_Value should be greater or equal to 0 and greater than min salary if min salary is specified'
+      'incorrect_job_max_salary': '_PL_Value should be greater or equal to 0 and greater than min salary if min salary is specified',
+      'incorrect_job_city': '_PL_Please enter city'
     }
   }
 }

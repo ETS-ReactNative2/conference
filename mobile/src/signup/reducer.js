@@ -133,7 +133,14 @@ export function signUpReducer (state = initialState, action) {
             link: '',
             description: '',
             partTime: false,
-            payments: []
+            payments: [],
+            location: [],
+            country: {
+              cca2: 'US',
+              countryName: 'United States of America',
+              callingCode: '1'
+            },
+            city: ''
           }
         })
 

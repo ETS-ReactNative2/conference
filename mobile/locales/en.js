@@ -114,7 +114,11 @@ export default {
       'keyword': {
         'title': 'Keywords',
         'placeholder': 'Select skills for job listing',
-        'full_time': 'Part time possible?'
+        'full_time': 'Part time possible?',
+        'remote': 'Remote possible?'
+      },
+      'location': {
+        'title': 'Job location'
       },
       'payment': {
         'title': 'Type of payment'
@@ -124,7 +128,8 @@ export default {
         'link': 'Link',
         'description': 'Job description',
         'min': 'Min. salary',
-        'max': 'Max. salary'
+        'max': 'Max. salary',
+        'city': 'City'
       }
     },
     'investor': {
@@ -312,6 +317,10 @@ export default {
       'tokens': 'Tokens',
       'equity': 'Equity'
     },
+    'job_location': {
+      'local': 'Local',
+      'remote': 'Remote'
+    },
     'months': {
       '0': 'January',
       '1': 'February',
@@ -338,7 +347,8 @@ export default {
       'incorrect_job_link': 'Please enter either job link or job description',
       'incorrect_job_description': 'Please enter either job link or job description',
       'incorrect_job_min_salary': 'Value should be greater or equal to 0',
-      'incorrect_job_max_salary': 'Value should be greater or equal to 0 and greater than min salary if min salary is specified'
+      'incorrect_job_max_salary': 'Value should be greater or equal to 0 and greater than min salary if min salary is specified',
+      'incorrect_job_city': 'Please enter city'
     }
   }
 }

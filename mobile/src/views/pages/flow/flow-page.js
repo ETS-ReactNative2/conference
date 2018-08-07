@@ -3,7 +3,7 @@ import React from 'react'
 import { BackHandler } from 'react-native'
 import { connect } from 'react-redux'
 import { signUpActions } from '../../../signup'
-import { CommonProfileOnboarding, InvestorGiveaways } from './steps'
+import { CommonProfileOnboarding } from './steps'
 import { PAGES_NAMES } from '../../../navigation'
 
 class FlowPage extends React.Component {

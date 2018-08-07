@@ -606,3 +606,8 @@ export const SKILLS = [
 { id: 254, text: 'Writing Whitepapers' },
 { id: 255, text: 'jQuery' }
   ]
+
+export const JOB_LOCATION = [
+  { index: 1, slug: 'local'},
+  { index: 2, slug: 'remote'}
+]
