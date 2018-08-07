@@ -1,4 +1,4 @@
-package com.rspective.luna.testing;
+package com.meetluna.conference;
 
 import android.app.Application;
 

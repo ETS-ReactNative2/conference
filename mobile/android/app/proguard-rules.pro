@@ -69,4 +69,4 @@
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
 
--keep class com.rspective.luna.testing.BuildConfig { *; }
+-keep class com.meetluna.conference.BuildConfig { *; }
