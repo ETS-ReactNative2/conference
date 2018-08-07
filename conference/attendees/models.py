@@ -60,6 +60,8 @@ class ProductStage(models.Model):
 
 class Region(models.Model):
 
+    ANYWHERE = 1
+
     ANYWHERE_EXCEPT_UNITED_STATES = 2
 
     SOUTH_KOREA_ONLY = 3
@@ -247,6 +249,8 @@ class Investor(models.Model):
 
     # The desired region of projects.
     region = models.ForeignKey(Region, null=True, blank=True, default='')
+
+    region_other_text = models.CharField(max_length=40, blank=True, default='')
 
     ticket_sizes = models.ManyToManyField(TicketSize, blank=True)
 
