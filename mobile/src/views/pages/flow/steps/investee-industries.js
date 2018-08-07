@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { INVESTOR_INDUSTRIES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
-import { InvesteeTeamMembers } from './index'
+import { InvesteeLinks, InvesteeTeamMembers } from './index'
 
 class InvesteeIndustries extends React.Component {
   constructor (props) {
@@ -17,7 +17,7 @@ class InvesteeIndustries extends React.Component {
 
   handleSubmit = () => {
     this.props.saveInvestor({ industry: this.state.industry })
-    this.props.onFill( {nextStep: InvesteeTeamMembers})
+    this.props.onFill( {nextStep: InvesteeLinks})
   }
 
   handleCheckboxClick = index => {

@@ -165,7 +165,7 @@ export default {
         'title': '_DE_Where should the company be located?'
       },
       'giveaways': {
-        'title': '_DE_Giveaways'
+        'title': '_DE_Investor buys'
       },
       'product_stage': {
         'title': '_DE_Product stage'
@@ -243,7 +243,8 @@ export default {
     'regions': {
       'anywhere': '_DE_Anywhere',
       'anywhere_except_us': '_DE_Anywhere except US',
-      'korea_only': '_DE_Korea only'
+      'korea_only': '_DE_Korea only',
+      'other': '_DE_Other'
     },
     'country': {
       'usa': 'USA',

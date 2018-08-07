@@ -165,7 +165,7 @@ export default {
         'title': '_PL_Where should the company be located?'
       },
       'giveaways': {
-        'title': '_PL_Giveaways'
+        'title': '_PL_Investor buys'
       },
       'product_stage': {
         'title': '_PL_Product stage'
@@ -243,7 +243,8 @@ export default {
     'regions': {
       'anywhere': '_PL_Anywhere',
       'anywhere_except_us': '_PL_Anywhere except US',
-      'korea_only': '_PL_Korea only'
+      'korea_only': '_PL_Korea only',
+      'other': '_PL_Other'
     },
     'payment': {
       'fiat': '_PL_Fiat money',

@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { InvesteeMoneySource } from './index'
+import { InvesteeHiring } from './index'
 
 class InvesteeTeamMembers extends React.Component {
   constructor (props) {
@@ -66,7 +66,7 @@ class InvesteeTeamMembers extends React.Component {
       teamSize: this.state.size
     })
     this.props.onFill({
-      nextStep: InvesteeMoneySource
+      nextStep: InvesteeHiring
     })
   }
   handleFieldChange = (text, field) => {

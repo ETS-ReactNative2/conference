@@ -6,7 +6,7 @@ import CountryPicker from 'react-native-country-picker-modal'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { InvesteeTokenType, InvestorInvestIn } from './index'
+import { InvesteeMoneySource, InvesteeTokenType, InvestorInvestIn } from './index'
 
 class InvesteeProjectLocation extends React.Component {
   constructor (props) {
@@ -98,7 +98,7 @@ class InvesteeProjectLocation extends React.Component {
 
   handleSubmit = () => {
     this.props.saveInvestor({ legal: this.state.legal, main: this.state.main })
-    this.props.onFill({ nextStep: InvesteeTokenType })
+    this.props.onFill({ nextStep: InvesteeMoneySource })
   }
   handleChange = (fieldName, value) => {
     this.setState({
