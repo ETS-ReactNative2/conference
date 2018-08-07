@@ -79,7 +79,11 @@ export default {
     },
     'members': {
       'title': '_DE_Members',
-      'label': '_DE_Members'
+      'label': '_DE_Members',
+      'size': '_DE_Team size'
+    },
+    'industries': {
+      'title': '_DE_Which industry you work in?'
     },
     'employee': {
       'role': {

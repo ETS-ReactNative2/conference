@@ -5,13 +5,13 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { InvesteeMoneySource } from './index'
-import validator from 'validator'
 
 class InvesteeTeamMembers extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      members: this.props.investee.teamMembers
+      members: this.props.investee.teamMembers,
+      size: this.props.investee.teamSize
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -30,6 +30,14 @@ class InvesteeTeamMembers extends React.Component {
               numberOfLines={ 5 }
             />
           </Item>
+          <Item floatingLabel>
+            <Label>{ I18n.t('flow_page.members.size') }</Label>
+            <Input
+              onChangeText={ text => this.handleFieldChange(text, 'size') }
+              value={ this.state.size }
+              keyboardType={'numeric'}
+            />
+          </Item>
         </Form>
         <Button success
                 rounded
@@ -44,7 +52,7 @@ class InvesteeTeamMembers extends React.Component {
   }
 
   isFormValid = () => {
-    return true //!validator.isEmpty(this.state.member)
+    return true
   }
 
   validateForm = () => {
@@ -54,7 +62,8 @@ class InvesteeTeamMembers extends React.Component {
 
   handleSubmit = () => {
     this.props.save({
-      teamMembers: this.state.members
+      teamMembers: this.state.members,
+      teamSize: this.state.size
     })
     this.props.onFill({
       nextStep: InvesteeMoneySource

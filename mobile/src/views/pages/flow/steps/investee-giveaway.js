@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { GIVEAWAY_TYPES_PROJECT } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
-import { InvesteeProductStage, InvesteeTeamMembers } from './index'
+import { InvesteeIndustry} from './index'
 
 class InvesteeGiveaway extends React.Component {
   constructor (props) {
@@ -19,7 +19,7 @@ class InvesteeGiveaway extends React.Component {
 
   handleSubmit = () => {
     this.props.saveInvestee({ giveaway: this.state.giveaway })
-    this.props.onFill({ nextStep: InvesteeTeamMembers })
+    this.props.onFill({ nextStep: InvesteeIndustry })
   }
 
   handleChange = (index) => {

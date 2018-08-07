@@ -49,6 +49,8 @@ export async function createInvestee ({
   fundingStage,
   giveaway,
   notable,
+  size,
+  industry,
   name,
   productStage,
   tagline,

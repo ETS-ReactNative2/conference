@@ -51,11 +51,13 @@ const initialState = {
     fundingStage: -1,
     hiring: false,
     teamMembers: '',
+    teamSize: String(0),
     money: false,
     amount: '',
     tokenType: -1,
-    giveaway: [],
-    investorNationality: 0
+    giveaway: -1,
+    investorNationality: 0,
+    industry: -1,
   },
   employer: {
     roles: []

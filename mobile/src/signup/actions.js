@@ -42,6 +42,7 @@ export function uploadProfile () {
             fundraisingAmount: investee.amount,
             giveaway: investee.giveaway,
             notable: investee.teamMembers,
+            size: investee.teamSize,
             tagline: investee.projectTagline,
             tokenType: investee.tokenType,
             github: investee.github,
@@ -51,7 +52,8 @@ export function uploadProfile () {
             telegram: investee.telegram,
             news: investee.news,
             legalCountry: '',
-            mainCountry: ''
+            mainCountry: '',
+            industry: investee.industry
           })
         case 'investor':
           return await api.createInvestor({

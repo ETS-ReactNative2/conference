@@ -84,7 +84,11 @@ export default {
     },
     'members': {
       'title': 'Members',
-      'label': 'Who are your notable members or advisors, if any?'
+      'label': 'Who are your notable members or advisors, if any?',
+      'size': 'Team size'
+    },
+    'industries': {
+      'title': 'Which industry you work in?'
     },
     'employee': {
       'role': {
