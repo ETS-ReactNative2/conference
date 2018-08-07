@@ -3,6 +3,8 @@ export default {
     'app_description': '_PL_Luna Conference',
     'login': '_PL_Login',
     'signup': '_PL_Sign Up',
+    'connect_with': '_PL_Or connect with',
+    'connect_with_telegram': '_PL_CONNECT WITH TELEGRAM',
     'search': 'Search - temp',
     'flow': 'Flow - temp',
     'agenda': 'Agenda - temp',

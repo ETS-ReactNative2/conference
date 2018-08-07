@@ -64,6 +64,7 @@
     "react-native-fabric": "0.5.1",
     "react-native-i18n": "2.0.12",
     "react-native-languages": "2.0.0",
+    "react-native-linear-gradient": "2.4.0",
     "react-native-material-selectize": "^1.9.0",
     "react-native-responsive-layout": "^1.1.0",
     "react-native-sensitive-info": "5.2.4",
@@ -73,5 +74,10 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "2.3.0",
     "validator": "10.4.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }
