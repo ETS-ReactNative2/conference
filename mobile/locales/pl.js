@@ -85,6 +85,13 @@ export default {
     'industries': {
       'title': '_PL_Which industry you work in?'
     },
+    'investee': {
+      'project_location': {
+        'title': '_PL_Project location',
+        'main': '_PL_Main office location',
+        'legal': '_PL_Company legal location'
+      }
+    },
     'employee': {
       'role': {
         'title': '_PL_Role'

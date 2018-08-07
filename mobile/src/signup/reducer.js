@@ -29,7 +29,6 @@ const initialState = {
   investor: {
     productStages: [],
     giveaways: [],
-    companyLocation: '',
     nationality: '',
     investments: [],
     ticketSizes: [],
@@ -55,8 +54,10 @@ const initialState = {
     money: false,
     amount: '',
     tokenType: -1,
-    giveaway: -1,
     investorNationality: 0,
+    legal: '',
+    main: '',
+    giveaway: -1,
     industry: -1,
   },
   employer: {

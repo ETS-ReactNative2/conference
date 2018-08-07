@@ -51,8 +51,8 @@ export function uploadProfile () {
             whitepaper: investee.whitepaper,
             telegram: investee.telegram,
             news: investee.news,
-            legalCountry: '',
-            mainCountry: '',
+            legalCountry: investee.legal.cca2,
+            mainCountry: investee.main.cca2,
             industry: investee.industry
           })
         case 'investor':
@@ -63,7 +63,8 @@ export function uploadProfile () {
             ticketSizes: investor.ticketSizes,
             tokenTypes: investor.investments,
             industries: investor.industries,
-            region: investor.marketLocation
+            region: investor.marketLocation,
+            nationality: investor.nationality.cca2
           })
       }
     } catch (err) {

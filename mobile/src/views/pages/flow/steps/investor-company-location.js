@@ -12,11 +12,6 @@ class InvestorCompanyLocation extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      location: this.props.location || {
-        cca2: 'US',
-        countryName: 'United States of America',
-        callingCode: '1'
-      },
       nationality: this.props.nationality || {
         cca2: 'US',
         countryName: 'United States of America',
@@ -29,35 +24,6 @@ class InvestorCompanyLocation extends React.Component {
     return (
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.company_location.title') }</Text>
-        <Text style={ { marginTop: 16, marginBottom: 16 } }>{ I18n.t('flow_page.investor.company_location.localization') }</Text>
-        <CountryPicker
-          onChange={ value => {
-            this.setState({ location: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
-          } }
-          filterable
-          closeable
-          cca2={ this.state.location.cca2 }
-          translation="eng"
-          styles={ {
-            touchFlag: {
-              alignItems: 'flex-start',
-              justifyContent: 'center',
-              height: 24
-            },
-          } }
-        >
-
-          <View style={ {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-            justifyContent: 'flex-start',
-            height: 19
-          } }>
-            { CountryPicker.renderFlag(this.state.location.cca2) }
-            <Text style={ { marginLeft: 8 } }>{ this.state.location.countryName }</Text>
-          </View>
-        </CountryPicker>
         <Text style={ { marginTop: 16, marginBottom: 16 } }>{ I18n.t('flow_page.investor.company_location.nationality') }</Text>
         <CountryPicker
           onChange={ value => {
@@ -99,7 +65,7 @@ class InvestorCompanyLocation extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.saveInvestor({ companyLocation: this.state.location, nationality: this.state.nationality })
+    this.props.saveInvestor({ nationality: this.state.nationality })
     this.props.onFill({ nextStep: InvestorInvestIn })
   }
   handleChange = (fieldName, value) => {
@@ -115,7 +81,6 @@ InvestorCompanyLocation.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    location: state.signUp.investor.companyLocation,
     nationality: state.signUp.investor.nationality
   }
 }

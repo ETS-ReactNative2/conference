@@ -13,6 +13,7 @@ export { default as InvesteeProjectSetup } from './investee-project-setup'
 export { default as InvesteeHiring } from './investee-hiring'
 export { default as InvesteeTokenType } from './investee-token-type'
 export { default as InvesteeGiveaway } from './investee-giveaway'
+export { default as InvesteeProjectLocation } from './investee-project-location'
 export { default as InvesteeIndustry} from './investee-industries'
 
 export { default as CommonProfileOnboarding } from './common-profile-onboarding'
