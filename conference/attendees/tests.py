@@ -174,10 +174,14 @@ class InvestorsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('token_types'), [1, 2, 3])
 
 
-class ProjectsViewTest(AuthMixin, SharedListViewMixin):
+class ProjectsViewTest(AuthMixin):
 
     def view(self):
         return 'project_list'
+
+    def test_get(self):
+        response = self.client.get(reverse(self.view()), **self.header)
+        self.assertEqual(response.status_code, 200)
 
     def test_post_max(self):
         response = self.client.post(
@@ -188,12 +192,14 @@ class ProjectsViewTest(AuthMixin, SharedListViewMixin):
                 'fundraising_amount': 2147483647,
                 'github': 'aaaaaaaa',
                 'giveaway': 1,
+                'industry': 1,
                 'legal_country': 'us',
                 'main_country': 'us',
                 'name': 'aaaaaaaa',
                 'news': 'http://www.example.com',
                 'notable': 'aaaaaaaa',
                 'product_stage': 1,
+                'size': 2147483647,
                 'tagline': 'aaaaaaaa',
                 'telegram': 'aaaaaaaa',
                 'token_type': 1,
@@ -215,19 +221,21 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
     def test_get(self):
         project = models.Project.objects.create(
             description='aaaaaaaa',
-            funding_stage=models.FundingStage.objects.get(id=1),
+            funding_stage=models.FundingStage.objects.get(pk=1),
             fundraising_amount=2147483647,
             github='http://www.example.com',
-            giveaway=models.Giveaway.objects.get(id=1),
+            giveaway=models.Giveaway.objects.get(pk=1),
+            industry=models.Industry.objects.get(pk=1),
             legal_country='us',
             main_country='us',
             name='aaaaaaaa',
             news='http://www.example.com',
             notable='aaaaaaaa',
-            product_stage=models.ProductStage.objects.get(id=1),
+            product_stage=models.ProductStage.objects.get(pk=1),
+            size=2147483647,
             tagline='aaaaaaaa',
             telegram='aaaaaaaa',
-            token_type=models.TokenType.objects.get(id=1),
+            token_type=models.TokenType.objects.get(pk=1),
             twitter='aaaaaaaa',
             website='http://www.example.com',
             whitepaper='http://www.example.com',
@@ -240,12 +248,14 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('funding_stage'), 1)
         self.assertEqual(response_dict.get('github'), 'http://www.example.com')
         self.assertEqual(response_dict.get('giveaway'), 1)
+        self.assertEqual(response_dict.get('industry'), 1)
         self.assertEqual(response_dict.get('legal_country'), 'us')
         self.assertEqual(response_dict.get('main_country'), 'us')
         self.assertEqual(response_dict.get('name'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('news'), 'http://www.example.com')
         self.assertEqual(response_dict.get('notable'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('product_stage'), 1)
+        self.assertEqual(response_dict.get('size'), 2147483647)
         self.assertEqual(response_dict.get('tagline'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('telegram'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('token_type'), 1)

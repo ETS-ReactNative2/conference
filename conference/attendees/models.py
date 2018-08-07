@@ -206,6 +206,8 @@ class Project(models.Model):
 
     giveaway = models.ForeignKey(Giveaway, db_index=True, null=True, blank=True)
 
+    industry = models.ForeignKey(Industry)
+
     legal_country = models.CharField(max_length=2, blank=True, default='')
 
     main_country = models.CharField(max_length=2, blank=True, default='')
@@ -217,6 +219,8 @@ class Project(models.Model):
     notable = models.TextField(blank=True, default='')
 
     product_stage = models.ForeignKey(ProductStage, db_index=True, null=True, blank=True)
+
+    size = models.PositiveIntegerField()
 
     tagline = models.CharField(max_length=255, blank=True, default='')
 

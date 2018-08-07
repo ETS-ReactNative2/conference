@@ -6,6 +6,7 @@
 	},
 	"item": [
 		{
+			"_postman_id": "aee1c8c5-0411-419f-ad1f-1781404de76f",
 			"name": "/api-token-auth/",
 			"request": {
 				"auth": {
@@ -36,6 +37,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "d17d8ffc-5836-4151-a369-ea735a090d06",
 			"name": "/investors/",
 			"request": {
 				"method": "POST",
@@ -64,6 +66,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "6bd3e478-16e3-4beb-b434-bae0e2094feb",
 			"name": "/jobs/",
 			"request": {
 				"method": "POST",
@@ -92,6 +95,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "b04c4343-3304-43ef-9e27-58611d4fb3ad",
 			"name": "/persons/",
 			"request": {
 				"method": "POST",
@@ -120,6 +124,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "6a106b7f-f3e6-4c09-a5bb-4c1b6fda9b27",
 			"name": "/projects/",
 			"request": {
 				"method": "POST",
@@ -131,7 +136,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"description\": \"aaaaaaaa\",\n    \"funding_stage\": 1,\n    \"fundraising_amount\": 2147483647,\n    \"github\": \"http://www.example.com\",\n    \"giveaway\": 1,\n    \"legal_country\": \"us\",\n    \"main_country\": \"us\",\n    \"name\": \"aaaaaaaa\",\n    \"news\": \"http://www.example.com\",\n    \"notable\": \"aaaaaaaa\",\n    \"product_stage\": 1,\n    \"tagline\": \"aaaaaaaa\",\n    \"telegram\": \"aaaaaaaa\",\n    \"token_type\": 1,\n    \"twitter\": \"aaaaaaaa\",\n    \"website\": \"http://www.example.com\",\n    \"whitepaper\": \"http://www.example.com\"\n}"
+					"raw": "{\n    \"description\": \"aaaaaaaa\",\n    \"funding_stage\": 1,\n    \"fundraising_amount\": 2147483647,\n    \"github\": \"http://www.example.com\",\n    \"giveaway\": 1,\n    \"industry\": 1,\n    \"legal_country\": \"us\",\n    \"main_country\": \"us\",\n    \"name\": \"aaaaaaaa\",\n    \"news\": \"http://www.example.com\",\n    \"notable\": \"aaaaaaaa\",\n    \"product_stage\": 1,\n    \"size\": 2147483647,\n    \"tagline\": \"aaaaaaaa\",\n    \"telegram\": \"aaaaaaaa\",\n    \"token_type\": 1,\n    \"twitter\": \"aaaaaaaa\",\n    \"website\": \"http://www.example.com\",\n    \"whitepaper\": \"http://www.example.com\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/projects/",
@@ -148,6 +153,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "73910736-5127-47e0-9ec6-655ee1fb6d58",
 			"name": "/users/",
 			"request": {
 				"auth": {
@@ -179,6 +185,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "b718d515-5492-449d-929c-985ce1ae162d",
 			"name": "/investors/<id>/",
 			"request": {
 				"method": "GET",
@@ -203,6 +210,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "dd8b76fd-3b76-4129-acc4-5fb3a4f1b57d",
 			"name": "/projects/<id>/",
 			"request": {
 				"method": "GET",
@@ -227,6 +235,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "452433fb-d4f6-4e80-bb72-869ff5c73a1f",
 			"name": "/schedule/",
 			"request": {
 				"method": "GET",
