@@ -116,7 +116,8 @@ export default {
         'error': 'Please select from 1 to 3 traits'
       },
       'most_info': {
-        'label': 'What do you know the most about?',
+        'header': 'What do you know the most about?',
+        'placeholder': 'What do you know the most about?',
         'error': 'Please enter info'
       }
     },

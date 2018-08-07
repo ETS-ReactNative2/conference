@@ -121,13 +121,14 @@ class EmployeeKeywords extends React.Component {
         {!this.validateSelectedTraits(this.state.traits) && (
           <Text style={styles.errorText}>{ I18n.t('flow_page.employee.traits.error')}</Text>
         )}
+        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employee.most_info.header') }</Text>
         <Form>
-          <ValidatedInput floatingLabel
-                          value={ this.state.mostInfo}
-                          labelText={I18n.t('flow_page.employee.most_info.label')}
-                          isError={!this.validateMostInfo(this.state.mostInfo)}
-                          errorMessage={I18n.t('flow_page.employee.most_info.error')}
-                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'mostInfo')} />
+            <ValidatedInput floatingLabel
+                            value={ this.state.mostInfo}
+                            labelText={I18n.t('flow_page.employee.most_info.placeholder')}
+                            isError={!this.validateMostInfo(this.state.mostInfo)}
+                            errorMessage={I18n.t('flow_page.employee.most_info.error')}
+                            onChangeText={ (newValue) => this.handleFieldChange(newValue, 'mostInfo')} />
         </Form>
         <Button success
                 rounded

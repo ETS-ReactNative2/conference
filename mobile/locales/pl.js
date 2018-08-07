@@ -111,8 +111,9 @@ export default {
         'error': '_PL_Please select from 1 to 3 traits'
       },
       'most_info': {
-        'label': '_PL_What do you know the most about?',
-        'error': '_PL_Please enter info'
+          'header': 'What do you know the most about?',
+          'placeholder': 'What do you know the most about?',
+          'error': 'Please enter info'
       }
     },
     'employer': {
