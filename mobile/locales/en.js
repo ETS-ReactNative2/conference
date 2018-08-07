@@ -194,7 +194,9 @@ export default {
   },
   'drawer': {
     'agenda': 'Agenda',
-    'notifications': 'Notifications'
+    'notifications': 'Notifications',
+    'flows': 'Flows',
+    'search': 'Search'
   },
   'common': {
     'yes': 'Yes',

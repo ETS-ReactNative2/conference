@@ -191,7 +191,10 @@ export default {
     }
   },
   'drawer': {
-    'agenda': '_DE_Agenda'
+    'agenda': '_DE_Agenda',
+    'notifications': '_DE_Notifications',
+    'flows': '_DE_Flows',
+    'search': '_DE_Search'
   },
   'common': {
     'yes': 'Ja',

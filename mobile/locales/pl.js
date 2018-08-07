@@ -191,7 +191,10 @@ export default {
     }
   },
   'drawer': {
-    'agenda': '_PL_Agenda'
+    'agenda': '_PL_Agenda',
+    'notifications': '_PL_Notifications',
+    'flows': '_PL_Flows',
+    'search': '_PL_Search'
   },
   'common': {
     'yes': 'Tak',

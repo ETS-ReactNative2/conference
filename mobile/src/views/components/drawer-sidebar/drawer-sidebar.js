@@ -18,6 +18,18 @@ const routes = [
     iconName: 'search',
     badge: true,
     badgeValueProps: 'unread'
+  },
+  {
+    name: 'flows',
+    navigation_page: 'FLOW_PAGE',
+    iconType: 'FontAwesome',
+    iconName: 'search',
+  },
+  {
+    name: 'search',
+    navigation_page: 'SEARCH_PAGE',
+    iconType: 'FontAwesome',
+    iconName: 'search'
   }
 ]
 

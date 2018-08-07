@@ -125,7 +125,7 @@ export const login = (username, password) => async dispatch => {
     await storageService.removeItem(TOKEN_NAME)
     await storageService.setItem(TOKEN_NAME, token)
     dispatch(loginInSuccess())
-    navigationService.navigate(PAGES_NAMES.FLOW_PAGE)
+    navigationService.navigate(PAGES_NAMES.HOME_PAGE)
   } catch (err) {
     //TODO: Refactor to use localization for errors
     dispatch(logInError('Error during logging in'))
