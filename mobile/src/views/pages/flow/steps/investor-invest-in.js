@@ -58,7 +58,6 @@ class InvestorInvestIn extends React.Component {
         <Button success
                 rounded
                 block
-                disabled={ this.state.investments.length === 0 }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>

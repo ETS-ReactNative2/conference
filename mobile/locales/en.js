@@ -173,7 +173,8 @@ export default {
         'title': 'What is your funding stage?'
       },
       'market_location': {
-        'title': 'Where should the company be located?'
+        'title': 'Where should the company be located?',
+        'other_location_placeholder': 'Enter location'
       },
       'giveaways': {
         'title': 'Investor buys'
@@ -374,6 +375,7 @@ export default {
       'incorrect_job_description': 'Please enter either job link or job description',
       'incorrect_job_min_salary': 'Value should be greater or equal to 0',
       'incorrect_job_max_salary': 'Value should be greater or equal to 0 and greater than min salary if min salary is specified',
+      'incorrect_investor_custom_location': 'Location can be maximum 40 characters long',
       'incorrect_job_city': 'Please enter city'
     }
   }

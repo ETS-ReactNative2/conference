@@ -12,11 +12,7 @@ class InvestorCompanyLocation extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      nationality: this.props.nationality || {
-        cca2: 'US',
-        countryName: 'United States of America',
-        callingCode: '1'
-      }
+      nationality: this.props.nationality
     }
   }
 
@@ -27,12 +23,11 @@ class InvestorCompanyLocation extends React.Component {
         <Text style={ { marginTop: 16, marginBottom: 16 } }>{ I18n.t('flow_page.investor.company_location.nationality') }</Text>
         <CountryPicker
           onChange={ value => {
-            console.log({ value })
             this.setState({ nationality: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
           } }
           filterable
           closeable
-          cca2={ this.state.nationality.cca2 }
+          cca2={ this.state.nationality ? this.state.nationality.cca2 : '' }
           translation="eng"
           styles={ {
             touchFlag: {
@@ -45,12 +40,12 @@ class InvestorCompanyLocation extends React.Component {
           <View style={ {
             flex: 1,
             flexDirection: 'row',
-            alignItems: 'flex-start',
+            alignItems: 'center',
             justifyContent: 'flex-start',
             height: 19
           } }>
-            { CountryPicker.renderFlag(this.state.nationality.cca2) }
-            <Text style={ { marginLeft: 8 } }>{ this.state.nationality.countryName }</Text>
+            { CountryPicker.renderFlag(this.state.nationality ? this.state.nationality.cca2 : '') }
+            <Text style={ { marginLeft: 8 } }>{ this.state.nationality ? this.state.nationality.countryName : I18n.t('flow_page.investor.company_location.nationality_placeholder')}</Text>
           </View>
         </CountryPicker>
         <Button success

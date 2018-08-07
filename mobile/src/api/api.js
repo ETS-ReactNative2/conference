@@ -92,7 +92,7 @@ export async function createInvestee ({
 }
 
 export async function createInvestor ({
-  fundingStages, ticketSizes, productStages, tokenTypes, giveaways, industries, region
+  fundingStages, ticketSizes, productStages, tokenTypes, giveaways, industries, region, nationality, regionOtherText
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.post('/api/investors/', decamelizeKeys({
@@ -102,7 +102,9 @@ export async function createInvestor ({
     tokenTypes,
     giveaways,
     industries,
-    region
+    region,
+    nationality,
+    regionOtherText
   }), {
     headers: {
       'X-Authorization': `Bearer ${token}`

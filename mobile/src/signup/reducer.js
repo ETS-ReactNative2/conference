@@ -33,7 +33,8 @@ const initialState = {
     investments: [],
     ticketSizes: [],
     stages: [],
-    marketLocation: -1,
+    marketLocation: '',
+    regionOtherText: '',
     industries: []
   },
   investee: {

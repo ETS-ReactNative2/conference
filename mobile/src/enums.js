@@ -245,6 +245,9 @@ export const REGIONS = [
   }, {
     slug: 'korea_only',
     index: 3
+  }, {
+    slug: 'other',
+    index: 4
   }
 ]
 

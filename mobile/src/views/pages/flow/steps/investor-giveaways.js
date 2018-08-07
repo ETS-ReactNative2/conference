@@ -49,7 +49,7 @@ class InvestorGiveaways extends React.Component {
   }
 
   isFormValid = () => {
-    return this.state.selectedGiveaways.length > 0
+    return true;
   }
 
   validateForm = () => {

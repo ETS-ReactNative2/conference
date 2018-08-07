@@ -63,8 +63,9 @@ export function uploadProfile () {
             ticketSizes: investor.ticketSizes,
             tokenTypes: investor.investments,
             industries: investor.industries,
-            region: investor.marketLocation,
-            nationality: investor.nationality.cca2
+            region: investor.marketLocation ? investor.marketLocation.index : "",
+            nationality: investor.nationality ? investor.nationality.cca2 : "",
+            regionOtherText: investor.regionOtherText
           })
       }
     } catch (err) {

@@ -171,7 +171,8 @@ export default {
         'title': '_PL_Funding slot for companies:'
       },
       'market_location': {
-        'title': '_PL_Where should the company be located?'
+        'title': '_PL_Where should the company be located?',
+        'other_location_placeholder': '_PL_Enter location'
       },
       'giveaways': {
         'title': '_PL_Investor buys'
@@ -367,6 +368,7 @@ export default {
       'incorrect_job_description': '_PL_Please enter either job link or job description',
       'incorrect_job_min_salary': '_PL_Value should be greater or equal to 0',
       'incorrect_job_max_salary': '_PL_Value should be greater or equal to 0 and greater than min salary if min salary is specified',
+      'incorrect_investor_custom_location': '_PL_Location can be maximum 40 characters long',
       'incorrect_job_city': '_PL_Please enter city'
     }
   }
