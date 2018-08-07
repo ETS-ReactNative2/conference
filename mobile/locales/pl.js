@@ -96,8 +96,14 @@ export default {
     },
     'employee': {
       'role': {
-        'title': '_PL_Role'
+        'title': '_PL_Role',
+        'looking_for_job': '_PL_Are you looking for job?'
       },
+      'job': {
+        'city': '_PL_City'
+      },
+      'relocate': '_PL_Are you willing to relocate?',
+      'remote': '_PL_Are you willing to work remote?',
       'skills': {
         'header': '_PL_What are your top 3 skills?',
         'title': '_PL_Skills',
@@ -114,7 +120,10 @@ export default {
           'header': 'What do you know the most about?',
           'placeholder': 'What do you know the most about?',
           'error': 'Please enter info'
-      }
+      },
+        'location': {
+            'header': 'Where are you located?'
+        }
     },
     'employer': {
       'role': {

@@ -64,10 +64,15 @@ const initialState = {
     roles: []
   },
   employee: {
-    role: '',
+    role: -1,
     skills: [],
     traits: [],
-    mostInfo: ''
+    mostInfo: '',
+    lookingForJob: false,
+    relocate: false,
+    remote: false,
+    country: '',
+    city: ''
   }
 }
 
