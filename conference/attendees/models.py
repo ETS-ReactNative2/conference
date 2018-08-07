@@ -189,30 +189,36 @@ class Project(models.Model):
     A company potentially raising funds.
     """
 
+    DESCRIPTION_MAX_LENGTH = 250
+
     # 39 characters user/organization + slash + 100 characters repo
     GITHUB_MAX_LENGTH = 140
+
+    NAME_MAX_LENGTH = 40
+
+    TAGLINE_MAX_LENGTH = 60
 
     TELEGRAM_MAX_LENGTH = 32
 
     TWITTER_MAX_LENGTH = 15
 
-    description = models.TextField(blank=True, default='')
+    description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH, blank=True, default='')
 
     funding_stage = models.ForeignKey(FundingStage, db_index=True, null=True, blank=True)
 
-    fundraising_amount = models.DecimalField(db_index=True, max_digits=12, decimal_places=0, null=True, blank=True)
+    fundraising_amount = models.PositiveIntegerField(db_index=True, default=0)
 
     github = models.CharField(max_length=GITHUB_MAX_LENGTH, blank=True, default='')
 
     giveaway = models.ForeignKey(Giveaway, db_index=True, null=True, blank=True)
 
-    industry = models.ForeignKey(Industry)
+    industry = models.ForeignKey(Industry, db_index=True)
 
-    legal_country = models.CharField(max_length=2, blank=True, default='')
+    legal_country = models.CharField(db_index=True, max_length=2)
 
-    main_country = models.CharField(max_length=2, blank=True, default='')
+    main_country = models.CharField(db_index=True, max_length=2)
 
-    name = models.CharField(max_length=255, blank=True, default='')
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
 
     news = models.URLField(blank=True, default='')
 
@@ -222,7 +228,7 @@ class Project(models.Model):
 
     size = models.PositiveIntegerField()
 
-    tagline = models.CharField(max_length=255, blank=True, default='')
+    tagline = models.CharField(max_length=TAGLINE_MAX_LENGTH, blank=True, default='')
 
     telegram = models.CharField(max_length=TELEGRAM_MAX_LENGTH, default='', blank=True)
 
