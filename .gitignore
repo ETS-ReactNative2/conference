@@ -3,6 +3,7 @@
 *.pyc
 *.sqlite3
 .idea/
+venv/
 
 #======================================
 # OS generated
