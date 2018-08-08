@@ -12,7 +12,7 @@ import {
 function BaseButton({onPress, disabled, style, children}) {
   const styles = baseButton
   return (
-    <Button disabled={ disabled } onPress={ onPress } style={ disabled ? [styles.disabledButton, style] : [styles.button, style] }>
+    <Button disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? [styles.disabledButton, style] : [styles.button, style] }>
       { children }
     </Button>
   )
@@ -21,7 +21,7 @@ function BaseButton({onPress, disabled, style, children}) {
 export function BlackButton ({ text = 'Example text', onPress, disabled }) {
   const styles = blackButtonStyles
   return (
-    <BaseButton disabled={ disabled } onPress={ onPress } style={ disabled ? styles.disabledButton : styles.button }>
+    <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
   )
@@ -30,7 +30,7 @@ export function BlackButton ({ text = 'Example text', onPress, disabled }) {
 export function OutlineBlackButton ({ text = 'Example text', onPress, disabled, icon }) {
   const styles = outlineBlackButtonStyles
   return (
-    <BaseButton disabled={ disabled } onPress={ onPress } style={ disabled ? styles.disabledButton : styles.button }>
+    <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
       { icon && <Icon active color='#000' name={icon}></Icon> }
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
@@ -40,7 +40,7 @@ export function OutlineBlackButton ({ text = 'Example text', onPress, disabled, 
 export function OutlineWhiteButton ({ text = 'Example text', onPress, disabled, icon }) {
   const styles = outlineWhiteButtonStyles
   return (
-    <BaseButton disabled={ disabled } onPress={ onPress } style={ disabled ? styles.disabledButton : styles.button }>
+    <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
       { icon && <Icon active color='#fff' name={icon}></Icon> }
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
@@ -50,7 +50,7 @@ export function OutlineWhiteButton ({ text = 'Example text', onPress, disabled, 
 export function PrimaryButton ({ text = 'Example text', onPress, disabled }) {
   const styles = primaryButtonStyles
   return (
-    <BaseButton disabled={ disabled } style={ disabled ? styles.disabledButton : styles.button } onPress={ onPress }>
+    <BaseButton disabled={ disabled } style={ disabled ? styles.disabledButton : styles.button } onPress={ ev => onPress(ev) }>
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
   )
@@ -59,7 +59,7 @@ export function PrimaryButton ({ text = 'Example text', onPress, disabled }) {
 export function BlueButton ({ text, onPress, disabled, icon}){
   const styles = blueButtonStyles
   return (
-    <BaseButton disabled={ disabled } style={ disabled ? styles.disabledButton : styles.button } onPress={ onPress }>
+    <BaseButton disabled={ disabled } style={ disabled ? styles.disabledButton : styles.button } onPress={ ev => onPress(ev) }>
       { icon && <Icon active color='#fff' name={icon}></Icon> }
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
