@@ -1,0 +1,6 @@
+export const DISABLED_COLOR = '#e2eae9'
+export const BLACK_DISABLED_COLOR = '#aaaaaa'
+export const PRIMARY_DISABLED_COLOR = '#e8c0b6'
+export const PRIMARY_DISABLED_TEXT_COLOR = '#cfa399'
+export const BLUE_COLOR = '#3CBBE5'
+export const PRIMARY_COLOR = '#FE2B77'
