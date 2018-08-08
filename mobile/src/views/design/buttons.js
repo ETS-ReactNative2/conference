@@ -68,6 +68,7 @@ export function BlueButton ({ text, onPress, disabled, icon}){
 
 const baseButton = EStyleSheet.create({
   button: {
+    maxWidth: 360,
     width: '100%',
     height: 60,
     alignSelf: 'center',
