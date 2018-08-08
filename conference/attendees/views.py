@@ -69,6 +69,121 @@ class CreatePerson(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+class CreateUpdateProject(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        json_body = request.data
+
+        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
+            models.ConferenceUser.objects.create(user=self.request.user)
+        if request.user.conference_user.project:
+            project = request.user.conference_user.project
+        else:
+            project = models.Project()
+
+        description = json_body.get('description')
+        clean_description = description[:models.Project.DESCRIPTION_MAX_LENGTH] if description else ''
+
+        funding_stage = json_body.get('funding_stage')
+        clean_funding_stage = models.FundingStage.objects.get(pk=funding_stage) if (
+                funding_stage and 1 <= funding_stage <= 3
+        ) else None
+
+        fundraising_amount = json_body.get('fundraising_amount')
+        clean_fundraising_amount = fundraising_amount if fundraising_amount and fundraising_amount >= 0 else 0
+
+        github = json_body.get('github')
+        clean_github = github[:models.Project.GITHUB_MAX_LENGTH] if github else ''
+
+        giveaway = json_body.get('giveaway')
+        clean_giveaway = models.Giveaway.objects.get(pk=giveaway) if (
+                giveaway and 1 <= giveaway <= 3
+        ) else None
+
+        industry = json_body.get('industry')
+        clean_industry = models.Industry.objects.get(pk=industry) if (
+                industry and 1 <= industry <= 41
+        ) else models.Industry.objects.get(pk=41)
+
+        legal_country = json_body.get('legal_country')
+        clean_legal_country = legal_country[:2] if legal_country else ''
+
+        main_country = json_body.get('main_country')
+        clean_main_country = main_country[:2] if main_country else ''
+
+        name = json_body.get('name')
+        clean_name = name[:models.Project.NAME_MAX_LENGTH] if name else '-'
+
+        news = json_body.get('news')
+        try:
+            clean_news = news[:200] if news else ''
+        except:
+            clean_news = ''
+
+        notable = json_body.get('notable')
+        clean_notable = notable[:models.Project.NOTABLE_MAX_LENGTH] if notable else ''
+
+        product_stage = json_body.get('product_stage')
+        clean_product_stage = models.ProductStage.objects.get(pk=product_stage) if (
+            product_stage and 1 <= product_stage <= 3
+        ) else None
+
+        size = json_body.get('size')
+        clean_size = size if size and size >= 0 else 0
+
+        tagline = json_body.get('tagline')
+        clean_tagline = tagline[:models.Project.TAGLINE_MAX_LENGTH] if tagline else ''
+
+        telegram = json_body.get('telegram')
+        clean_telegram = telegram[:models.Project.TELEGRAM_MAX_LENGTH] if telegram else ''
+
+        token_type = json_body.get('token_type')
+        clean_token_type = models.TokenType.objects.get(pk=token_type) if (
+            token_type and 1 <= token_type <= 3
+        ) else None
+
+        twitter = json_body.get('twitter')
+        clean_twitter = twitter[:models.Project.TWITTER_MAX_LENGTH] if twitter else ''
+
+        website = json_body.get('website')
+        try:
+            clean_website = website[:200] if website else ''
+        except:
+            clean_website = ''
+
+        whitepaper = json_body.get('whitepaper')
+        try:
+            clean_whitepaper = whitepaper[:200] if whitepaper else ''
+        except:
+            clean_whitepaper = ''
+
+        project.description = clean_description
+        project.funding_stage = clean_funding_stage
+        project.fundraising_amount = clean_fundraising_amount
+        project.github = clean_github
+        project.giveaway = clean_giveaway
+        project.industry = clean_industry
+        project.legal_country = clean_legal_country
+        project.main_country = clean_main_country
+        project.name = clean_name
+        project.news = clean_news
+        project.notable = clean_notable
+        project.product_stage = clean_product_stage
+        project.size = clean_size
+        project.tagline = clean_tagline
+        project.telegram = clean_telegram
+        project.token_type = clean_token_type
+        project.twitter = clean_twitter
+        project.website = clean_website
+        project.whitepaper = clean_whitepaper
+
+        project.save()
+        request.user.conference_user.project = project
+        request.user.conference_user.save()
+        return JsonResponse(serializers.ProjectSerializer(project).data, status=status.HTTP_201_CREATED)
+
+
 class ListCreateInvestor(generics.ListCreateAPIView):
     queryset = models.Investor.objects.all()
     serializer_class = serializers.InvestorSerializer
@@ -117,7 +232,7 @@ class CreateJob(generics.CreateAPIView):
         serializer.save(project=self.request.user.conference_user.project)
 
 
-class ListCreateProject(generics.ListCreateAPIView):
+class ListProject(generics.ListAPIView):
     queryset = models.Project.objects.all()
     serializer_class = serializers.ProjectSerializer
 
@@ -143,14 +258,6 @@ class ListCreateProject(generics.ListCreateAPIView):
         if token_types:
             filters['token_types__in'] = token_types
         return models.Project.objects.filter(**filters).exclude(**excludes)
-
-    @transaction.atomic
-    def perform_create(self, serializer):
-        project = serializer.save()
-        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
-            models.ConferenceUser.objects.create(user=self.request.user)
-        self.request.user.conference_user.project = project
-        self.request.user.conference_user.save()
 
 
 class ListCreateUser(APIView):

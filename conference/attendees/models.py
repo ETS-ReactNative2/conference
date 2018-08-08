@@ -170,6 +170,8 @@ class Project(models.Model):
 
     NAME_MAX_LENGTH = 40
 
+    NOTABLE_MAX_LENGTH = 250
+
     TAGLINE_MAX_LENGTH = 60
 
     TELEGRAM_MAX_LENGTH = 32
@@ -196,7 +198,7 @@ class Project(models.Model):
 
     news = models.URLField(blank=True, default='')
 
-    notable = models.TextField(blank=True, default='')
+    notable = models.CharField(max_length=NOTABLE_MAX_LENGTH, blank=True, default='')
 
     product_stage = models.ForeignKey(ProductStage, db_index=True, null=True, blank=True)
 

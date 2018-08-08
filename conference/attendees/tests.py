@@ -92,6 +92,8 @@ class InvestorsViewTest(AuthMixin, SharedListViewMixin):
         self.assertEqual(response_dict.get('ticket_sizes'), [1, 2, 3, 4, 5, 6])
         self.assertEqual(response_dict.get('token_types'), [1, 2, 3])
 
+        self.assertEqual(models.Investor.objects.count(), 1)
+
     def test_post_min(self):
         response = self.client.post(
             reverse(self.view()),
@@ -130,6 +132,8 @@ class InvestorsViewTest(AuthMixin, SharedListViewMixin):
         self.assertEqual(response_dict.get('region_other_text'), '')
         self.assertEqual(response_dict.get('ticket_sizes'), [1, 2, 3, 4, 5, 6])
         self.assertEqual(response_dict.get('token_types'), [1, 2, 3])
+
+        self.assertEqual(models.Investor.objects.count(), 1)
 
 
 class InvestorsIdViewTest(AuthMixin, SharedDetailViewMixin):
@@ -174,7 +178,7 @@ class InvestorsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('token_types'), [1, 2, 3])
 
 
-class ProjectsViewTest(AuthMixin):
+class ListProjectTest(AuthMixin):
 
     def view(self):
         return 'project_list'
@@ -182,6 +186,12 @@ class ProjectsViewTest(AuthMixin):
     def test_get(self):
         response = self.client.get(reverse(self.view()), **self.header)
         self.assertEqual(response.status_code, 200)
+
+
+class CreateUpdateProjectTest(AuthMixin):
+
+    def view(self):
+        return 'create_update_project'
 
     def test_post_max(self):
         response = self.client.post(
@@ -211,6 +221,8 @@ class ProjectsViewTest(AuthMixin):
             **self.header
         )
         self.assertEqual(response.status_code, 201)
+
+        self.assertEqual(models.Project.objects.count(), 1)
 
     def test_post_min(self):
         response = self.client.post(
@@ -261,6 +273,89 @@ class ProjectsViewTest(AuthMixin):
         self.assertEqual(response_dict.get('twitter'), '')
         self.assertEqual(response_dict.get('website'), '')
         self.assertEqual(response_dict.get('whitepaper'), '')
+
+        self.assertEqual(models.Project.objects.count(), 1)
+
+    def test_post_override(self):
+        # Post a fat project.
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'description': 'aaaaaaaa',
+                'funding_stage': 1,
+                'fundraising_amount': 2147483647,
+                'github': 'aaaaaaaa',
+                'giveaway': 1,
+                'industry': 1,
+                'legal_country': 'us',
+                'main_country': 'us',
+                'name': 'aaaaaaaa',
+                'news': 'http://www.example.com',
+                'notable': 'aaaaaaaa',
+                'product_stage': 1,
+                'size': 2147483647,
+                'tagline': 'aaaaaaaa',
+                'telegram': 'aaaaaaaa',
+                'token_type': 1,
+                'twitter': 'aaaaaaaa',
+                'website': 'http://www.example.com',
+                'whitepaper': 'http://www.example.com',
+            }),
+            content_type='application/json',
+            **self.header
+        )
+        # Post a slim project.
+        response = self.client.post(
+            reverse('create_update_project'),
+            json.dumps({
+                'description': '',
+                'funding_stage': '',
+                'fundraising_amount': 0,
+                'github': '',
+                'giveaway': '',
+                'industry': 1,
+                'legal_country': 'us',
+                'main_country': 'us',
+                'name': 'aaa',
+                'news': '',
+                'notable': '',
+                'product_stage': '',
+                'size': 0,
+                'tagline': '',
+                'telegram': '',
+                'token_type': '',
+                'twitter': '',
+                'website': '',
+                'whitepaper': '',
+            }),
+            content_type='application/json',
+            **self.header
+        )
+        # Have that work and result in just one project.
+        self.assertEqual(response.status_code, 201)
+        response_dict = json.loads(response.content)
+        self.assertIn('id', response_dict)
+        self.assertEqual(response_dict.get('description'), '')
+        self.assertEqual(response_dict.get('funding_stage'), None)
+        self.assertEqual(response_dict.get('fundraising_amount'), 0)
+        self.assertEqual(response_dict.get('github'), '')
+        self.assertEqual(response_dict.get('giveaway'), None)
+        self.assertEqual(response_dict.get('industry'), 1)
+        self.assertEqual(response_dict.get('legal_country'), 'us')
+        self.assertEqual(response_dict.get('main_country'), 'us')
+        self.assertEqual(response_dict.get('name'), 'aaa')
+        self.assertEqual(response_dict.get('news'), '')
+        self.assertEqual(response_dict.get('notable'), '')
+        self.assertEqual(response_dict.get('product_stage'), None)
+        self.assertEqual(response_dict.get('size'), 0)
+        self.assertEqual(response_dict.get('tagline'), '')
+        self.assertEqual(response_dict.get('telegram'), '')
+        self.assertEqual(response_dict.get('token_type'), None)
+        self.assertEqual(response_dict.get('twitter'), '')
+        self.assertEqual(response_dict.get('website'), '')
+        self.assertEqual(response_dict.get('whitepaper'), '')
+
+        self.assertEqual(models.Project.objects.count(), 1)
 
 
 class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
@@ -348,6 +443,8 @@ class PersonsViewTest(AuthMixin):
         self.assertEqual(response.data.get('linkedin'), 'aaaaaaaa')
         self.assertNotIn('id', response.data)
 
+        self.assertEqual(models.ConferenceUser.objects.count(), 1)
+
         user = models.ConferenceUser.objects.get(pk=self.user.id)
         self.assertEqual(user.user, self.user)
         self.assertEqual(user.title, 'aaaaaaaa')
@@ -360,6 +457,8 @@ class PersonsViewTest(AuthMixin):
     def test_post_no_data(self):
         response = self.client.post(reverse(self.view()), **self.header)
         self.assertEqual(response.status_code, 201)
+
+        self.assertEqual(models.ConferenceUser.objects.count(), 1)
 
 
 class UsersViewTest(AuthMixin):

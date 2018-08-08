@@ -66,7 +66,7 @@ export async function createInvestee ({
   whitepaper
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.post('/api/projects/', decamelizeKeys({
+  return axios.post('/api/create_update_project/', decamelizeKeys({
     description,
     fundingStage,
     fundraisingAmount,
@@ -77,6 +77,7 @@ export async function createInvestee ({
     notable,
     name,
     productStage,
+    size,
     tagline,
     tokenType,
     news,
