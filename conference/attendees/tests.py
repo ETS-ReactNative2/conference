@@ -212,6 +212,56 @@ class ProjectsViewTest(AuthMixin):
         )
         self.assertEqual(response.status_code, 201)
 
+    def test_post_min(self):
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'description': '',
+                'funding_stage': '',
+                'fundraising_amount': 0,
+                'github': '',
+                'giveaway': '',
+                'industry': 1,
+                'legal_country': 'us',
+                'main_country': 'us',
+                'name': 'aaa',
+                'news': '',
+                'notable': '',
+                'product_stage': '',
+                'size': 0,
+                'tagline': '',
+                'telegram': '',
+                'token_type': '',
+                'twitter': '',
+                'website': '',
+                'whitepaper': '',
+            }),
+            content_type='application/json',
+            **self.header
+        )
+        self.assertEqual(response.status_code, 201)
+        response_dict = json.loads(response.content)
+        self.assertIn('id', response_dict)
+        self.assertEqual(response_dict.get('description'), '')
+        self.assertEqual(response_dict.get('funding_stage'), None)
+        self.assertEqual(response_dict.get('fundraising_amount'), 0)
+        self.assertEqual(response_dict.get('github'), '')
+        self.assertEqual(response_dict.get('giveaway'), None)
+        self.assertEqual(response_dict.get('industry'), 1)
+        self.assertEqual(response_dict.get('legal_country'), 'us')
+        self.assertEqual(response_dict.get('main_country'), 'us')
+        self.assertEqual(response_dict.get('name'), 'aaa')
+        self.assertEqual(response_dict.get('news'), '')
+        self.assertEqual(response_dict.get('notable'), '')
+        self.assertEqual(response_dict.get('product_stage'), None)
+        self.assertEqual(response_dict.get('size'), 0)
+        self.assertEqual(response_dict.get('tagline'), '')
+        self.assertEqual(response_dict.get('telegram'), '')
+        self.assertEqual(response_dict.get('token_type'), None)
+        self.assertEqual(response_dict.get('twitter'), '')
+        self.assertEqual(response_dict.get('website'), '')
+        self.assertEqual(response_dict.get('whitepaper'), '')
+
 
 class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
 
