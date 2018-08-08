@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from rest_framework import generics
 from django.contrib.auth.hashers import make_password
+from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -21,46 +22,40 @@ class CreatePerson(APIView):
     def post(self, request, format=None):
         json_body = request.data
 
-        user_id = json_body.get('user_id')
-        try:
-            user = models.User.objects.get(pk=user_id)
-        except:
-            return Response('user_id_invalid', status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-
         first_name = json_body.get('first_name')
         clean_first_name = first_name[:models.ConferenceUser.FIRST_NAME_MAX_LENGTH] if first_name is not None else ''
 
         last_name = json_body.get('last_name')
         clean_last_name = last_name[:models.ConferenceUser.LAST_NAME_MAX_LENGTH] if last_name is not None else ''
 
-        user.first_name = clean_first_name
-        user.last_name = clean_last_name
-        user.save()
+        request.user.first_name = clean_first_name
+        request.user.last_name = clean_last_name
+        request.user.save()
 
         title = json_body.get('title')
-        clean_title = title
+        clean_title = title if title else ''
 
         company = json_body.get('company')
-        clean_company = company
+        clean_company = company if company else ''
 
         twitter = json_body.get('twitter')
-        clean_twitter = twitter[:models.ConferenceUser.TWITTER_MAX_LENGTH]
+        clean_twitter = twitter[:models.ConferenceUser.TWITTER_MAX_LENGTH] if twitter else ''
 
         facebook = json_body.get('facebook')
-        clean_facebook = facebook[:models.ConferenceUser.FACEBOOK_MAX_LENGTH]
+        clean_facebook = facebook[:models.ConferenceUser.FACEBOOK_MAX_LENGTH] if facebook else ''
 
         telegram = json_body.get('telegram')
-        clean_telegram = telegram[:models.ConferenceUser.TELEGRAM_MAX_LENGTH]
+        clean_telegram = telegram[:models.ConferenceUser.TELEGRAM_MAX_LENGTH] if telegram else ''
 
         linkedin = json_body.get('linkedin')
-        clean_linkedin = linkedin[:models.ConferenceUser.LINKEDIN_MAX_LENGTH]
+        clean_linkedin = linkedin[:models.ConferenceUser.LINKEDIN_MAX_LENGTH] if linkedin else ''
 
-        if models.ConferenceUser.objects.filter(user=user).exists():
-            conference_user = models.ConferenceUser.objects.get(user=user)
+        if models.ConferenceUser.objects.filter(user=request.user).exists():
+            conference_user = models.ConferenceUser.objects.get(user=request.user)
         else:
             conference_user = models.ConferenceUser()
+            conference_user.user = request.user
 
-        conference_user.user = user
         conference_user.title = clean_title
         conference_user.company = clean_company
         conference_user.twitter = clean_twitter
@@ -100,10 +95,26 @@ class ListCreateInvestor(generics.ListCreateAPIView):
             filters['token_types__in'] = token_types
         return models.Investor.objects.filter(**filters).exclude(**excludes)
 
+    @transaction.atomic
+    def perform_create(self, serializer):
+        investor = serializer.save()
+        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
+            models.ConferenceUser.objects.create(user=self.request.user)
+        self.request.user.conference_user.investor = investor
+        self.request.user.conference_user.save()
+
 
 class CreateJob(generics.CreateAPIView):
     queryset = models.JobListing.objects.all()
     serializer_class = serializers.JobListingSerializer
+
+    @transaction.atomic
+    def perform_create(self, serializer):
+        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
+            raise ValidationError('Person missing.')
+        if not self.request.user.conference_user.project:
+            raise ValidationError('Project missing.')
+        serializer.save(project=self.request.user.conference_user.project)
 
 
 class ListCreateProject(generics.ListCreateAPIView):
@@ -132,6 +143,14 @@ class ListCreateProject(generics.ListCreateAPIView):
         if token_types:
             filters['token_types__in'] = token_types
         return models.Project.objects.filter(**filters).exclude(**excludes)
+
+    @transaction.atomic
+    def perform_create(self, serializer):
+        project = serializer.save()
+        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
+            models.ConferenceUser.objects.create(user=self.request.user)
+        self.request.user.conference_user.project = project
+        self.request.user.conference_user.save()
 
 
 class ListCreateUser(APIView):

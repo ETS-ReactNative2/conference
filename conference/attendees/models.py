@@ -15,6 +15,12 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_conference_user(sender, instance=None, created=False, **kwargs):
+    if created:
+        ConferenceUser.objects.create(user=instance)
+
+
 class FundingStage(models.Model):
 
     id = models.IntegerField(primary_key=True, verbose_name='ID')
@@ -152,38 +158,6 @@ class Trait(models.Model):
         return self.name
 
 
-class ConferenceUser(models.Model):
-    """
-    Extra information about a user that's not related to the authentication process.
-    """
-
-    FIRST_NAME_MAX_LENGTH = 30
-
-    LAST_NAME_MAX_LENGTH = 30
-
-    TWITTER_MAX_LENGTH = 15
-
-    FACEBOOK_MAX_LENGTH = 50
-
-    TELEGRAM_MAX_LENGTH = 32
-
-    LINKEDIN_MAX_LENGTH = 50
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-
-    title = models.TextField(blank=True)
-
-    company = models.TextField(blank=True)
-
-    twitter = models.CharField(max_length=TWITTER_MAX_LENGTH, blank=True)
-
-    facebook = models.CharField(max_length=FACEBOOK_MAX_LENGTH, blank=True)
-
-    telegram = models.CharField(max_length=TELEGRAM_MAX_LENGTH, blank=True)
-
-    linkedin = models.CharField(max_length=LINKEDIN_MAX_LENGTH, blank=True)
-
-
 class Project(models.Model):
     """
     A company potentially raising funds.
@@ -265,6 +239,42 @@ class Investor(models.Model):
     ticket_sizes = models.ManyToManyField(TicketSize, blank=True)
 
     token_types = models.ManyToManyField(TokenType, blank=True)
+
+
+class ConferenceUser(models.Model):
+    """
+    Extra information about a user that's not related to the authentication process.
+    """
+
+    FIRST_NAME_MAX_LENGTH = 30
+
+    LAST_NAME_MAX_LENGTH = 30
+
+    TWITTER_MAX_LENGTH = 15
+
+    FACEBOOK_MAX_LENGTH = 50
+
+    TELEGRAM_MAX_LENGTH = 32
+
+    LINKEDIN_MAX_LENGTH = 50
+
+    user = models.OneToOneField(User, related_name='conference_user', on_delete=models.CASCADE)
+
+    title = models.TextField(blank=True, default='')
+
+    company = models.TextField(blank=True, default='')
+
+    twitter = models.CharField(max_length=TWITTER_MAX_LENGTH, blank=True, default='')
+
+    facebook = models.CharField(max_length=FACEBOOK_MAX_LENGTH, blank=True, default='')
+
+    telegram = models.CharField(max_length=TELEGRAM_MAX_LENGTH, blank=True, default='')
+
+    linkedin = models.CharField(max_length=LINKEDIN_MAX_LENGTH, blank=True, default='')
+
+    investor = models.ForeignKey(Investor, related_name='users', db_index=True, null=True, blank=True)
+
+    project = models.ForeignKey(Project, related_name='users', db_index=True, null=True, blank=True)
 
 
 class JobListing(models.Model):

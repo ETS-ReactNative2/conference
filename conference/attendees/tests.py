@@ -359,7 +359,7 @@ class PersonsViewTest(AuthMixin):
 
     def test_post_no_data(self):
         response = self.client.post(reverse(self.view()), **self.header)
-        self.assertEqual(response.status_code, 422)
+        self.assertEqual(response.status_code, 201)
 
 
 class UsersViewTest(AuthMixin):
@@ -393,7 +393,7 @@ class UsersViewTest(AuthMixin):
         self.assertEqual(response.status_code, 409)
         self.assertEqual(response.data, 'email_exists')
         self.assertEqual(models.User.objects.count(), 2)
-        self.assertEqual(models.ConferenceUser.objects.count(), 0)
+        self.assertEqual(models.ConferenceUser.objects.count(), 2)
 
     def test_post(self):
         response = self.client.post(
@@ -414,7 +414,7 @@ class UsersViewTest(AuthMixin):
         self.assertNotIn('username', response.data)
 
         self.assertEqual(models.User.objects.count(), 2)
-        self.assertEqual(models.ConferenceUser.objects.count(), 0)
+        self.assertEqual(models.ConferenceUser.objects.count(), 2)
 
         user = models.User.objects.get(email='a@b.cc')
         self.assertEqual(user.email, 'a@b.cc')

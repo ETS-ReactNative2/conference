@@ -81,7 +81,6 @@ class JobListingSerializer(serializers.ModelSerializer):
             'local_remote_options',
             'country',
             'city',
-            'project',
         )
 
 
