@@ -96,7 +96,7 @@ export async function createInvestor ({
   fundingStages, ticketSizes, productStages, tokenTypes, giveaways, industries, region, nationality, regionOtherText
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.post('/api/investors/', decamelizeKeys({
+  return axios.post('/api/create_update_investor/', decamelizeKeys({
     fundingStages,
     ticketSizes,
     productStages,

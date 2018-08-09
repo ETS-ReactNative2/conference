@@ -72,6 +72,8 @@ class Region(models.Model):
 
     SOUTH_KOREA_ONLY = 3
 
+    OTHER = 4
+
     COUNTRY_SOUTH_KOREA = 'KR'
 
     COUNTRY_UNITED_STATES = 'US'
@@ -222,6 +224,8 @@ class Investor(models.Model):
     A company doing investing.
     """
 
+    REGION_OTHER_TEXT_MAX_LENGTH = 40
+
     funding_stages = models.ManyToManyField(FundingStage, blank=True)
 
     giveaways = models.ManyToManyField(Giveaway, blank=True)
@@ -236,7 +240,7 @@ class Investor(models.Model):
     # The desired region of projects.
     region = models.ForeignKey(Region, null=True, blank=True, default='')
 
-    region_other_text = models.CharField(max_length=40, blank=True, default='')
+    region_other_text = models.CharField(max_length=REGION_OTHER_TEXT_MAX_LENGTH, blank=True, default='')
 
     ticket_sizes = models.ManyToManyField(TicketSize, blank=True)
 

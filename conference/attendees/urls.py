@@ -3,7 +3,8 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^investors/$', views.ListCreateInvestor.as_view(), name='investor_list'),
+    url(r'^investors/$', views.ListInvestor.as_view(), name='investor_list'),
+    url(r'^create_update_investor/$', views.CreateUpdateInvestor.as_view(), name='create_update_investor'),
     url(r'^investors/(?P<pk>\d+)/$', views.RetrieveUpdateDestroyInvestor.as_view(), name='investor_detail'),
     url(r'^jobs/$', views.CreateJob.as_view(), name='job_list'),
     url(r'^persons/$', views.CreatePerson.as_view(), name='person_create'),

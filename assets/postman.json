@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"_postman_id": "c03b97da-acb9-4b22-ab83-01a326bda122",
+			"_postman_id": "e4c58026-53bd-402c-8b3e-28f017d49bae",
 			"name": "/api-token-auth/",
 			"request": {
 				"auth": {
@@ -37,8 +37,8 @@
 			"response": []
 		},
 		{
-			"_postman_id": "b15dc080-036b-458e-bd64-d9e42fada7fa",
-			"name": "/investors/",
+			"_postman_id": "ca4b3055-f57b-43c9-97d7-97a9a7242e42",
+			"name": "/create_update_investor/",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -52,13 +52,13 @@
 					"raw": "{\n    \"funding_stages\": [1, 2, 3],\n    \"giveaways\": [1, 2],\n    \"industries\": [\n    \t1, 2, 3, 4, 5, 6, 7, 8, 9, 10,\n        11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\n        21, 22, 23, 24, 25, 26, 27, 28, 29, 30,\n        31, 32, 33, 34, 35, 36, 37, 38, 39, 40,\n        41\n    ],\n    \"nationality\": \"us\",\n    \"product_stages\": [1, 2, 3],\n    \"region\": 1,\n    \"ticket_sizes\": [1, 2, 3, 4, 5, 6],\n    \"token_types\": [1, 2, 3]\n}"
 				},
 				"url": {
-					"raw": "{{HOST}}/api/investors/",
+					"raw": "{{HOST}}/api/create_update_investor/",
 					"host": [
 						"{{HOST}}"
 					],
 					"path": [
 						"api",
-						"investors",
+						"create_update_investor",
 						""
 					]
 				}
@@ -66,7 +66,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "81fff8d1-f733-4ab9-9bd0-ccff522d53b1",
+			"_postman_id": "63bddb9b-77bb-4bd1-a104-364cc6f99d70",
 			"name": "/jobs/",
 			"request": {
 				"method": "POST",
@@ -95,7 +95,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "9abd2d91-e8d8-4890-8bd8-cfaadb8983b2",
+			"_postman_id": "518121eb-9c63-410e-b65b-c47454b00d3e",
 			"name": "/persons/",
 			"request": {
 				"method": "POST",
@@ -124,7 +124,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "e5154428-dc90-4f87-a6e2-c49bc6ab46b9",
+			"_postman_id": "b0bfc7e1-b5c9-4ee0-92ad-71e623162599",
 			"name": "/create_update_project/",
 			"request": {
 				"method": "POST",
@@ -153,7 +153,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "dde477e2-0c25-45a1-b99e-22a8f17340c4",
+			"_postman_id": "b8e4bb77-4239-469e-aedb-804fc091d182",
 			"name": "/users/",
 			"request": {
 				"auth": {
@@ -185,7 +185,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "c108e85c-2e82-417c-8443-dc16ff20f563",
+			"_postman_id": "6a7b3d9d-e806-4b8a-9e61-908f826bfb54",
 			"name": "/investors/<id>/",
 			"request": {
 				"method": "GET",
@@ -210,7 +210,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "5d65e0ae-978b-46d8-a3df-bfab70339a0f",
+			"_postman_id": "b17ab971-a302-4c1c-a58f-8d0d14dd23ae",
 			"name": "/projects/<id>/",
 			"request": {
 				"method": "GET",
@@ -235,7 +235,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "f54fb256-bf28-4008-bea2-2dea6ec25d70",
+			"_postman_id": "1999b0df-dd07-410d-9150-c193b3084ee3",
 			"name": "/schedule/",
 			"request": {
 				"method": "GET",

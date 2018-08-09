@@ -20,17 +20,6 @@ class AuthMixin(TestCase):
         User.objects.get(username='test').delete()
 
 
-class SharedListViewMixin(object):
-
-    def test_get(self):
-        response = self.client.get(reverse(self.view()), **self.header)
-        self.assertEqual(response.status_code, 200)
-
-    def test_post_no_data(self):
-        response = self.client.post(reverse(self.view()), **self.header)
-        self.assertEqual(response.status_code, 201)
-
-
 class SharedDetailViewMixin(object):
 
     def test_get_404(self):
@@ -42,10 +31,20 @@ class SharedDetailViewMixin(object):
         self.assertEqual(response.status_code, 405)
 
 
-class InvestorsViewTest(AuthMixin, SharedListViewMixin):
+class ListInvestorTest(AuthMixin):
 
     def view(self):
         return 'investor_list'
+
+    def test_get(self):
+        response = self.client.get(reverse(self.view()), **self.header)
+        self.assertEqual(response.status_code, 200)
+
+
+class CreateUpdateInvestorTest(AuthMixin):
+
+    def view(self):
+        return 'create_update_investor'
 
     def test_post_max(self):
         response = self.client.post(
@@ -132,6 +131,63 @@ class InvestorsViewTest(AuthMixin, SharedListViewMixin):
         self.assertEqual(response_dict.get('region_other_text'), '')
         self.assertEqual(response_dict.get('ticket_sizes'), [1, 2, 3, 4, 5, 6])
         self.assertEqual(response_dict.get('token_types'), [1, 2, 3])
+
+        self.assertEqual(models.Investor.objects.count(), 1)
+
+    def test_post_override(self):
+        # Post a fat investor.
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'funding_stages': [1, 2, 3],
+                'giveaways': [1, 2],
+                'industries': [
+                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                    21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                    31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                    41,
+                ],
+                'nationality': 'us',
+                'product_stages': [1, 2, 3],
+                'region': 4,
+                'region_other_text': 'aaaaaaaa',
+                'ticket_sizes': [1, 2, 3, 4, 5, 6],
+                'token_types': [1, 2, 3],
+            }),
+            content_type='application/json',
+            **self.header
+        )
+        # Post a slim investor.
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'funding_stages': [1],
+                'giveaways': [1],
+                'industries': [1],
+                'nationality': '',
+                'product_stages': [1],
+                'region': '',
+                'region_other_text': '',
+                'ticket_sizes': [1],
+                'token_types': [1],
+            }),
+            content_type='application/json',
+            **self.header
+        )
+        # Have that work and result in just one investor.
+        self.assertEqual(response.status_code, 201)
+        response_dict = json.loads(response.content)
+        self.assertIn('id', response_dict)
+        self.assertEqual(response_dict.get('funding_stages'), [1])
+        self.assertEqual(response_dict.get('giveaways'), [1])
+        self.assertEqual(response_dict.get('industries'), [1])
+        self.assertEqual(response_dict.get('nationality'), '')
+        self.assertEqual(response_dict.get('product_stages'), [1])
+        self.assertEqual(response_dict.get('region'), 1)
+        self.assertEqual(response_dict.get('region_other_text'), '')
+        self.assertEqual(response_dict.get('ticket_sizes'), [1])
+        self.assertEqual(response_dict.get('token_types'), [1])
 
         self.assertEqual(models.Investor.objects.count(), 1)
 

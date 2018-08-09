@@ -69,6 +69,78 @@ class CreatePerson(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+class CreateUpdateInvestor(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        json_body = request.data
+
+        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
+            models.ConferenceUser.objects.create(user=self.request.user)
+        if request.user.conference_user.investor:
+            investor = request.user.conference_user.investor
+        else:
+            investor = models.Investor.objects.create()
+
+        funding_stages = json_body.get('funding_stages')
+        clean_funding_stages = [models.FundingStage.objects.get(pk=pk) for pk in funding_stages] if (
+            funding_stages
+        ) else models.FundingStage.objects.all()
+
+        giveaways = json_body.get('giveaways')
+        clean_giveaways = [models.Giveaway.objects.get(pk=pk) for pk in giveaways] if (
+            giveaways
+        ) else [models.Giveaway.objects.get(pk=pk) for pk in [1, 2]]
+
+        industries = json_body.get('industries')
+        clean_industries = [models.Industry.objects.get(pk=pk) for pk in industries] if (
+            industries
+        ) else models.Industry.objects.all()
+
+        nationality = json_body.get('nationality')
+        clean_nationality = nationality[:2] if nationality else ''
+
+        product_stages = json_body.get('product_stages')
+        clean_product_stages = [models.ProductStage.objects.get(pk=pk) for pk in product_stages] if (
+            product_stages
+        ) else models.ProductStage.objects.all()
+
+        region = json_body.get('region')
+        clean_region = models.Region.objects.get(pk=region) if (
+            region and 1 <= region <= 4
+        ) else models.Region.objects.get(pk=models.Region.ANYWHERE)
+
+        region_other_text = json_body.get('region_other_text')
+        clean_region_other_text = region_other_text[:models.Investor.REGION_OTHER_TEXT_MAX_LENGTH] if (
+            region_other_text and clean_region.pk == models.Region.OTHER
+        ) else ''
+
+        ticket_sizes = json_body.get('ticket_sizes')
+        clean_ticket_sizes = [models.TicketSize.objects.get(pk=pk) for pk in ticket_sizes] if (
+            ticket_sizes
+        ) else models.TicketSize.objects.all()
+
+        token_types = json_body.get('token_types')
+        clean_token_types = [models.TokenType.objects.get(pk=pk) for pk in token_types] if (
+            token_types
+        ) else models.TokenType.objects.all()
+
+        investor.funding_stages = clean_funding_stages
+        investor.giveaways = clean_giveaways
+        investor.industries = clean_industries
+        investor.nationality = clean_nationality
+        investor.product_stages = clean_product_stages
+        investor.region = clean_region
+        investor.region_other_text = clean_region_other_text
+        investor.ticket_sizes = clean_ticket_sizes
+        investor.token_types = clean_token_types
+
+        investor.save()
+        request.user.conference_user.investor = investor
+        request.user.conference_user.save()
+        return JsonResponse(serializers.InvestorSerializer(investor).data, status=status.HTTP_201_CREATED)
+
+
 class CreateUpdateProject(APIView):
 
     @transaction.atomic
@@ -184,7 +256,7 @@ class CreateUpdateProject(APIView):
         return JsonResponse(serializers.ProjectSerializer(project).data, status=status.HTTP_201_CREATED)
 
 
-class ListCreateInvestor(generics.ListCreateAPIView):
+class ListInvestor(generics.ListAPIView):
     queryset = models.Investor.objects.all()
     serializer_class = serializers.InvestorSerializer
 
@@ -209,14 +281,6 @@ class ListCreateInvestor(generics.ListCreateAPIView):
         if token_types:
             filters['token_types__in'] = token_types
         return models.Investor.objects.filter(**filters).exclude(**excludes)
-
-    @transaction.atomic
-    def perform_create(self, serializer):
-        investor = serializer.save()
-        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
-            models.ConferenceUser.objects.create(user=self.request.user)
-        self.request.user.conference_user.investor = investor
-        self.request.user.conference_user.save()
 
 
 class CreateJob(generics.CreateAPIView):
