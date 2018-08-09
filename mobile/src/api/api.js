@@ -35,7 +35,7 @@ export async function fetchInvestors (filters) {
 export async function createConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram, userId }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.post(
-    '/api/persons/',
+    '/api/create_update_person/',
     decamelizeKeys({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram, userId }),
     {
       headers: {

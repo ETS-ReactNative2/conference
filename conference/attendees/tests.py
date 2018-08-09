@@ -468,7 +468,7 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
 class PersonsViewTest(AuthMixin):
 
     def view(self):
-        return 'person_create'
+        return 'create_update_person'
 
     def test_get(self):
         response = self.client.get(reverse(self.view()), **self.header)
@@ -513,8 +513,67 @@ class PersonsViewTest(AuthMixin):
     def test_post_no_data(self):
         response = self.client.post(reverse(self.view()), **self.header)
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data.get('user'), self.user.id)
+        self.assertEqual(response.data.get('title'), '')
+        self.assertEqual(response.data.get('company'), '')
+        self.assertEqual(response.data.get('twitter'), '')
+        self.assertEqual(response.data.get('facebook'), '')
+        self.assertEqual(response.data.get('telegram'), '')
+        self.assertEqual(response.data.get('linkedin'), '')
+        self.assertNotIn('id', response.data)
 
         self.assertEqual(models.ConferenceUser.objects.count(), 1)
+
+        user = models.ConferenceUser.objects.get(pk=self.user.id)
+        self.assertEqual(user.user, self.user)
+        self.assertEqual(user.title, '')
+        self.assertEqual(user.company, '')
+        self.assertEqual(user.twitter, '')
+        self.assertEqual(user.facebook, '')
+        self.assertEqual(user.telegram, '')
+        self.assertEqual(user.linkedin, '')
+
+    def test_post_override(self):
+        # Post a fat person.
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'user_id': self.user.id,
+                'title': 'aaaaaaaa',
+                'company': 'aaaaaaaa',
+                'twitter': 'aaaaaaaa',
+                'facebook': 'aaaaaaaa',
+                'telegram': 'aaaaaaaa',
+                'linkedin': 'aaaaaaaa',
+            }),
+            content_type='application/json',
+            **self.header
+        )
+        # Post a slim person.
+        response = self.client.post(reverse(self.view()), **self.header)
+        # Have that work and result in just one person.
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data.get('user'), self.user.id)
+        self.assertEqual(response.data.get('title'), '')
+        self.assertEqual(response.data.get('company'), '')
+        self.assertEqual(response.data.get('twitter'), '')
+        self.assertEqual(response.data.get('facebook'), '')
+        self.assertEqual(response.data.get('telegram'), '')
+        self.assertEqual(response.data.get('linkedin'), '')
+        self.assertNotIn('id', response.data)
+
+        self.assertEqual(models.ConferenceUser.objects.count(), 1)
+
+        user = models.ConferenceUser.objects.get(pk=self.user.id)
+        self.assertEqual(user.user, self.user)
+        self.assertEqual(user.title, '')
+        self.assertEqual(user.company, '')
+        self.assertEqual(user.twitter, '')
+        self.assertEqual(user.facebook, '')
+        self.assertEqual(user.telegram, '')
+        self.assertEqual(user.linkedin, '')
 
 
 class UsersViewTest(AuthMixin):

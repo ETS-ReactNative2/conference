@@ -16,11 +16,17 @@ from . import serializers
 import json
 
 
-class CreatePerson(APIView):
+class CreateUpdatePerson(APIView):
 
     @transaction.atomic
     def post(self, request, format=None):
         json_body = request.data
+
+        if models.ConferenceUser.objects.filter(user=request.user).exists():
+            conference_user = models.ConferenceUser.objects.get(user=request.user)
+        else:
+            conference_user = models.ConferenceUser()
+            conference_user.user = request.user
 
         first_name = json_body.get('first_name')
         clean_first_name = first_name[:models.ConferenceUser.FIRST_NAME_MAX_LENGTH] if first_name is not None else ''
@@ -33,10 +39,10 @@ class CreatePerson(APIView):
         request.user.save()
 
         title = json_body.get('title')
-        clean_title = title if title else ''
+        clean_title = title[:models.ConferenceUser.TITLE_MAX_LENGTH] if title else ''
 
         company = json_body.get('company')
-        clean_company = company if company else ''
+        clean_company = company[:models.ConferenceUser.TITLE_MAX_LENGTH] if company else ''
 
         twitter = json_body.get('twitter')
         clean_twitter = twitter[:models.ConferenceUser.TWITTER_MAX_LENGTH] if twitter else ''
@@ -50,12 +56,6 @@ class CreatePerson(APIView):
         linkedin = json_body.get('linkedin')
         clean_linkedin = linkedin[:models.ConferenceUser.LINKEDIN_MAX_LENGTH] if linkedin else ''
 
-        if models.ConferenceUser.objects.filter(user=request.user).exists():
-            conference_user = models.ConferenceUser.objects.get(user=request.user)
-        else:
-            conference_user = models.ConferenceUser()
-            conference_user.user = request.user
-
         conference_user.title = clean_title
         conference_user.company = clean_company
         conference_user.twitter = clean_twitter
@@ -64,9 +64,7 @@ class CreatePerson(APIView):
         conference_user.linkedin = clean_linkedin
 
         conference_user.save()
-
-        serializer = serializers.ConferenceUserSerializer(conference_user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.ConferenceUserSerializer(conference_user).data, status=status.HTTP_201_CREATED)
 
 
 class CreateUpdateInvestor(APIView):

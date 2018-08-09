@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"_postman_id": "e4c58026-53bd-402c-8b3e-28f017d49bae",
+			"_postman_id": "14f88a2f-a3a7-4cc0-b0c2-29e427574a8d",
 			"name": "/api-token-auth/",
 			"request": {
 				"auth": {
@@ -37,7 +37,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "ca4b3055-f57b-43c9-97d7-97a9a7242e42",
+			"_postman_id": "660127e2-2e17-490f-b54a-3fd40e015edb",
 			"name": "/create_update_investor/",
 			"request": {
 				"method": "POST",
@@ -66,7 +66,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "63bddb9b-77bb-4bd1-a104-364cc6f99d70",
+			"_postman_id": "6c1351c9-7aab-4996-b72e-7742f69820cb",
 			"name": "/jobs/",
 			"request": {
 				"method": "POST",
@@ -95,8 +95,8 @@
 			"response": []
 		},
 		{
-			"_postman_id": "518121eb-9c63-410e-b65b-c47454b00d3e",
-			"name": "/persons/",
+			"_postman_id": "a9d4e6c2-d43f-4f27-bb21-592ca1897d7b",
+			"name": "/create_update_person/",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -110,13 +110,13 @@
 					"raw": "{\n    \"user_id\": 1,\n    \"first_name\": \"Foo\",\n    \"last_name\": \"Bar\",\n    \"title\": \"Title\",\n    \"company\": \"Company\",\n    \"twitter\": \"Twitter\",\n    \"facebook\": \"Facebook\",\n    \"telegram\": \"Telegram\",\n    \"linkedin\": \"Linkedin\"\n}"
 				},
 				"url": {
-					"raw": "{{HOST}}/api/persons/",
+					"raw": "{{HOST}}/api/create_update_person/",
 					"host": [
 						"{{HOST}}"
 					],
 					"path": [
 						"api",
-						"persons",
+						"create_update_person",
 						""
 					]
 				}
@@ -124,7 +124,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "b0bfc7e1-b5c9-4ee0-92ad-71e623162599",
+			"_postman_id": "1bc2340d-ce30-4076-9580-7f59364da9e6",
 			"name": "/create_update_project/",
 			"request": {
 				"method": "POST",
@@ -153,7 +153,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "b8e4bb77-4239-469e-aedb-804fc091d182",
+			"_postman_id": "c9029ad8-68c8-4356-b6f3-836d2f2a38be",
 			"name": "/users/",
 			"request": {
 				"auth": {
@@ -185,7 +185,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "6a7b3d9d-e806-4b8a-9e61-908f826bfb54",
+			"_postman_id": "0c699775-1044-43f7-b70a-b7beae964071",
 			"name": "/investors/<id>/",
 			"request": {
 				"method": "GET",
@@ -210,7 +210,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "b17ab971-a302-4c1c-a58f-8d0d14dd23ae",
+			"_postman_id": "edb602df-266e-47a1-bf47-ed961542422a",
 			"name": "/projects/<id>/",
 			"request": {
 				"method": "GET",
@@ -235,7 +235,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "1999b0df-dd07-410d-9150-c193b3084ee3",
+			"_postman_id": "c7f4316d-f9bd-4914-8151-4fed0199336f",
 			"name": "/schedule/",
 			"request": {
 				"method": "GET",

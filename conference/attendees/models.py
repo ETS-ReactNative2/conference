@@ -256,6 +256,10 @@ class ConferenceUser(models.Model):
 
     LAST_NAME_MAX_LENGTH = 30
 
+    TITLE_MAX_LENGTH = 40
+
+    COMPANY_MAX_LENGTH = 40
+
     TWITTER_MAX_LENGTH = 15
 
     FACEBOOK_MAX_LENGTH = 50
@@ -266,9 +270,9 @@ class ConferenceUser(models.Model):
 
     user = models.OneToOneField(User, related_name='conference_user', on_delete=models.CASCADE)
 
-    title = models.TextField(blank=True, default='')
+    title = models.CharField(max_length=TITLE_MAX_LENGTH, blank=True, default='')
 
-    company = models.TextField(blank=True, default='')
+    company = models.CharField(max_length=COMPANY_MAX_LENGTH, blank=True, default='')
 
     twitter = models.CharField(max_length=TWITTER_MAX_LENGTH, blank=True, default='')
 
