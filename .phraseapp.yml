@@ -1,0 +1,13 @@
+phraseapp:
+  access_token: 56b447f79514fc1dc0dccdb1fc9cedaf777637b4235f8f1e31bc2e86c157aea6
+  project_id: da06be34b5a840b5116f30c4db05ebb0
+  push:
+    sources:
+    - file: mobile/locales/<locale_name>.json
+      params:
+        file_format: react_nested_json
+  pull:
+    targets:
+    - file: mobile/locales/<locale_name>.json
+      params:
+        file_format: react_nested_json
