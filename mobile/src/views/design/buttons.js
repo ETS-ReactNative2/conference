@@ -31,7 +31,7 @@ export function OutlineBlackButton ({ text = 'Example text', onPress, disabled, 
   const styles = outlineBlackButtonStyles
   return (
     <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
-      { icon && <Icon active color='#000' name={icon}></Icon> }
+      { icon && <Icon active style={{color: '#000000'}} name={icon}></Icon> }
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
   )
@@ -41,7 +41,7 @@ export function OutlineWhiteButton ({ text = 'Example text', onPress, disabled, 
   const styles = outlineWhiteButtonStyles
   return (
     <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
-      { icon && <Icon active color='#fff' name={icon}></Icon> }
+      { icon && <Icon active style={{color: '#FFFFFF'}} name={icon}></Icon> }
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
   )
@@ -60,7 +60,7 @@ export function BlueButton ({ text, onPress, disabled, icon}){
   const styles = blueButtonStyles
   return (
     <BaseButton disabled={ disabled } style={ disabled ? styles.disabledButton : styles.button } onPress={ ev => onPress(ev) }>
-      { icon && <Icon active color='#fff' name={icon}></Icon> }
+      { icon && <Icon active style={{color: '#FFFFFF'}} name={icon}></Icon> }
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
   )
@@ -76,6 +76,7 @@ const baseButton = EStyleSheet.create({
     borderRadius: 0
   },
   disabledButton: {
+    maxWidth: 360,
     width: '100%',
     height: 60,
     alignSelf: 'center',

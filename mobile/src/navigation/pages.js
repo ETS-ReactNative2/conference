@@ -90,14 +90,14 @@ const AppStackNavigator = createStackNavigator({
     screen: LoginPage,
     navigationOptions: () => ({
       title: I18n.t('login_page.title'),
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
     }),
   },
   SIGNUP_PAGE: {
     screen: SignupPage,
     navigationOptions: () => ({
-      title: I18n.t('signup_page.title'),
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
+      header: null
     }),
   },
   HOME_PAGE: {

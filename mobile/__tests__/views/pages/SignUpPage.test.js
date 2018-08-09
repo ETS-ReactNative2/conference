@@ -1,12 +1,11 @@
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Button } from 'native-base'
 import React from 'react'
 
-import renderer from 'react-test-renderer'
 import { PAGES_NAMES } from '../../../src/navigation'
 import { SignupPage } from '../../../src/views/pages/signup/signup-page'
-import ValidatedInput from '../../../src/views/components/validated-input/validated-input'
+import InputValidated from '../../../src/views/design/input-validated'
+import { BlackButton } from '../../../src/views/design/buttons'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -15,14 +14,14 @@ describe('SignUpPage Component', () => {
 
   it('renders without crashing', () => {
     const navigation = { navigate: jest.fn() }
-    const rendered = renderer.create(<SignupPage navigation={ navigation } signup={jest.fn()}/>).toJSON()
-    expect(rendered).toBeTruthy()
+    const wrapper = shallow(<SignupPage navigation={ navigation } signup={jest.fn()}/>)
+    expect(wrapper).not.toBe(null)
   })
   
   it('renders signup button as disabled by default', () => {
     const navigation = { navigate: jest.fn() }
     const wrapper = shallow(<SignupPage navigation={ navigation } signup={jest.fn()}/>)
-    const signUpButton = wrapper.find(Button).first()
+    const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
     expect(signUpButtonProps.disabled).toBeTruthy()
   })
@@ -30,7 +29,7 @@ describe('SignUpPage Component', () => {
   it('signup button should not change navigation when button is disabled', () => {
     const navigation = { navigate: jest.fn() }
     const wrapper = shallow(<SignupPage navigation={ navigation } signup={jest.fn()}/>)
-    const signUpButton = wrapper.find(Button).first()
+    const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
     signUpButtonProps.onPress()
     expect(navigation.navigate.mock.calls.length).toBe(0)
@@ -41,13 +40,13 @@ describe('SignUpPage Component', () => {
     const callbackMock = jest.fn()
     const wrapper = shallow(<SignupPage navigation={ navigation } onSubmit={ callbackMock } signup={jest.fn()}/>)
     // Set Email address
-    wrapper.find(ValidatedInput).first().props().onChangeText('test@test.com')
+    wrapper.find(InputValidated).first().props().onChangeText('test@test.com')
     // Set Password
-    wrapper.find(ValidatedInput).at(1).props().onChangeText('12345678')
+    wrapper.find(InputValidated).at(1).props().onChangeText('12345678')
     // Set Phone Number
-    wrapper.find(ValidatedInput).at(2).props().onChangeText('123')
+    wrapper.find(InputValidated).at(2).props().onChangeText('123')
     wrapper.update()
-    const signUpButton = wrapper.find(Button).first()
+    const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
     expect(signUpButtonProps.disabled).toBeTruthy()
   })
@@ -57,13 +56,13 @@ describe('SignUpPage Component', () => {
     const callbackMock = jest.fn()
     const wrapper = shallow(<SignupPage navigation={ navigation } onSubmit={ callbackMock } signup={jest.fn()}/>)
     // Set Email address
-    wrapper.find(ValidatedInput).first().props().onChangeText('test@test.com')
+    wrapper.find(InputValidated).first().props().onChangeText('test@test.com')
     // Set Password
-    wrapper.find(ValidatedInput).at(1).props().onChangeText('123')
+    wrapper.find(InputValidated).at(1).props().onChangeText('123')
     // Set Phone Number
-    wrapper.find(ValidatedInput).at(2).props().onChangeText('123456789')
+    wrapper.find(InputValidated).at(2).props().onChangeText('123456789')
     wrapper.update()
-    const signUpButton = wrapper.find(Button).first()
+    const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
     expect(signUpButtonProps.disabled).toBeTruthy()
   })
@@ -73,13 +72,13 @@ describe('SignUpPage Component', () => {
     const callbackMock = jest.fn()
     const wrapper = shallow(<SignupPage navigation={ navigation } onSubmit={ callbackMock } signup={jest.fn()}/>)
     // Set Email address
-    wrapper.find(ValidatedInput).first().props().onChangeText('test@.com')
+    wrapper.find(InputValidated).first().props().onChangeText('test@.com')
     // Set Password
-    wrapper.find(ValidatedInput).at(1).props().onChangeText('12345678')
+    wrapper.find(InputValidated).at(1).props().onChangeText('12345678')
     // Set Phone Number
-    wrapper.find(ValidatedInput).at(2).props().onChangeText('123456789')
+    wrapper.find(InputValidated).at(2).props().onChangeText('123456789')
     wrapper.update()
-    const signUpButton = wrapper.find(Button).first()
+    const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
     expect(signUpButtonProps.disabled).toBeTruthy()
   })
@@ -89,13 +88,13 @@ describe('SignUpPage Component', () => {
     const callbackMock = jest.fn()
     const wrapper = shallow(<SignupPage navigation={ navigation } onSubmit={ callbackMock } signup={jest.fn()}/>)
     // Set Email address
-    wrapper.find(ValidatedInput).first().props().onChangeText('test@test.com')
+    wrapper.find(InputValidated).first().props().onChangeText('test@test.com')
     // Set Password
-    wrapper.find(ValidatedInput).at(1).props().onChangeText('12345678')
+    wrapper.find(InputValidated).at(1).props().onChangeText('12345678')
     // Set Phone Number
-    wrapper.find(ValidatedInput).at(2).props().onChangeText('123456789')
+    wrapper.find(InputValidated).at(2).props().onChangeText('123456789')
     wrapper.update()
-    const signUpButton = wrapper.find(Button).first()
+    const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
     expect(signUpButtonProps.disabled).toBeFalsy()
   })
@@ -106,13 +105,13 @@ describe('SignUpPage Component', () => {
     const signupActionMock = jest.fn(() => {return Promise.resolve()})
     const wrapper = shallow(<SignupPage navigation={ navigation } onSubmit={ callbackMock } signup={signupActionMock}/>)
     // Set Email address
-    wrapper.find(ValidatedInput).first().props().onChangeText('test@test.com')
+    wrapper.find(InputValidated).first().props().onChangeText('test@test.com')
     // Set Password
-    wrapper.find(ValidatedInput).at(1).props().onChangeText('12345678')
+    wrapper.find(InputValidated).at(1).props().onChangeText('12345678')
     // Set Phone Number
-    wrapper.find(ValidatedInput).at(2).props().onChangeText('123456789')
+    wrapper.find(InputValidated).at(2).props().onChangeText('123456789')
     wrapper.update()
-    const signUpButton = wrapper.find(Button).first()
+    const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
     // Click Button
     await signUpButtonProps.onPress()
