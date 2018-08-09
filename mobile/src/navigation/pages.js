@@ -91,6 +91,7 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: I18n.t('login_page.title'),
       ...commonNavBarStyle,
+      header: null
     }),
   },
   SIGNUP_PAGE: {

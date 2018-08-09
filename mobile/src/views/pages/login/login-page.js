@@ -1,13 +1,17 @@
 import React from 'react'
 import { View } from 'react-native'
-import { Button, Card, Content, Container, Form, Text } from 'native-base'
+import { Content, Container, Text } from 'native-base'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
-import ValidatedInput from '../../components/validated-input/validated-input'
-import ErrorMessage from '../../components/error-message/error-message'
-import { signUpActions } from '../../../signup';
+import { signUpActions } from '../../../signup'
+import { SafeAreaView } from 'react-navigation'
+import Header from '../../components/header/header'
+import InputValidated from '../../design/input-validated'
+import BlackLogo from '../../../assets/logos/logo-black.png'
+import { BlackButton, OutlineBlackButton } from '../../design/buttons'
+import { PAGES_NAMES } from '../../../navigation/pages'
 
 class LoginPage extends React.Component {
   constructor (props) {
@@ -48,49 +52,100 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <Container>
-        <Content padder>
-          {this.props.isError && this.props.errorMessage && (
-            <ErrorMessage message={this.props.errorMessage} onRetry={this.handleSubmit} />
-          )}
-        <Card style={ { padding: 8 } }>
-            <Form>
-              <ValidatedInput floatingLabel
-                              iconProps={{active: true, name: 'email', type:'MaterialCommunityIcons'}}
-                              value={ this.state.email }
-                              keyboardType={ 'email-address' }
-                              labelText={I18n.t('login_page.email_placeholder')}
-                              isError={!this.validateEmail(this.state.email)}
-                              errorMessage={I18n.t('common.errors.incorrect_email')}
-                              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'email')} />
-              <ValidatedInput floatingLabel
-                              iconProps={{active: true, name: 'lock'}}
-                              value={ this.state.password }
-                              secureTextEntry={ true }
-                              labelText={I18n.t('login_page.password_placeholder')}
-                              isError={!this.validatePassword(this.state.password)}
-                              errorMessage={I18n.t('common.errors.incorrect_password')}
-                              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password')} />
-            </Form>
-            <Button
-              success
-              rounded
-              block
-              disabled={!this.state.isFormValid}
-              style={styles.button}
-              onPress={ this.handleSubmit } >
-              <Text>{I18n.t('login_page.button')}</Text>
-            </Button>
-          </Card>
-        </Content>
-      </Container>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}} forceInset={{top: 'always'}}>
+        <Container>
+          <Content style={styles.mainContainer}>
+            <Header title={ I18n.t('login_page.title') } rightIconSource={BlackLogo} />
+            <View style={styles.contentContainer}>
+              <View style={styles.inputContainer}>
+                <InputValidated value={ this.state.email }
+                        isError={!this.validateEmail(this.state.email)}
+                        errorMessage={I18n.t('common.errors.incorrect_email')}
+                        keyboardType='email-address'
+                        labelText={ I18n.t('login_page.email_placeholder') }
+                        placeholder="email@domain.com"
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'email') }/>
+                </View>
+                <InputValidated value={ this.state.password }
+                                isSecure
+                                isError={!this.validatePassword(this.state.password)}
+                                errorMessage={I18n.t('common.errors.incorrect_password')}
+                                labelText={ I18n.t('login_page.password_placeholder') }
+                                placeholder='********'
+                                onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password') }/>
+                <View style={styles.button}>
+                  <BlackButton
+                    disabled={ !this.state.isFormValid }
+                    text={ I18n.t('login_page.button')  }
+                    onPress={ () => this.handleSubmit() } />
+                </View>
+                <View style={styles.textStyling}>
+                  <Text>{ I18n.t('login_page.change_mind')}</Text>
+                  <Text onPress={() => this.props.navigation.navigate(PAGES_NAMES.SIGNUP_PAGE)} style={styles.signup}>{I18n.t('login_page.signup')}</Text>
+                </View>
+                <Text style={styles.connectWith}>{I18n.t('login_page.connect_with')}</Text>
+                <View style={{paddingBottom: 20}}>
+                  <OutlineBlackButton
+                    icon={'md-paper-plane'}
+                    text={ I18n.t('login_page.connect_with_telegram')  }
+                    onPress={() => {}} />
+                </View>
+                <View style={styles.policyAndConditionsWrapper}>
+                  <Text style={styles.policyAndConditions}>{ I18n.t('login_page.privacy_policy') } &amp; { I18n.t('login_page.terms_and_conditions')}</Text>
+                </View>
+            </View>
+          </Content>
+        </Container>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = EStyleSheet.create({
+  contentContainer: {
+    marginTop: 40
+  },
+  mainContainer: {
+    backgroundColor: '#FFFFFF',
+    marginLeft: 15,
+    marginRight: 15
+  },
+  textStyling: {
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingTop: 20,
+    paddingBottom: 20
+  },
+  inputContainer: {
+    marginBottom: 20
+  },
   button: {
-    marginTop: 30
+    marginTop: 30,
+    flex: 0
+  },
+  signup: {
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 18,
+    textDecorationLine: 'underline',
+    marginLeft: 20
+  },
+  policyAndConditionsWrapper: {
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  policyAndConditions: {
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 14,
+    textDecorationLine: 'underline'
+  },
+  connectWith: {
+    alignSelf: 'center',
+    fontSize: 12,
+    fontFamily: 'Montserrat-ExtraLight'
   }
 });
 

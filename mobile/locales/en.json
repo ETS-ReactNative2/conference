@@ -11,10 +11,16 @@
   },
   "login_page": {
     "title": "Login",
-    "email_placeholder": "Enter email",
-    "password_placeholder": "Enter password",
+    "email_placeholder": "Enter",
+    "password_placeholder": "Password",
     "button": "Log in",
-    "spinner_text": "Logging you in... Please wait"
+    "spinner_text": "Logging you in... Please wait",
+    "connect_with": "Or connect with:",
+    "change_mind": "I have changed my mind",
+    "signup": "SIGN UP",
+    "connect_with_telegram": "CONNECT WITH TELEGRAM",
+    "privacy_policy": "PRIVACY POLICY",
+    "terms_and_conditions": "TERMS AND CONDITIONS"
   },
   "investor_page": {
     "title": "Investor details"
