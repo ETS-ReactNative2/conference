@@ -113,6 +113,28 @@ export async function createInvestor ({
   })
 }
 
+export async function createProfessional ({
+  role, roleOtherText, skills, traits, knowMost, localRemoteOptions, country, city, age, experience
+}) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post('/api/create_update_professional/', decamelizeKeys({
+    role,
+    roleOtherText,
+    skills,
+    traits,
+    knowMost,
+    localRemoteOptions,
+    country,
+    city,
+    age,
+    experience
+  }), {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
 export async function fetchNotifications () {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

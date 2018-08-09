@@ -84,6 +84,23 @@ class JobListingSerializer(serializers.ModelSerializer):
         )
 
 
+class ProfessionalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Professional
+        fields = (
+            'role',
+            'role_other_text',
+            'skills',
+            'traits',
+            'know_most',
+            'local_remote_options',
+            'country',
+            'city',
+            'age',
+            'experience',
+        )
+
+
 class ProjectSerializer(serializers.ModelSerializer):
     job_listings = JobListingSerializer(many=True, read_only=True)
 

@@ -465,7 +465,7 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('whitepaper'), 'http://www.example.com')
 
 
-class PersonsViewTest(AuthMixin):
+class CreateUpdatePersonTest(AuthMixin):
 
     def view(self):
         return 'create_update_person'
@@ -478,7 +478,6 @@ class PersonsViewTest(AuthMixin):
         response = self.client.post(
             reverse(self.view()),
             json.dumps({
-                'user_id': self.user.id,
                 'title': 'aaaaaaaa',
                 'company': 'aaaaaaaa',
                 'twitter': 'aaaaaaaa',
@@ -539,7 +538,6 @@ class PersonsViewTest(AuthMixin):
         response = self.client.post(
             reverse(self.view()),
             json.dumps({
-                'user_id': self.user.id,
                 'title': 'aaaaaaaa',
                 'company': 'aaaaaaaa',
                 'twitter': 'aaaaaaaa',
@@ -553,7 +551,6 @@ class PersonsViewTest(AuthMixin):
         # Post a slim person.
         response = self.client.post(reverse(self.view()), **self.header)
         # Have that work and result in just one person.
-        self.assertEqual(response.status_code, 201)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.get('user'), self.user.id)
         self.assertEqual(response.data.get('title'), '')

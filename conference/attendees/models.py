@@ -8,6 +8,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+CITY_MAX_LENGTH = 40
+
+COUNTRY_MAX_LENGTH = 2
+
+URL_MAX_LENGTH = 200
+
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
@@ -112,6 +118,10 @@ class TokenType(models.Model):
 
 class LocalRemoteOption(models.Model):
 
+    LOCAL = 1
+
+    REMOTE = 2
+
     id = models.IntegerField(primary_key=True, verbose_name='ID')
 
     name = models.CharField(max_length=40)
@@ -121,6 +131,10 @@ class LocalRemoteOption(models.Model):
 
 
 class JobRole(models.Model):
+
+    OTHER = 12
+
+    ROLE_OTHER_TEXT_MAX_LENGTH = 40
 
     id = models.IntegerField(primary_key=True, verbose_name='ID')
 
@@ -192,9 +206,9 @@ class Project(models.Model):
 
     industry = models.ForeignKey(Industry, db_index=True)
 
-    legal_country = models.CharField(db_index=True, max_length=2)
+    legal_country = models.CharField(db_index=True, max_length=COUNTRY_MAX_LENGTH)
 
-    main_country = models.CharField(db_index=True, max_length=2)
+    main_country = models.CharField(db_index=True, max_length=COUNTRY_MAX_LENGTH)
 
     name = models.CharField(max_length=NAME_MAX_LENGTH)
 
@@ -233,7 +247,7 @@ class Investor(models.Model):
     industries = models.ManyToManyField(Industry, blank=True)
 
     # The investor's own nationality.
-    nationality = models.CharField(max_length=2, blank=True, default='')
+    nationality = models.CharField(max_length=COUNTRY_MAX_LENGTH, blank=True, default='')
 
     product_stages = models.ManyToManyField(ProductStage, blank=True)
 
@@ -245,6 +259,31 @@ class Investor(models.Model):
     ticket_sizes = models.ManyToManyField(TicketSize, blank=True)
 
     token_types = models.ManyToManyField(TokenType, blank=True)
+
+
+class Professional(models.Model):
+
+    KNOW_MOST_MAX_LENGTH = 60
+
+    role = models.ForeignKey(JobRole, db_index=True, null=True, blank=True)
+
+    role_other_text = models.CharField(max_length=JobRole.ROLE_OTHER_TEXT_MAX_LENGTH, blank=True, default='')
+
+    skills = models.ManyToManyField(Skill, blank=True)
+
+    traits = models.ManyToManyField(Trait, blank=True)
+
+    know_most = models.CharField(max_length=KNOW_MOST_MAX_LENGTH, blank=True, default='')
+
+    local_remote_options = models.ManyToManyField(LocalRemoteOption, blank=True)
+
+    country = models.CharField(max_length=COUNTRY_MAX_LENGTH, blank=True, default='')
+
+    city = models.CharField(max_length=CITY_MAX_LENGTH, blank=True, default='')
+
+    age = models.PositiveSmallIntegerField(null=True, blank=True)
+
+    experience = models.PositiveSmallIntegerField(null=True, blank=True)
 
 
 class ConferenceUser(models.Model):
@@ -282,6 +321,10 @@ class ConferenceUser(models.Model):
 
     linkedin = models.CharField(max_length=LINKEDIN_MAX_LENGTH, blank=True, default='')
 
+    professional = models.OneToOneField(
+        Professional, related_name='user', null=True, blank=True, on_delete=models.SET_NULL
+    )
+
     investor = models.ForeignKey(Investor, related_name='users', db_index=True, null=True, blank=True)
 
     project = models.ForeignKey(Project, related_name='users', db_index=True, null=True, blank=True)
@@ -289,15 +332,17 @@ class ConferenceUser(models.Model):
 
 class JobListing(models.Model):
 
-    role = models.ForeignKey(JobRole)
+    DESCRIPTION_MAX_LENGTH = 250
 
-    role_other_text = models.CharField(max_length=40, blank=True, default='')
+    role = models.ForeignKey(JobRole, db_index=True)
+
+    role_other_text = models.CharField(max_length=JobRole.ROLE_OTHER_TEXT_MAX_LENGTH, blank=True, default='')
 
     skills = models.ManyToManyField(Skill, blank=True)
 
     link = models.URLField(blank=True, default='')
 
-    description = models.TextField(blank=True, default='')
+    description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH, blank=True, default='')
 
     part_time = models.BooleanField(default=False)
 
@@ -305,8 +350,8 @@ class JobListing(models.Model):
 
     local_remote_options = models.ManyToManyField(LocalRemoteOption)
 
-    country = models.CharField(max_length=2, blank=True, default='')
+    country = models.CharField(max_length=COUNTRY_MAX_LENGTH, blank=True, default='')
 
-    city = models.CharField(max_length=40, blank=True, default='')
+    city = models.CharField(max_length=CITY_MAX_LENGTH, blank=True, default='')
 
     project = models.ForeignKey(Project, related_name='job_listings')

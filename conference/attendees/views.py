@@ -67,6 +67,80 @@ class CreateUpdatePerson(APIView):
         return Response(serializers.ConferenceUserSerializer(conference_user).data, status=status.HTTP_201_CREATED)
 
 
+class CreateUpdateProfessional(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        json_body = request.data
+
+        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
+            models.ConferenceUser.objects.create(user=self.request.user)
+        if request.user.conference_user.professional:
+            professional = request.user.conference_user.professional
+        else:
+            professional = models.Professional.objects.create()
+
+        role = json_body.get('role')
+        try:
+            clean_role = models.JobRole.objects.get(pk=role) if (
+                role
+            ) else models.JobRole.objects.get(pk=models.JobRole.OTHER)
+        except:
+            clean_role = models.JobRole.objects.get(pk=models.JobRole.OTHER)
+
+        role_other_text = json_body.get('role_other_text')
+        clean_role_other_text = role_other_text[:models.JobRole.ROLE_OTHER_TEXT_MAX_LENGTH] if (
+            role_other_text and clean_role.pk == models.JobRole.OTHER
+        ) else ''
+
+        skills = json_body.get('skills')
+        clean_skills = [models.Skill.objects.get(pk=pk) for pk in skills] if skills else []
+
+        traits = json_body.get('traits')
+        clean_traits = [models.Trait.objects.get(pk=pk) for pk in traits] if traits else []
+
+        know_most = json_body.get('know_most')
+        clean_know_most = know_most[:models.Professional.KNOW_MOST_MAX_LENGTH] if know_most else ''
+
+        local_remote_options = json_body.get('local_remote_options')
+        clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
+            local_remote_options
+        ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
+
+        country = json_body.get('country')
+        clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
+            country and
+            models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
+        ) else ''
+
+        city = json_body.get('city')
+        clean_city = city[:models.CITY_MAX_LENGTH] if (
+            city and
+            models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
+        ) else ''
+
+        age = json_body.get('age')
+        clean_age = age if age and 18 <= age <= 120 else None
+
+        experience = json_body.get('experience')
+        clean_experience = experience if experience and 0 <= experience <= 120 else None
+
+        professional.role = clean_role
+        professional.role_other_text = clean_role_other_text
+        professional.skills = clean_skills
+        professional.traits = clean_traits
+        professional.know_most = clean_know_most
+        professional.local_remote_options = clean_local_remote_options
+        professional.country = clean_country
+        professional.city = clean_city
+        professional.age = clean_age
+        professional.experience = clean_experience
+        professional.save()
+        request.user.conference_user.professional = professional
+        request.user.conference_user.save()
+        return JsonResponse(serializers.ProfessionalSerializer(professional).data, status=status.HTTP_201_CREATED)
+
+
 class CreateUpdateInvestor(APIView):
 
     @transaction.atomic
@@ -96,7 +170,7 @@ class CreateUpdateInvestor(APIView):
         ) else models.Industry.objects.all()
 
         nationality = json_body.get('nationality')
-        clean_nationality = nationality[:2] if nationality else ''
+        clean_nationality = nationality[:models.COUNTRY_MAX_LENGTH] if nationality else ''
 
         product_stages = json_body.get('product_stages')
         clean_product_stages = [models.ProductStage.objects.get(pk=pk) for pk in product_stages] if (
@@ -177,17 +251,17 @@ class CreateUpdateProject(APIView):
         ) else models.Industry.objects.get(pk=41)
 
         legal_country = json_body.get('legal_country')
-        clean_legal_country = legal_country[:2] if legal_country else ''
+        clean_legal_country = legal_country[:models.COUNTRY_MAX_LENGTH] if legal_country else ''
 
         main_country = json_body.get('main_country')
-        clean_main_country = main_country[:2] if main_country else ''
+        clean_main_country = main_country[:models.COUNTRY_MAX_LENGTH] if main_country else ''
 
         name = json_body.get('name')
         clean_name = name[:models.Project.NAME_MAX_LENGTH] if name else '-'
 
         news = json_body.get('news')
         try:
-            clean_news = news[:200] if news else ''
+            clean_news = news[:models.URL_MAX_LENGTH] if news else ''
         except:
             clean_news = ''
 
@@ -218,13 +292,13 @@ class CreateUpdateProject(APIView):
 
         website = json_body.get('website')
         try:
-            clean_website = website[:200] if website else ''
+            clean_website = website[:models.URL_MAX_LENGTH] if website else ''
         except:
             clean_website = ''
 
         whitepaper = json_body.get('whitepaper')
         try:
-            clean_whitepaper = whitepaper[:200] if whitepaper else ''
+            clean_whitepaper = whitepaper[:models.URL_MAX_LENGTH] if whitepaper else ''
         except:
             clean_whitepaper = ''
 

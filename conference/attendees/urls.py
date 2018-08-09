@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^investors/(?P<pk>\d+)/$', views.RetrieveUpdateDestroyInvestor.as_view(), name='investor_detail'),
     url(r'^jobs/$', views.CreateJob.as_view(), name='job_list'),
     url(r'^create_update_person/$', views.CreateUpdatePerson.as_view(), name='create_update_person'),
+    url(r'^create_update_professional/$', views.CreateUpdateProfessional.as_view(), name='create_update_professional'),
     url(r'^projects/$', views.ListProject.as_view(), name='project_list'),
     url(r'^create_update_project/$', views.CreateUpdateProject.as_view(), name='create_update_project'),
     url(r'^projects/(?P<pk>\d+)/$', views.RetrieveUpdateDestroyProject.as_view(), name='project_detail'),

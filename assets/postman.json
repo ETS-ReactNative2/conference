@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"_postman_id": "14f88a2f-a3a7-4cc0-b0c2-29e427574a8d",
+			"_postman_id": "2fa00eb1-a539-4c33-8e68-2c8cd5b0f303",
 			"name": "/api-token-auth/",
 			"request": {
 				"auth": {
@@ -37,7 +37,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "660127e2-2e17-490f-b54a-3fd40e015edb",
+			"_postman_id": "657ccc3c-8103-4d1b-9c27-4228ac9a3f8d",
 			"name": "/create_update_investor/",
 			"request": {
 				"method": "POST",
@@ -66,7 +66,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "6c1351c9-7aab-4996-b72e-7742f69820cb",
+			"_postman_id": "68164126-1e45-41e9-98a8-7569fcbeef36",
 			"name": "/jobs/",
 			"request": {
 				"method": "POST",
@@ -95,7 +95,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "a9d4e6c2-d43f-4f27-bb21-592ca1897d7b",
+			"_postman_id": "f1a48a58-d6da-4fb6-a194-b396074029f3",
 			"name": "/create_update_person/",
 			"request": {
 				"method": "POST",
@@ -107,7 +107,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"user_id\": 1,\n    \"first_name\": \"Foo\",\n    \"last_name\": \"Bar\",\n    \"title\": \"Title\",\n    \"company\": \"Company\",\n    \"twitter\": \"Twitter\",\n    \"facebook\": \"Facebook\",\n    \"telegram\": \"Telegram\",\n    \"linkedin\": \"Linkedin\"\n}"
+					"raw": "{\n    \"first_name\": \"Foo\",\n    \"last_name\": \"Bar\",\n    \"title\": \"Title\",\n    \"company\": \"Company\",\n    \"twitter\": \"Twitter\",\n    \"facebook\": \"Facebook\",\n    \"telegram\": \"Telegram\",\n    \"linkedin\": \"Linkedin\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/create_update_person/",
@@ -124,7 +124,36 @@
 			"response": []
 		},
 		{
-			"_postman_id": "1bc2340d-ce30-4076-9580-7f59364da9e6",
+			"_postman_id": "a898a281-702f-4fc1-a189-67ee07a164b5",
+			"name": "/create_update_professional/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role\": 12,\n    \"role_other_text\": \"aaaaaaaa\",\n    \"skills\": [1, 2, 3],\n    \"traits\": [1, 2, 3],\n    \"know_most\": \"aaaaaaaa\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"aaaaaaaa\",\n    \"age\": 42,\n    \"experience\": 23\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/create_update_professional/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"create_update_professional",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "24bc20a6-10cb-4425-95c6-113cb2af1f43",
 			"name": "/create_update_project/",
 			"request": {
 				"method": "POST",
@@ -153,7 +182,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "c9029ad8-68c8-4356-b6f3-836d2f2a38be",
+			"_postman_id": "11c53028-de9e-42e0-8d01-23e1111a1c3e",
 			"name": "/users/",
 			"request": {
 				"auth": {
@@ -185,7 +214,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "0c699775-1044-43f7-b70a-b7beae964071",
+			"_postman_id": "55bca94e-c9b4-43f3-a0e8-e1bc75aace87",
 			"name": "/investors/<id>/",
 			"request": {
 				"method": "GET",
@@ -210,7 +239,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "edb602df-266e-47a1-bf47-ed961542422a",
+			"_postman_id": "2ae291bd-e3f5-4297-909a-05b12c09502e",
 			"name": "/projects/<id>/",
 			"request": {
 				"method": "GET",
@@ -235,7 +264,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "c7f4316d-f9bd-4914-8151-4fed0199336f",
+			"_postman_id": "047a3107-752e-496a-8901-cd7700dfb2fe",
 			"name": "/schedule/",
 			"request": {
 				"method": "GET",
