@@ -1,14 +1,21 @@
-import { Button, Card, Text, View } from 'native-base'
+import { Container, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-
-import CountryPicker from 'react-native-country-picker-modal'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { InvesteeMoneySource, InvesteeTokenType, InvestorInvestIn } from './index'
+import { FlowButton } from '../../../design/buttons'
+import { CountrySelect } from '../../../design/select'
+import { StepTitle } from '../../../design/step-title'
+import { Subheader } from '../../../design/subheader'
+import { InvesteeMoneySource } from './index'
 
 class InvesteeProjectLocation extends React.Component {
+
+  static BACKGROUND_COLOR = '#2C65E2'
+
   constructor (props) {
     super(props)
     this.state = {
@@ -27,72 +34,35 @@ class InvesteeProjectLocation extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investee.project_location.title') }</Text>
-        <Text style={ { marginTop: 16, marginBottom: 16 } }>{ I18n.t('flow_page.investee.project_location.legal') }</Text>
-        <CountryPicker
-          onChange={ value => {
-            this.setState({ legal: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
-          } }
-          filterable
-          closeable
-          cca2={ this.state.legal.cca2 }
-          translation="eng"
-          styles={ {
-            touchFlag: {
-              alignItems: 'flex-start',
-              justifyContent: 'center',
-              height: 24
-            },
-          } }
-        >
-          <View style={ {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-            justifyContent: 'flex-start',
-            height: 19
-          } }>
-            { CountryPicker.renderFlag(this.state.legal.cca2) }
-            <Text style={ { marginLeft: 8 } }>{ this.state.legal.countryName }</Text>
-          </View>
-        </CountryPicker>
-        <Text style={ { marginTop: 16, marginBottom: 16 } }>{ I18n.t('flow_page.investee.project_location.main') }</Text>
-        <CountryPicker
-          onChange={ value => {
-            this.setState({ main: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
-          } }
-          filterable
-          closeable
-          cca2={ this.state.main.cca2 }
-          translation="eng"
-          styles={ {
-            touchFlag: {
-              alignItems: 'flex-start',
-              justifyContent: 'center',
-              height: 24
-            },
-          } }
-        >
-          <View style={ {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-            justifyContent: 'flex-start',
-            height: 19
-          } }>
-            { CountryPicker.renderFlag(this.state.main.cca2) }
-            <Text style={ { marginLeft: 8 } }>{ this.state.main.countryName }</Text>
-          </View>
-        </CountryPicker>
-        <Button success
-                rounded
-                block
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+      <Container style={ styles.container }>
+        <StepTitle text={ I18n.t('flow_page.investee.project_location.title') }/>
+        <View style={ { flex: 1, justifyContent: 'center' } }>
+          <Subheader
+            text={ I18n.t('flow_page.investee.project_location.legal') }
+          />
+          <CountrySelect
+            onChange={ value => {
+              this.setState({ legal: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
+            } }
+            value={ this.state.legal }
+          />
+          <Subheader
+            text={ I18n.t('flow_page.investee.project_location.main') }
+          />
+          <CountrySelect
+            onChange={ value => {
+              this.setState({ main: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
+            } }
+            value={ this.state.main }
+          />
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ 'Next' }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </Container>
     )
   }
 
@@ -106,6 +76,14 @@ class InvesteeProjectLocation extends React.Component {
     })
   }
 }
+
+const styles = EStyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    height: `100% - ${Header.HEIGHT}`
+  }
+})
 
 InvesteeProjectLocation.propTypes = {
   onFill: PropTypes.func.isRequired

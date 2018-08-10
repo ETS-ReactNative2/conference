@@ -66,6 +66,15 @@ export function BlueButton ({ text, onPress, disabled, icon}){
   )
 }
 
+export function FlowButton ({ text = 'Next', onPress, disabled }) {
+  const styles = flowButton
+  return (
+    <BaseButton disabled={ disabled } style={ disabled ? styles.disabledButton : styles.button } onPress={ ev => onPress(ev) }>
+      <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
+    </BaseButton>
+  )
+}
+
 const baseButton = EStyleSheet.create({
   button: {
     maxWidth: 360,
@@ -92,6 +101,25 @@ const baseButton = EStyleSheet.create({
     justifyContent: 'center',
     fontWeight: 'bold',
     fontFamily: 'Montserrat-SemiBold'
+  }
+})
+
+const flowButton = EStyleSheet.create({
+  button: {
+    backgroundColor: '#fff',
+    maxWidth: 500
+  },
+  disabledButton: {
+    maxWidth: 500,
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: '#ccc'
+  },
+  text: {
+    color: '#000'
+  },
+  disabledText: {
+    color: '#ccc'
   }
 })
 

@@ -1,7 +1,7 @@
+import { Text } from 'native-base'
 import React from 'react'
 import { ImageBackground, ScrollView, View } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
-import { Text } from 'native-base'
 import LinearGradient from 'react-native-linear-gradient'
 import I18n from '../../../../locales/i18n'
 import { PAGES_NAMES } from '../../../navigation'
@@ -12,6 +12,7 @@ import WelcomePageBackgroundImage from '../../../assets/images/welcome_screen_ba
 import { BlueButton, OutlineWhiteButton, PrimaryButton } from '../../design/buttons'
 
 class WelcomePage extends React.Component {
+
   render () {
     const { navigate } = this.props.navigation
     return (
@@ -29,14 +30,14 @@ class WelcomePage extends React.Component {
                   </View>
                   <View style={ styles.buttonContainer }>
                     <OutlineWhiteButton
-                      onPress={() => {navigate(PAGES_NAMES.SIGNUP_PAGE)}}
-                      text={I18n.t('welcome_page.signup')}
+                      onPress={ () => {navigate(PAGES_NAMES.SIGNUP_PAGE)} }
+                      text={ I18n.t('welcome_page.signup') }
                     />
                   </View>
                   <Text style={ styles.connectWith }>{ I18n.t('welcome_page.connect_with') }</Text>
                   <View style={ styles.buttonContainer }>
                     <BlueButton
-                      icon={'md-paper-plane'}
+                      icon={ 'md-paper-plane' }
                       text={ I18n.t('welcome_page.connect_with_telegram') }/>
                   </View>
                 </View>

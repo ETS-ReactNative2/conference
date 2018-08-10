@@ -1,46 +1,61 @@
-import { Button, Container, Content, Icon, Text } from 'native-base'
+import { Button, Container, Content, Icon } from 'native-base'
 import React from 'react'
 import { BackHandler } from 'react-native'
 import { connect } from 'react-redux'
-import { signUpActions } from '../../../signup'
-import { CommonProfileOnboarding, EmployeeKeywords, EmployeeRole } from './steps'
 import { PAGES_NAMES } from '../../../navigation'
+import { signUpActions } from '../../../signup'
+import { CommonProfileOnboarding, CommonProfileType, InvesteeProjectLocation } from './steps'
 
 class FlowPage extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: (
-      <Button
-        style={ { height: '100%' } }
-        transparent
-        onPress={ navigation.getParam('onHeaderBackButton') }>
-        <Icon style={ { color: 'white' } } name='arrow-back'/>
-      </Button>
-    )
-  });
+  static navigationOptions = ({ navigation }) => {
+    console.log(2)
+    return ({
+      headerStyle: {
+        backgroundColor: navigation.getParam('getBackgroundColor')
+      },
+      headerLeft: (
+        <Button
+          style={ { height: '100%' } }
+          transparent
+          onPress={ navigation.getParam('onHeaderBackButton') }>
+          <Icon style={ { color: 'white' } } name='arrow-back'/>
+        </Button>
+      )
+    })
+  }
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       CurrentStep: CommonProfileOnboarding,
       PreviousSteps: []
-    };
+    }
     BackHandler.addEventListener(
       'hardwareBackPress',
       this.onBackButtonPressAndroid
-    );
+    )
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.navigation.setParams({
-      onHeaderBackButton: this.onHeaderBackButton
-    });
+      onHeaderBackButton: this.onHeaderBackButton,
+      getBackgroundColor: this.getBackgroundColor()
+    })
+  }
+
+  getBackgroundColor = () => {
+    return this.state.CurrentStep.BACKGROUND_COLOR || 'white'
   }
 
   onHeaderBackButton = () => {
     if (!this.onBackButtonPressAndroid()) {
-      this.props.navigation.goBack();
+      this.props.navigation.goBack()
+      this.props.navigation.setParams({
+        getBackgroundColor: this.getBackgroundColor()
+      })
     }
-  };
+  }
+
   onBackButtonPressAndroid = () => {
     const { CurrentStep, PreviousSteps } = this.state
     const previousStepsCopy = [ ...PreviousSteps ]
@@ -48,11 +63,15 @@ class FlowPage extends React.Component {
       this.setState({
         CurrentStep: previousStepsCopy.pop(),
         PreviousSteps: previousStepsCopy
-      });
-      return true;
+      }, () => {
+        this.props.navigation.setParams({
+          getBackgroundColor: this.getBackgroundColor()
+        })
+      })
+      return true
     }
-    return false;
-  };
+    return false
+  }
 
   onFill = async ({ nextStep, done }) => {
     const { PreviousSteps, CurrentStep } = this.state
@@ -64,32 +83,37 @@ class FlowPage extends React.Component {
         PreviousSteps: previousStepsCopy,
         CurrentStep: nextStep,
         done
+      }, () => {
+        this.props.navigation.setParams({
+          getBackgroundColor: this.getBackgroundColor()
+        })
       })
     }
     else {
       try {
         await uploadProfile()
         //TODO
-        navigation.navigate(PAGES_NAMES.HOME_PAGE);
+        navigation.navigate(PAGES_NAMES.HOME_PAGE)
       } catch (err) {
         console.error(err)
       }
     }
   }
 
-  render() {
-    const { CurrentStep } = this.state;
+  render () {
+    const { CurrentStep } = this.state
 
     return (
-      <Container>
+      // TODO: needs to add property to each step
+      <Container style={ { backgroundColor: this.state.CurrentStep.BACKGROUND_COLOR || 'white' } }>
         <Content>
           <CurrentStep
-            onFill={this.onFill}
-            style={{ marginBottom: 16, marginTop: 16 }}
+            onFill={ this.onFill }
+            style={ { marginBottom: 16, marginTop: 16 } }
           />
         </Content>
       </Container>
-    );
+    )
   }
 }
 

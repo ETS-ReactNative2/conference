@@ -40,6 +40,17 @@ const commonNavBarStyle = {
   headerTintColor: '#FFF'
 }
 
+const flowNavbarStyle = {
+  headerStyle: {
+    backgroundColor: 'transparent'
+  },
+  headerTitleStyle: {
+    fontWeight: 'bold',
+    color: '#FFF'
+  },
+  headerTintColor: '#FFF'
+}
+
 const DrawerStack = createDrawerNavigator({
   AGENDA_PAGE: { screen: AgendaPage },
   NOTIFICATIONS_PAGE: { screen: NotificationsPage }
@@ -74,9 +85,10 @@ const AppStackNavigator = createStackNavigator({
   },
   FLOW_PAGE: {
     screen: FlowPage,
-    navigationOptions: () => ({
+    navigationOptions: nav => ({
       title: I18n.t('flow_page.title'),
-      ...commonNavBarStyle
+      ...flowNavbarStyle,
+      ...FlowPage.navigationOptions(nav)
     })
   },
   SEARCH_PAGE: {
