@@ -11,7 +11,7 @@ export async function signup ({ email, password, phone }) {
 export async function fetchProjects (filters) {
   const token = await storageService.getItem(TOKEN_NAME)
   console.log(token)
-  return axios.get('/api/projects', {
+  return axios.get('/api/projects/', {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
     headers: {
@@ -23,7 +23,7 @@ export async function fetchProjects (filters) {
 export async function fetchInvestors (filters) {
   const token = await storageService.getItem(TOKEN_NAME)
   console.log(token)
-  return axios.get('/api/investors', {
+  return axios.get('/api/investors/', {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
     headers: {
@@ -48,8 +48,8 @@ export async function createJob ({
 
 export async function createConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram, userId }) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.post(
-    '/api/create_update_person/',
+  return axios.put(
+    '/api/my_person/',
     decamelizeKeys({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram, userId }),
     {
       headers: {
@@ -131,7 +131,7 @@ export async function createProfessional ({
   role, roleOtherText, skills, traits, knowMost, localRemoteOptions, country, city, age, experience
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.post('/api/create_update_professional/', decamelizeKeys({
+  return axios.put('/api/my_professional/', decamelizeKeys({
     role,
     roleOtherText,
     skills,
@@ -247,7 +247,7 @@ const transformRequestOptions = params => {
 }
 
 export async function fetchConferenceSchedule () {
-  return axios.get('/schedule', {
+  return axios.get('/schedule/', {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
