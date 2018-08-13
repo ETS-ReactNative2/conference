@@ -8,7 +8,7 @@ export class Header extends React.Component {
   render () {
     return (
         <View style={styles.container}>
-            <Text style={[styles.title, this.props.titleStyle]} adjustsFontSizeToFit>{ this.props.title }</Text>
+            <Text style={[styles.title, this.props.titleStyle]} adjustsFontSizeToFit>{ this.props.title.toUpperCase() }</Text>
             <Image style={styles.logo} source={this.props.rightIconSource} />
         </View>
     )

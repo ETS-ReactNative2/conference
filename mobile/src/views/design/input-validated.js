@@ -14,11 +14,11 @@ class InputValidated extends Component {
                  value={this.props.value}
                  labelText={this.props.labelText}
                  onChangeText={this.props.onChangeText}
-                 status={this.props.isError ? 'error' : 'ok'}
-           />
-           {this.props.isError && (
-             <Text style={styles.errorText}>{this.props.errorMessage}</Text>
-           )}
+                 status={this.props.isError ? 'error' : 'ok'}>
+            {this.props.isError && (
+              <Text style={styles.errorText}>{this.props.errorMessage}</Text>
+            )}
+          </Input>
         </React.Fragment>
     )
   }
@@ -29,7 +29,7 @@ const styles = EStyleSheet.create({
       flex: 1
   },
   errorText: {
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-start',
     color: 'red'
   }
 })

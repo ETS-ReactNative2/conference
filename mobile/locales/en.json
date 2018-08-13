@@ -14,6 +14,7 @@
       "usa": "USA"
     },
     "errors": {
+      "email_exists": "This email address is already bound to user, please try different one",
       "incorrect_email": "Please enter correct email address",
       "incorrect_investor_custom_location": "Location can be maximum 40 characters long",
       "incorrect_job_city": "Please enter city",
@@ -27,7 +28,10 @@
       "incorrect_profile_last_name": "Family name must be at least 3 characters long",
       "incorrect_project_description": "Plesae enter project description",
       "incorrect_project_name": "Project name must be at least 3 characters long",
-      "incorrect_project_tagline": "Please enter project tagline"
+      "incorrect_project_tagline": "Please enter project tagline",
+      "incorrect_request": "The request was incorrect. Please try again",
+      "no_internet_connection": "No internet connection",
+      "server_error": "We have some issues, please try again or contact us"
     },
     "facebook": "Facebook",
     "funding_stages": {
@@ -377,6 +381,9 @@
     "login": "LOG IN",
     "password_placeholder": "Enter password",
     "phone_placeholder": "Enter phone number",
+    "privacy_policy": "PRIVACY POLICY",
+    "spinner_text": "Creating your account... Please wait",
+    "terms_and_conditions": "TERMS AND CONDITIONS",
     "title": "Sign Up"
   },
   "welcome_page": {

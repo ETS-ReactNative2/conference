@@ -6,12 +6,19 @@ import {
   SAVE_PROFILE_INVESTEE,
   SAVE_PROFILE_INFO,
   LOGIN_USER_SUCCESS,
-  LOGIN_USER_ERROR } from './action-types'
+  LOGIN_USER_ERROR,
+  SIGN_UP_USER_ERROR,
+  CLEAR_SIGN_UP_USER_ERROR } from './action-types'
 
 const initialState = {
   auth: {
     login: {
       isError: false,
+      errorMessage: ''
+    },
+    signup: {
+      isServerError: false,
+      isEmailFieldError: false,
       errorMessage: ''
     }
   },
@@ -176,6 +183,32 @@ export function signUpReducer (state = initialState, action) {
         employee: {
           ...state.employee,
           ...action.employeeData
+        }
+      }
+    case SIGN_UP_USER_ERROR:
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          signup: {
+            ...state.signup,
+            isServerError: action.isServerError,
+            isEmailFieldError: action.isEmailFieldError,
+            errorMessage: action.error
+          }
+        }
+      }
+    case CLEAR_SIGN_UP_USER_ERROR:
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          signup: {
+            ...state.signup,
+            isServerError: false,
+            isEmailFieldError: false,
+            errorMessage: ''
+          }
         }
       }
     default:

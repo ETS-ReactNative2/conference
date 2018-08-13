@@ -13,6 +13,7 @@ import Header from '../../components/header/header'
 import InputValidated from '../../design/input-validated'
 import BlackLogo from '../../../assets/logos/logo-black.png'
 import { BlackButton, OutlineBlackButton } from '../../design/buttons'
+import Alert from '../../components/alert/alert'
 
 export class SignupPage extends React.Component {
   constructor (props) {
@@ -46,39 +47,40 @@ export class SignupPage extends React.Component {
   }
 
   handleFieldChange = (newValue, name) => {
+    if (this.props.isEmailFieldError || this.props.isServerError) {
+      this.props.clearErrors();
+    }
     this.setState({
       [ name ]: newValue
     }, this.validateForm)
   }
 
-  handleSubmit = async () => {
+  handleSubmit = () => {
     const { email, password, phone } = this.state
-    const { signup, navigation } = this.props
+    const { signup } = this.props
     if (this.state.isFormValid) {
-      try {
-        await signup({
-          email, password, phone
-        })
-        navigation.navigate(PAGES_NAMES.FLOW_PAGE)
-      } catch (err) {
-        console.log(err)
-      }
+      signup({email, password, phone})
     }
   }
 
   render () {
+    const isEmailFieldError = !this.validateEmail(this.state.email) || this.props.isEmailFieldError;
+    const emailErrorMessage = this.props.isEmailFieldError ? this.props.errorMessage : I18n.t('common.errors.incorrect_email');
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}} forceInset={{top: 'always'}}>
         <Container>
           <Content style={styles.mainContainer}>
             <Header title={ I18n.t('signup_page.title') } rightIconSource={BlackLogo} />
             <View style={styles.contentContainer}>
+              {this.props.isServerError && (
+                <Alert color="error" message={this.props.errorMessage} />
+              )}
               <View style={styles.inputContainer}>
                 <InputValidated value={ this.state.email }
-                      isError={!this.validateEmail(this.state.email)}
-                      errorMessage={I18n.t('common.errors.incorrect_email')}
+                      isError={isEmailFieldError}
+                      errorMessage={emailErrorMessage}
                       keyboardType='email-address'
-                      labelText={ I18n.t('signup_page.email_placeholder') }
+                      labelText={ I18n.t('signup_page.email_placeholder').toUpperCase() }
                       placeholder="email@domain.com"
                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'email') }/>
               </View>
@@ -87,13 +89,13 @@ export class SignupPage extends React.Component {
                       isSecure
                       isError={!this.validatePassword(this.state.password)}
                       errorMessage={I18n.t('common.errors.incorrect_password')}
-                      labelText={ I18n.t('signup_page.password_placeholder') }
+                      labelText={ I18n.t('signup_page.password_placeholder').toUpperCase() }
                       placeholder='********'
                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password') }/>
               </View>
               <InputValidated value={ this.state.phone }
                     keyboardType='phone-pad'
-                    isError={!this.validatePassword(this.state.phone)}
+                    isError={!this.validatePhoneNumber(this.state.phone)}
                     errorMessage={I18n.t('common.errors.incorrect_phone_number')}
                     labelText={ I18n.t('signup_page.phone_placeholder') }
                     placeholder="+48123456789"
@@ -114,6 +116,9 @@ export class SignupPage extends React.Component {
                   icon={'md-paper-plane'}
                   text={ I18n.t('signup_page.connect_with_telegram')  }
                   onPress={() => {}} />
+              </View>
+              <View style={styles.policyAndConditionsWrapper}>
+                  <Text style={styles.policyAndConditions}>{ I18n.t('signup_page.privacy_policy') } &amp; { I18n.t('signup_page.terms_and_conditions')}</Text>
               </View>
             </View>
           </Content>
@@ -153,6 +158,17 @@ const styles = EStyleSheet.create({
     textDecorationLine: 'underline',
     marginLeft: 20
   },
+  policyAndConditionsWrapper: {
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  policyAndConditions: {
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 14,
+    textDecorationLine: 'underline'
+  },
   connectWith: {
     alignSelf: 'center',
     fontSize: 12,
@@ -160,15 +176,20 @@ const styles = EStyleSheet.create({
   }
 })
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = state => {
+  return {
+    isServerError: state.signUp.auth.signup.isServerError,
+    isEmailFieldError: state.signUp.auth.signup.isEmailFieldError,
+    errorMessage: state.signUp.auth.signup.errorMessage
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     signup: data => dispatch(signUpActions.signup(data)),
     showLoader: message => dispatch(globalActions.setGlobalLoading(message)),
-    hideLoader: () => dispatch(globalActions.unsetGlobalLoading())
+    hideLoader: () => dispatch(globalActions.unsetGlobalLoading()),
+    clearErrors: () => dispatch(signUpActions.clearSignUpError())
   }
 }
 

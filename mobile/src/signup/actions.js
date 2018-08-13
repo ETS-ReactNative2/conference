@@ -1,5 +1,6 @@
 import I18n from '../../locales/i18n'
 import * as api from '../api/api'
+import { batchActions } from 'redux-batch-enhancer'
 import { ROLES } from '../enums'
 
 import { globalActions } from '../global'
@@ -12,18 +13,53 @@ import {
   SAVE_INVESTOR,
   SAVE_PROFILE_EMPLOYER,
   SAVE_PROFILE_INFO,
-  SAVE_PROFILE_INVESTEE
+  SAVE_PROFILE_INVESTEE,
+  SIGN_UP_USER_ERROR,
+  CLEAR_SIGN_UP_USER_ERROR
 } from './action-types'
 
 const TOKEN_NAME = 'AUTH-TOKEN'
-const ID_NAME = 'ID_NAME'
+
+export const clearSignUpError = () => ({
+  type: CLEAR_SIGN_UP_USER_ERROR
+})
+
+const signUpError = (isEmailFieldError, errorMsg) => ({
+  type: SIGN_UP_USER_ERROR,
+  isServerError: !isEmailFieldError,
+  isEmailFieldError: isEmailFieldError,
+  error: errorMsg
+})
 
 export function signup (signupData) {
   return async dispatch => {
-    const res = await api.signup(signupData)
-    await storageService.setItem(ID_NAME, String(res.data.id))
-    await dispatch(login(signupData.email, signupData.password))
-    return
+    try {
+      dispatch(batchActions([clearSignUpError(), globalActions.setGlobalLoading(I18n.t('signup_page.spinner_text'))]))
+      await api.signup(signupData)
+      await dispatch(login(signupData.email, signupData.password))
+    } catch (err) {
+      let errorMessage = ''
+      let isEmailFieldError = false;
+      const noInternetAccess = err.response === undefined && err.message === "Network Error";
+      if (noInternetAccess) {
+        errorMessage = I18n.t('common.errors.no_internet_connection')
+      } else {
+        const isInternalServerError = err.response.status >= 500
+        const isInvalidRequestError = err.response.status === 400
+        const errorCode = err.response.data
+        if (isInternalServerError) {
+          errorMessage = I18n.t('common.errors.server_error')
+        } else if (isInvalidRequestError) {
+          errorMessage = I18n.t('common.errors.incorrect_request')
+        } else {
+          errorMessage = I18n.t(`common.errors.${errorCode}`)
+          isEmailFieldError = true;
+        }
+      }
+      dispatch(signUpError(isEmailFieldError, errorMessage))
+    } finally {
+      dispatch(globalActions.unsetGlobalLoading())
+    }
   }
 }
 
@@ -32,8 +68,7 @@ export function uploadProfile () {
     try {
       const flow = getState().signUp
       const { profile: { type, ...profileRest }, investor, investee, employer, employee } = flow
-
-      await api.createConferenceUser({...profileRest, userId: await storageService.getItem(ID_NAME)})
+      await api.createConferenceUser({...profileRest})
       switch (type) {
         case 'investee':
           await api.createInvestee({
