@@ -1,5 +1,6 @@
 import I18n from '../../locales/i18n'
 import * as api from '../api/api'
+import { ROLES } from '../enums'
 
 import { globalActions } from '../global'
 import { PAGES_NAMES } from '../navigation'
@@ -30,11 +31,12 @@ export function uploadProfile () {
   return async (dispatch, getState) => {
     try {
       const flow = getState().signUp
-      const { profile: { type, ...profileRest }, investor, investee, employeer, employee } = flow
+      const { profile: { type, ...profileRest }, investor, investee, employer, employee } = flow
+
       await api.createConferenceUser({...profileRest, userId: await storageService.getItem(ID_NAME)})
       switch (type) {
         case 'investee':
-          return await api.createInvestee({
+          await api.createInvestee({
             description: investee.projectDescription,
             name: investee.projectName,
             productStage: investee.productStage,
@@ -55,6 +57,25 @@ export function uploadProfile () {
             mainCountry: investee.main.cca2,
             industry: investee.industry
           })
+          if(investee.hiring) {
+            const { roles, ...jobs } = employer
+
+            const promises = Object.keys(jobs).map(async key => {
+              const job = employer[ key ]
+              return api.createJob({
+                role: ROLES.find(role => role.slug === key).index,
+                skills: job.keywords.map(key => key.id),
+                link: job.link,
+                description: job.description,
+                partTime: job.partTime,
+                payments: job.payments,
+                localRemoteOptions: job.location,
+                country: job.country ? job.country.cca2 : '',
+                city: job.city
+              })
+            })
+            return Promise.all(promises)
+          }
         case 'investor':
           return await api.createInvestor({
             giveaways: investor.giveaways,

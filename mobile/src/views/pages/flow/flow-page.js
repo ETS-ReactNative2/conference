@@ -4,7 +4,13 @@ import { BackHandler } from 'react-native'
 import { connect } from 'react-redux'
 import { PAGES_NAMES } from '../../../navigation'
 import { signUpActions } from '../../../signup'
-import { CommonProfileOnboarding, CommonProfileType, InvesteeProjectLocation } from './steps'
+import {
+  CommonProfileOnboarding,
+  CommonProfileType,
+  EmployeeRole,
+  EmployerRole,
+  InvesteeProjectLocation
+} from './steps'
 
 class FlowPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -92,7 +98,6 @@ class FlowPage extends React.Component {
     else {
       try {
         await uploadProfile()
-        //TODO
         navigation.navigate(PAGES_NAMES.HOME_PAGE)
       } catch (err) {
         console.error(err)

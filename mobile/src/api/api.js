@@ -32,6 +32,20 @@ export async function fetchInvestors (filters) {
   })
 }
 
+export async function createJob ({
+  role, skills, city, country, link, description, partTime, localRemoteOptions, payments, project
+}) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post(
+    '/api/my_project/jobs/',
+    decamelizeKeys({ role, skills, city, country, link, description, partTime, localRemoteOptions, payments, project }),
+    {
+      headers: {
+        'X-Authorization': `Bearer ${token}`
+      }
+    })
+}
+
 export async function createConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram, userId }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.post(

@@ -240,13 +240,13 @@ class EmployerJobs extends React.Component {
                     </React.Fragment>
                   ) }
                 <Text style={ { fontSize: 24, marginTop: 16 } }>{ I18n.t('flow_page.employer.payment.title') }</Text>
-                { PAYMENTS.map((payment, index) => {
+                { PAYMENTS.map(({ slug, index }) => {
                   return (
                     <ListItem
                       onPress={ () => this.handleCheckboxClick(index, role) }
-                      key={ `payment-${payment.slug}` }>
+                      key={ `payment-${slug}` }>
                       <Left>
-                        <Text>{ I18n.t(`common.payment.${payment.slug}`) }</Text>
+                        <Text>{ I18n.t(`common.payment.${slug}`) }</Text>
                       </Left>
                       <Right>
                         <Radio
@@ -281,7 +281,15 @@ class EmployerJobs extends React.Component {
     const { isFormValid, ...jobs } = this.state
     return Object.values(jobs)
       .map(({ link, description, payments, location, city }) => {
-        return this.validateJobLink(link, description) && payments.length > 0 && location.length > 0 && (location.includes(2) ? this.validateJobCity(city) : true)
+        console.log(this.validateJobLink(link,
+          description) && payments.length > 0 && location.length > 0 && (location.includes(1) ? this.validateJobCity(
+          city) : true))
+        console.log({
+          location: location.includes(1) ? this.validateJobCity(city) : true
+        })
+        return this.validateJobLink(link,
+          description) && payments.length > 0 && location.length > 0 && (location.includes(1) ? this.validateJobCity(
+          city) : true)
       })
       .reduce((previous, current) => {
         return previous && current
