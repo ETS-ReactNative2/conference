@@ -1,12 +1,11 @@
 {
 	"info": {
-		"_postman_id": "78c18f98-930d-4ef5-8587-0d2455f446cf",
+		"_postman_id": "9011ce85-d09b-4836-8351-580317b50cb0",
 		"name": "Conference",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"_postman_id": "2fa00eb1-a539-4c33-8e68-2c8cd5b0f303",
 			"name": "/api-token-auth/",
 			"request": {
 				"auth": {
@@ -37,10 +36,66 @@
 			"response": []
 		},
 		{
-			"_postman_id": "657ccc3c-8103-4d1b-9c27-4228ac9a3f8d",
-			"name": "/create_update_investor/",
+			"name": "/api/investors/<id>/",
 			"request": {
-				"method": "POST",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/investors/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"investors",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_investor/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_investor/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_investor",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_investor/",
+			"request": {
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -52,13 +107,13 @@
 					"raw": "{\n    \"funding_stages\": [1, 2, 3],\n    \"giveaways\": [1, 2],\n    \"industries\": [\n    \t1, 2, 3, 4, 5, 6, 7, 8, 9, 10,\n        11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\n        21, 22, 23, 24, 25, 26, 27, 28, 29, 30,\n        31, 32, 33, 34, 35, 36, 37, 38, 39, 40,\n        41\n    ],\n    \"nationality\": \"us\",\n    \"product_stages\": [1, 2, 3],\n    \"region\": 1,\n    \"ticket_sizes\": [1, 2, 3, 4, 5, 6],\n    \"token_types\": [1, 2, 3]\n}"
 				},
 				"url": {
-					"raw": "{{HOST}}/api/create_update_investor/",
+					"raw": "{{HOST}}/api/my_investor/",
 					"host": [
 						"{{HOST}}"
 					],
 					"path": [
 						"api",
-						"create_update_investor",
+						"my_investor",
 						""
 					]
 				}
@@ -66,28 +121,27 @@
 			"response": []
 		},
 		{
-			"_postman_id": "68164126-1e45-41e9-98a8-7569fcbeef36",
-			"name": "/jobs/",
+			"name": "/api/my_person/",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key": "Accept",
 						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills\": [1, 2, 3],\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\",\n    \"project\": 1\n}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}/api/jobs/",
+					"raw": "{{HOST}}/api/my_person/",
 					"host": [
 						"{{HOST}}"
 					],
 					"path": [
 						"api",
-						"jobs",
+						"my_person",
 						""
 					]
 				}
@@ -95,10 +149,9 @@
 			"response": []
 		},
 		{
-			"_postman_id": "f1a48a58-d6da-4fb6-a194-b396074029f3",
-			"name": "/create_update_person/",
+			"name": "/api/my_person/",
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -110,13 +163,13 @@
 					"raw": "{\n    \"first_name\": \"Foo\",\n    \"last_name\": \"Bar\",\n    \"title\": \"Title\",\n    \"company\": \"Company\",\n    \"twitter\": \"Twitter\",\n    \"facebook\": \"Facebook\",\n    \"telegram\": \"Telegram\",\n    \"linkedin\": \"Linkedin\"\n}"
 				},
 				"url": {
-					"raw": "{{HOST}}/api/create_update_person/",
+					"raw": "{{HOST}}/api/my_person/",
 					"host": [
 						"{{HOST}}"
 					],
 					"path": [
 						"api",
-						"create_update_person",
+						"my_person",
 						""
 					]
 				}
@@ -124,10 +177,37 @@
 			"response": []
 		},
 		{
-			"_postman_id": "a898a281-702f-4fc1-a189-67ee07a164b5",
-			"name": "/create_update_professional/",
+			"name": "/api/my_professional/",
 			"request": {
-				"method": "POST",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_professional/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_professional",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_professional/",
+			"request": {
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -139,13 +219,13 @@
 					"raw": "{\n    \"role\": 12,\n    \"role_other_text\": \"aaaaaaaa\",\n    \"skills\": [1, 2, 3],\n    \"traits\": [1, 2, 3],\n    \"know_most\": \"aaaaaaaa\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"aaaaaaaa\",\n    \"age\": 42,\n    \"experience\": 23\n}"
 				},
 				"url": {
-					"raw": "{{HOST}}/api/create_update_professional/",
+					"raw": "{{HOST}}/api/my_professional/",
 					"host": [
 						"{{HOST}}"
 					],
 					"path": [
 						"api",
-						"create_update_professional",
+						"my_professional",
 						""
 					]
 				}
@@ -153,10 +233,37 @@
 			"response": []
 		},
 		{
-			"_postman_id": "24bc20a6-10cb-4425-95c6-113cb2af1f43",
-			"name": "/create_update_project/",
+			"name": "/api/my_project/",
 			"request": {
-				"method": "POST",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_project/",
+			"request": {
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -168,13 +275,13 @@
 					"raw": "{\n    \"description\": \"aaaaaaaa\",\n    \"funding_stage\": 1,\n    \"fundraising_amount\": 2147483647,\n    \"github\": \"http://www.example.com\",\n    \"giveaway\": 1,\n    \"industry\": 1,\n    \"legal_country\": \"us\",\n    \"main_country\": \"us\",\n    \"name\": \"aaaaaaaa\",\n    \"news\": \"http://www.example.com\",\n    \"notable\": \"aaaaaaaa\",\n    \"product_stage\": 1,\n    \"size\": 2147483647,\n    \"tagline\": \"aaaaaaaa\",\n    \"telegram\": \"aaaaaaaa\",\n    \"token_type\": 1,\n    \"twitter\": \"aaaaaaaa\",\n    \"website\": \"http://www.example.com\",\n    \"whitepaper\": \"http://www.example.com\"\n}"
 				},
 				"url": {
-					"raw": "{{HOST}}/api/create_update_project/",
+					"raw": "{{HOST}}/api/my_project/",
 					"host": [
 						"{{HOST}}"
 					],
 					"path": [
 						"api",
-						"create_update_project",
+						"my_project",
 						""
 					]
 				}
@@ -182,8 +289,262 @@
 			"response": []
 		},
 		{
-			"_postman_id": "11c53028-de9e-42e0-8d01-23e1111a1c3e",
-			"name": "/users/",
+			"name": "/api/my_project/jobs/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/jobs/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						"jobs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_project/jobs/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills\": [1, 2, 3],\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/jobs/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						"jobs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_project/jobs/<id>/",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/jobs/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						"jobs",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_project/jobs/<id>/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/jobs/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						"jobs",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_project/jobs/<id>/",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills\": [1, 2, 3],\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/jobs/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						"jobs",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_project/members/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/members/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						"members",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_project/members/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"foo@bar.baz\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/members/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						"members",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_project/members/<id>/",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/members/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						"members",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/projects/<id>/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/projects/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"projects",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/users/",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -214,57 +575,6 @@
 			"response": []
 		},
 		{
-			"_postman_id": "55bca94e-c9b4-43f3-a0e8-e1bc75aace87",
-			"name": "/investors/<id>/",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{HOST}}/api/investors/1/",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"api",
-						"investors",
-						"1",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"_postman_id": "2ae291bd-e3f5-4297-909a-05b12c09502e",
-			"name": "/projects/<id>/",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{HOST}}/api/projects/1/",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"api",
-						"projects",
-						"1",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"_postman_id": "047a3107-752e-496a-8901-cd7700dfb2fe",
 			"name": "/schedule/",
 			"request": {
 				"method": "GET",

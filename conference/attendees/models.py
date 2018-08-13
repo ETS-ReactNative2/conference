@@ -327,7 +327,9 @@ class ConferenceUser(models.Model):
 
     investor = models.ForeignKey(Investor, related_name='users', db_index=True, null=True, blank=True)
 
-    project = models.ForeignKey(Project, related_name='users', db_index=True, null=True, blank=True)
+    project = models.ForeignKey(Project, related_name='members', db_index=True, null=True, blank=True)
+
+    project_request = models.ForeignKey(Project, related_name='member_requests', db_index=True, null=True, blank=True)
 
 
 class JobListing(models.Model):

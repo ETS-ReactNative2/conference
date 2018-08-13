@@ -66,7 +66,7 @@ export async function createInvestee ({
   whitepaper
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.post('/api/create_update_project/', decamelizeKeys({
+  return axios.put('/api/my_project/', decamelizeKeys({
     description,
     fundingStage,
     fundraisingAmount,
@@ -96,7 +96,7 @@ export async function createInvestor ({
   fundingStages, ticketSizes, productStages, tokenTypes, giveaways, industries, region, nationality, regionOtherText
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.post('/api/create_update_investor/', decamelizeKeys({
+  return axios.put('/api/my_investor/', decamelizeKeys({
     fundingStages,
     ticketSizes,
     productStages,
@@ -129,6 +129,61 @@ export async function createProfessional ({
     age,
     experience
   }), {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+export async function getMyProjectJobs () {
+  const token = storageService.getItem(TOKEN_NAME)
+  return axios.get('/api/my_project/jobs/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+// todo postMyProjectJobs
+
+export async function deleteMyProjectJobsId ({ id }) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.delete('/api/my_project/jobs/' + id + '/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+// todo getMyProjectJobsId
+
+// todo putMyProjectJobsId
+
+export async function getMyProjectMembers () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.get('/api/my_project/members/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`,
+      Accept: 'application/json'
+    }
+  })
+}
+
+export async function postMyProjectMembers ({ email }) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post(
+    '/api/my_project/members/',
+    decamelizeKeys({ email }),
+    {
+      headers: {
+        'X-Authorization': `Bearer ${token}`
+      }
+    })
+}
+
+export async function deleteMyProjectMembersId ({ id }) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.delete('/api/my_project/members/' + id + '/', {
     headers: {
       'X-Authorization': `Bearer ${token}`
     }
