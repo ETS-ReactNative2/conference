@@ -11,7 +11,7 @@ from account.forms import SignupForm
 from account.forms import LoginEmailForm
 from django.contrib.auth import get_user_model
 from rest_framework.authtoken import views
-
+from . import authentication
 import symposion.views
 
 
@@ -70,7 +70,7 @@ urlpatterns = patterns(
     url(r'^api/smatched/', include('smatched.urls')),
     url(r'^api/', include('attendees.urls')),
     url(r"^api/", include('symposion2016.conf_api.urls')),
-    url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^api-token-auth/', authentication.obtain_auth_token, name='api_token_auth'),
 
     # url(r"^", include("symposion.cms.urls")),
 )
