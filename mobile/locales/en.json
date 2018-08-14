@@ -178,9 +178,6 @@
     "twitter": "Twitter",
     "yes": "Yes"
   },
-  "header": {
-    "skip": "SKIP"
-  },
   "drawer": {
     "agenda": "Agenda",
     "flows": "Flows",
@@ -190,13 +187,13 @@
   "flow_page": {
     "common": {
       "profile_onboarding": {
-        "header": "WELCOME",
-        "title": "We would like to know more about you",
         "company": "COMPANY",
         "first_name": "GIVEN NAME",
+        "header": "WELCOME",
         "last_name": "FAMILY NAME",
-        "titleField": "JOB TITLE",
-        "spinner_text": "Saving your profile... Please wait"
+        "spinner_text": "Saving your profile... Please wait",
+        "title": "We would like to know more about you",
+        "titleField": "JOB TITLE"
       },
       "profile_type": {
         "meeting": "Meet people",
@@ -347,6 +344,9 @@
     "token_type": {
       "title": "Token type"
     }
+  },
+  "header": {
+    "skip": "SKIP"
   },
   "investor_page": {
     "title": "Investor details"
