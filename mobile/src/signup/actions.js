@@ -15,10 +15,40 @@ import {
   SAVE_PROFILE_INFO,
   SAVE_PROFILE_INVESTEE,
   SIGN_UP_USER_ERROR,
-  CLEAR_SIGN_UP_USER_ERROR
+  CLEAR_SIGN_UP_USER_ERROR,
+  CLEAR_LOGIN_USER_ERROR
 } from './action-types'
 
 const TOKEN_NAME = 'AUTH-TOKEN'
+
+const isNetworkUnavailable = err => {
+  return err.response === undefined && err.message === "Network Error";
+}
+
+const getErrorData = err => {
+  let errorMessage = ''
+  let isFieldError = false
+  const noInternetAccess = isNetworkUnavailable(err)
+  if (noInternetAccess) {
+    errorMessage = I18n.t('common.errors.no_internet_connection')
+  } else {
+    const isInternalServerError = err.response.status >= 500
+    const isInvalidRequestError = err.response.status === 400
+    const errorCode = err.response.data
+    if (isInternalServerError) {
+      errorMessage = I18n.t('common.errors.server_error')
+    } else if (isInvalidRequestError) {
+      errorMessage = I18n.t('common.errors.incorrect_request')
+    } else {
+      errorMessage = I18n.t(`common.errors.${errorCode}`)
+      isFieldError = true;
+    }
+  }
+  return {
+    errorMessage,
+    isFieldError
+  }
+}
 
 export const clearSignUpError = () => ({
   type: CLEAR_SIGN_UP_USER_ERROR
@@ -38,25 +68,8 @@ export function signup (signupData) {
       await api.signup(signupData)
       await dispatch(login(signupData.email, signupData.password))
     } catch (err) {
-      let errorMessage = ''
-      let isEmailFieldError = false;
-      const noInternetAccess = err.response === undefined && err.message === "Network Error";
-      if (noInternetAccess) {
-        errorMessage = I18n.t('common.errors.no_internet_connection')
-      } else {
-        const isInternalServerError = err.response.status >= 500
-        const isInvalidRequestError = err.response.status === 400
-        const errorCode = err.response.data
-        if (isInternalServerError) {
-          errorMessage = I18n.t('common.errors.server_error')
-        } else if (isInvalidRequestError) {
-          errorMessage = I18n.t('common.errors.incorrect_request')
-        } else {
-          errorMessage = I18n.t(`common.errors.${errorCode}`)
-          isEmailFieldError = true;
-        }
-      }
-      dispatch(signUpError(isEmailFieldError, errorMessage))
+      const errorData = getErrorData(err);
+      dispatch(signUpError(errorData.isFieldError, errorData.errorMessage))
     } finally {
       dispatch(globalActions.unsetGlobalLoading())
     }
@@ -165,9 +178,15 @@ export function saveEmployee (employeeData) {
   }
 }
 
-const logInError = err => ({
+export const clearLoginError = () => ({
+  type: CLEAR_LOGIN_USER_ERROR
+})
+
+const logInError = (isCredentialsError, errorMsg) => ({
   type: LOGIN_USER_ERROR,
-  error: err
+  isServerError: !isCredentialsError,
+  isCredentialsError: isCredentialsError,
+  error: errorMsg
 })
 
 const loginInSuccess = () => ({
@@ -176,7 +195,7 @@ const loginInSuccess = () => ({
 
 export const login = (username, password) => async dispatch => {
   try {
-    dispatch(globalActions.setGlobalLoading(I18n.t('login_page.spinner_text')))
+    dispatch(batchActions([clearLoginError(), globalActions.setGlobalLoading(I18n.t('login_page.spinner_text'))]))
     const response = await api.login(username, password)
     const token = response.data.token
     await storageService.removeItem(TOKEN_NAME)
@@ -184,8 +203,16 @@ export const login = (username, password) => async dispatch => {
     dispatch(loginInSuccess())
     navigationService.navigate(PAGES_NAMES.HOME_PAGE)
   } catch (err) {
-    //TODO: Refactor to use localization for errors
-    dispatch(logInError('Error during logging in'))
+    let errorData = {};
+    if (!isNetworkUnavailable(err) && err.response.status === 401) {
+      errorData = {
+        isFieldError: true,
+        errorMessage: I18n.t('common.errors.invalid_credentials')
+      }
+    } else {
+      errorData = getErrorData(err);
+    }
+    dispatch(logInError(errorData.isFieldError, errorData.errorMessage))
   } finally {
     dispatch(globalActions.unsetGlobalLoading())
   }

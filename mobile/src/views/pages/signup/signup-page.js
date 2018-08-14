@@ -187,8 +187,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     signup: data => dispatch(signUpActions.signup(data)),
-    showLoader: message => dispatch(globalActions.setGlobalLoading(message)),
-    hideLoader: () => dispatch(globalActions.unsetGlobalLoading()),
     clearErrors: () => dispatch(signUpActions.clearSignUpError())
   }
 }

@@ -30,6 +30,7 @@
       "incorrect_project_name": "Project name must be at least 3 characters long",
       "incorrect_project_tagline": "Please enter project tagline",
       "incorrect_request": "The request was incorrect. Please try again",
+      "invalid_credentials": "Unable to log in with provided credentials",
       "no_internet_connection": "No internet connection",
       "server_error": "We have some issues, please try again or contact us"
     },
@@ -350,8 +351,8 @@
     "change_mind": "I have changed my mind",
     "connect_with": "Or connect with:",
     "connect_with_telegram": "CONNECT WITH TELEGRAM",
-    "email_placeholder": "Enter email",
-    "password_placeholder": "Enter password",
+    "email_placeholder": "Email",
+    "password_placeholder": "Password",
     "privacy_policy": "PRIVACY POLICY",
     "signup": "SIGN UP",
     "spinner_text": "Logging you in... Please wait",
