@@ -82,6 +82,7 @@ export async function createInvestee ({
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put('/api/my_project/', decamelizeKeys({
     description,
+    industry,
     fundingStage,
     fundraisingAmount,
     legalCountry,

@@ -19,16 +19,8 @@ class InvesteeProjectLocation extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      legal: this.props.legal || {
-        cca2: 'US',
-        countryName: 'United States of America',
-        callingCode: '1'
-      },
-      main: this.props.main || {
-        cca2: 'US',
-        countryName: 'United States of America',
-        callingCode: '1'
-      }
+      legal: this.props.legal,
+      main: this.props.main
     }
   }
 
@@ -45,6 +37,7 @@ class InvesteeProjectLocation extends React.Component {
               this.setState({ legal: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
             } }
             value={ this.state.legal }
+            placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder')}
           />
           <Subheader
             text={ I18n.t('flow_page.investee.project_location.main') }
@@ -54,6 +47,7 @@ class InvesteeProjectLocation extends React.Component {
               this.setState({ main: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
             } }
             value={ this.state.main }
+            placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder')}
           />
         </View>
         <View style={ { margin: 8 } }>
@@ -67,7 +61,7 @@ class InvesteeProjectLocation extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.saveInvestor({ legal: this.state.legal, main: this.state.main })
+    this.props.saveInvestee({ legal: this.state.legal, main: this.state.main })
     this.props.onFill({ nextStep: InvesteeMoneySource })
   }
   handleChange = (fieldName, value) => {
@@ -98,7 +92,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveInvestor: investorData => dispatch(signUpActions.saveInvestor(investorData))
+    saveInvestee: investorData => dispatch(signUpActions.saveProfileInvestee(investorData))
   }
 }
 

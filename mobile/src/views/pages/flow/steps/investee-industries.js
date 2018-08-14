@@ -67,13 +67,13 @@ InvesteeIndustries.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    industries: state.signUp.investee.industry
+    industry: state.signUp.investee.industry
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveInvestor: investorData => dispatch(signUpActions.saveInvestor(investorData))
+    saveInvestor: investorData => dispatch(signUpActions.saveProfileInvestee(investorData))
   }
 }
 

@@ -278,6 +278,7 @@
     },
     "investee": {
       "project_location": {
+        "country_picker_placeholder": "Choose country",
         "legal": "Company legal location",
         "main": "Main office location",
         "title": "Project location"

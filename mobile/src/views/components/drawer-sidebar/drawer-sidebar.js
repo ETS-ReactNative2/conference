@@ -21,7 +21,7 @@ const routes = [
   },
   {
     name: 'flows',
-    navigation_page: 'FLOW_PAGE',
+    navigation_page: 'PROFILE_ONBOARDING_PAGE',
     iconType: 'FontAwesome',
     iconName: 'search',
   },

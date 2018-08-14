@@ -134,7 +134,7 @@ class EmployerJobs extends React.Component {
               <Card key={ role } style={ { padding: 8, marginBottom: 16 } }>
                 <Text style={ { fontSize: 24 } }>{ I18n.t(`common.roles_job.${role}`) }</Text>
                 <Selectize
-                  selectedItems={ this.state[ role ] }
+                  selectedItems={ this.state[role] ? this.state[role].keywords : [] }
                   items={ SKILLS }
                   label={ I18n.t('flow_page.employer.keyword.title') }
                   textInputProps={ {
