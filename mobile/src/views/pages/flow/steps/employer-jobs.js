@@ -1,21 +1,15 @@
-import { Button, Card, Left, ListItem, Radio, Right, Switch, Text } from 'native-base'
+import { Button, Card, Left, ListItem, Radio, Right, Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { StyleSheet } from 'react-native'
+import CountryPicker from 'react-native-country-picker-modal'
 import { Chip, Selectize } from 'react-native-material-selectize'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
-import { PAYMENTS, ROLES } from '../../../../enums'
+import { JOB_LOCATION, PAYMENTS, ROLES, SKILLS } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import ValidatedInput from '../../../components/validated-input/validated-input'
-
-const items = [
-  { id: 1, text: 'React' },
-  { id: 2, text: 'Ad Words' },
-  { id: 3, text: 'Blockchain' },
-  { id: 4, text: 'Shrimps' }
-]
 
 class EmployerJobs extends React.Component {
   constructor (props) {
@@ -49,13 +43,17 @@ class EmployerJobs extends React.Component {
     return jobDescriptionExists || jobLinkExists
   }
 
-  handleCheck = (role) => {
+  validateJobCity = (city) => {
+    return !validator.isEmpty(city)
+  }
+
+  handleCheck = (role, field) => {
     this.setState({
       [ role ]: {
         ...this.state[ role ],
-        partTime: !this.state[ role ].partTime
+        [ field ]: !this.state[ role ][ field ]
       }
-    })
+    }, this.validateForm)
   }
 
   onChipAdded = (chipToAdd, role, callBack) => {
@@ -85,6 +83,27 @@ class EmployerJobs extends React.Component {
     callBack(true)
   }
 
+  handleCheckboxClickLocation = (index, role) => {
+    console.log({ index, role })
+    let location = [ ...this.state[ role ].location ]
+    const locationIndex = location.indexOf(index)
+    if (locationIndex !== -1) {
+      location = location.filter(pay => pay !== index)
+    } else {
+      location.push(index)
+    }
+    this.setState({
+      [ role ]: {
+        ...this.state[ role ],
+        location
+      }
+    }, this.validateForm)
+  }
+
+  isCheckboxSelectedLocation = (index, role) => {
+    return this.state[ role ].location.indexOf(index) !== -1
+  }
+
   handleCheckboxClick = (index, role) => {
     let payments = [ ...this.state[ role ].payments ]
     const paymentIndex = payments.indexOf(index)
@@ -102,21 +121,21 @@ class EmployerJobs extends React.Component {
   }
 
   isCheckboxSelected = (index, role) => {
-    return this.state[role].payments.indexOf(index) !== -1
+    return this.state[ role ].payments.indexOf(index) !== -1
   }
 
   render () {
     return (
       <React.Fragment>
         { this.props.employer.roles
-          .map(role => ROLES[ role ].slug)
+          .map(role => ROLES.find(job => job.index === role).slug)
           .map(role => {
             return (
               <Card key={ role } style={ { padding: 8, marginBottom: 16 } }>
                 <Text style={ { fontSize: 24 } }>{ I18n.t(`common.roles_job.${role}`) }</Text>
                 <Selectize
-                  selectedItems={ this.state[ role ] }
-                  items={ items }
+                  selectedItems={ this.state[role] ? this.state[role].keywords : [] }
+                  items={ SKILLS }
                   label={ I18n.t('flow_page.employer.keyword.title') }
                   textInputProps={ {
                     placeholder: I18n.t('flow_page.employer.keyword.placeholder')
@@ -153,22 +172,81 @@ class EmployerJobs extends React.Component {
                                   this.state[ role ].description) }
                                 errorMessage={ I18n.t('common.errors.incorrect_job_description') }
                                 onChangeText={ (newValue) => this.handleFieldChange(newValue, role, 'description') }/>
-                <ListItem noIndent>
-                  <Left>
-                    <Switch
-                      onValueChange={ () => this.handleCheck(role) }
-                      value={ this.state[ role ].partTime }/>
-                    <Text style={ { marginLeft: 8 } }>{ I18n.t('flow_page.employer.keyword.full_time') }</Text>
-                  </Left>
-                </ListItem>
+
+                <Text style={ { fontSize: 24, marginTop: 16 } }>{ I18n.t('flow_page.employer.location.title') }</Text>
+                { JOB_LOCATION.map(({ slug, index }) => {
+                  return (
+                    <ListItem
+                      onPress={ () => this.handleCheckboxClickLocation(index, role) }
+                      key={ `payment-${slug}` }>
+                      <Left>
+                        <Text>{ I18n.t(`common.job_location.${slug}`) }</Text>
+                      </Left>
+                      <Right>
+                        <Radio
+                          onPress={ () => this.handleCheckboxClickLocation(index, role) }
+                          selected={ this.isCheckboxSelectedLocation(index, role) }/>
+                      </Right>
+                    </ListItem>
+                  )
+                }) }
+                <View style={ { marginTop: 16, marginBottom: 16 } }/>
+                {
+                  this.state[ role ].location.includes(1) && (
+                    <React.Fragment>
+                      <CountryPicker
+                        style={ { marginTop: 16 } }
+                        onChange={ value => {
+                          this.setState({
+                            [ role ]: {
+                              ...this.state[ role ],
+                              country: { cca2: value.cca2, countryName: value.name, calling: value.callingCode }
+                            }
+                          })
+                        } }
+                        filterable
+                        closeable
+                        cca2={ this.state[ role ].country.cca2 }
+                        translation="eng"
+                        styles={ {
+                          touchFlag: {
+                            alignItems: 'flex-start',
+                            justifyContent: 'center',
+                            height: 24
+                          },
+                        } }
+                      >
+
+                        <View style={ {
+                          flex: 1,
+                          flexDirection: 'row',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          height: 19
+                        } }>
+                          { CountryPicker.renderFlag(this.state[ role ].country.cca2) }
+                          <Text style={ { marginLeft: 8 } }>{ this.state[ role ].country.countryName }</Text>
+                        </View>
+                      </CountryPicker>
+                      <ValidatedInput floatingLabel
+                                      style={ { marginTop: 16 } }
+                                      multiline={ true }
+                                      numberOfLines={ 5 }
+                                      value={ this.state[ role ].city }
+                                      labelText={ I18n.t('flow_page.employer.job.city') }
+                                      isError={ !this.validateJobCity(this.state[ role ].city) }
+                                      errorMessage={ I18n.t('common.errors.incorrect_job_city') }
+                                      onChangeText={ (newValue) => this.handleFieldChange(newValue, role, 'city') }/>
+                    </React.Fragment>
+                  ) }
                 <Text style={ { fontSize: 24, marginTop: 16 } }>{ I18n.t('flow_page.employer.payment.title') }</Text>
-                { PAYMENTS.map((payment, index) => {
+                { PAYMENTS.map(({ slug, index }) => {
                   return (
                     <ListItem
                       onPress={ () => this.handleCheckboxClick(index, role) }
-                      key={ `payment-${payment.slug}` }>
+                      key={ `payment-${slug}` }>
                       <Left>
-                        <Text>{ I18n.t(`common.payment.${payment.slug}`) }</Text>
+                        <Text>{ I18n.t(`common.payment.${slug}`) }</Text>
                       </Left>
                       <Right>
                         <Radio
@@ -202,10 +280,17 @@ class EmployerJobs extends React.Component {
   isFormValid = () => {
     const { isFormValid, ...jobs } = this.state
     return Object.values(jobs)
-      .map(({ link, description, payments }) => {
-        return this.validateJobLink(link, description) && payments.length > 0
+      .map(({ link, description, payments, location, city }) => {
+        console.log(this.validateJobLink(link,
+          description) && payments.length > 0 && location.length > 0 && (location.includes(1) ? this.validateJobCity(
+          city) : true))
+        console.log({
+          location: location.includes(1) ? this.validateJobCity(city) : true
+        })
+        return this.validateJobLink(link,
+          description) && payments.length > 0 && location.length > 0 && (location.includes(1) ? this.validateJobCity(
+          city) : true)
       })
-
       .reduce((previous, current) => {
         return previous && current
       })

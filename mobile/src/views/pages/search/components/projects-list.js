@@ -101,7 +101,7 @@ ProjectsList.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    profiles: state.search.investors
+    profiles: state.search.projects
   }
 }
 

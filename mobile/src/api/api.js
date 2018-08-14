@@ -10,76 +10,211 @@ export async function signup ({ email, password, phone }) {
 
 export async function fetchProjects (filters) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.get('/api/projects', {
+  console.log(token)
+  return axios.get('/api/projects/', {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'X-Authorization': `Bearer ${token}`
     }
   })
 }
 
 export async function fetchInvestors (filters) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.get('/api/investors', {
+  console.log(token)
+  return axios.get('/api/investors/', {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'X-Authorization': `Bearer ${token}`
     }
   })
 }
 
+export async function createJob ({
+  role, skills, city, country, link, description, partTime, localRemoteOptions, payments, project
+}) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post(
+    '/api/my_project/jobs/',
+    decamelizeKeys({ role, skills, city, country, link, description, partTime, localRemoteOptions, payments, project }),
+    {
+      headers: {
+        'X-Authorization': `Bearer ${token}`
+      }
+    })
+}
+
 export async function createConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram }) {
-  return axios.post('/api/users/', decamelizeKeys({
-    firstName, lastName, title, company, twitter, facebook, linkedin, telegram
-  }))
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.put(
+    '/api/my_person/',
+    decamelizeKeys({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram }),
+    {
+      headers: {
+        'X-Authorization': `Bearer ${token}`
+      }
+    })
 }
 
 export async function createInvestee ({
-  country, description, fundingStage, giveaway, notable, name, productStage, tagline, tokenType
+  description,
+  fundingStage,
+  giveaway,
+  notable,
+  size,
+  industry,
+  name,
+  productStage,
+  tagline,
+  tokenType,
+  fundraisingAmount,
+  github,
+  legalCountry,
+  mainCountry,
+  news,
+  telegram,
+  twitter,
+  website,
+  whitepaper
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.post('/api/projects/', decamelizeKeys({
-    country,
+  return axios.put('/api/my_project/', decamelizeKeys({
     description,
+    industry,
     fundingStage,
+    fundraisingAmount,
+    legalCountry,
+    mainCountry,
+    github,
     giveaway,
     notable,
     name,
     productStage,
+    size,
     tagline,
-    tokenType
+    tokenType,
+    news,
+    telegram,
+    twitter,
+    website,
+    whitepaper
   }), {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'X-Authorization': `Bearer ${token}`
     }
   })
 }
 
 export async function createInvestor ({
-  fundingStages, ticketSizes, productStages, tokenTypes, giveaways
+  fundingStages, ticketSizes, productStages, tokenTypes, giveaways, industries, region, nationality, regionOtherText
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.post('/api/investors/', decamelizeKeys({
+  return axios.put('/api/my_investor/', decamelizeKeys({
     fundingStages,
     ticketSizes,
     productStages,
     tokenTypes,
-    giveaways
+    giveaways,
+    industries,
+    region,
+    nationality,
+    regionOtherText
   }), {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'X-Authorization': `Bearer ${token}`
     }
   })
+}
+
+export async function putMyProfessional ({
+  role, roleOtherText, skills, traits, knowMost, localRemoteOptions, country, city, age, experience
+}) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.put('/api/my_professional/', decamelizeKeys({
+    role,
+    roleOtherText,
+    skills,
+    traits,
+    knowMost,
+    localRemoteOptions,
+    country,
+    city,
+    age,
+    experience
+  }), {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+export async function getMyProjectJobs () {
+  const token = storageService.getItem(TOKEN_NAME)
+  return axios.get('/api/my_project/jobs/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+// todo postMyProjectJobs
+
+export async function deleteMyProjectJobsId ({ id }) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.delete('/api/my_project/jobs/' + id + '/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+// todo getMyProjectJobsId
+
+// todo putMyProjectJobsId
+
+export async function getMyProjectMembers () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.get('/api/my_project/members/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`,
+      Accept: 'application/json'
+    }
+  })
+}
+
+export async function postMyProjectMembers ({ email }) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post(
+    '/api/my_project/members/',
+    decamelizeKeys({ email }),
+    {
+      headers: {
+        'X-Authorization': `Bearer ${token}`
+      }
+    })
+}
+
+export async function deleteMyProjectMembersId ({ id }) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.delete('/api/my_project/members/' + id + '/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+export async function getProfessionals (filters) {
+    const token = await storageService.getItem(TOKEN_NAME)
+    console.log(token)
+    return axios.get('/api/professionals/', {
+        params: filters,
+        paramsSerializer: params => transformRequestOptions(params),
+        headers: {
+            'X-Authorization': `Bearer ${token}`
+        }
+    })
 }
 
 export async function fetchNotifications () {
@@ -125,7 +260,7 @@ const transformRequestOptions = params => {
 }
 
 export async function fetchConferenceSchedule () {
-  return axios.get('/schedule', {
+  return axios.get('/schedule/', {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',

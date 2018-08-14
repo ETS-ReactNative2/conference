@@ -3,7 +3,9 @@
   "version": "0.1.1",
   "private": true,
   "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
+    "babel-preset-stage-1": "^6.24.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^23.1.0",
@@ -45,7 +47,7 @@
     ]
   },
   "dependencies": {
-    "axios": "0.18.0",
+    "axios": "^0.18.0",
     "create-react-class": "15.6.3",
     "humps": "^2.0.1",
     "immutable": "3.8.2",
@@ -64,14 +66,21 @@
     "react-native-fabric": "0.5.1",
     "react-native-i18n": "2.0.12",
     "react-native-languages": "2.0.0",
+    "react-native-linear-gradient": "2.4.0",
     "react-native-material-selectize": "^1.9.0",
     "react-native-responsive-layout": "^1.1.0",
     "react-native-sensitive-info": "5.2.4",
     "react-navigation": "2.5.3",
     "react-redux": "5.0.7",
     "redux": "4.0.0",
+    "redux-batch-enhancer": "0.1.3",
     "redux-logger": "^3.0.6",
     "redux-thunk": "2.3.0",
     "validator": "10.4.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }

@@ -22,16 +22,16 @@ class InvesteeProductStage extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.product_stage.title') }</Text>
         <Content>
           {
-            PRODUCT_STAGES.map((option, index) => {
+            PRODUCT_STAGES.map((option) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(index) }>
+                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(option.index) }>
                   <Left>
                     <Text>{ I18n.t(`common.product_stages.${option.slug}`) }</Text>
                   </Left>
                   <Right>
                     <Radio
-                      onPress={ () => this.handleChange(index) }
-                      selected={ this.state.selected === index }/>
+                      onPress={ () => this.handleChange(option.index) }
+                      selected={ this.state.selected === option.index }/>
                   </Right>
                 </ListItem>
               )

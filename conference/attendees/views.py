@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from rest_framework import generics
 from django.contrib.auth.hashers import make_password
+from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -12,49 +13,182 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models
 from . import serializers
-import json
+from .views_investor import (
+    ListInvestor, RetrieveInvestor, MyInvestor
+)
+from .views_project import (
+    ListProject, RetrieveProject, MyProject, MyProjectJobs, MyProjectJobsId, MyProjectMembers, MyProjectMembersId
+)
 
 
-class ListCreateInvestor(generics.ListCreateAPIView):
-    queryset = models.Investor.objects.all()
-    serializer_class = serializers.InvestorSerializer
+class MyPerson(APIView):
+
+    @transaction.atomic
+    def get(self, request, format=None):
+        if models.ConferenceUser.objects.filter(user=request.user).exists():
+            conference_user = models.ConferenceUser.objects.get(user=request.user)
+        else:
+            conference_user = models.ConferenceUser.objects.create(user=request.user)
+
+        return JsonResponse(serializers.ConferenceUserSerializer(conference_user).data,
+                            status=status.HTTP_200_OK)
+
+    @transaction.atomic
+    def put(self, request, format=None):
+        json_body = request.data
+
+        if models.ConferenceUser.objects.filter(user=request.user).exists():
+            conference_user = models.ConferenceUser.objects.get(user=request.user)
+        else:
+            conference_user = models.ConferenceUser()
+            conference_user.user = request.user
+
+        first_name = json_body.get('first_name')
+        clean_first_name = first_name[:models.ConferenceUser.FIRST_NAME_MAX_LENGTH] if first_name is not None else ''
+
+        last_name = json_body.get('last_name')
+        clean_last_name = last_name[:models.ConferenceUser.LAST_NAME_MAX_LENGTH] if last_name is not None else ''
+
+        request.user.first_name = clean_first_name
+        request.user.last_name = clean_last_name
+        request.user.save()
+
+        title = json_body.get('title')
+        clean_title = title[:models.ConferenceUser.TITLE_MAX_LENGTH] if title else ''
+
+        company = json_body.get('company')
+        clean_company = company[:models.ConferenceUser.TITLE_MAX_LENGTH] if company else ''
+
+        twitter = json_body.get('twitter')
+        clean_twitter = twitter[:models.ConferenceUser.TWITTER_MAX_LENGTH] if twitter else ''
+
+        facebook = json_body.get('facebook')
+        clean_facebook = facebook[:models.ConferenceUser.FACEBOOK_MAX_LENGTH] if facebook else ''
+
+        telegram = json_body.get('telegram')
+        clean_telegram = telegram[:models.ConferenceUser.TELEGRAM_MAX_LENGTH] if telegram else ''
+
+        linkedin = json_body.get('linkedin')
+        clean_linkedin = linkedin[:models.ConferenceUser.LINKEDIN_MAX_LENGTH] if linkedin else ''
+
+        conference_user.title = clean_title
+        conference_user.company = clean_company
+        conference_user.twitter = clean_twitter
+        conference_user.facebook = clean_facebook
+        conference_user.telegram = clean_telegram
+        conference_user.linkedin = clean_linkedin
+
+        conference_user.save()
+        return Response(serializers.ConferenceUserSerializer(conference_user).data, status=status.HTTP_201_CREATED)
+
+
+class MyProfessional(APIView):
+
+    @transaction.atomic
+    def get(self, request, format=None):
+        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
+            models.ConferenceUser.objects.create(user=self.request.user)
+
+        # Check if the current user even has a professional
+        if not request.user.conference_user.professional:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        return JsonResponse(serializers.ProfessionalSerializer(request.user.conference_user.professional).data,
+                            status=status.HTTP_200_OK)
+
+    @transaction.atomic
+    def put(self, request, format=None):
+        json_body = request.data
+
+        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
+            models.ConferenceUser.objects.create(user=self.request.user)
+        if request.user.conference_user.professional:
+            professional = request.user.conference_user.professional
+        else:
+            professional = models.Professional.objects.create()
+
+        role = json_body.get('role')
+        try:
+            clean_role = models.JobRole.objects.get(pk=role) if (
+                role
+            ) else models.JobRole.objects.get(pk=models.JobRole.OTHER)
+        except:
+            clean_role = models.JobRole.objects.get(pk=models.JobRole.OTHER)
+
+        role_other_text = json_body.get('role_other_text')
+        clean_role_other_text = role_other_text[:models.JobRole.ROLE_OTHER_TEXT_MAX_LENGTH] if (
+            role_other_text and clean_role.pk == models.JobRole.OTHER
+        ) else ''
+
+        skills = json_body.get('skills')
+        clean_skills = [models.Skill.objects.get(pk=skill.get('id')) for skill in skills] if skills else []
+
+        traits = json_body.get('traits')
+        clean_traits = [models.Trait.objects.get(pk=trait.get('id')) for trait in traits] if traits else []
+
+        know_most = json_body.get('know_most')
+        clean_know_most = know_most[:models.Professional.KNOW_MOST_MAX_LENGTH] if know_most else ''
+
+        local_remote_options = json_body.get('local_remote_options')
+        clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
+            local_remote_options
+        ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
+
+        country = json_body.get('country')
+        clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
+            country and
+            models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
+        ) else ''
+
+        city = json_body.get('city')
+        clean_city = city[:models.CITY_MAX_LENGTH] if (
+            city and
+            models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
+        ) else ''
+
+        age = json_body.get('age')
+        clean_age = age if age and 18 <= age <= 120 else None
+
+        experience = json_body.get('experience')
+        clean_experience = experience if experience and 0 <= experience <= 120 else None
+
+        professional.role = clean_role
+        professional.role_other_text = clean_role_other_text
+        professional.skills = clean_skills
+        professional.traits = clean_traits
+        professional.know_most = clean_know_most
+        professional.local_remote_options = clean_local_remote_options
+        professional.country = clean_country
+        professional.city = clean_city
+        professional.age = clean_age
+        professional.experience = clean_experience
+        professional.save()
+        request.user.conference_user.professional = professional
+        request.user.conference_user.save()
+        return JsonResponse(serializers.ProfessionalSerializer(professional).data, status=status.HTTP_201_CREATED)
+
+
+class Professionals(generics.ListAPIView):
+    queryset = models.Professional.objects.all()
+    serializer_class = serializers.ProfessionalSerializer
 
     def get_queryset(self):
         filters = {}
-        funding_stages = self.request.GET.getlist('funding_stage')
-        if funding_stages:
-            filters['funding_stages__in'] = funding_stages
-        giveaways = self.request.GET.getlist('giveaway')
-        if giveaways:
-            filters['giveaways__in'] = giveaways
-        product_stages = self.request.GET.getlist('product_stage')
-        if product_stages:
-            filters['product_stages__in'] = product_stages
-        token_types = self.request.GET.getlist('token_type')
-        if token_types:
-            filters['token_types__in'] = token_types
-        return models.Investor.objects.filter(**filters)
+        roles = self.request.GET.get('roles')
+        if roles:
+            filters['role__in'] = roles
+        local_remote_options = self.request.GET.get('local_remote_options')
+        if local_remote_options:
+            filters['local_remote_options__in'] = local_remote_options
+        country = self.request.GET.get('country')
+        if country:
+            filters['country'] = country
+        return models.Professional.objects.filter(**filters)
 
 
-class ListCreateProject(generics.ListCreateAPIView):
-    queryset = models.Project.objects.all()
-    serializer_class = serializers.ProjectSerializer
-
-    def get_queryset(self):
-        filters = {}
-        funding_stages = self.request.GET.getlist('funding_stage')
-        if funding_stages:
-            filters['funding_stage__in'] = funding_stages
-        giveaways = self.request.GET.getlist('giveaway')
-        if giveaways:
-            filters['giveaway__in'] = giveaways
-        product_stages = self.request.GET.getlist('product_stage')
-        if product_stages:
-            filters['product_stage__in'] = product_stages
-        token_types = self.request.GET.getlist('token_type')
-        if token_types:
-            filters['token_types__in'] = token_types
-        return models.Project.objects.filter(**filters)
+class ProfessionalsId(generics.RetrieveAPIView):
+    queryset = models.Professional.objects.all()
+    serializer_class = serializers.ProfessionalSerializer
 
 
 class ListCreateUser(APIView):
@@ -64,8 +198,6 @@ class ListCreateUser(APIView):
     def post(self, request, format=None):
         json_body = request.data
         email = json_body.get('email')
-        first_name = json_body.get('first_name')
-        last_name = json_body.get('last_name')
         password = json_body.get('password')
 
         # email None or ''
@@ -84,32 +216,15 @@ class ListCreateUser(APIView):
         if models.User.objects.filter(username=clean_email).exists():
             return Response('username_exists', status=status.HTTP_409_CONFLICT)
 
-        clean_first_name = first_name if first_name is not None else ''
-
-        clean_last_name = last_name if last_name is not None else ''
-
         user = models.User.objects.create(
             email=clean_email,
-            first_name=clean_first_name,
-            last_name=clean_last_name,
+            first_name='',
+            last_name='',
             password=make_password(password),
             username=clean_email,
         )
-        models.ConferenceUser.objects.create(
-            user=user,
-        )
         serializer = serializers.UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-class RetrieveUpdateDestroyInvestor(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Investor.objects.all()
-    serializer_class = serializers.InvestorSerializer
-
-
-class RetrieveUpdateDestroyProject(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Project.objects.all()
-    serializer_class = serializers.ProjectSerializer
 
 
 def users_id(request, pk):

@@ -32,13 +32,13 @@ class InvesteeTokenType extends React.Component {
     return (
       <Card style={ { padding: 8 } }>
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.token_type.title') }</Text>
-        { TOKEN_TYPES.map((tokenType, index) => {
+        { TOKEN_TYPES.map(( {slug, index}) => {
           return (
             <ListItem
               onPress={ () => this.handleChange(index) }
-              key={ `investment-item-${tokenType.slug}` }>
+              key={ `investment-item-${slug}` }>
               <Left>
-                <Text>{ I18n.t(`common.token_types.${tokenType.slug}`) }</Text>
+                <Text>{ I18n.t(`common.token_types.${slug}`) }</Text>
               </Left>
               <Right>
                 <Radio

@@ -5,10 +5,9 @@ import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
 import { REGIONS } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
-import { InvesteeHiring } from './index'
+import { InvesteeHiring, InvesteeTokenType } from './index'
 
 class InvesteeMoneySource extends React.Component {
-  
   constructor (props) {
     super(props)
     this.state = {
@@ -62,6 +61,18 @@ class InvesteeMoneySource extends React.Component {
                   </ListItem>
                 )
               }) }
+              <ListItem
+                onPress={ () => this.handleChange(4) }
+                key={ `nationality-4` }>
+                <Left>
+                  <Text>{ I18n.t(`common.regions.other`) }</Text>
+                </Left>
+                <Right>
+                  <Radio
+                    onPress={ () => this.handleChange(4) }
+                    selected={ this.state.nationality === 4 }/>
+                </Right>
+              </ListItem>
             </React.Fragment>
           )
         }
@@ -114,7 +125,7 @@ class InvesteeMoneySource extends React.Component {
       investorNationality: nationality
     })
     this.props.onFill({
-      nextStep: InvesteeHiring
+      nextStep: lookingForMoney ? InvesteeTokenType : InvesteeHiring
     })
   }
 }

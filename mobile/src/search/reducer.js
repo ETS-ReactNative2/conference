@@ -3,6 +3,7 @@ import { LOAD_PROFILES_SUCCESS, LOAD_PROFILES, LOAD_PROFILES_ERROR } from './act
 const initialState = {
   isLoading: false,
   error: false,
+  professionals: [],
   projects: [],
   investors: []
 }
@@ -20,6 +21,7 @@ export function searchReducer (state = initialState, action) {
         ...state,
         isLoading: false,
         error: false,
+        professionals: action.data.professionals ? action.data.professionals : state.professionals,
         projects: action.data.projects ? action.data.projects : state.projects,
         investors: action.data.investors ? action.data.investors : state.investors
       }

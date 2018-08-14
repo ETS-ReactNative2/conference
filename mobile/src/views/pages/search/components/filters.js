@@ -2,7 +2,9 @@ import { Body, Button, Left, ListItem, Radio, Right, Switch, Text, View } from '
 import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
-import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGION, TOKEN_TYPES } from '../../../../enums'
+import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGION, REGIONS, TOKEN_TYPES } from '../../../../enums'
+
+// todo filters for professionals
 
 class Filters extends React.Component {
 
@@ -119,7 +121,7 @@ class Filters extends React.Component {
         { this.renderFilter('tokenType',
           { options: TOKEN_TYPES, title: 'Token types', label: 'token_types' }) }
         { this.renderFilter('region',
-          { options: REGION, title: 'Region', label: 'region' }) }
+          { options: REGIONS, title: 'Region', label: 'regions' }) }
 
         <Button block success bordered style={ { marginTop: 16, marginBottom: 16 } } onPress={ this.handleSubmit }>
           <Text>Search</Text>

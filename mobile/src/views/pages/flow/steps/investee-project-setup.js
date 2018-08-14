@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { InvesteeLinks } from './index'
+import { InvesteeIndustry } from './index'
 import ValidatedInput from '../../../components/validated-input/validated-input'
 
 class InvesteeProjectSetup extends React.Component {
@@ -24,23 +24,22 @@ class InvesteeProjectSetup extends React.Component {
         <Form>
           <ValidatedInput floatingLabel
                           value={ this.state.projectName }
+                          maxLength={40}
                           labelText={I18n.t('flow_page.project_setup.project_name')}
                           isError={!this.validateProjectName(this.state.projectName)}
                           errorMessage={I18n.t('common.errors.incorrect_project_name')}
                           onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectName')} />
           <ValidatedInput floatingLabel
                           value={ this.state.projectTagline }
+                          maxLength={60}
                           labelText={I18n.t('flow_page.project_setup.project_tagline')}
-                          isError={!this.validateProjectTagline(this.state.projectTagline)}
-                          errorMessage={I18n.t('common.errors.incorrect_project_tagline')}
                           onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectTagline')} />
           <ValidatedInput floatingLabel
                           multiline={ true }
                           numberOfLines={ 5 }
+                          maxLength={250}
                           value={ this.state.projectDescription }
                           labelText={I18n.t('flow_page.project_setup.project_description')}
-                          isError={!this.validateProjectDescription(this.state.projectDescription)}
-                          errorMessage={I18n.t('common.errors.incorrect_project_description')}
                           onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectDescription')} />
         </Form>
         <Button success
@@ -59,21 +58,11 @@ class InvesteeProjectSetup extends React.Component {
     return validator.isLength(projectName, { min: 3 })
   }
 
-  validateProjectTagline = (projectTagLine) => {
-    return !validator.isEmpty(projectTagLine)
-  }
-
-  validateProjectDescription = (projectDescription) => {
-    return !validator.isEmpty(projectDescription)
-  }
-
   isFormValid = () => {
-    const { projectName, projectTagline, projectDescription } = this.state
+    const { projectName } = this.state
     const nameLength = this.validateProjectName(projectName)
-    const taglineExists = this.validateProjectTagline(projectTagline)
-    const descriptionExists = this.validateProjectDescription(projectDescription)
 
-    return nameLength && taglineExists && descriptionExists
+    return nameLength
   }
 
   validateForm = () => {
@@ -88,7 +77,7 @@ class InvesteeProjectSetup extends React.Component {
       projectDescription: this.state.projectDescription
     })
     this.props.onFill({
-      nextStep: InvesteeLinks
+      nextStep: InvesteeIndustry
     })
   }
   handleFieldChange = (value, name) => {

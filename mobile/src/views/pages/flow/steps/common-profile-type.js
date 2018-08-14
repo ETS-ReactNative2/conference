@@ -1,15 +1,21 @@
-import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { Container, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation } from './index'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation } from './index'
+
 
 const options = [
   {
     slug: 'meeting',
-    value: 'attendant'
+    value: 'employee'
   },
   {
     slug: 'projects',
@@ -22,6 +28,9 @@ const options = [
 ]
 
 class CommonProfileType extends React.Component {
+
+  static BACKGROUND_COLOR = 'green'
+
   constructor (props) {
     super(props)
     this.state = {
@@ -32,35 +41,31 @@ class CommonProfileType extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.common.profile_type.title') }</Text>
-        <Content>
+      <Container style={ styles.container }>
+        <StepTitle text={ I18n.t('flow_page.common.profile_type.title') }/>
+        <View style={ { flex: 1, justifyContent: 'center' } }>
           {
             options.map((option, index) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(index) }>
-                  <Left>
-                    <Text>{ I18n.t(`flow_page.common.profile_type.${option.slug}`) }</Text>
-                  </Left>
-                  <Right>
-                    <Radio
-                      onPress={ () => this.handleChange(index) }
-                      selected={ this.state.selected === index }/>
-                  </Right>
-                </ListItem>
+                <FlowListItem
+                  key={ option.slug }
+                  multiple={ false }
+                  text={ I18n.t(`flow_page.common.profile_type.${option.slug}`) }
+                  selected={ this.state.selected === index }
+                  onSelect={ () => this.handleChange(index) }
+                />
               )
             })
           }
-        </Content>
-        <Button success
-                rounded
-                block
-                disabled={ this.state.selected === -1}
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ I18n.t('common.next') }
+            disabled={ this.state.selected === -1 }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </Container>
     )
   }
 
@@ -77,7 +82,7 @@ class CommonProfileType extends React.Component {
         nextStep = InvesteeProjectSetup
         break
     }
-    this.props.saveProfileInfo({ type: this.state.selectedValue });
+    this.props.saveProfileInfo({ type: this.state.selectedValue })
     this.props.onFill({ nextStep })
   }
 
@@ -88,6 +93,14 @@ class CommonProfileType extends React.Component {
     })
   }
 }
+
+const styles = EStyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    height: `100% - ${Header.HEIGHT}`
+  }
+})
 
 CommonProfileType.propTypes = {
   onFill: PropTypes.func.isRequired
@@ -101,7 +114,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveProfileInfo : profileInfo => dispatch(signUpActions.saveProfileInfo(profileInfo))
+    saveProfileInfo: profileInfo => dispatch(signUpActions.saveProfileInfo(profileInfo))
   }
 }
 

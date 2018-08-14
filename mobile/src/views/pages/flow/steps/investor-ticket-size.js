@@ -40,7 +40,6 @@ class InvestorTicketSize extends React.Component {
         <Button success
                 rounded
                 block
-                disabled={ this.state.selected === -1 }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
@@ -61,7 +60,6 @@ class InvestorTicketSize extends React.Component {
   }
 
   isCheckboxSelected = id => {
-    console.log(this.state)
     return this.state.ticketSizes.indexOf(id) !== -1
   }
 

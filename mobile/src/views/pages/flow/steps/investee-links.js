@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { InvesteeProductStage, InvesteeTokenType } from './index'
+import { InvesteeProjectLocation } from './index'
 
 class InvesteeLinks extends React.Component {
   constructor (props) {
@@ -91,7 +91,7 @@ class InvesteeLinks extends React.Component {
   handleSubmit = () => {
     this.props.save(this.state)
     this.props.onFill({
-      nextStep: InvesteeTokenType
+      nextStep: InvesteeProjectLocation
     })
   }
 

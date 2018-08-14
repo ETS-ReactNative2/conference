@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { FUNDING_STAGES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
-import { InvesteeGiveaway, InvesteeTeamMembers } from './index'
+import { InvesteeGiveaway } from './index'
 
 class InvesteeFundingStage extends React.Component {
   constructor (props) {
@@ -22,16 +22,16 @@ class InvesteeFundingStage extends React.Component {
         <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.funding_stage.title') }</Text>
         <Content>
           {
-            FUNDING_STAGES.map((option, index) => {
+            FUNDING_STAGES.map((option) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(index) }>
+                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(option.index) }>
                   <Left>
                     <Text>{ I18n.t(`common.funding_stages.${option.slug}`) }</Text>
                   </Left>
                   <Right>
                     <Radio
-                      onPress={ () => this.handleChange(index) }
-                      selected={ this.state.selected === index }/>
+                      onPress={ () => this.handleChange(option.index) }
+                      selected={ this.state.selected === option.index }/>
                   </Right>
                 </ListItem>
               )

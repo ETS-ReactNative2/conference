@@ -1,4 +1,4 @@
-import { Button, Card, Content, Body, ListItem, CheckBox, Text } from 'native-base'
+import { Button, Card, Content, Body, ListItem, CheckBox, Text, Radio } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -28,9 +28,9 @@ class InvestorGiveaways extends React.Component {
                   <Body>
                     <Text>{ I18n.t(`common.giveaways.${option.slug}`) }</Text>
                   </Body>
-                  <CheckBox
+                  <Radio
                     onPress={ () => this.handleChange(option.index) }
-                    checked={ this.state.selectedGiveaways.indexOf(option.index) !== -1  }/>
+                    selected={ this.state.selectedGiveaways.indexOf(option.index) !== -1  }/>
                 </ListItem>
               )
             })
@@ -49,7 +49,7 @@ class InvestorGiveaways extends React.Component {
   }
 
   isFormValid = () => {
-    return this.state.selectedGiveaways.length > 0
+    return true;
   }
 
   validateForm = () => {

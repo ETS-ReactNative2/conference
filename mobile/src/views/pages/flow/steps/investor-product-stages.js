@@ -52,7 +52,7 @@ class InvestorProductStages extends React.Component {
   }
 
   isFormValid = () => {
-    return this.state.productStages.length > 0;
+    return true;
   }
 
   validateForm = () => {

@@ -6,8 +6,8 @@ export function fetchMatches () {
   return async dispatch => {
     try {
       dispatch({ type: LOAD_PROFILES })
-      const projectResponse = await api.fetchProjects()
-      const investorResponse = await api.fetchInvestors()
+      const projectResponse = await api.fetchProjects({})
+      const investorResponse = await api.fetchInvestors({})
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {
@@ -16,7 +16,7 @@ export function fetchMatches () {
         }
       })
     } catch (err) {
-      console.log(err)
+      console.log({err})
       dispatch({ type: LOAD_PROFILES_ERROR })
     }
   }
@@ -36,6 +36,23 @@ export function updateInvestors (filters) {
       dispatch({ type: LOAD_PROFILES_ERROR })
     }
   }
+}
+
+export function updateProfessionals (filters) {
+    return async dispatch => {
+        try {
+            const {data, request} = await api.getProfessionals(decamelizeKeys(filters))
+            console.log({ request, data })
+            dispatch({
+                type: LOAD_PROFILES_SUCCESS,
+                data: {
+                    projects: data
+                }
+            })
+        } catch (err) {
+            dispatch({ type: LOAD_PROFILES_ERROR })
+        }
+    }
 }
 
 export function updateProjects (filters) {

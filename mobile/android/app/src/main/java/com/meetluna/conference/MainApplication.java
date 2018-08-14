@@ -1,8 +1,9 @@
-package com.rspective.luna.testing;
+package com.meetluna.conference;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.reactcommunity.rnlanguages.RNLanguagesPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
             new RNSensitiveInfoPackage(),
             new RNDeviceInfo(),
           new RNLanguagesPackage(),

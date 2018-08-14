@@ -1,14 +1,13 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
-import { Button, Input } from 'native-base'
 import Adapter from 'enzyme-adapter-react-16';
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import LoginPage from '../../../src/views/pages/login/login-page'
-import ValidatedInput from '../../../src/views/components/validated-input/validated-input'
 import { globalActionsTypes } from '../../../src/global'
-
-import renderer from 'react-test-renderer'
+import { signUpActionsTypes } from '../../../src/signup'
+import InputValidated from '../../../src/views/design/input-validated'
+import { BlackButton } from '../../../src/views/design/buttons'
 
 Enzyme.configure({ adapter: new Adapter()})
 
@@ -36,15 +35,15 @@ describe('LoginPage Component', () => {
     it('renders without crashing', () => {
         const navigation = { navigate: jest.fn() }
         const callbackMock = jest.fn()
-        const rendered = renderer.create(<LoginPage navigation={navigation} onSubmit={ callbackMock } store={store}/>).toJSON()
-        expect(rendered).toBeTruthy()
+        const wrapper = shallow(<LoginPage navigation={navigation} onSubmit={ callbackMock } store={store}/>).dive()
+        expect(wrapper).not.toBe(null)
       });
       
       it('renders login button as disabled by default', () => {
           const navigation = { navigate: jest.fn() }
           const callbackMock = jest.fn()
           const wrapper = shallow(<LoginPage navigation={navigation} onSubmit={ callbackMock } store={store}/>).dive()
-          const loginButton = wrapper.find(Button).first()
+          const loginButton = wrapper.find(BlackButton).first()
           const loginButtonProps = loginButton.props()
           expect(loginButtonProps.disabled).toBeTruthy()
       });
@@ -53,7 +52,7 @@ describe('LoginPage Component', () => {
           const navigation = { navigate: jest.fn() }
           const callbackMock = jest.fn()
           const wrapper = shallow(<LoginPage navigation={navigation} onSubmit={ callbackMock } store={store}/>).dive()
-          const loginButton = wrapper.find(Button).first()
+          const loginButton = wrapper.find(BlackButton).first()
           const loginButtonProps = loginButton.props()
           loginButtonProps.onPress()
           expect(callbackMock.mock.calls.length).toBe(0)
@@ -64,11 +63,11 @@ describe('LoginPage Component', () => {
           const callbackMock = jest.fn()
           const wrapper = shallow(<LoginPage navigation={navigation} onSubmit={ callbackMock } store={store}/>).dive()
           // Set Email address
-          wrapper.find(ValidatedInput).first().props().onChangeText("test@.com")
+          wrapper.find(InputValidated).first().props().onChangeText("test@.com")
           // Set Password
-          wrapper.find(ValidatedInput).at(1).props().onChangeText("12345678")
+          wrapper.find(InputValidated).at(1).props().onChangeText("12345678")
           wrapper.update()
-          const loginButton = wrapper.find(Button).first()
+          const loginButton = wrapper.find(BlackButton).first()
           const loginButtonProps = loginButton.props()
           expect(loginButtonProps.disabled).toBeTruthy()
       });
@@ -78,11 +77,11 @@ describe('LoginPage Component', () => {
           const callbackMock = jest.fn()
           const wrapper = shallow(<LoginPage navigation={navigation} onSubmit={ callbackMock } store={store}/>).dive()
           // Set Email address
-          wrapper.find(ValidatedInput).first().props().onChangeText("test@test.com")
+          wrapper.find(InputValidated).first().props().onChangeText("test@test.com")
           // Set Password
-          wrapper.find(ValidatedInput).at(1).props().onChangeText("12345")
+          wrapper.find(InputValidated).at(1).props().onChangeText("12345")
           wrapper.update()
-          const loginButton = wrapper.find(Button).first()
+          const loginButton = wrapper.find(BlackButton).first()
           const loginButtonProps = loginButton.props()
           expect(loginButtonProps.disabled).toBeTruthy()
       });
@@ -92,11 +91,11 @@ describe('LoginPage Component', () => {
           const callbackMock = jest.fn()
           const wrapper = shallow(<LoginPage navigation={navigation} onSubmit={ callbackMock } store={store}/>).dive()
           // Set Email address
-          wrapper.find(ValidatedInput).first().props().onChangeText("test@test.com")
+          wrapper.find(InputValidated).first().props().onChangeText("test@test.com")
           // Set Password
-          wrapper.find(ValidatedInput).at(1).props().onChangeText("12345678")
+          wrapper.find(InputValidated).at(1).props().onChangeText("12345678")
           wrapper.update()
-          const loginButton = wrapper.find(Button).first()
+          const loginButton = wrapper.find(BlackButton).first()
           const loginButtonProps = loginButton.props()
           expect(loginButtonProps.disabled).toBeFalsy()
       });
@@ -106,20 +105,24 @@ describe('LoginPage Component', () => {
           const callbackMock = jest.fn()
           const wrapper = shallow(<LoginPage navigation={navigation} onSubmit={ callbackMock } store={store}/>).dive()
           // Set Email address
-          wrapper.find(ValidatedInput).first().props().onChangeText("test@test.com")
+          wrapper.find(InputValidated).first().props().onChangeText("test@test.com")
           // Set Password
-          wrapper.find(ValidatedInput).at(1).props().onChangeText("12345678")
+          wrapper.find(InputValidated).at(1).props().onChangeText("12345678")
           wrapper.update()
-          const loginButton = wrapper.find(Button).first()
+          const loginButton = wrapper.find(BlackButton).first()
           const loginButtonProps = loginButton.props()
           loginButtonProps.onPress()
           const expectedActions = [{
-              type: globalActionsTypes.SET_LOADING,
-              data: {
-                  message: "Mocked translation"
-              }
-            }
-          ]
+              payload: [{
+                  type: signUpActionsTypes.CLEAR_LOGIN_USER_ERROR
+              }, {
+                  type: globalActionsTypes.SET_LOADING,
+                  data: {
+                    message: "Mocked translation"
+                }
+            }],
+            type: "ENHANCED_BATCHING.BATCH"
+          }]
           expect(store.getActions()).toEqual(expectedActions)
       });
 })

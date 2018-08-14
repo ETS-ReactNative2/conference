@@ -57,7 +57,6 @@ class InvestorIndustries extends React.Component {
         <Button success
                 rounded
                 block
-                disabled={ this.state.industries.length === 0 }
                 onPress={ this.handleSubmit }
                 style={ { marginTop: 16 } }>
           <Text>{ I18n.t('common.next') }</Text>
