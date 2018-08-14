@@ -23,11 +23,6 @@ const initialState = {
       isEmailFieldError: false,
       errorMessage: ''
     },
-    signup: {
-      isServerError: false,
-      isEmailFieldError: false,
-      errorMessage: ''
-    }
   },
   profile: {
     firstName: '',

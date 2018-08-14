@@ -38,6 +38,23 @@ export function updateInvestors (filters) {
   }
 }
 
+export function updateProfessionals (filters) {
+    return async dispatch => {
+        try {
+            const {data, request} = await api.getProfessionals(decamelizeKeys(filters))
+            console.log({ request, data })
+            dispatch({
+                type: LOAD_PROFILES_SUCCESS,
+                data: {
+                    projects: data
+                }
+            })
+        } catch (err) {
+            dispatch({ type: LOAD_PROFILES_ERROR })
+        }
+    }
+}
+
 export function updateProjects (filters) {
   return async dispatch => {
     try {

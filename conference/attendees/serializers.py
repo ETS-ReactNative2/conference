@@ -4,10 +4,15 @@ from . import models
 
 
 class ConferenceUserSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(max_length=models.ConferenceUser.FIRST_NAME_MAX_LENGTH, source='user.first_name')
+    last_name = serializers.CharField(max_length=models.ConferenceUser.LAST_NAME_MAX_LENGTH, source='user.last_name')
+
     class Meta:
         model = models.ConferenceUser
         fields = (
             'user',
+            'first_name',
+            'last_name',
             'title',
             'company',
             'twitter',
@@ -85,6 +90,7 @@ class JobListingSerializer(serializers.ModelSerializer):
 
 
 class ProfessionalSerializer(serializers.ModelSerializer):
+    user = ConferenceUserSerializer()
     class Meta:
         model = models.Professional
         fields = (
@@ -98,6 +104,7 @@ class ProfessionalSerializer(serializers.ModelSerializer):
             'city',
             'age',
             'experience',
+            'user',
         )
 
 

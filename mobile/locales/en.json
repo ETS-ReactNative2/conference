@@ -359,11 +359,15 @@
     "terms_and_conditions": "TERMS AND CONDITIONS",
     "title": "Login"
   },
+  "professional_page": {
+    "title": "Professional details"
+  },
   "project_page": {
     "title": "Project details"
   },
   "search_page": {
     "investor_header": "Investors",
+    "professional_header": "Professionals",
     "projects_header": "Projects",
     "title": "Search"
   },

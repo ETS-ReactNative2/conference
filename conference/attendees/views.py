@@ -14,7 +14,7 @@ from rest_framework.response import Response
 from . import models
 from . import serializers
 from .views_investor import (
-    ListInvestor, MyInvestor
+    ListInvestor, RetrieveInvestor, MyInvestor
 )
 from .views_project import (
     ListProject, RetrieveProject, MyProject, MyProjectJobs, MyProjectJobsId, MyProjectMembers, MyProjectMembersId
@@ -121,10 +121,10 @@ class MyProfessional(APIView):
         ) else ''
 
         skills = json_body.get('skills')
-        clean_skills = [models.Skill.objects.get(pk=pk) for pk in skills] if skills else []
+        clean_skills = [models.Skill.objects.get(pk=skill.get('id')) for skill in skills] if skills else []
 
         traits = json_body.get('traits')
-        clean_traits = [models.Trait.objects.get(pk=pk) for pk in traits] if traits else []
+        clean_traits = [models.Trait.objects.get(pk=trait.get('id')) for trait in traits] if traits else []
 
         know_most = json_body.get('know_most')
         clean_know_most = know_most[:models.Professional.KNOW_MOST_MAX_LENGTH] if know_most else ''
@@ -168,6 +168,29 @@ class MyProfessional(APIView):
         return JsonResponse(serializers.ProfessionalSerializer(professional).data, status=status.HTTP_201_CREATED)
 
 
+class Professionals(generics.ListAPIView):
+    queryset = models.Professional.objects.all()
+    serializer_class = serializers.ProfessionalSerializer
+
+    def get_queryset(self):
+        filters = {}
+        roles = self.request.GET.get('roles')
+        if roles:
+            filters['role__in'] = roles
+        local_remote_options = self.request.GET.get('local_remote_options')
+        if local_remote_options:
+            filters['local_remote_options__in'] = local_remote_options
+        country = self.request.GET.get('country')
+        if country:
+            filters['country'] = country
+        return models.Professional.objects.filter(**filters)
+
+
+class ProfessionalsId(generics.RetrieveAPIView):
+    queryset = models.Professional.objects.all()
+    serializer_class = serializers.ProfessionalSerializer
+
+
 class ListCreateUser(APIView):
     permission_classes = (permissions.AllowAny,)
 
@@ -202,11 +225,6 @@ class ListCreateUser(APIView):
         )
         serializer = serializers.UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-class RetrieveUpdateDestroyInvestor(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Investor.objects.all()
-    serializer_class = serializers.InvestorSerializer
 
 
 def users_id(request, pk):

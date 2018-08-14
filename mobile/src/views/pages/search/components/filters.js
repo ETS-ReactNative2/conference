@@ -4,6 +4,8 @@ import React from 'react'
 import I18n from '../../../../../locales/i18n'
 import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGION, REGIONS, TOKEN_TYPES } from '../../../../enums'
 
+// todo filters for professionals
+
 class Filters extends React.Component {
 
   constructor (props) {

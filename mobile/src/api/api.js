@@ -127,7 +127,7 @@ export async function createInvestor ({
   })
 }
 
-export async function createProfessional ({
+export async function putMyProfessional ({
   role, roleOtherText, skills, traits, knowMost, localRemoteOptions, country, city, age, experience
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
@@ -202,6 +202,18 @@ export async function deleteMyProjectMembersId ({ id }) {
       'X-Authorization': `Bearer ${token}`
     }
   })
+}
+
+export async function getProfessionals (filters) {
+    const token = await storageService.getItem(TOKEN_NAME)
+    console.log(token)
+    return axios.get('/api/professionals/', {
+        params: filters,
+        paramsSerializer: params => transformRequestOptions(params),
+        headers: {
+            'X-Authorization': `Bearer ${token}`
+        }
+    })
 }
 
 export async function fetchNotifications () {

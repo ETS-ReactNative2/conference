@@ -42,6 +42,11 @@ class ListInvestor(generics.ListAPIView):
         return models.Investor.objects.filter(**filters).exclude(**excludes)
 
 
+class RetrieveInvestor(generics.RetrieveAPIView):
+    queryset = models.Investor.objects.all()
+    serializer_class = serializers.InvestorSerializer
+
+
 class MyInvestor(APIView):
 
     @transaction.atomic

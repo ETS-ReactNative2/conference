@@ -62,6 +62,8 @@ class MyPersonTest(AuthMixin):
         response = self.client.put(
             reverse(self.view()),
             json.dumps({
+                'first_name': 'foo',
+                'last_name': 'bar',
                 'title': 'aaaaaaaa',
                 'company': 'aaaaaaaa',
                 'twitter': 'aaaaaaaa',
@@ -74,6 +76,8 @@ class MyPersonTest(AuthMixin):
         )
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.get('user'), self.user.id)
+        self.assertEqual(response.data.get('first_name'), 'foo')
+        self.assertEqual(response.data.get('last_name'), 'bar')
         self.assertEqual(response.data.get('title'), 'aaaaaaaa')
         self.assertEqual(response.data.get('company'), 'aaaaaaaa')
         self.assertEqual(response.data.get('twitter'), 'aaaaaaaa')
@@ -86,6 +90,8 @@ class MyPersonTest(AuthMixin):
 
         user = models.ConferenceUser.objects.get(pk=self.user.id)
         self.assertEqual(user.user, self.user)
+        self.assertEqual(user.user.first_name, 'foo')
+        self.assertEqual(user.user.last_name, 'bar')
         self.assertEqual(user.title, 'aaaaaaaa')
         self.assertEqual(user.company, 'aaaaaaaa')
         self.assertEqual(user.twitter, 'aaaaaaaa')
@@ -97,6 +103,8 @@ class MyPersonTest(AuthMixin):
         response = self.client.put(reverse(self.view()), **self.header)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.get('user'), self.user.id)
+        self.assertEqual(response.data.get('first_name'), '')
+        self.assertEqual(response.data.get('last_name'), '')
         self.assertEqual(response.data.get('title'), '')
         self.assertEqual(response.data.get('company'), '')
         self.assertEqual(response.data.get('twitter'), '')
@@ -109,6 +117,8 @@ class MyPersonTest(AuthMixin):
 
         user = models.ConferenceUser.objects.get(pk=self.user.id)
         self.assertEqual(user.user, self.user)
+        self.assertEqual(user.user.first_name, '')
+        self.assertEqual(user.user.last_name, '')
         self.assertEqual(user.title, '')
         self.assertEqual(user.company, '')
         self.assertEqual(user.twitter, '')
@@ -121,6 +131,8 @@ class MyPersonTest(AuthMixin):
         response = self.client.put(
             reverse(self.view()),
             json.dumps({
+                'first_name': 'foo',
+                'last_name': 'bar',
                 'title': 'aaaaaaaa',
                 'company': 'aaaaaaaa',
                 'twitter': 'aaaaaaaa',
@@ -136,6 +148,8 @@ class MyPersonTest(AuthMixin):
         # Have that work and result in just one person.
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.get('user'), self.user.id)
+        self.assertEqual(response.data.get('first_name'), '')
+        self.assertEqual(response.data.get('last_name'), '')
         self.assertEqual(response.data.get('title'), '')
         self.assertEqual(response.data.get('company'), '')
         self.assertEqual(response.data.get('twitter'), '')
@@ -148,6 +162,8 @@ class MyPersonTest(AuthMixin):
 
         user = models.ConferenceUser.objects.get(pk=self.user.id)
         self.assertEqual(user.user, self.user)
+        self.assertEqual(user.user.first_name, '')
+        self.assertEqual(user.user.last_name, '')
         self.assertEqual(user.title, '')
         self.assertEqual(user.company, '')
         self.assertEqual(user.twitter, '')
@@ -189,8 +205,8 @@ class MyProfessionalTest(AuthMixin):
             json.dumps({
                 'role': 12,
                 'role_other_text': 'aaaaaaaa',
-                'skills': [1, 2, 3],
-                'traits': [1, 2, 3],
+                'skills': [{'id': 1}, {'id': 2}, {'id': 3}],
+                'traits': [{'id': 1}, {'id': 2}, {'id': 3}],
                 'know_most': 'aaaaaaaa',
                 'local_remote_options': [1, 2],
                 'country': 'us',
@@ -242,8 +258,8 @@ class MyProfessionalTest(AuthMixin):
             json.dumps({
                 'role': 12,
                 'role_other_text': 'aaaaaaaa',
-                'skills': [1, 2, 3],
-                'traits': [1, 2, 3],
+                'skills': [{'id': 1}, {'id': 2}, {'id': 3}],
+                'traits': [{'id': 1}, {'id': 2}, {'id': 3}],
                 'know_most': 'aaaaaaaa',
                 'local_remote_options': [1, 2],
                 'country': 'us',
@@ -272,6 +288,53 @@ class MyProfessionalTest(AuthMixin):
         self.assertNotIn('id', response_dict)
 
         self.assertEqual(models.Professional.objects.count(), 1)
+
+
+class ProfessionalsTest(AuthMixin):
+
+    def view(self):
+        return 'professionals'
+
+    def test_get_one(self):
+        self.user.first_name = 'foo'
+        self.user.last_name = 'bar'
+        self.user.save()
+        self.user.conference_user.title = 'title'
+        self.user.conference_user.company = 'company'
+        self.user.conference_user.twitter = 'twitter'
+        self.user.conference_user.facebook = 'facebook'
+        self.user.conference_user.telegram = 'telegram'
+        self.user.conference_user.linkedin = 'linkedin'
+        self.user.conference_user.save()
+        professional = models.Professional.objects.create(
+        )
+        self.user.conference_user.professional = professional
+        self.user.conference_user.save()
+        response = self.client.get(reverse(self.view()), **self.header)
+        self.assertEqual(response.status_code, 200)
+        response_list = json.loads(response.content)
+        self.assertEqual(len(response_list), 1)
+        response_professional_0 = response_list[0]
+        self.assertEqual(response_professional_0.get('role'), None)
+        self.assertEqual(response_professional_0.get('role_other_text'), '')
+        self.assertEqual(response_professional_0.get('skills'), [])
+        self.assertEqual(response_professional_0.get('traits'), [])
+        self.assertEqual(response_professional_0.get('know_most'), '')
+        self.assertEqual(response_professional_0.get('local_remote_options'), [])
+        self.assertEqual(response_professional_0.get('country'), '')
+        self.assertEqual(response_professional_0.get('city'), '')
+        self.assertEqual(response_professional_0.get('age'), None)
+        self.assertEqual(response_professional_0.get('experience'), None)
+
+        response_conference_user_0 = response_professional_0.get('user')
+        self.assertEqual(response_conference_user_0.get('first_name'), 'foo')
+        self.assertEqual(response_conference_user_0.get('last_name'), 'bar')
+        self.assertEqual(response_conference_user_0.get('title'), 'title')
+        self.assertEqual(response_conference_user_0.get('company'), 'company')
+        self.assertEqual(response_conference_user_0.get('twitter'), 'twitter')
+        self.assertEqual(response_conference_user_0.get('facebook'), 'facebook')
+        self.assertEqual(response_conference_user_0.get('telegram'), 'telegram')
+        self.assertEqual(response_conference_user_0.get('linkedin'), 'linkedin')
 
 
 class UsersViewTest(AuthMixin):

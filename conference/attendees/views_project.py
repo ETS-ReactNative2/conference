@@ -252,7 +252,7 @@ class MyProjectJobs(APIView):
         clean_part_time = part_time if part_time else False
 
         payments = json_body.get('payments')
-        clean_payments = [models.Payment.objects.get(pk) for pk in payments] if payments else []
+        clean_payments = [models.Payment.objects.get(pk=pk) for pk in payments] if payments else []
 
         local_remote_options = json_body.get('local_remote_options')
         clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
