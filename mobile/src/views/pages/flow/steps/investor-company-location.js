@@ -1,7 +1,6 @@
-import { Button, Card, Text, View } from 'native-base'
+import { Button, Card, Container, Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-
 import CountryPicker from 'react-native-country-picker-modal'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'

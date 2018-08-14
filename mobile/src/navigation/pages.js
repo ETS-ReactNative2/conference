@@ -15,7 +15,8 @@ import ProjectPage from '../views/pages/project/project-page'
 import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
-import {navigationService} from '../services'
+import CommonProfileOnboarding from '../views/pages/flow/steps/common-profile-onboarding';
+import { navigationService } from '../services'
 
 const PAGES_NAMES = {
     WELCOME_PAGE: 'WELCOME_PAGE',
@@ -28,7 +29,8 @@ const PAGES_NAMES = {
     NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE',
     INVESTOR_PAGE: 'INVESTOR_PAGE',
     PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
-    PROJECT_PAGE: 'PROJECT_PAGE'
+    PROJECT_PAGE: 'PROJECT_PAGE',
+    PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -84,6 +86,12 @@ const AppStackNavigator = createStackNavigator({
         navigationOptions: () => ({
             header: null
         }),
+    },
+    PROFILE_ONBOARDING_PAGE: {
+        screen: CommonProfileOnboarding,
+        navigationOptions: () => ({
+          header: null
+        })
     },
     FLOW_PAGE: {
         screen: FlowPage,

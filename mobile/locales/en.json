@@ -119,17 +119,17 @@
       "polish": "Polish"
     },
     "news": "News publication about your project",
-    "next": "Next",
+    "next": "Save",
     "no": "No",
     "payment": {
       "equity": "Equity",
       "fiat": "Fiat money",
       "tokens": "Tokens"
     },
-    "personal_facebook": "Personal Facebook",
-    "personal_linkedin": "Personal Linkedin",
-    "personal_telegram": "Personal Telegram",
-    "personal_twitter": "Personal Twitter",
+    "personal_facebook": "PERSONAL FACEBOOK",
+    "personal_linkedin": "PERSONAL LINKEDIN",
+    "personal_telegram": "PERSONAL TELEGRAM",
+    "personal_twitter": "PERSONAL TWITTER",
     "product_stages": {
       "live": "Live product",
       "pre": "Pre-product",
@@ -178,6 +178,9 @@
     "twitter": "Twitter",
     "yes": "Yes"
   },
+  "header": {
+    "skip": "SKIP"
+  },
   "drawer": {
     "agenda": "Agenda",
     "flows": "Flows",
@@ -187,11 +190,13 @@
   "flow_page": {
     "common": {
       "profile_onboarding": {
-        "company": "Company",
-        "first_name": "Given name",
-        "last_name": "Family name",
-        "title": "Profile Onboarding",
-        "titleField": "Title"
+        "header": "WELCOME",
+        "title": "We would like to know more about you",
+        "company": "COMPANY",
+        "first_name": "GIVEN NAME",
+        "last_name": "FAMILY NAME",
+        "titleField": "JOB TITLE",
+        "spinner_text": "Saving your profile... Please wait"
       },
       "profile_type": {
         "meeting": "Meet people",

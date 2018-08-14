@@ -172,7 +172,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginUser: (email, password) => dispatch(signUpActions.login(email, password)),
+    loginUser: (email, password) => dispatch(signUpActions.login(email, password, PAGES_NAMES.HOME_PAGE)),
     clearErrors: () => dispatch(signUpActions.clearLoginError())
   }
 }

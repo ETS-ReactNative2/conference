@@ -8,6 +8,7 @@ export class Header extends React.Component {
   render () {
     return (
         <View style={styles.container}>
+            {this.props.left}
             <Text style={[styles.title, this.props.titleStyle]} adjustsFontSizeToFit>{ this.props.title.toUpperCase() }</Text>
             <Image style={styles.logo} source={this.props.rightIconSource} />
         </View>
@@ -37,6 +38,7 @@ const styles = EStyleSheet.create({
 })
 
 Header.propTypes = {
+    left: PropTypes.node,
     title: PropTypes.string.isRequired,
     titleStyle: PropTypes.any,
     rightIconSource: PropTypes.node.isRequired

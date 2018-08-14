@@ -15,9 +15,10 @@ class FlowInputValidated extends Component {
           labelText={ this.props.labelText }
           onChangeText={ this.props.onChangeText }
           status={ this.props.isError ? 'error' : 'ok' }
+          errorStyleOverride={this.props.errorStyleOverride}
         />
         { this.props.isError && (
-          <Text style={ styles.errorText }>{ this.props.errorMessage }</Text>
+          <Text style={ [styles.errorText, this.props.errorStyleOverride ? this.props.errorStyleOverride.text : ''] }>{ this.props.errorMessage }</Text>
         ) }
       </React.Fragment>
     )
@@ -25,9 +26,6 @@ class FlowInputValidated extends Component {
 }
 
 const styles = EStyleSheet.create({
-  inputContainer: {
-    flex: 1
-  },
   errorText: {
     alignSelf: 'flex-end',
     color: 'red'
@@ -41,7 +39,16 @@ FlowInputValidated.propTypes = {
   labelText: PropTypes.string.isRequired,
   isError: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string.isRequired,
-  onChangeText: PropTypes.func.isRequired
+  onChangeText: PropTypes.func.isRequired,
+  errorStyleOverride: PropTypes.shape({
+    border: PropTypes.shape({
+      borderColor: PropTypes.string,
+      borderBottomColor: PropTypes.string
+    }),
+    text: PropTypes.shape({
+      color: PropTypes.string
+    })
+  })
 }
 
 export default FlowInputValidated

@@ -15,6 +15,9 @@ export class Alert extends React.Component {
     if (stylesMapping[status]) {
       stylesArray.push(stylesMapping[status]);
     }
+    if (status === "error" && this.props.errorStyleOverride) {
+      stylesArray.push(this.props.errorStyleOverride.border)
+    }
     return stylesArray;
   }
 
@@ -26,6 +29,9 @@ export class Alert extends React.Component {
     };
     if (stylesMapping[status]) {
       stylesArray.push(stylesMapping[status]);
+    }
+    if (status === "error" && this.props.errorStyleOverride) {
+      stylesArray.push(this.props.errorStyleOverride.text)
     }
     return stylesArray;
   }
@@ -73,7 +79,15 @@ const styles = EStyleSheet.create({
 
 Alert.propTypes = {
   message: PropTypes.string.isRequired,
-  color: PropTypes.oneOf(["error", "success"]).isRequired
+  color: PropTypes.oneOf(["error", "success"]).isRequired,
+  errorStyleOverride: PropTypes.shape({
+    border: PropTypes.shape({
+      borderColor: PropTypes.string
+    }),
+    text: PropTypes.shape({
+      color: PropTypes.string
+    })
+  })
 };
 
 export default Alert;

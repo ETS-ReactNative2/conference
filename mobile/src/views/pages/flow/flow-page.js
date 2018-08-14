@@ -5,11 +5,7 @@ import { connect } from 'react-redux'
 import { PAGES_NAMES } from '../../../navigation'
 import { signUpActions } from '../../../signup'
 import {
-  CommonProfileOnboarding,
   CommonProfileType,
-  EmployeeRole,
-  EmployerRole,
-  InvesteeProjectLocation
 } from './steps'
 
 class FlowPage extends React.Component {
@@ -32,7 +28,7 @@ class FlowPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      CurrentStep: CommonProfileOnboarding,
+      CurrentStep: CommonProfileType,
       PreviousSteps: []
     }
     BackHandler.addEventListener(
@@ -49,7 +45,7 @@ class FlowPage extends React.Component {
   }
 
   getBackgroundColor = () => {
-    return this.state.CurrentStep.BACKGROUND_COLOR || 'white'
+    return this.state.CurrentStep.BACKGROUND_COLOR || '#603695'
   }
 
   onHeaderBackButton = () => {

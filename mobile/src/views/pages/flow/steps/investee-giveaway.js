@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { GIVEAWAY_TYPES_PROJECT } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
-import { InvesteeIndustry, InvesteeTeamMembers } from './index'
+import { InvesteeTeamMembers } from './index'
 
 class InvesteeGiveaway extends React.Component {
   constructor (props) {

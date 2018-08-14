@@ -46,11 +46,11 @@ export async function createJob ({
     })
 }
 
-export async function createConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram, userId }) {
+export async function createConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put(
     '/api/my_person/',
-    decamelizeKeys({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram, userId }),
+    decamelizeKeys({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram }),
     {
       headers: {
         'X-Authorization': `Bearer ${token}`

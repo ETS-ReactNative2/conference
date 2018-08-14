@@ -16,7 +16,9 @@ import {
     SAVE_PROFILE_INVESTEE,
     SIGN_UP_USER_ERROR,
     CLEAR_SIGN_UP_USER_ERROR,
-    CLEAR_LOGIN_USER_ERROR
+    CLEAR_LOGIN_USER_ERROR,
+    SAVE_PROFILE_ERROR,
+    CLEAR_SAVE_PROFILE_ERROR
 } from './action-types'
 
 const TOKEN_NAME = 'AUTH-TOKEN'
@@ -66,7 +68,7 @@ export function signup(signupData) {
         try {
             dispatch(batchActions([clearSignUpError(), globalActions.setGlobalLoading(I18n.t('signup_page.spinner_text'))]))
             await api.signup(signupData)
-            await dispatch(login(signupData.email, signupData.password))
+            await dispatch(login(signupData.email, signupData.password, PAGES_NAMES.PROFILE_ONBOARDING_PAGE))
         } catch (err) {
             const errorData = getErrorData(err);
             dispatch(signUpError(errorData.isFieldError, errorData.errorMessage))
@@ -206,7 +208,7 @@ const loginInSuccess = () => ({
     type: LOGIN_USER_SUCCESS
 })
 
-export const login = (username, password) => async dispatch => {
+export const login = (username, password, redirectPage) => async dispatch => {
     try {
         dispatch(batchActions([clearLoginError(), globalActions.setGlobalLoading(I18n.t('login_page.spinner_text'))]))
         const response = await api.login(username, password)
@@ -214,7 +216,7 @@ export const login = (username, password) => async dispatch => {
         await storageService.removeItem(TOKEN_NAME)
         await storageService.setItem(TOKEN_NAME, token)
         dispatch(loginInSuccess())
-        navigationService.navigate(PAGES_NAMES.HOME_PAGE)
+        navigationService.navigate(redirectPage)
     } catch (err) {
         let errorData = {};
         if (!isNetworkUnavailable(err) && err.response.status === 401) {
@@ -229,4 +231,31 @@ export const login = (username, password) => async dispatch => {
     } finally {
         dispatch(globalActions.unsetGlobalLoading())
     }
+}
+
+export const clearSaveProfileError = () => ({
+  type: CLEAR_SAVE_PROFILE_ERROR
+})
+
+const saveProfileError = errorMsg => ({
+  type: SAVE_PROFILE_ERROR,
+  isError: true,
+  error: errorMsg
+})
+
+export const saveProfileOnboardingInfo = ( profileInfo, redirectPage) => async dispatch => {
+  try {
+    dispatch(batchActions([clearSaveProfileError(), globalActions.setGlobalLoading(I18n.t('flow_page.common.profile_onboarding.spinner_text'))]))
+    await api.createConferenceUser(profileInfo)
+    navigationService.navigate(redirectPage)
+  } catch (err) {
+    if (!isNetworkUnavailable(err) && err.response.status === 401) {
+      navigationService.navigate(PAGES_NAMES.LOGIN_PAGE)
+    } else {
+      const errorData = getErrorData(err);
+      dispatch(saveProfileError(errorData.errorMessage))
+    }
+  } finally {
+    dispatch(globalActions.unsetGlobalLoading())
+  } 
 }

@@ -9,7 +9,9 @@ import {
   LOGIN_USER_ERROR,
   SIGN_UP_USER_ERROR,
   CLEAR_SIGN_UP_USER_ERROR,
-  CLEAR_LOGIN_USER_ERROR } from './action-types'
+  CLEAR_LOGIN_USER_ERROR,
+  SAVE_PROFILE_ERROR,
+  CLEAR_SAVE_PROFILE_ERROR } from './action-types'
 
 const initialState = {
   auth: {
@@ -23,6 +25,10 @@ const initialState = {
       isEmailFieldError: false,
       errorMessage: ''
     },
+    profile: {
+      isError: false,
+      errorMessage: ''
+    }
   },
   profile: {
     firstName: '',
@@ -223,6 +229,30 @@ export function signUpReducer (state = initialState, action) {
             ...state.auth.login,
             isServerError: false,
             isCredentialsError: false,
+            errorMessage: ''
+          }
+        }
+      }
+    case SAVE_PROFILE_ERROR:
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          profile: {
+            ...state.auth.profile,
+            isError: true,
+            errorMessage: action.error
+          }
+        }
+      }
+    case CLEAR_SAVE_PROFILE_ERROR:
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          profile: {
+            ...state.auth.profile,
+            isError: false,
             errorMessage: ''
           }
         }

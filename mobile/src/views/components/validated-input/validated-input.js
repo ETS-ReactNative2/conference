@@ -46,8 +46,8 @@ ValidatedInput.propTypes = {
     floatingLabel: PropTypes.bool,
     value: PropTypes.string,
     labelText: PropTypes.string.isRequired,
-    isError: PropTypes.bool.isRequired,
-    errorMessage: PropTypes.string.isRequired,
+    isError: PropTypes.bool,
+    errorMessage: PropTypes.string,
     onChangeText: PropTypes.func.isRequired
 }
 

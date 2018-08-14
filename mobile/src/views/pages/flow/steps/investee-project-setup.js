@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { InvesteeIndustry, InvesteeLinks } from './index'
+import { InvesteeIndustry } from './index'
 import ValidatedInput from '../../../components/validated-input/validated-input'
 
 class InvesteeProjectSetup extends React.Component {
