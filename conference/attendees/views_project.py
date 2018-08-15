@@ -2,15 +2,10 @@
 from __future__ import unicode_literals
 
 from rest_framework import generics
-from django.contrib.auth.hashers import make_password
-from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
-from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from . import models
 from . import serializers
 

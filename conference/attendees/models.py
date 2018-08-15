@@ -218,7 +218,7 @@ class Project(models.Model):
 
     product_stage = models.ForeignKey(ProductStage, db_index=True, null=True, blank=True)
 
-    size = models.PositiveIntegerField()
+    size = models.PositiveIntegerField(default=0)
 
     tagline = models.CharField(max_length=TAGLINE_MAX_LENGTH, blank=True, default='')
 
@@ -325,7 +325,8 @@ class ConferenceUser(models.Model):
         Professional, related_name='user', null=True, blank=True, on_delete=models.SET_NULL
     )
 
-    investor = models.ForeignKey(Investor, related_name='users', db_index=True, null=True, blank=True)
+    investor = models.OneToOneField(Investor, related_name='conference_user', db_index=True, null=True, blank=True,
+                                    on_delete=models.SET_NULL)
 
     project = models.ForeignKey(Project, related_name='members', db_index=True, null=True, blank=True)
 

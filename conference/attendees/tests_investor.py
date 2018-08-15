@@ -62,6 +62,104 @@ class InvestorsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('token_types'), [1, 2, 3])
 
 
+class InvestorsIdMessagesTest(TestCase):
+
+    def setUp(self):
+        self.user_noproject = User.objects.create_user(
+            'user_noproject',
+            'user_noproject@example.com',
+            'user_noproject',
+            **{
+                'first_name': 'user_noproject_first_name',
+                'last_name': 'user_noproject_last_name',
+            }
+        )
+        self.token_noproject = Token.objects.get(user=self.user_noproject).key
+        self.header_noproject = {'HTTP_AUTHORIZATION': 'Bearer {}'.format(self.token_noproject)}
+
+        self.user_yesproject = User.objects.create_user(
+            'user_yesproject',
+            'user_yesproject@example.com',
+            'user_yesproject',
+            **{
+                'first_name': 'user_yesproject_first_name',
+                'last_name': 'user_yesproject_last_name',
+            }
+        )
+        self.project = models.Project.objects.create(
+            industry=models.Industry.objects.get(pk=1),
+        )
+        self.user_yesproject.conference_user.project = self.project
+        self.user_yesproject.conference_user.save()
+        self.token_yesproject = Token.objects.get(user=self.user_yesproject).key
+        self.header_yesproject = {'HTTP_AUTHORIZATION': 'Bearer {}'.format(self.token_yesproject)}
+
+        self.investor_user = User.objects.create_user(
+            'investor',
+            'investor@example.com',
+            'investor',
+            **{
+                'first_name': 'investor_first_name',
+                'last_name': 'investor_last_name',
+            }
+        )
+        self.investor = models.Investor.objects.create()
+        self.investor_user.conference_user.investor = self.investor
+        self.investor_user.conference_user.save()
+
+    def tearDown(self):
+        self.user_noproject.delete()
+        self.user_yesproject.delete()
+        self.investor.delete()
+        self.investor_user.delete()
+
+    def view(self):
+        return 'investors_id_messages'
+
+    def test_get_401(self):
+        response = self.client.get(reverse(self.view(), kwargs={'pk': self.investor.pk}))
+        self.assertEqual(response.status_code, 401)
+
+    def test_get_405(self):
+        response = self.client.get(reverse(self.view(), kwargs={'pk': self.investor.pk}), **self.header_yesproject)
+        self.assertEqual(response.status_code, 405)
+
+    def test_post_400(self):
+        response = self.client.post(reverse(self.view(), kwargs={'pk': self.investor.pk}), **self.header_yesproject)
+        self.assertEqual(response.status_code, 400)
+
+    def test_post_401(self):
+        response = self.client.post(reverse(self.view(), kwargs={'pk': self.investor.pk}))
+        self.assertEqual(response.status_code, 401)
+
+    def test_post_403(self):
+        response = self.client.post(reverse(self.view(), kwargs={'pk': self.investor.pk}), **self.header_noproject)
+        self.assertEqual(response.status_code, 403)
+
+    def test_post_404(self):
+        response = self.client.post(reverse(self.view(), kwargs={'pk': self.investor.pk + 1}), **self.header_yesproject)
+        self.assertEqual(response.status_code, 404)
+
+    def test_post(self):
+        response = self.client.post(
+            reverse(self.view(), kwargs={'pk': self.investor.pk}),
+            json.dumps({
+                'message': 'Hello, World!',
+            }),
+            content_type='application/json',
+            **self.header_yesproject
+        )
+        self.assertEqual(response.status_code, 201)
+
+    def test_put_401(self):
+        response = self.client.put(reverse(self.view(), kwargs={'pk': self.investor.pk}))
+        self.assertEqual(response.status_code, 401)
+
+    def test_put_405(self):
+        response = self.client.put(reverse(self.view(), kwargs={'pk': self.investor.pk}), **self.header_yesproject)
+        self.assertEqual(response.status_code, 405)
+
+
 class MyInvestorTest(AuthMixin):
 
     def view(self):
