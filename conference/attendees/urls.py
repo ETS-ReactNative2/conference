@@ -17,7 +17,6 @@ urlpatterns = [
     url(r'^my_project/members/$', MyProjectMembers.as_view(), name='my_project_members'),
     url(r'^my_project/members/(?P<pk>\d+)/$', MyProjectMembersId.as_view(), name='my_project_members_id'),
     url(r'^professionals/$', Professionals.as_view(), name='professionals'),
-
     url(r'^projects/$', ListProject.as_view(), name='project_list'),
     url(r'^projects/(?P<pk>\d+)/$', RetrieveProject.as_view(), name='project_detail'),
     url(r'^users/$', ListCreateUser.as_view(), name='user_list'),
