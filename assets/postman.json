@@ -630,6 +630,35 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/schedule/presentation/<id>/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/schedule/presentation/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"schedule",
+						"presentation",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
