@@ -65,6 +65,36 @@
 			"response": []
 		},
 		{
+			"name": "/api/investors/<id>/messages/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"Hello, World!\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/investors/1/messages/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"investors",
+						"1",
+						"messages",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/my_investor/",
 			"request": {
 				"method": "GET",
