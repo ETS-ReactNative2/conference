@@ -110,10 +110,19 @@ class MyProject(APIView):
                 giveaway and 1 <= giveaway <= 3
         ) else None
 
+        image_url = json_body.get('image_url')
+        try:
+            clean_image_url = image_url[:models.URL_MAX_LENGTH] if image_url else ''
+        except:
+            clean_image_url = ''
+
         industry = json_body.get('industry')
         clean_industry = models.Industry.objects.get(pk=industry) if (
                 industry and 1 <= industry <= 41
         ) else models.Industry.objects.get(pk=41)
+
+        is_sponsor = json_body.get('is_sponsor')
+        clean_is_sponsor = is_sponsor if isinstance(is_sponsor, bool) else False
 
         legal_country = json_body.get('legal_country')
         clean_legal_country = legal_country[:models.COUNTRY_MAX_LENGTH] if legal_country else ''
@@ -172,7 +181,9 @@ class MyProject(APIView):
         project.fundraising_amount = clean_fundraising_amount
         project.github = clean_github
         project.giveaway = clean_giveaway
+        project.image_url = clean_image_url
         project.industry = clean_industry
+        project.is_sponsor = clean_is_sponsor
         project.legal_country = clean_legal_country
         project.main_country = clean_main_country
         project.name = clean_name

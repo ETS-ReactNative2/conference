@@ -204,7 +204,11 @@ class Project(models.Model):
 
     giveaway = models.ForeignKey(Giveaway, db_index=True, null=True, blank=True)
 
+    image_url = models.URLField(blank=True, default='')
+
     industry = models.ForeignKey(Industry, db_index=True)
+
+    is_sponsor = models.BooleanField(db_index=True, default=False)
 
     legal_country = models.CharField(db_index=True, max_length=COUNTRY_MAX_LENGTH)
 
