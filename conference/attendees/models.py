@@ -12,6 +12,10 @@ CITY_MAX_LENGTH = 40
 
 COUNTRY_MAX_LENGTH = 2
 
+SKILLS_MAX_LENGTH = 100
+
+TRAITS_MAX_LENGTH = 100
+
 URL_MAX_LENGTH = 200
 
 
@@ -154,26 +158,6 @@ class Payment(models.Model):
         return self.name
 
 
-class Skill(models.Model):
-
-    id = models.IntegerField(primary_key=True, verbose_name='ID')
-
-    name = models.CharField(max_length=56)
-
-    def __str__(self):
-        return self.name
-
-
-class Trait(models.Model):
-
-    id = models.IntegerField(primary_key=True, verbose_name='ID')
-
-    name = models.CharField(max_length=24)
-
-    def __str__(self):
-        return self.name
-
-
 class Project(models.Model):
     """
     A company potentially raising funds.
@@ -273,9 +257,9 @@ class Professional(models.Model):
 
     role_other_text = models.CharField(max_length=JobRole.ROLE_OTHER_TEXT_MAX_LENGTH, blank=True, default='')
 
-    skills = models.ManyToManyField(Skill, blank=True)
+    skills_text = models.CharField(max_length=SKILLS_MAX_LENGTH, blank=True, default='')
 
-    traits = models.ManyToManyField(Trait, blank=True)
+    traits_text = models.CharField(max_length=TRAITS_MAX_LENGTH, blank=True, default='')
 
     know_most = models.CharField(max_length=KNOW_MOST_MAX_LENGTH, blank=True, default='')
 
@@ -345,7 +329,7 @@ class JobListing(models.Model):
 
     role_other_text = models.CharField(max_length=JobRole.ROLE_OTHER_TEXT_MAX_LENGTH, blank=True, default='')
 
-    skills = models.ManyToManyField(Skill, blank=True)
+    skills_text = models.CharField(max_length=SKILLS_MAX_LENGTH, blank=True, default='')
 
     link = models.URLField(blank=True, default='')
 

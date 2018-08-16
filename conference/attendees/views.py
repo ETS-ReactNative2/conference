@@ -113,11 +113,11 @@ class MyProfessional(APIView):
             role_other_text and clean_role.pk == models.JobRole.OTHER
         ) else ''
 
-        skills = json_body.get('skills')
-        clean_skills = [models.Skill.objects.get(pk=skill.get('id')) for skill in skills] if skills else []
+        skills = json_body.get('skills_text')
+        clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
 
-        traits = json_body.get('traits')
-        clean_traits = [models.Trait.objects.get(pk=trait.get('id')) for trait in traits] if traits else []
+        traits = json_body.get('traits_text')
+        clean_traits = traits[:models.TRAITS_MAX_LENGTH] if traits else ''
 
         know_most = json_body.get('know_most')
         clean_know_most = know_most[:models.Professional.KNOW_MOST_MAX_LENGTH] if know_most else ''
@@ -147,8 +147,8 @@ class MyProfessional(APIView):
 
         professional.role = clean_role
         professional.role_other_text = clean_role_other_text
-        professional.skills = clean_skills
-        professional.traits = clean_traits
+        professional.skills_text = clean_skills
+        professional.traits_text = clean_traits
         professional.know_most = clean_know_most
         professional.local_remote_options = clean_local_remote_options
         professional.country = clean_country

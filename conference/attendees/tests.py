@@ -205,8 +205,8 @@ class MyProfessionalTest(AuthMixin):
             json.dumps({
                 'role': 12,
                 'role_other_text': 'aaaaaaaa',
-                'skills': [{'id': 1}, {'id': 2}, {'id': 3}],
-                'traits': [{'id': 1}, {'id': 2}, {'id': 3}],
+                'skills_text': 'skills',
+                'traits_text': 'traits',
                 'know_most': 'aaaaaaaa',
                 'local_remote_options': [1, 2],
                 'country': 'us',
@@ -221,8 +221,8 @@ class MyProfessionalTest(AuthMixin):
         response_dict = json.loads(response.content)
         self.assertEqual(response_dict.get('role'), 12)
         self.assertEqual(response_dict.get('role_other_text'), 'aaaaaaaa')
-        self.assertEqual(response_dict.get('skills'), [1, 2, 3])
-        self.assertEqual(response_dict.get('traits'), [1, 2, 3])
+        self.assertEqual(response_dict.get('skills_text'), 'skills')
+        self.assertEqual(response_dict.get('traits_text'), 'traits')
         self.assertEqual(response_dict.get('know_most'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('local_remote_options'), [1, 2])
         self.assertEqual(response_dict.get('country'), 'us')
@@ -239,8 +239,8 @@ class MyProfessionalTest(AuthMixin):
         response_dict = json.loads(response.content)
         self.assertEqual(response_dict.get('role'), 12)
         self.assertEqual(response_dict.get('role_other_text'), '')
-        self.assertEqual(response_dict.get('skills'), [])
-        self.assertEqual(response_dict.get('traits'), [])
+        self.assertEqual(response_dict.get('skills_text'), '')
+        self.assertEqual(response_dict.get('traits_text'), '')
         self.assertEqual(response_dict.get('know_most'), '')
         self.assertEqual(response_dict.get('local_remote_options'), [2])
         self.assertEqual(response_dict.get('country'), '')
@@ -258,8 +258,8 @@ class MyProfessionalTest(AuthMixin):
             json.dumps({
                 'role': 12,
                 'role_other_text': 'aaaaaaaa',
-                'skills': [{'id': 1}, {'id': 2}, {'id': 3}],
-                'traits': [{'id': 1}, {'id': 2}, {'id': 3}],
+                'skills_text': 'skills',
+                'traits_text': 'traits',
                 'know_most': 'aaaaaaaa',
                 'local_remote_options': [1, 2],
                 'country': 'us',
@@ -277,8 +277,8 @@ class MyProfessionalTest(AuthMixin):
         response_dict = json.loads(response.content)
         self.assertEqual(response_dict.get('role'), 12)
         self.assertEqual(response_dict.get('role_other_text'), '')
-        self.assertEqual(response_dict.get('skills'), [])
-        self.assertEqual(response_dict.get('traits'), [])
+        self.assertEqual(response_dict.get('skills_text'), '')
+        self.assertEqual(response_dict.get('traits_text'), '')
         self.assertEqual(response_dict.get('know_most'), '')
         self.assertEqual(response_dict.get('local_remote_options'), [2])
         self.assertEqual(response_dict.get('country'), '')
@@ -317,8 +317,8 @@ class ProfessionalsTest(AuthMixin):
         response_professional_0 = response_list[0]
         self.assertEqual(response_professional_0.get('role'), None)
         self.assertEqual(response_professional_0.get('role_other_text'), '')
-        self.assertEqual(response_professional_0.get('skills'), [])
-        self.assertEqual(response_professional_0.get('traits'), [])
+        self.assertEqual(response_professional_0.get('skills_text'), '')
+        self.assertEqual(response_professional_0.get('traits_text'), '')
         self.assertEqual(response_professional_0.get('know_most'), '')
         self.assertEqual(response_professional_0.get('local_remote_options'), [])
         self.assertEqual(response_professional_0.get('country'), '')

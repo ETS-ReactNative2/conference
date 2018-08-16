@@ -114,7 +114,7 @@ export function uploadProfile() {
                             const job = employer[key]
                             return api.createJob({
                                 role: ROLES.find(role => role.slug === key).index,
-                                skills: job.keywords.map(key => key.id),
+                                skillsText: job.keywords,
                                 link: job.link,
                                 description: job.description,
                                 partTime: job.partTime,
@@ -142,8 +142,8 @@ export function uploadProfile() {
                     return await api.putMyProfessional({
                         role: employee.role,
                         roleOtherText: employee.roleOtherText,
-                        skills: employee.skills,
-                        traits: employee.traits,
+                        skillsText: employee.skills,
+                        traitsText: employee.traits,
                         knowMost: employee.knowMost,
                         localRemoteOptions: employee.localRemoteOptions,
                         country: employee.country,

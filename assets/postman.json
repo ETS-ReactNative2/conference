@@ -246,7 +246,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other_text\": \"aaaaaaaa\",\n    \"skills\": [1, 2, 3],\n    \"traits\": [1, 2, 3],\n    \"know_most\": \"aaaaaaaa\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"aaaaaaaa\",\n    \"age\": 42,\n    \"experience\": 23\n}"
+					"raw": "{\n    \"role\": 12,\n    \"role_other_text\": \"aaaaaaaa\",\n    \"skills_text\": \"skills\",\n    \"traits_text\": \"traits\",\n    \"know_most\": \"aaaaaaaa\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"aaaaaaaa\",\n    \"age\": 42,\n    \"experience\": 23\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_professional/",
@@ -359,7 +359,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills\": [1, 2, 3],\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
+					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills_text\": \"skills\",\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_project/jobs/",
@@ -443,7 +443,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills\": [1, 2, 3],\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
+					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills_text\": \"skills\",\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_project/jobs/1/",

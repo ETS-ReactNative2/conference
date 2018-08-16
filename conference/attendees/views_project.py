@@ -245,8 +245,8 @@ class MyProjectJobs(APIView):
             role_other_text and clean_role.pk == models.JobRole.OTHER
         ) else ''
 
-        skills = json_body.get('skills')
-        clean_skills = [models.Skill.objects.get(pk=pk) for pk in skills] if skills else []
+        skills = json_body.get('skills_text')
+        clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
 
         link = json_body.get('link')
         clean_link = link[:models.URL_MAX_LENGTH] if link else ''
@@ -280,6 +280,7 @@ class MyProjectJobs(APIView):
         job_listing = models.JobListing.objects.create(
             role=clean_role,
             role_other_text=clean_role_other_text,
+            skills_text=clean_skills,
             link=clean_link,
             description=clean_description,
             part_time=clean_part_time,
@@ -287,7 +288,6 @@ class MyProjectJobs(APIView):
             city=clean_city,
             project=project,
         )
-        job_listing.skills = clean_skills
         job_listing.payments = clean_payments
         job_listing.local_remote_options = clean_local_remote_options
         job_listing.save()
@@ -381,7 +381,7 @@ class MyProjectJobsId(APIView):
         ) else ''
 
         skills = json_body.get('skills')
-        clean_skills = [models.Skill.objects.get(pk=pk) for pk in skills] if skills else []
+        clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
 
         link = json_body.get('link')
         clean_link = link[:models.URL_MAX_LENGTH] if link else ''
@@ -418,7 +418,7 @@ class MyProjectJobsId(APIView):
         job_listing.part_time = clean_part_time
         job_listing.country = clean_country
         job_listing.city = clean_city
-        job_listing.skills = clean_skills
+        job_listing.skills_text = clean_skills
         job_listing.payments = clean_payments
         job_listing.local_remote_options = clean_local_remote_options
         job_listing.save()
