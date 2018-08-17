@@ -147,6 +147,18 @@ class MyProject(APIView):
                 product_stage and 1 <= product_stage <= 3
         ) else None
 
+        services_consumed_other_text = json_body.get('services_consumed_other_text')
+        clean_services_consumed_other_text =\
+            services_consumed_other_text[:models.Project.SERVICES_CONSUMED_OTHER_TEXT_MAX_LENGTH] if (
+                services_consumed_other_text
+            ) else ''
+
+        services_provided_other_text = json_body.get('services_provided_other_text')
+        clean_services_provided_other_text =\
+            services_provided_other_text[:models.Project.SERVICES_PROVIDED_OTHER_TEXT_MAX_LENGTH] if (
+                services_provided_other_text
+            ) else ''
+
         size = json_body.get('size')
         clean_size = size if size and size >= 0 else 0
 
@@ -190,6 +202,8 @@ class MyProject(APIView):
         project.news = clean_news
         project.notable = clean_notable
         project.product_stage = clean_product_stage
+        project.services_consumed_other_text = clean_services_consumed_other_text
+        project.services_provided_other_text = clean_services_provided_other_text
         project.size = clean_size
         project.tagline = clean_tagline
         project.telegram = clean_telegram
@@ -197,8 +211,22 @@ class MyProject(APIView):
         project.twitter = clean_twitter
         project.website = clean_website
         project.whitepaper = clean_whitepaper
-
         project.save()
+
+        services_consumed = json_body.get('services_consumed')
+        clean_services_consumed = [models.Service.objects.get(pk=pk) for pk in services_consumed] if (
+            services_consumed
+        ) else []
+
+        services_provided = json_body.get('services_provided')
+        clean_services_provided = [models.Service.objects.get(pk=pk) for pk in services_provided] if (
+            services_provided
+        ) else []
+
+        project.services_consumed = clean_services_consumed
+        project.services_provided = clean_services_provided
+        project.save()
+
         request.user.conference_user.project = project
         request.user.conference_user.save()
         return JsonResponse(serializers.ProjectSerializer(project).data, status=status.HTTP_201_CREATED)

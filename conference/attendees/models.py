@@ -96,6 +96,16 @@ class Region(models.Model):
         return self.name
 
 
+class Service(models.Model):
+
+    id = models.IntegerField(primary_key=True, verbose_name='ID')
+
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
 class TicketSize(models.Model):
 
     POSITIVE_INFINITY = 2147483647
@@ -172,6 +182,10 @@ class Project(models.Model):
 
     NOTABLE_MAX_LENGTH = 250
 
+    SERVICES_CONSUMED_OTHER_TEXT_MAX_LENGTH = 100
+
+    SERVICES_PROVIDED_OTHER_TEXT_MAX_LENGTH = 100
+
     TAGLINE_MAX_LENGTH = 60
 
     TELEGRAM_MAX_LENGTH = 32
@@ -205,6 +219,16 @@ class Project(models.Model):
     notable = models.CharField(max_length=NOTABLE_MAX_LENGTH, blank=True, default='')
 
     product_stage = models.ForeignKey(ProductStage, db_index=True, null=True, blank=True)
+
+    services_consumed = models.ManyToManyField(Service, blank=True, related_name='projects_consuming')
+
+    services_consumed_other_text = models.CharField(max_length=SERVICES_CONSUMED_OTHER_TEXT_MAX_LENGTH, blank=True,
+                                                    default='')
+
+    services_provided = models.ManyToManyField(Service, blank=True, related_name='projects_providing')
+
+    services_provided_other_text = models.CharField(max_length=SERVICES_PROVIDED_OTHER_TEXT_MAX_LENGTH, blank=True,
+                                                    default='')
 
     size = models.PositiveIntegerField(default=0)
 

@@ -61,6 +61,8 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
             news='http://www.example.com',
             notable='aaaaaaaa',
             product_stage=models.ProductStage.objects.get(pk=1),
+            services_consumed_other_text='services consumed other text',
+            services_provided_other_text='services provided other text',
             size=2147483647,
             tagline='aaaaaaaa',
             telegram='aaaaaaaa',
@@ -69,6 +71,9 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
             website='http://www.example.com',
             whitepaper='http://www.example.com',
         )
+        project.services_consumed = models.Service.objects.all()
+        project.services_provided = models.Service.objects.all()
+        project.save()
         response = self.client.get(reverse(self.view(), kwargs={'pk': project.id}), **self.header)
         self.assertEquals(response.status_code, 200)
         response_dict = json.loads(response.content)
@@ -86,6 +91,10 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('news'), 'http://www.example.com')
         self.assertEqual(response_dict.get('notable'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('product_stage'), 1)
+        self.assertEqual(response_dict.get('services_consumed'), range(1, 19))
+        self.assertEqual(response_dict.get('services_consumed_other_text'), 'services consumed other text')
+        self.assertEqual(response_dict.get('services_provided'), range(1, 19))
+        self.assertEqual(response_dict.get('services_provided_other_text'), 'services provided other text')
         self.assertEqual(response_dict.get('size'), 2147483647)
         self.assertEqual(response_dict.get('tagline'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('telegram'), 'aaaaaaaa')
@@ -140,6 +149,10 @@ class MyProjectTest(AuthMixin):
                 'news': 'http://www.example.com',
                 'notable': 'aaaaaaaa',
                 'product_stage': 1,
+                'services_consumed': range(1, 19),
+                'services_consumed_other_text': 'services consumed other text',
+                'services_provided': range(1, 19),
+                'services_provided_other_text': 'services provided other text',
                 'size': 2147483647,
                 'tagline': 'aaaaaaaa',
                 'telegram': 'aaaaaaaa',
@@ -167,6 +180,10 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(response_dict.get('news'), 'http://www.example.com')
         self.assertEqual(response_dict.get('notable'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('product_stage'), 1)
+        self.assertEqual(response_dict.get('services_consumed'), range(1, 19))
+        self.assertEqual(response_dict.get('services_consumed_other_text'), 'services consumed other text')
+        self.assertEqual(response_dict.get('services_provided'), range(1, 19))
+        self.assertEqual(response_dict.get('services_provided_other_text'), 'services provided other text')
         self.assertEqual(response_dict.get('size'), 2147483647)
         self.assertEqual(response_dict.get('tagline'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('telegram'), 'aaaaaaaa')
@@ -190,6 +207,10 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(project.news, 'http://www.example.com')
         self.assertEqual(project.notable, 'aaaaaaaa')
         self.assertEqual(project.product_stage, models.ProductStage.objects.get(pk=1))
+        self.assertEqual(list(project.services_consumed.all()), list(models.Service.objects.all()))
+        self.assertEqual(project.services_consumed_other_text, 'services consumed other text')
+        self.assertEqual(list(project.services_provided.all()), list(models.Service.objects.all()))
+        self.assertEqual(project.services_provided_other_text, 'services provided other text')
         self.assertEqual(project.size, 2147483647)
         self.assertEqual(project.tagline, 'aaaaaaaa')
         self.assertEqual(project.telegram, 'aaaaaaaa')
@@ -216,6 +237,10 @@ class MyProjectTest(AuthMixin):
                 'news': '',
                 'notable': '',
                 'product_stage': '',
+                'services_consumed': [],
+                'services_consumed_other_text': '',
+                'services_provided': [],
+                'services_provided_other_text': '',
                 'size': 0,
                 'tagline': '',
                 'telegram': '',
@@ -244,6 +269,10 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(response_dict.get('news'), '')
         self.assertEqual(response_dict.get('notable'), '')
         self.assertEqual(response_dict.get('product_stage'), None)
+        self.assertEqual(response_dict.get('services_consumed'), [])
+        self.assertEqual(response_dict.get('services_consumed_other_text'), '')
+        self.assertEqual(response_dict.get('services_provided'), [])
+        self.assertEqual(response_dict.get('services_provided_other_text'), '')
         self.assertEqual(response_dict.get('size'), 0)
         self.assertEqual(response_dict.get('tagline'), '')
         self.assertEqual(response_dict.get('telegram'), '')
@@ -267,6 +296,10 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(project.news, '')
         self.assertEqual(project.notable, '')
         self.assertEqual(project.product_stage, None)
+        self.assertEqual(list(project.services_consumed.all()), [])
+        self.assertEqual(project.services_consumed_other_text, '')
+        self.assertEqual(list(project.services_provided.all()), [])
+        self.assertEqual(project.services_provided_other_text, '')
         self.assertEqual(project.size, 0)
         self.assertEqual(project.tagline, '')
         self.assertEqual(project.telegram, '')
@@ -294,6 +327,10 @@ class MyProjectTest(AuthMixin):
                 'news': 'http://www.example.com',
                 'notable': 'aaaaaaaa',
                 'product_stage': 1,
+                'services_consumed': range(1, 19),
+                'services_consumed_other_text': 'services consumed other text',
+                'services_provided': range(1, 19),
+                'services_provided_other_text': 'services provided other text',
                 'size': 2147483647,
                 'tagline': 'aaaaaaaa',
                 'telegram': 'aaaaaaaa',
@@ -323,6 +360,10 @@ class MyProjectTest(AuthMixin):
                 'news': '',
                 'notable': '',
                 'product_stage': '',
+                'services_consumed': [],
+                'services_consumed_other_text': '',
+                'services_provided': [],
+                'services_provided_other_text': '',
                 'size': 0,
                 'tagline': '',
                 'telegram': '',
@@ -352,6 +393,10 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(response_dict.get('news'), '')
         self.assertEqual(response_dict.get('notable'), '')
         self.assertEqual(response_dict.get('product_stage'), None)
+        self.assertEqual(response_dict.get('services_consumed'), [])
+        self.assertEqual(response_dict.get('services_consumed_other_text'), '')
+        self.assertEqual(response_dict.get('services_provided'), [])
+        self.assertEqual(response_dict.get('services_provided_other_text'), '')
         self.assertEqual(response_dict.get('size'), 0)
         self.assertEqual(response_dict.get('tagline'), '')
         self.assertEqual(response_dict.get('telegram'), '')
@@ -375,6 +420,10 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(project.news, '')
         self.assertEqual(project.notable, '')
         self.assertEqual(project.product_stage, None)
+        self.assertEqual(list(project.services_consumed.all()), [])
+        self.assertEqual(project.services_consumed_other_text, '')
+        self.assertEqual(list(project.services_provided.all()), [])
+        self.assertEqual(project.services_provided_other_text, '')
         self.assertEqual(project.size, 0)
         self.assertEqual(project.tagline, '')
         self.assertEqual(project.telegram, '')
