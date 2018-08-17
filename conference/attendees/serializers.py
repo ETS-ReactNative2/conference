@@ -23,6 +23,8 @@ class ConferenceUserSerializer(serializers.ModelSerializer):
 
 
 class InvestorSerializer(serializers.ModelSerializer):
+    user = ConferenceUserSerializer(source='conference_user')
+
     class Meta:
         model = models.Investor
         fields = (
@@ -36,6 +38,7 @@ class InvestorSerializer(serializers.ModelSerializer):
             'region_other_text',
             'ticket_sizes',
             'token_types',
+            'user',
         )
 
     @transaction.atomic
@@ -91,6 +94,7 @@ class JobListingSerializer(serializers.ModelSerializer):
 
 class ProfessionalSerializer(serializers.ModelSerializer):
     user = ConferenceUserSerializer()
+
     class Meta:
         model = models.Professional
         fields = (
