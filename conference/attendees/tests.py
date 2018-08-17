@@ -337,13 +337,13 @@ class ProfessionalsTest(AuthMixin):
         self.assertEqual(response_conference_user_0.get('linkedin'), 'linkedin')
 
 
-class UsersViewTest(AuthMixin):
+class UsersViewTest(TestCase):
 
     def view(self):
         return 'user_list'
 
     def test_get(self):
-        response = self.client.get(reverse(self.view()), **self.header)
+        response = self.client.get(reverse(self.view()))
         self.assertEqual(response.status_code, 405)
 
     def test_post_existing(self):
@@ -354,7 +354,6 @@ class UsersViewTest(AuthMixin):
                 'password': 'aaaaaaaa',
             }),
             content_type='application/json',
-            **self.header
         )
         response = self.client.post(
             reverse(self.view()),
@@ -363,12 +362,11 @@ class UsersViewTest(AuthMixin):
                 'password': 'aaaaaaaa',
             }),
             content_type='application/json',
-            **self.header
         )
         self.assertEqual(response.status_code, 409)
         self.assertEqual(response.data, 'email_exists')
-        self.assertEqual(models.User.objects.count(), 2)
-        self.assertEqual(models.ConferenceUser.objects.count(), 2)
+        self.assertEqual(models.User.objects.count(), 1)
+        self.assertEqual(models.ConferenceUser.objects.count(), 1)
 
     def test_post(self):
         response = self.client.post(
@@ -378,7 +376,6 @@ class UsersViewTest(AuthMixin):
                 'password': 'aaaaaaaa',
             }),
             content_type='application/json',
-            **self.header
         )
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.get('email'), 'a@b.cc')
@@ -388,8 +385,8 @@ class UsersViewTest(AuthMixin):
         self.assertNotIn('password', response.data)
         self.assertNotIn('username', response.data)
 
-        self.assertEqual(models.User.objects.count(), 2)
-        self.assertEqual(models.ConferenceUser.objects.count(), 2)
+        self.assertEqual(models.User.objects.count(), 1)
+        self.assertEqual(models.ConferenceUser.objects.count(), 1)
 
         user = models.User.objects.get(email='a@b.cc')
         self.assertEqual(user.email, 'a@b.cc')
@@ -405,7 +402,6 @@ class UsersViewTest(AuthMixin):
                 'password': 'aaaaaaaa',
             }),
             content_type='application/json',
-            **self.header
         )
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data, 'email_missing')
@@ -418,7 +414,6 @@ class UsersViewTest(AuthMixin):
                 'password': 'aaaaaaaa',
             }),
             content_type='application/json',
-            **self.header
         )
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data, 'email_missing')
@@ -430,7 +425,6 @@ class UsersViewTest(AuthMixin):
                 'email': 'A@b.Cc',
             }),
             content_type='application/json',
-            **self.header
         )
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data, 'password_missing')
@@ -443,14 +437,33 @@ class UsersViewTest(AuthMixin):
                 'password': '',
             }),
             content_type='application/json',
-            **self.header
         )
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data, 'password_missing')
 
     def test_post_no_data(self):
-        response = self.client.post(reverse(self.view()), **self.header)
+        response = self.client.post(reverse(self.view()))
         self.assertEqual(response.status_code, 400)
+
+    def test_post_with_project_member(self):
+        # Arrange
+        project = models.Project.objects.create(industry=models.Industry.objects.get(pk=1))
+        models.ProjectMember.objects.create(email='foo@bar.baz', project=project)
+        # Act
+        response = self.client.post(
+            reverse(self.view()),
+            json.dumps({
+                'email': 'foo@bar.baz',
+                'password': 'password',
+            }),
+            content_type='application/json',
+        )
+        # Assert
+        self.assertEqual(response.status_code, 201)
+        user = models.User.objects.get(email='foo@bar.baz')
+        conference_user = models.ConferenceUser.objects.get(user=user)
+        self.assertEqual(conference_user.project, project)
+        self.assertEqual(models.ProjectMember.objects.count(), 0)
 
 
 class UsersIdViewTest(SharedDetailViewMixin):

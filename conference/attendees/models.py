@@ -245,6 +245,13 @@ class Project(models.Model):
     whitepaper = models.URLField(blank=True, default='')
 
 
+class ProjectMember(models.Model):
+
+    email = models.EmailField(primary_key=True)
+
+    project = models.ForeignKey(Project)
+
+
 class Investor(models.Model):
     """
     A company doing investing.

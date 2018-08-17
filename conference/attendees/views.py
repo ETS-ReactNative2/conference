@@ -216,6 +216,13 @@ class ListCreateUser(APIView):
             password=make_password(password),
             username=clean_email,
         )
+        project_member_queryset = models.ProjectMember.objects.filter(email=clean_email)
+        if project_member_queryset.exists():
+            project_member = project_member_queryset.get()
+            conference_user = models.ConferenceUser.objects.get(user=user)
+            conference_user.project = project_member.project
+            conference_user.save()
+            project_member.delete()
         serializer = serializers.UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
