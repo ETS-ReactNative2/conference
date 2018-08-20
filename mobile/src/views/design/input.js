@@ -44,21 +44,24 @@ export class Input extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.label}>{this.props.labelText}</Text>
-        <Item style={this.getBorderStyle(this.props.status)}>
-          <InputGroup style={styles.inputGroup}>
-            <NativeBaseInput style={this.getInputTextStyling(this.props.value, this.props.status)} placeholder={this.props.placeholder}
-                            keyboardType={this.props.keyboardType}
-                            secureTextEntry={this.props.isSecure}
-                            value={this.props.value}
-                            onChangeText={ newValue => this.props.onChangeText(newValue) }/>
-            {this.props.status === 'error' && (
-              <Icon active style={this.getIconStyling(this.props.status)} type="FontAwesome"  name="exclamation-circle" />
-            )}
-            {this.props.status === 'ok' && (
-              <Icon active style={this.getIconStyling(this.props.status)} type="FontAwesome"  name="check" />
-            )}
-          </InputGroup>
-        </Item>
+        <View style={this.getBorderStyle(this.props.status)}>
+          <Item style={{borderColor: 'transparent' }}>
+            <InputGroup style={{borderColor: 'transparent' }}>
+              <NativeBaseInput style={this.getInputTextStyling(this.props.value, this.props.status)} placeholder={this.props.placeholder}
+                              keyboardType={this.props.keyboardType}
+                              secureTextEntry={this.props.isSecure}
+                              value={this.props.value}
+                              onChangeText={ newValue => this.props.onChangeText(newValue) }/>
+              {this.props.status === 'error' && (
+                <Icon active style={this.getIconStyling(this.props.status)} type="FontAwesome"  name="exclamation-circle" />
+              )}
+              {this.props.status === 'ok' && (
+                <Icon active style={this.getIconStyling(this.props.status)} type="FontAwesome"  name="check" />
+              )}
+            </InputGroup>
+          </Item>
+          {this.props.children}
+        </View>
       </View>
     );
   }
@@ -69,6 +72,7 @@ const styles = EStyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   item: {
+    borderBottomWidth: 2,
     marginLeft: 0
   },
   borderRegular: {
@@ -86,9 +90,6 @@ const styles = EStyleSheet.create({
   textError: {
     color: ERROR_COLOR
   },
-  inputGroup: {
-    backgroundColor: '#F9F9F9'
-  },
   iconError: {
     color: ERROR_COLOR
   },
@@ -96,7 +97,7 @@ const styles = EStyleSheet.create({
     color: OK_COLOR
   },
   input: {
-    height: 70,
+    height: 60,
     paddingLeft: 10
   },
   placeholder: {
@@ -104,7 +105,7 @@ const styles = EStyleSheet.create({
   },
   label: {
     fontFamily: 'Montserrat-Regular',
-    color: '#000000',
+    color: '#888888',
     fontSize: 14,
     paddingTop: 5,
     paddingBottom: 5

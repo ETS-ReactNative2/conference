@@ -15,7 +15,7 @@ import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation } from './i
 const options = [
   {
     slug: 'meeting',
-    value: 'attendant'
+    value: 'employee'
   },
   {
     slug: 'projects',

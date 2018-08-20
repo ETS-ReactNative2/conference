@@ -4,7 +4,10 @@ import { BackHandler } from 'react-native'
 import { connect } from 'react-redux'
 import { PAGES_NAMES } from '../../../navigation'
 import { signUpActions } from '../../../signup'
-import { CommonProfileOnboarding, CommonProfileType, InvesteeProjectLocation } from './steps'
+import {
+  CommonProfileOnboarding,
+  CommonProfileType,
+} from './steps'
 
 class FlowPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -26,7 +29,7 @@ class FlowPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      CurrentStep: CommonProfileOnboarding,
+      CurrentStep: CommonProfileType,
       PreviousSteps: []
     }
     BackHandler.addEventListener(
@@ -43,7 +46,7 @@ class FlowPage extends React.Component {
   }
 
   getBackgroundColor = () => {
-    return this.state.CurrentStep.BACKGROUND_COLOR || 'white'
+    return this.state.CurrentStep.BACKGROUND_COLOR || '#603695'
   }
 
   onHeaderBackButton = () => {
@@ -91,7 +94,6 @@ class FlowPage extends React.Component {
     else {
       try {
         await uploadProfile()
-        //TODO
         navigation.navigate(PAGES_NAMES.HOME_PAGE)
       } catch (err) {
         console.error(err)

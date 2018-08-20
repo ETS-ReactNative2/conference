@@ -5,6 +5,7 @@ import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import LoginPage from '../../../src/views/pages/login/login-page'
 import { globalActionsTypes } from '../../../src/global'
+import { signUpActionsTypes } from '../../../src/signup'
 import InputValidated from '../../../src/views/design/input-validated'
 import { BlackButton } from '../../../src/views/design/buttons'
 
@@ -112,12 +113,16 @@ describe('LoginPage Component', () => {
           const loginButtonProps = loginButton.props()
           loginButtonProps.onPress()
           const expectedActions = [{
-              type: globalActionsTypes.SET_LOADING,
-              data: {
-                  message: "Mocked translation"
-              }
-            }
-          ]
+              payload: [{
+                  type: signUpActionsTypes.CLEAR_LOGIN_USER_ERROR
+              }, {
+                  type: globalActionsTypes.SET_LOADING,
+                  data: {
+                    message: "Mocked translation"
+                }
+            }],
+            type: "ENHANCED_BATCHING.BATCH"
+          }]
           expect(store.getActions()).toEqual(expectedActions)
       });
 })

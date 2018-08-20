@@ -1,21 +1,35 @@
-import { Container, Form, Icon, Input, Item, Label, View } from 'native-base'
-import PropTypes from 'prop-types'
+import { Form } from 'native-base'
 import React from 'react'
-import { ScrollView } from 'react-native'
+import { ImageBackground, ScrollView, View } from 'react-native'
+import { SafeAreaView } from 'react-navigation'
+import LinearGradient from 'react-native-linear-gradient'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import validator from 'validator'
+import { batchActions } from 'redux-batch-enhancer'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { FlowButton } from '../../../design/buttons'
 import FlowInputValidated from '../../../design/flow-input-validated'
 import FlowInput from '../../../design/flow-inputs'
 import { StepTitle } from '../../../design/step-title'
-import { CommonProfileType } from './index'
+import WelcomePageBackgroundImage from '../../../../assets/images/welcome_screen_background.png'
+import HeaderSkip from '../../../components/header/header-skip'
+import WhiteLogo from '../../../../assets/logos/logo-white.png'
+import { PAGES_NAMES } from '../../../../navigation/index'
+import { BlackButton } from '../../../design/buttons'
+import Alert from '../../../components/alert/alert'
+
+const errorStyleOverride = {
+  border: {
+    borderColor: '#000000',
+    borderBottomColor: '#000000'
+  },
+  text: {
+    color: '#000000'
+  }
+}
 
 class CommonProfileOnboarding extends React.Component {
-  static BACKGROUND_COLOR = '#2C65E2'
 
   constructor (props) {
     super(props)
@@ -61,125 +75,164 @@ class CommonProfileOnboarding extends React.Component {
       facebook: this.state.facebook,
       telegram: this.state.telegram,
       linkedin: this.state.linkedin
-    })
-    this.props.onFill({ nextStep: CommonProfileType })
+    }, PAGES_NAMES.FLOW_PAGE)
   }
 
   handleFieldChange = (newValue, name) => {
+    if (this.props.isError) {
+      this.props.clearErrors();
+    }
     this.setState({
       [ name ]: newValue
     }, this.validateForm)
   }
 
   render () {
+    console.log(this.props)
+    const { navigate } = this.props.navigation
     return (
-      <Container style={ styles.container }>
-        <StepTitle text={ I18n.t('flow_page.common.profile_onboarding.title') }/>
-        <ScrollView style={ { flex: 1}}>
-          <Form>
-            <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-              <FlowInputValidated
-                floatingLabel={ true }
-                value={ this.state.firstName }
-                placeholder={ I18n.t('flow_page.common.profile_onboarding.first_name') }
-                labelText={ I18n.t('flow_page.common.profile_onboarding.first_name') }
-                isError={ !this.validateProfileFirstName(this.state.firstName) }
-                errorMessage={ I18n.t('common.errors.incorrect_profile_first_name') }
-                onChangeText={ (newValue) => this.handleFieldChange(newValue, 'firstName') }/>
-            </View>
-            <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-              <FlowInputValidated
-                floatingLabel={ true }
-                value={ this.state.lastName }
-                placeholder={ I18n.t('flow_page.common.profile_onboarding.last_name') }
-                labelText={ I18n.t('flow_page.common.profile_onboarding.last_name') }
-                isError={ !this.validateProfileLastName(this.state.lastName) }
-                errorMessage={ I18n.t('common.errors.incorrect_profile_last_name') }
-                onChangeText={ (newValue) => this.handleFieldChange(newValue, 'lastName') }/>
-            </View>
-            <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-              <FlowInput
-                floatingLabel={ true }
-                labelText={ I18n.t('flow_page.common.profile_onboarding.titleField') }
-                value={ this.state.title }
-                status={ this.state.title.length > 0 ? 'ok' : 'regular' }
-                onChangeText={ text => this.handleFieldChange(text, 'title') }/>
-            </View>
-            <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-              <FlowInput
-                floatingLabel={ true }
-                labelText={ I18n.t('flow_page.common.profile_onboarding.company') }
-                value={ this.state.company }
-                status={ this.state.company.length > 0 ? 'ok' : 'regular' }
-                onChangeText={ text => this.handleFieldChange(text, 'company') }/>
-            </View>
-            <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-              <FlowInput
-                leftIcon={'logo-twitter'}
-                floatingLabel={ true }
-                labelText={ I18n.t('common.personal_twitter') }
-                value={ this.state.twitter }
-                status={ this.state.twitter.length > 0 ? 'ok' : 'regular' }
-                onChangeText={ text => this.handleFieldChange(text, 'twitter') }/>
-            </View>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#000000'}} forceInset={{top: 'always'}}>
+        <ImageBackground source={WelcomePageBackgroundImage} style={styles.imageContainer} blurRadius={1}>
+          <LinearGradient style={{flex: 1}} locations={[0,0.4,0.8]} colors={['rgba(0, 0, 0, 1)', 'rgba(255, 0, 92 ,0.8)', 'rgba(156, 26, 73, 0.7)']}>
+            <View style={ styles.content }>
+              <ScrollView contentContainerStyle={{flexGrow: 1}}>
+                <HeaderSkip title={I18n.t('flow_page.common.profile_onboarding.header')}
+                            rightIconSource={WhiteLogo}
+                            titleStyle={styles.headerTitle}
+                            onSkipClick={() => { navigate(PAGES_NAMES.HOME_PAGE) } }/>
+                <View style={styles.pageTitleContainer}>
+                  <StepTitle text={ I18n.t('flow_page.common.profile_onboarding.title') } textStyle={styles.pageTitle}/>
+                </View>
+                {this.props.isError && (
+                  <Alert color="error" message={this.props.errorMessage} errorStyleOverride={errorStyleOverride} />
+                )}
+                <View style={ { flex: 1}}>
+                  <Form>
+                    <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                      <FlowInputValidated
+                        floatingLabel={ true }
+                        value={ this.state.firstName }
+                        placeholder={ I18n.t('flow_page.common.profile_onboarding.first_name') }
+                        labelText={ I18n.t('flow_page.common.profile_onboarding.first_name') }
+                        isError={ !this.validateProfileFirstName(this.state.firstName) }
+                        errorMessage={ I18n.t('common.errors.incorrect_profile_first_name') }
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'firstName') }
+                        errorStyleOverride={errorStyleOverride}/>
+                    </View>
+                    <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                      <FlowInputValidated
+                        floatingLabel={ true }
+                        value={ this.state.lastName }
+                        placeholder={ I18n.t('flow_page.common.profile_onboarding.last_name') }
+                        labelText={ I18n.t('flow_page.common.profile_onboarding.last_name') }
+                        isError={ !this.validateProfileLastName(this.state.lastName) }
+                        errorMessage={ I18n.t('common.errors.incorrect_profile_last_name') }
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'lastName') }
+                        errorStyleOverride={errorStyleOverride}/>
+                    </View>
+                    <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                      <FlowInput
+                        floatingLabel={ true }
+                        status={ 'error' }
+                        placeholder={ 'Job title' }
+                        labelText={ I18n.t('flow_page.common.profile_onboarding.titleField') }
+                        value={ this.state.title }
+                        status='regular'
+                        onChangeText={ text => this.handleFieldChange(text, 'title') }/>
+                    </View>
+                    <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                      <FlowInput
+                        floatingLabel={ true }
+                        status={ 'error' }
+                        placeholder={ 'Company' }
+                        labelText={ I18n.t('flow_page.common.profile_onboarding.company') }
+                        value={ this.state.company }
+                        status='regular'
+                        onChangeText={ text => this.handleFieldChange(text, 'company') }/>
+                    </View>
 
-            <Item floatingLabel>
-              <Icon active name='logo-twitter'/>
-              <Label>{ I18n.t('common.personal_twitter') }</Label>
-              <Input
-                onChangeText={ text => this.handleFieldChange(text, 'twitter') }
-                value={ this.state.twitter }
-              />
-            </Item>
-            <Item floatingLabel>
-              <Icon active name='logo-facebook'/>
-              <Label>{ I18n.t('common.personal_facebook') }</Label>
-              <Input
-                onChangeText={ text => this.handleFieldChange(text, 'facebook') }
-                value={ this.state.facebook }
-              />
-            </Item>
-            <Item floatingLabel>
-              <Icon active name='paper-plane'/>
-              <Label>{ I18n.t('common.personal_telegram') }</Label>
-              <Input
-                onChangeText={ text => this.handleFieldChange(text, 'telegram') }
-                value={ this.state.telegram }
-              />
-            </Item>
-            <Item floatingLabel>
-              <Icon active name='logo-linkedin'/>
-              <Label>{ I18n.t('common.personal_linkedin') }</Label>
-              <Input
-                onChangeText={ text => this.handleFieldChange(text, 'linkedin') }
-                value={ this.state.linkedin }
-              />
-            </Item>
-          </Form>
-        </ScrollView>
-        <View style={ { margin: 8 } }>
-          <FlowButton
-            text={ I18n.t('common.next') }
-            disabled={ !this.state.isFormValid }
-            onPress={ this.handleSubmit }
-          />
-        </View>
-      </Container>
+                    <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                      <FlowInput
+                        floatingLabel={ true }
+                        status='regular'
+                        value={ this.state.twitter }
+                        placeholder=''
+                        labelText={ I18n.t('common.personal_twitter') }
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'twitter') } />
+                    </View>
+                    <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                      <FlowInput
+                        floatingLabel={ true }
+                        status='regular'
+                        value={ this.state.facebook }
+                        placeholder=''
+                        labelText={ I18n.t('common.personal_facebook') }
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'facebook') } />
+                    </View>
+                    <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                      <FlowInput
+                        floatingLabel={ true }
+                        status='regular'
+                        value={ this.state.telegram }
+                        placeholder=''
+                        labelText={ I18n.t('common.personal_telegram') }
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'telegram') } />
+                    </View>
+                    <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                      <FlowInput
+                        floatingLabel={ true }
+                        status='regular'
+                        value={ this.state.linkedin }
+                        placeholder=''
+                        labelText={ I18n.t('common.personal_linkedin') }
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'linkedin') } />
+                    </View>
+                  </Form>
+                </View>
+              </ScrollView>
+              <View style={ { margin: 8 } }>
+                <BlackButton
+                  text={ I18n.t('common.next') }
+                  disabled={ !this.state.isFormValid }
+                  onPress={ this.handleSubmit }
+                />
+              </View>
+            </View>
+          </LinearGradient>
+        </ImageBackground>
+      </SafeAreaView>
     )
   }
 }
 
 const styles = EStyleSheet.create({
-  container: {
+  imageContainer: {
     flex: 1,
-    justifyContent: 'center',
-    height: `100% - ${Header.HEIGHT}`
+    alignSelf: 'stretch',
+    backgroundColor: 'transparent'
+  },
+  content: {
+    flex: 1
+  },
+  pageTitleContainer: {
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20
+  },
+  pageTitle: {
+    fontSize: 18,
+    fontFamily: 'Montserrat-SemiBold',
+    letterSpacing: 0.18,
+    lineHeight: 30
+  },
+  headerTitle: {
+    textAlign: 'center',
+    flexGrow: 1,
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontFamily: 'Montserrat-SemiBold'
   }
 })
-
-CommonProfileOnboarding.propTypes = {
-  onFill: PropTypes.func.isRequired
-}
 
 const mapStateToProps = state => {
   return {
@@ -190,13 +243,17 @@ const mapStateToProps = state => {
     twitter: state.signUp.profile.twitter,
     facebook: state.signUp.profile.facebook,
     telegram: state.signUp.profile.telegram,
-    linkedin: state.signUp.profile.linkedin
+    linkedin: state.signUp.profile.linkedin,
+    isError: state.signUp.auth.profile.isError,
+    errorMessage: state.signUp.auth.profile.errorMessage
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveProfileInfo: profileInfo => dispatch(signUpActions.saveProfileInfo(profileInfo))
+    saveProfileInfo: (profileInfo, redirectPage) => dispatch(batchActions([signUpActions.saveProfileInfo(profileInfo),
+                                                                           signUpActions.saveProfileOnboardingInfo(profileInfo, redirectPage)])),
+    clearErrors: () => dispatch(signUpActions.clearSaveProfileError())
   }
 }
 

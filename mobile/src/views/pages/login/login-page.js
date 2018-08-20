@@ -12,6 +12,7 @@ import InputValidated from '../../design/input-validated'
 import BlackLogo from '../../../assets/logos/logo-black.png'
 import { BlackButton, OutlineBlackButton } from '../../design/buttons'
 import { PAGES_NAMES } from '../../../navigation/pages'
+import Alert from '../../components/alert/alert'
 
 class LoginPage extends React.Component {
   constructor (props) {
@@ -45,32 +46,43 @@ class LoginPage extends React.Component {
   };
 
   handleFieldChange = (newValue, name) => {
+    if (this.props.isCredentialsError || this.props.isServerError) {
+      this.props.clearErrors();
+    }
     this.setState({
       [ name ]: newValue
     }, this.validateForm)
   };
 
   render() {
+    const isEmailFieldError = !this.validateEmail(this.state.email) || this.props.isCredentialsError
+    const isPasswordFieldError = !this.validatePassword(this.state.password) || this.props.isCredentialsError
+    const invalidCredentialsErrorMessage = I18n.t('common.errors.invalid_credentials')
+    const emailFieldErrorMessage = this.props.isCredentialsError ? invalidCredentialsErrorMessage : I18n.t('common.errors.incorrect_email')
+    const passwordFieldErrorMessage = this.props.isCredentialsError ? invalidCredentialsErrorMessage : I18n.t('common.errors.incorrect_password')
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}} forceInset={{top: 'always'}}>
         <Container>
           <Content style={styles.mainContainer}>
             <Header title={ I18n.t('login_page.title') } rightIconSource={BlackLogo} />
             <View style={styles.contentContainer}>
+              {this.props.isServerError && (
+                <Alert color="error" message={this.props.errorMessage} />
+              )}
               <View style={styles.inputContainer}>
                 <InputValidated value={ this.state.email }
-                        isError={!this.validateEmail(this.state.email)}
-                        errorMessage={I18n.t('common.errors.incorrect_email')}
+                        isError={isEmailFieldError}
+                        errorMessage={emailFieldErrorMessage}
                         keyboardType='email-address'
-                        labelText={ I18n.t('login_page.email_placeholder') }
+                        labelText={ I18n.t('login_page.email_placeholder').toUpperCase() }
                         placeholder="email@domain.com"
                         onChangeText={ (newValue) => this.handleFieldChange(newValue, 'email') }/>
                 </View>
                 <InputValidated value={ this.state.password }
                                 isSecure
-                                isError={!this.validatePassword(this.state.password)}
-                                errorMessage={I18n.t('common.errors.incorrect_password')}
-                                labelText={ I18n.t('login_page.password_placeholder') }
+                                isError={isPasswordFieldError}
+                                errorMessage={passwordFieldErrorMessage}
+                                labelText={ I18n.t('login_page.password_placeholder').toUpperCase() }
                                 placeholder='********'
                                 onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password') }/>
                 <View style={styles.button}>
@@ -152,14 +164,16 @@ const styles = EStyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    isError: state.signUp.auth.login.isError,
+    isServerError: state.signUp.auth.login.isServerError,
+    isCredentialsError: state.signUp.auth.login.isCredentialsError,
     errorMessage: state.signUp.auth.login.errorMessage
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginUser: (email, password) => dispatch(signUpActions.login(email, password))
+    loginUser: (email, password) => dispatch(signUpActions.login(email, password, PAGES_NAMES.HOME_PAGE)),
+    clearErrors: () => dispatch(signUpActions.clearLoginError())
   }
 }
 

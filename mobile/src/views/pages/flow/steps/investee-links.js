@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { InvesteeProductStage, InvesteeProjectLocation, InvesteeTokenType } from './index'
+import { InvesteeProjectLocation } from './index'
 
 class InvesteeLinks extends React.Component {
   constructor (props) {

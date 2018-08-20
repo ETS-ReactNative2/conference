@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { INVESTOR_INDUSTRIES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
-import { InvesteeLinks, InvesteeTeamMembers } from './index'
+import { InvesteeLinks } from './index'
 
 class InvesteeIndustries extends React.Component {
   constructor (props) {
@@ -67,13 +67,13 @@ InvesteeIndustries.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    industries: state.signUp.investee.industry
+    industry: state.signUp.investee.industry
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveInvestor: investorData => dispatch(signUpActions.saveInvestor(investorData))
+    saveInvestor: investorData => dispatch(signUpActions.saveProfileInvestee(investorData))
   }
 }
 

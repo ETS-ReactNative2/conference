@@ -17,6 +17,9 @@ export class FlowInput extends Component {
     if (stylesMapping[ inputStatus ]) {
       stylesArray.push(stylesMapping[ inputStatus ])
     }
+    if (inputStatus === "error" && this.props.errorStyleOverride) {
+      stylesArray.push(this.props.errorStyleOverride.border)
+    }
     return stylesArray
   }
 
@@ -27,12 +30,15 @@ export class FlowInput extends Component {
     } else if (inputStatus === 'error') {
       stylesArray.push(styles.textError)
     }
+    if (inputStatus === "error" && this.props.errorStyleOverride) {
+      stylesArray.push(this.props.errorStyleOverride.text)
+    }
     return stylesArray
   }
 
   getIconStyling (inputStatus) {
     if (inputStatus === 'error') {
-      return styles.iconError
+      return this.props.errorStyleOverride ? this.props.errorStyleOverride.text : styles.iconError
     }
     if (inputStatus === 'ok') {
       return styles.iconOk
@@ -111,10 +117,6 @@ const styles = EStyleSheet.create({
   textError: {
     color: ERROR_COLOR
   },
-  inputGroup: {
-    backgroundColor: 'transparent',
-    borderBottomWidth: 0
-  },
   iconError: {
     color: ERROR_COLOR
   },
@@ -155,7 +157,16 @@ FlowInput.propTypes = {
   value: PropTypes.string,
   labelText: PropTypes.string.isRequired,
   onChangeText: PropTypes.func.isRequired,
-  status: PropTypes.oneOf([ 'regular', 'ok', 'warning', 'error' ]).isRequired
+  status: PropTypes.oneOf([ 'regular', 'ok', 'warning', 'error' ]).isRequired,
+  errorStyleOverride: PropTypes.shape({
+    border: PropTypes.shape({
+      borderColor: PropTypes.string,
+      borderBottomColor: PropTypes.string
+    }),
+    text: PropTypes.shape({
+      color: PropTypes.string
+    })
+  })
 }
 
 export default FlowInput

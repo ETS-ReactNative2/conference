@@ -8,7 +8,6 @@ import { signUpActions } from '../../../../signup'
 import { InvesteeHiring, InvesteeTokenType } from './index'
 
 class InvesteeMoneySource extends React.Component {
-
   constructor (props) {
     super(props)
     this.state = {

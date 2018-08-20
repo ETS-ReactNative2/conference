@@ -3,10 +3,10 @@ import React from 'react'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { BAR_COLOR, SECONDARY_COLOR } from './constants'
 
-export function StepTitle ({ text = '' }) {
+export function StepTitle ({ text = '', textStyle = {} }) {
   return (
     <View style={ styles.title }>
-      <Text style={ styles.text }>{ text }</Text>
+      <Text style={[styles.text, textStyle] }>{ text }</Text>
     </View>
   )
 }
@@ -17,6 +17,7 @@ const styles = EStyleSheet.create({
     alignContent: 'center'
   },
   text: {
+    textAlign: 'center',
     color: 'white',
     fontSize: 24,
     marginLeft: 16,

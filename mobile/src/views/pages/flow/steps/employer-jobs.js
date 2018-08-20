@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import CountryPicker from 'react-native-country-picker-modal'
-import { Chip, Selectize } from 'react-native-material-selectize'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
-import { JOB_LOCATION, PAYMENTS, ROLES, SKILLS } from '../../../../enums'
+import { JOB_LOCATION, PAYMENTS, ROLES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import ValidatedInput from '../../../components/validated-input/validated-input'
 
@@ -29,6 +28,10 @@ class EmployerJobs extends React.Component {
       }
 
     }, this.validateForm)
+  }
+
+  validateSkills = (skills) => {
+    return skills.length > 0
   }
 
   validateJobLink = (jobLink, jobDescription) => {
@@ -54,33 +57,6 @@ class EmployerJobs extends React.Component {
         [ field ]: !this.state[ role ][ field ]
       }
     }, this.validateForm)
-  }
-
-  onChipAdded = (chipToAdd, role, callBack) => {
-    const itemsCopy = [ ...this.state[ role ].keywords ]
-    itemsCopy.push(chipToAdd)
-    this.setState({
-      [ role ]: {
-        ...this.state[ role ],
-        keywords: itemsCopy
-      }
-    })
-    // passing true to callback let's library add item to list of selected items
-    callBack(true)
-  }
-
-  onChipRemoved = (chipToRemove, role, callBack) => {
-    const itemsCopy = [ ...this.state[ role ].keywords ]
-    const idOfChipToRemove = chipToRemove.id
-    const filteredChips = itemsCopy.filter(singleChip => singleChip.id !== idOfChipToRemove)
-    this.setState({
-      [ role ]: {
-        ...this.state[ role ],
-        keywords: filteredChips
-      }
-    })
-    // passing true to callback allows library to remove items from list of selected items
-    callBack(true)
   }
 
   handleCheckboxClickLocation = (index, role) => {
@@ -133,29 +109,12 @@ class EmployerJobs extends React.Component {
             return (
               <Card key={ role } style={ { padding: 8, marginBottom: 16 } }>
                 <Text style={ { fontSize: 24 } }>{ I18n.t(`common.roles_job.${role}`) }</Text>
-                <Selectize
-                  selectedItems={ this.state[ role ] }
-                  items={ SKILLS }
-                  label={ I18n.t('flow_page.employer.keyword.title') }
-                  textInputProps={ {
-                    placeholder: I18n.t('flow_page.employer.keyword.placeholder')
-                  } }
-                  renderRow={ (id, onPress, item) => (
-                    <ListItem style={ styles.listRow } key={ id }
-                              onPress={ () => this.onChipAdded(item, role, onPress) }>
-                      <Text>{ item.text }</Text>
-                    </ListItem>
-                  ) }
-                  renderChip={ (id, onClose, item, style, iconStyle) => (
-                    <Chip
-                      key={ id }
-                      iconStyle={ iconStyle }
-                      onClose={ () => this.onChipRemoved(item, role, onClose) }
-                      text={ item.text }
-                      style={ style }
-                    />
-                  ) }
-                />
+                <ValidatedInput floatingLabel
+                                value={ this.state[role].keywords }
+                                labelText={ I18n.t('flow_page.employer.keyword.title') }
+                                isError={ !this.validateSkills(this.state[role].keywords) }
+                                errorMessage={ I18n.t('flow_page.employee.skills.error') }
+                                onChangeText={ (newValue) => this.handleFieldChange(newValue, role, 'skills') }/>
                 <ValidatedInput floatingLabel
                                 value={ this.state[ role ].link }
                                 labelText={ I18n.t('flow_page.employer.job.link') }
@@ -240,13 +199,13 @@ class EmployerJobs extends React.Component {
                     </React.Fragment>
                   ) }
                 <Text style={ { fontSize: 24, marginTop: 16 } }>{ I18n.t('flow_page.employer.payment.title') }</Text>
-                { PAYMENTS.map((payment, index) => {
+                { PAYMENTS.map(({ slug, index }) => {
                   return (
                     <ListItem
                       onPress={ () => this.handleCheckboxClick(index, role) }
-                      key={ `payment-${payment.slug}` }>
+                      key={ `payment-${slug}` }>
                       <Left>
-                        <Text>{ I18n.t(`common.payment.${payment.slug}`) }</Text>
+                        <Text>{ I18n.t(`common.payment.${slug}`) }</Text>
                       </Left>
                       <Right>
                         <Radio
@@ -281,7 +240,15 @@ class EmployerJobs extends React.Component {
     const { isFormValid, ...jobs } = this.state
     return Object.values(jobs)
       .map(({ link, description, payments, location, city }) => {
-        return this.validateJobLink(link, description) && payments.length > 0 && location.length > 0 && (location.includes(2) ? this.validateJobCity(city) : true)
+        console.log(this.validateJobLink(link,
+          description) && payments.length > 0 && location.length > 0 && (location.includes(1) ? this.validateJobCity(
+          city) : true))
+        console.log({
+          location: location.includes(1) ? this.validateJobCity(city) : true
+        })
+        return this.validateJobLink(link,
+          description) && payments.length > 0 && location.length > 0 && (location.includes(1) ? this.validateJobCity(
+          city) : true)
       })
       .reduce((previous, current) => {
         return previous && current

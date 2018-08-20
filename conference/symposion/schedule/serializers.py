@@ -27,8 +27,11 @@ class PresentationSerializer(serializers.ModelSerializer):
         fields = (
             'pk',
             'title',
+            'description',
+            'abstract',
             'speaker',
-            'additional_speakers'
+            'additional_speakers',
+            'cancelled',
         )
 
 

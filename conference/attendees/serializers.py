@@ -4,10 +4,15 @@ from . import models
 
 
 class ConferenceUserSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(max_length=models.ConferenceUser.FIRST_NAME_MAX_LENGTH, source='user.first_name')
+    last_name = serializers.CharField(max_length=models.ConferenceUser.LAST_NAME_MAX_LENGTH, source='user.last_name')
+
     class Meta:
         model = models.ConferenceUser
         fields = (
             'user',
+            'first_name',
+            'last_name',
             'title',
             'company',
             'twitter',
@@ -73,7 +78,7 @@ class JobListingSerializer(serializers.ModelSerializer):
             'id',
             'role',
             'role_other_text',
-            'skills',
+            'skills_text',
             'link',
             'description',
             'part_time',
@@ -85,19 +90,21 @@ class JobListingSerializer(serializers.ModelSerializer):
 
 
 class ProfessionalSerializer(serializers.ModelSerializer):
+    user = ConferenceUserSerializer()
     class Meta:
         model = models.Professional
         fields = (
             'role',
             'role_other_text',
-            'skills',
-            'traits',
+            'skills_text',
+            'traits_text',
             'know_most',
             'local_remote_options',
             'country',
             'city',
             'age',
             'experience',
+            'user',
         )
 
 
@@ -113,13 +120,19 @@ class ProjectSerializer(serializers.ModelSerializer):
             'fundraising_amount',
             'github',
             'giveaway',
+            'image_url',
             'industry',
+            'is_sponsor',
             'legal_country',
             'main_country',
             'name',
             'news',
             'notable',
             'product_stage',
+            'services_consumed',
+            'services_consumed_other_text',
+            'services_provided',
+            'services_provided_other_text',
             'size',
             'tagline',
             'telegram',
