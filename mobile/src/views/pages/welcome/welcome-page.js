@@ -30,7 +30,7 @@ class WelcomePage extends React.Component {
                   </View>
                   <View style={ styles.buttonContainer }>
                     <OutlineWhiteButton
-                      onPress={ () => {navigate(PAGES_NAMES.PROFILE_ONBOARDING_PAGE)} }
+                      onPress={ () => {navigate(PAGES_NAMES.PROFILE_TYPE_PAGE)} }
                       text={ I18n.t('welcome_page.signup') }
                     />
                   </View>

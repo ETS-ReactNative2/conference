@@ -4,10 +4,7 @@ import { BackHandler } from 'react-native'
 import { connect } from 'react-redux'
 import { PAGES_NAMES } from '../../../navigation'
 import { signUpActions } from '../../../signup'
-import {
-  CommonProfileOnboarding,
-  CommonProfileType,
-} from './steps'
+import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation, } from './steps'
 
 class FlowPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -29,7 +26,7 @@ class FlowPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      CurrentStep: CommonProfileType,
+      CurrentStep: this.getStepForType(),
       PreviousSteps: []
     }
     BackHandler.addEventListener(
@@ -43,6 +40,17 @@ class FlowPage extends React.Component {
       onHeaderBackButton: this.onHeaderBackButton,
       getBackgroundColor: this.getBackgroundColor()
     })
+  }
+
+  getStepForType () {
+    switch (this.props.profileType) {
+      case 'employee':
+        return EmployeeRole
+      case 'investor':
+        return InvestorCompanyLocation
+      case 'investee':
+        return InvesteeProjectSetup
+    }
   }
 
   getBackgroundColor = () => {
@@ -118,8 +126,10 @@ class FlowPage extends React.Component {
   }
 }
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = state => {
+  return {
+    profileType: state.signUp.profile.type
+  }
 }
 
 const mapDispatchToProps = dispatch => {

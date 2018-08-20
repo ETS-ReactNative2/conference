@@ -88,7 +88,6 @@ class CommonProfileOnboarding extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     const { navigate } = this.props.navigation
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#000000'}} forceInset={{top: 'always'}}>
