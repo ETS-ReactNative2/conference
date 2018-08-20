@@ -96,8 +96,8 @@ class CommonProfileOnboarding extends React.Component {
             <View style={ styles.content }>
               <ScrollView contentContainerStyle={{flexGrow: 1}}>
                 <HeaderSkip title={I18n.t('flow_page.common.profile_onboarding.header')}
-                            rightIconSource={WhiteLogo} 
-                            titleStyle={styles.headerTitle} 
+                            rightIconSource={WhiteLogo}
+                            titleStyle={styles.headerTitle}
                             onSkipClick={() => { navigate(PAGES_NAMES.HOME_PAGE) } }/>
                 <View style={styles.pageTitleContainer}>
                   <StepTitle text={ I18n.t('flow_page.common.profile_onboarding.title') } textStyle={styles.pageTitle}/>

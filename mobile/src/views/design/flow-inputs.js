@@ -60,6 +60,14 @@ export class FlowInput extends Component {
     }
   }
 
+  renderLeftIcon = () => {
+    if (this.props.leftIcon) {
+      console.log(this.props.leftIcon)
+      return <Icon active name={ this.props.leftIcon } color={ 'white' } style={ { color: 'white' } }/>
+    }
+    return <View/>
+  }
+
   render () {
     return (
       <View style={ styles.container }>
@@ -71,6 +79,7 @@ export class FlowInput extends Component {
               error={ this.props.status === 'error' }
               success={ this.props.status === 'ok' }
               style={ this.getBorderStyle(this.props.status) }>
+          { this.renderLeftIcon() }
           { this.props.floatingLabel &&
           <Label style={ styles.floatingLabel }>{ this.props.labelText }</Label>
           }
@@ -143,8 +152,8 @@ const styles = EStyleSheet.create({
 })
 
 FlowInput.propTypes = {
+  leftIcon: PropTypes.string,
   floatingLabel: PropTypes.bool,
-  placeholder: PropTypes.string.isRequired,
   value: PropTypes.string,
   labelText: PropTypes.string.isRequired,
   onChangeText: PropTypes.func.isRequired,
