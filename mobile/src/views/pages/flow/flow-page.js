@@ -1,16 +1,16 @@
 import { Button, Container, Content, Icon } from 'native-base'
 import React from 'react'
-import { BackHandler } from 'react-native'
+import { BackHandler, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { PAGES_NAMES } from '../../../navigation'
 import { signUpActions } from '../../../signup'
-import {
-  CommonProfileType,
-} from './steps'
+import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation, } from './steps'
+import WhiteLogo from '../../../assets/logos/logo-white.png'
 
 class FlowPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return ({
+      title: navigation.getParam('getTitle'),
       headerStyle: {
         backgroundColor: navigation.getParam('getBackgroundColor')
       },
@@ -21,14 +21,18 @@ class FlowPage extends React.Component {
           onPress={ navigation.getParam('onHeaderBackButton') }>
           <Icon style={ { color: 'white' } } name='arrow-back'/>
         </Button>
+      ),
+      headerRight: (
+        <Image style={{ marginRight: 20 }} source={ WhiteLogo }/>
       )
+
     })
   }
 
   constructor (props) {
     super(props)
     this.state = {
-      CurrentStep: CommonProfileType,
+      CurrentStep: this.getStepForType(),
       PreviousSteps: []
     }
     BackHandler.addEventListener(
@@ -40,19 +44,39 @@ class FlowPage extends React.Component {
   componentDidMount () {
     this.props.navigation.setParams({
       onHeaderBackButton: this.onHeaderBackButton,
-      getBackgroundColor: this.getBackgroundColor()
+      getBackgroundColor: this.getBackgroundColor(),
+      getTitle: this.getTitle()
     })
+  }
+
+  getStepForType () {
+    switch (this.props.profileType) {
+      case 'employee':
+        return EmployeeRole
+      case 'investor':
+        return InvestorCompanyLocation
+      case 'investee':
+        return InvesteeProjectSetup
+    }
+
+    return InvestorCompanyLocation
   }
 
   getBackgroundColor = () => {
     return this.state.CurrentStep.BACKGROUND_COLOR || '#603695'
   }
 
+  getTitle = () => {
+    const title = this.state.CurrentStep.TITLE || 'Match questions'
+    return title.toUpperCase()
+  }
+
   onHeaderBackButton = () => {
     if (!this.onBackButtonPressAndroid()) {
       this.props.navigation.goBack()
       this.props.navigation.setParams({
-        getBackgroundColor: this.getBackgroundColor()
+        getBackgroundColor: this.getBackgroundColor(),
+        getTitle: this.getTitle()
       })
     }
   }
@@ -66,7 +90,8 @@ class FlowPage extends React.Component {
         PreviousSteps: previousStepsCopy
       }, () => {
         this.props.navigation.setParams({
-          getBackgroundColor: this.getBackgroundColor()
+          getBackgroundColor: this.getBackgroundColor(),
+          getTitle: this.getTitle()
         })
       })
       return true
@@ -86,7 +111,8 @@ class FlowPage extends React.Component {
         done
       }, () => {
         this.props.navigation.setParams({
-          getBackgroundColor: this.getBackgroundColor()
+          getBackgroundColor: this.getBackgroundColor(),
+          getTitle: this.getTitle()
         })
       })
     }
@@ -117,8 +143,10 @@ class FlowPage extends React.Component {
   }
 }
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = state => {
+  return {
+    profileType: state.signUp.profile.type
+  }
 }
 
 const mapDispatchToProps = dispatch => {
