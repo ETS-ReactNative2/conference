@@ -8,7 +8,6 @@ import { CommonProfileOnboarding, CommonProfileType, InvesteeProjectLocation } f
 
 class FlowPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    console.log(2)
     return ({
       headerStyle: {
         backgroundColor: navigation.getParam('getBackgroundColor')
