@@ -29,15 +29,16 @@ class InvesteeProjectLocation extends React.Component {
       <Container style={ styles.container }>
         <StepTitle text={ I18n.t('flow_page.investee.project_location.title') }/>
         <View style={ { flex: 1, justifyContent: 'center' } }>
-          <Subheader
-            text={ I18n.t('flow_page.investee.project_location.legal') }
-          />
+
+            <Subheader
+              text={ I18n.t('flow_page.investee.project_location.legal') }
+            />
           <CountrySelect
             onChange={ value => {
               this.setState({ legal: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
             } }
             value={ this.state.legal }
-            placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder')}
+            placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder') }
           />
           <Subheader
             text={ I18n.t('flow_page.investee.project_location.main') }
@@ -47,7 +48,7 @@ class InvesteeProjectLocation extends React.Component {
               this.setState({ main: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
             } }
             value={ this.state.main }
-            placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder')}
+            placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder') }
           />
         </View>
         <View style={ { margin: 8 } }>
