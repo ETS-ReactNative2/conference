@@ -12,6 +12,8 @@ CITY_MAX_LENGTH = 40
 
 COUNTRY_MAX_LENGTH = 2
 
+REGION_OTHER_TEXT_MAX_LENGTH = 40
+
 SKILLS_MAX_LENGTH = 100
 
 TRAITS_MAX_LENGTH = 100
@@ -220,6 +222,12 @@ class Project(models.Model):
 
     product_stage = models.ForeignKey(ProductStage, db_index=True, null=True, blank=True)
 
+    # Desired Investor's Region
+    region = models.ForeignKey(Region, null=True, blank=True)
+
+    # Desired Investor's Region Other Text
+    region_other_text = models.CharField(max_length=REGION_OTHER_TEXT_MAX_LENGTH, blank=True, default='')
+
     services_consumed = models.ManyToManyField(Service, blank=True, related_name='projects_consuming')
 
     services_consumed_other_text = models.CharField(max_length=SERVICES_CONSUMED_OTHER_TEXT_MAX_LENGTH, blank=True,
@@ -256,8 +264,6 @@ class Investor(models.Model):
     """
     A company doing investing.
     """
-
-    REGION_OTHER_TEXT_MAX_LENGTH = 40
 
     funding_stages = models.ManyToManyField(FundingStage, blank=True)
 

@@ -147,6 +147,16 @@ class MyProject(APIView):
                 product_stage and 1 <= product_stage <= 3
         ) else None
 
+        region = json_body.get('region')
+        clean_region = models.Region.objects.get(pk=region) if (
+            region and 1 <= region <= 4
+        ) else None
+
+        region_other_text = json_body.get('region_other_text')
+        clean_region_other_text = region_other_text[:models.REGION_OTHER_TEXT_MAX_LENGTH] if (
+            region_other_text and clean_region.pk == models.Region.OTHER
+        ) else ''
+
         services_consumed_other_text = json_body.get('services_consumed_other_text')
         clean_services_consumed_other_text =\
             services_consumed_other_text[:models.Project.SERVICES_CONSUMED_OTHER_TEXT_MAX_LENGTH] if (
@@ -202,6 +212,8 @@ class MyProject(APIView):
         project.news = clean_news
         project.notable = clean_notable
         project.product_stage = clean_product_stage
+        project.region = clean_region
+        project.region_other_text = clean_region_other_text
         project.services_consumed_other_text = clean_services_consumed_other_text
         project.services_provided_other_text = clean_services_provided_other_text
         project.size = clean_size

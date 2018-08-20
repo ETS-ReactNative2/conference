@@ -133,6 +133,8 @@ class ProjectSerializer(serializers.ModelSerializer):
             'news',
             'notable',
             'product_stage',
+            'region',
+            'region_other_text',
             'services_consumed',
             'services_consumed_other_text',
             'services_provided',

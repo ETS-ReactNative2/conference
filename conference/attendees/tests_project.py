@@ -61,6 +61,8 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
             news='http://www.example.com',
             notable='aaaaaaaa',
             product_stage=models.ProductStage.objects.get(pk=1),
+            region=models.Region.objects.get(pk=models.Region.OTHER),
+            region_other_text='region_other_text',
             services_consumed_other_text='services consumed other text',
             services_provided_other_text='services provided other text',
             size=2147483647,
@@ -91,6 +93,8 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('news'), 'http://www.example.com')
         self.assertEqual(response_dict.get('notable'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('product_stage'), 1)
+        self.assertEqual(response_dict.get('region'), 4)
+        self.assertEqual(response_dict.get('region_other_text'), 'region_other_text')
         self.assertEqual(response_dict.get('services_consumed'), range(1, 19))
         self.assertEqual(response_dict.get('services_consumed_other_text'), 'services consumed other text')
         self.assertEqual(response_dict.get('services_provided'), range(1, 19))
@@ -149,6 +153,8 @@ class MyProjectTest(AuthMixin):
                 'news': 'http://www.example.com',
                 'notable': 'aaaaaaaa',
                 'product_stage': 1,
+                'region': 4,
+                'region_other_text': 'region_other_text',
                 'services_consumed': range(1, 19),
                 'services_consumed_other_text': 'services consumed other text',
                 'services_provided': range(1, 19),
@@ -180,6 +186,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(response_dict.get('news'), 'http://www.example.com')
         self.assertEqual(response_dict.get('notable'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('product_stage'), 1)
+        self.assertEqual(response_dict.get('region'), 4)
+        self.assertEqual(response_dict.get('region_other_text'), 'region_other_text')
         self.assertEqual(response_dict.get('services_consumed'), range(1, 19))
         self.assertEqual(response_dict.get('services_consumed_other_text'), 'services consumed other text')
         self.assertEqual(response_dict.get('services_provided'), range(1, 19))
@@ -207,6 +215,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(project.news, 'http://www.example.com')
         self.assertEqual(project.notable, 'aaaaaaaa')
         self.assertEqual(project.product_stage, models.ProductStage.objects.get(pk=1))
+        self.assertEqual(project.region, models.Region.objects.get(pk=models.Region.OTHER))
+        self.assertEqual(project.region_other_text, 'region_other_text')
         self.assertEqual(list(project.services_consumed.all()), list(models.Service.objects.all()))
         self.assertEqual(project.services_consumed_other_text, 'services consumed other text')
         self.assertEqual(list(project.services_provided.all()), list(models.Service.objects.all()))
@@ -237,6 +247,8 @@ class MyProjectTest(AuthMixin):
                 'news': '',
                 'notable': '',
                 'product_stage': '',
+                'region': '',
+                'region_other_text': '',
                 'services_consumed': [],
                 'services_consumed_other_text': '',
                 'services_provided': [],
@@ -269,6 +281,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(response_dict.get('news'), '')
         self.assertEqual(response_dict.get('notable'), '')
         self.assertEqual(response_dict.get('product_stage'), None)
+        self.assertEqual(response_dict.get('region'), None)
+        self.assertEqual(response_dict.get('region_other_text'), '')
         self.assertEqual(response_dict.get('services_consumed'), [])
         self.assertEqual(response_dict.get('services_consumed_other_text'), '')
         self.assertEqual(response_dict.get('services_provided'), [])
@@ -296,6 +310,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(project.news, '')
         self.assertEqual(project.notable, '')
         self.assertEqual(project.product_stage, None)
+        self.assertEqual(project.region, None)
+        self.assertEqual(project.region_other_text, '')
         self.assertEqual(list(project.services_consumed.all()), [])
         self.assertEqual(project.services_consumed_other_text, '')
         self.assertEqual(list(project.services_provided.all()), [])
@@ -327,6 +343,8 @@ class MyProjectTest(AuthMixin):
                 'news': 'http://www.example.com',
                 'notable': 'aaaaaaaa',
                 'product_stage': 1,
+                'region': 4,
+                'region_other_text': 'region_other_text',
                 'services_consumed': range(1, 19),
                 'services_consumed_other_text': 'services consumed other text',
                 'services_provided': range(1, 19),
@@ -360,6 +378,8 @@ class MyProjectTest(AuthMixin):
                 'news': '',
                 'notable': '',
                 'product_stage': '',
+                'region': '',
+                'region_other_text': '',
                 'services_consumed': [],
                 'services_consumed_other_text': '',
                 'services_provided': [],
@@ -393,6 +413,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(response_dict.get('news'), '')
         self.assertEqual(response_dict.get('notable'), '')
         self.assertEqual(response_dict.get('product_stage'), None)
+        self.assertEqual(response_dict.get('region'), None)
+        self.assertEqual(response_dict.get('region_other_text'), '')
         self.assertEqual(response_dict.get('services_consumed'), [])
         self.assertEqual(response_dict.get('services_consumed_other_text'), '')
         self.assertEqual(response_dict.get('services_provided'), [])
@@ -420,6 +442,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(project.news, '')
         self.assertEqual(project.notable, '')
         self.assertEqual(project.product_stage, None)
+        self.assertEqual(project.region, None)
+        self.assertEqual(project.region_other_text, '')
         self.assertEqual(list(project.services_consumed.all()), [])
         self.assertEqual(project.services_consumed_other_text, '')
         self.assertEqual(list(project.services_provided.all()), [])

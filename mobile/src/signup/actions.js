@@ -94,7 +94,7 @@ export function uploadProfile() {
                         fundraisingAmount: investee.amount,
                         giveaway: investee.giveaway,
                         notable: investee.teamMembers,
-                        size: investee.teamSize,
+                        size: Number(investee.teamSize) || 0,
                         tagline: investee.projectTagline,
                         tokenType: investee.tokenType,
                         github: investee.github,
@@ -105,7 +105,9 @@ export function uploadProfile() {
                         news: investee.news,
                         legalCountry: investee.legal.cca2,
                         mainCountry: investee.main.cca2,
-                        industry: investee.industry
+                        industry: investee.industry,
+                        region: investee.investorNationality ? investee.investorNationality.index : '',
+                        regionOtherText: investee.regionOtherText
                     })
                     if (investee.hiring) {
                         const {roles, ...jobs} = employer

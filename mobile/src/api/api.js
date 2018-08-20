@@ -77,7 +77,9 @@ export async function createInvestee ({
   telegram,
   twitter,
   website,
-  whitepaper
+  whitepaper,
+  region,
+  regionOtherText
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put('/api/my_project/', decamelizeKeys({
@@ -99,7 +101,9 @@ export async function createInvestee ({
     telegram,
     twitter,
     website,
-    whitepaper
+    whitepaper,
+    region,
+    regionOtherText
   }), {
     headers: {
       'X-Authorization': `Bearer ${token}`

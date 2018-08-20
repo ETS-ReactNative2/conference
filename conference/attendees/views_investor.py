@@ -146,7 +146,7 @@ class MyInvestor(APIView):
         ) else models.Region.objects.get(pk=models.Region.ANYWHERE)
 
         region_other_text = json_body.get('region_other_text')
-        clean_region_other_text = region_other_text[:models.Investor.REGION_OTHER_TEXT_MAX_LENGTH] if (
+        clean_region_other_text = region_other_text[:models.REGION_OTHER_TEXT_MAX_LENGTH] if (
                 region_other_text and clean_region.pk == models.Region.OTHER
         ) else ''
 

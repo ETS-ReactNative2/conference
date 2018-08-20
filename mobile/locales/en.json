@@ -330,7 +330,8 @@
       "amount": "How much money are you looking for?",
       "nationality": "Investor nationality",
       "need_money": "Are you looking for money?",
-      "title": "Money source"
+      "title": "Money source",
+      "other_location_placeholder": "Enter location"
     },
     "product_stage": {
       "title": "Product stage"

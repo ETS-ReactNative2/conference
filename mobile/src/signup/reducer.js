@@ -71,6 +71,7 @@ const initialState = {
     amount: '',
     tokenType: -1,
     investorNationality: 0,
+    regionOtherText: '',
     legal: '',
     main: '',
     giveaway: -1,

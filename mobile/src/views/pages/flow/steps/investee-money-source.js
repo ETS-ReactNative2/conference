@@ -6,6 +6,7 @@ import I18n from '../../../../../locales/i18n'
 import { REGIONS } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { InvesteeHiring, InvesteeTokenType } from './index'
+import ValidatedInput from '../../../components/validated-input/validated-input'
 
 class InvesteeMoneySource extends React.Component {
   constructor (props) {
@@ -13,7 +14,8 @@ class InvesteeMoneySource extends React.Component {
     this.state = {
       lookingForMoney: this.props.investee.money,
       amount: this.props.investee.amount,
-      nationality: this.props.investee.investorNationality
+      nationality: this.props.investee.investorNationality,
+      regionOtherText: this.props.investee.regionOtherText
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -48,31 +50,27 @@ class InvesteeMoneySource extends React.Component {
               { REGIONS.map((nationality) => {
                 return (
                   <ListItem
-                    onPress={ () => this.handleChange(nationality.index) }
+                    onPress={ () => this.handleChange(nationality) }
                     key={ `nationality-${nationality.slug}` }>
                     <Left>
                       <Text>{ I18n.t(`common.regions.${nationality.slug}`) }</Text>
                     </Left>
                     <Right>
                       <Radio
-                        onPress={ () => this.handleChange(nationality.index) }
-                        selected={ this.state.nationality === nationality.index }/>
+                        onPress={ () => this.handleChange(nationality) }
+                        selected={ this.state.nationality.index === nationality.index }/>
                     </Right>
                   </ListItem>
                 )
               }) }
-              <ListItem
-                onPress={ () => this.handleChange(4) }
-                key={ `nationality-4` }>
-                <Left>
-                  <Text>{ I18n.t(`common.regions.other`) }</Text>
-                </Left>
-                <Right>
-                  <Radio
-                    onPress={ () => this.handleChange(4) }
-                    selected={ this.state.nationality === 4 }/>
-                </Right>
-              </ListItem>
+              {this.state.nationality.slug === "other" && (
+                <ValidatedInput floatingLabel
+                  value={ this.state.regionOtherText }
+                  labelText={ I18n.t('flow_page.money.other_location_placeholder') }
+                  isError={ this.state.regionOtherText.length > 40 }
+                  errorMessage={ I18n.t('common.errors.incorrect_investor_custom_location') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'regionOtherText') }/>
+              )}
             </React.Fragment>
           )
         }
@@ -89,11 +87,15 @@ class InvesteeMoneySource extends React.Component {
   }
 
   isFormValid = () => {
-    const { lookingForMoney: money, amount } = this.state
-    if (!money) {
-      return true
+    let isValid = true;
+    const { lookingForMoney: money, amount, nationality, regionOtherText } = this.state
+    if (money) {
+      isValid = !validator.isEmpty(amount) && amount > 0
     }
-    return !validator.isEmpty(amount) && amount > 0
+    if (nationality.slug === "other") {
+      isValid = regionOtherText.length <= 40
+    }
+    return isValid;
   }
 
   validateForm = () => {
@@ -105,9 +107,9 @@ class InvesteeMoneySource extends React.Component {
     this.setState({ lookingForMoney: !this.state.lookingForMoney }, this.validateForm)
   }
 
-  handleChange = (index) => {
+  handleChange = (newValue) => {
     this.setState({
-      nationality: index
+      nationality: newValue
     }, this.validateForm)
   }
 
@@ -118,11 +120,12 @@ class InvesteeMoneySource extends React.Component {
   }
 
   handleSubmit = () => {
-    const { lookingForMoney, amount, nationality } = this.state
+    const { lookingForMoney, amount, nationality, regionOtherText } = this.state
     this.props.save({
       money: lookingForMoney,
       amount: amount,
-      investorNationality: nationality
+      investorNationality: nationality,
+      regionOtherText: regionOtherText
     })
     this.props.onFill({
       nextStep: lookingForMoney ? InvesteeTokenType : InvesteeHiring
