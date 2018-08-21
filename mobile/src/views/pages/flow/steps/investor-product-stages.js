@@ -1,9 +1,10 @@
-import { Button, Card, Content, Left, ListItem, Radio, Right, Text, View } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { GIVEAWAY_TYPES, PRODUCT_STAGES } from '../../../../enums'
+import { PRODUCT_STAGES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
 import { FlowContainer } from '../../../design/Container'
@@ -35,30 +36,32 @@ class InvestorProductStages extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-          <StepTitle text={ I18n.t('flow_page.investor.product_stage.title') }/>
-        </View>
-        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
-          <SubheaderWithSwitch
-            selected={ this.state.all }
-            text={ I18n.t(`common.product_stages.header`) }
-            onToggle={ this.selectAll }
-          />
-          { PRODUCT_STAGES.map((stage) => {
-            return (
-              <FlowListItem
-                multiple={ true }
-                key={ `product_stage-item-${stage.slug}` }
-                text={ I18n.t(`common.product_stages.${stage.slug}`) }
-                onSelect={ () => this.handleChange(stage.index) }
-                selected={ this.state.productStages.indexOf(stage.index) !== -1 }
-              />
-            )
-          }) }
-        </View>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.investor.product_stage.title') }/>
+            </View>
+            <SubheaderWithSwitch
+              selected={ this.state.all }
+              text={ I18n.t(`common.product_stages.header`) }
+              onToggle={ this.selectAll }
+            />
+            { PRODUCT_STAGES.map((stage) => {
+              return (
+                <FlowListItem
+                  multiple={ true }
+                  key={ `product_stage-item-${stage.slug}` }
+                  text={ I18n.t(`common.product_stages.${stage.slug}`) }
+                  onSelect={ () => this.handleChange(stage.index) }
+                  selected={ this.state.productStages.indexOf(stage.index) !== -1 }
+                />
+              )
+            }) }
+          </View>
+        </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
-            text={ 'Next' }
+            text={ I18n.t('common.next') }
             disabled={ !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />

@@ -160,11 +160,6 @@ const styles = EStyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 14,
     textDecorationLine: 'underline'
-  },
-  connectWith: {
-    alignSelf: 'center',
-    fontSize: 12,
-    fontFamily: 'Montserrat-ExtraLight'
   }
 })
 

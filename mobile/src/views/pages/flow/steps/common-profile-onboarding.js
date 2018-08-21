@@ -132,7 +132,6 @@ class CommonProfileOnboarding extends React.Component {
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInput
                         floatingLabel={ true }
-                        status={ 'error' }
                         placeholder={ 'Job title' }
                         labelText={ I18n.t('flow_page.common.profile_onboarding.titleField') }
                         value={ this.state.title }
@@ -142,7 +141,6 @@ class CommonProfileOnboarding extends React.Component {
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInput
                         floatingLabel={ true }
-                        status={ 'error' }
                         placeholder={ 'Company' }
                         labelText={ I18n.t('flow_page.common.profile_onboarding.company') }
                         value={ this.state.company }

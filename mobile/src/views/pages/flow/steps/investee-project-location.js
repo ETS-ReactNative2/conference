@@ -1,20 +1,20 @@
-import { Container, View } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import EStyleSheet from 'react-native-extended-stylesheet'
-import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
 import { CountrySelect } from '../../../design/select'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
 import { InvesteeMoneySource } from './index'
+import { ScrollView} from 'react-native'
 
 class InvesteeProjectLocation extends React.Component {
 
-  static BACKGROUND_COLOR = '#2C65E2'
+  static BACKGROUND_COLOR = '#172D5C'
 
   constructor (props) {
     super(props)
@@ -26,38 +26,41 @@ class InvesteeProjectLocation extends React.Component {
 
   render () {
     return (
-      <Container style={ styles.container }>
-        <StepTitle text={ I18n.t('flow_page.investee.project_location.title') }/>
-        <View style={ { flex: 1, justifyContent: 'center' } }>
-
+      <FlowContainer>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.investee.project_location.title') }/>
+            </View>
             <Subheader
               text={ I18n.t('flow_page.investee.project_location.legal') }
             />
-          <CountrySelect
-            onChange={ value => {
-              this.setState({ legal: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
-            } }
-            value={ this.state.legal }
-            placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder') }
-          />
-          <Subheader
-            text={ I18n.t('flow_page.investee.project_location.main') }
-          />
-          <CountrySelect
-            onChange={ value => {
-              this.setState({ main: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
-            } }
-            value={ this.state.main }
-            placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder') }
-          />
+            <CountrySelect
+              onChange={ value => {
+                this.setState({ legal: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
+              } }
+              value={ this.state.legal }
+              placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder') }
+            />
+            <Subheader
+              text={ I18n.t('flow_page.investee.project_location.main') }
+            />
+            <CountrySelect
+              onChange={ value => {
+                this.setState({ main: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
+              } }
+              value={ this.state.main }
+              placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder') }
+            />
+          </ScrollView>
         </View>
         <View style={ { margin: 8 } }>
           <FlowButton
-            text={ 'Next' }
+            text={ I18n.t('common.next') }
             onPress={ this.handleSubmit }
           />
         </View>
-      </Container>
+      </FlowContainer>
     )
   }
 
@@ -71,14 +74,6 @@ class InvesteeProjectLocation extends React.Component {
     })
   }
 }
-
-const styles = EStyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    height: `100% - ${Header.HEIGHT}`
-  }
-})
 
 InvesteeProjectLocation.propTypes = {
   onFill: PropTypes.func.isRequired

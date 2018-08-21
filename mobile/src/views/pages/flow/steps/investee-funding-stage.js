@@ -1,52 +1,88 @@
-import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { Button, Card, Content, Left, ListItem, Radio, Right, Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { FUNDING_STAGES } from '../../../../enums'
+import { FUNDING_STAGES, PRODUCT_STAGES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import FlowInput from '../../../design/flow-inputs'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { Subheader } from '../../../design/subheader'
 import { InvesteeGiveaway } from './index'
 
 class InvesteeFundingStage extends React.Component {
+
+  static BACKGROUND_COLOR = '#172D5C'
+
   constructor (props) {
     super(props)
     this.state = {
-      selected: this.props.investee.fundingStage
+      selected: this.props.investee.fundingStage,
+      members: this.props.investee.teamMembers,
+      size: this.props.investee.teamSize
     }
     this.state.isFormValid = this.isFormValid()
   }
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.funding_stage.title') }</Text>
-        <Content>
-          {
-            FUNDING_STAGES.map((option) => {
+      <FlowContainer>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.funding_stage.title') }/>
+            </View>
+            <Subheader
+              text={ I18n.t(`flow_page.funding_stage.header`) }
+            />
+            { FUNDING_STAGES.map((size) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(option.index) }>
-                  <Left>
-                    <Text>{ I18n.t(`common.funding_stages.${option.slug}`) }</Text>
-                  </Left>
-                  <Right>
-                    <Radio
-                      onPress={ () => this.handleChange(option.index) }
-                      selected={ this.state.selected === option.index }/>
-                  </Right>
-                </ListItem>
+                <FlowListItem
+                  multiple={ false }
+                  key={ `funding-stage-item-${size.index}` }
+                  text={ I18n.t(`common.funding_stages.${size.slug}`) }
+                  onSelect={ () => this.handleChange(size.index) }
+                  selected={ this.state.selected === size.index }
+                />
               )
-            })
-          }
-        </Content>
-        <Button success
-                rounded
-                block
-                disabled={ !this.state.isFormValid }
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+            }) }
+            <View style={ { paddingTop: 10 } }>
+              <Subheader
+                text={ I18n.t(`flow_page.members.header`) }
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <FlowInput
+                floatingLabel
+                value={this.state.members}
+                labelText={I18n.t('flow_page.members.title')}
+                onChangeText={ text => this.handleTextChange('members', text)}
+                status={this.state.members.length > 0 ? 'ok': 'regular'}/>
+            </View>
+            <View style={styles.inputContainer}>
+              <FlowInput
+                floatingLabel
+                value={this.state.size}
+                keyboardType={'numeric'}
+                labelText={I18n.t('flow_page.members.size')}
+                onChangeText={ text => this.handleTextChange('size', text)}
+                status={this.state.size.length > 0 ? 'ok': 'regular'}/>
+            </View>
+          </ScrollView>
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ I18n.t('common.next') }
+            disabled={!this.state.isFormValid}
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 
@@ -54,6 +90,11 @@ class InvesteeFundingStage extends React.Component {
     return this.state.selected !== -1
   }
 
+  handleTextChange = (field, text) => {
+    this.setState({
+      [field]: text
+    })
+  }
   validateForm = () => {
     const isFormValid = this.isFormValid()
     this.setState({ isFormValid })
@@ -61,7 +102,9 @@ class InvesteeFundingStage extends React.Component {
 
   handleSubmit = () => {
     this.props.save({
-      fundingStage: this.state.selected
+      fundingStage: this.state.selected,
+      teamMembers: this.state.members,
+      teamSize: this.state.size
     })
     this.props.onFill({
       nextStep: InvesteeGiveaway
@@ -74,6 +117,15 @@ class InvesteeFundingStage extends React.Component {
     }, this.validateForm)
   }
 }
+
+const styles = EStyleSheet.create({
+  inputContainer: {
+    flex: 1,
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingBottom: 16
+  }
+})
 
 InvesteeFundingStage.propTypes = {
   onFill: PropTypes.func.isRequired

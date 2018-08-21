@@ -1,13 +1,22 @@
-import { Button, Card, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { TOKEN_TYPES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { Subheader } from '../../../design/subheader'
 import { InvesteeProductStage } from './index'
 
 class InvesteeTokenType extends React.Component {
+
+  static BACKGROUND_COLOR = '#172D5C'
+
   constructor (props) {
     super(props)
     this.state = {
@@ -30,33 +39,36 @@ class InvesteeTokenType extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.token_type.title') }</Text>
-        { TOKEN_TYPES.map(( {slug, index}) => {
-          return (
-            <ListItem
-              onPress={ () => this.handleChange(index) }
-              key={ `investment-item-${slug}` }>
-              <Left>
-                <Text>{ I18n.t(`common.token_types.${slug}`) }</Text>
-              </Left>
-              <Right>
-                <Radio
-                  onPress={ () => this.handleChange(index) }
-                  selected={ this.state.tokenType === index }/>
-              </Right>
-            </ListItem>
-          )
-        }) }
-        <Button success
-                rounded
-                block
-                disabled={ !this.state.isFormValid }
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+      <FlowContainer>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.investee.token_type.title') }/>
+            </View>
+            <Subheader
+              text={ I18n.t(`flow_page.investee.token_type.header`) }
+            />
+            { TOKEN_TYPES.map((size) => {
+              return (
+                <FlowListItem
+                  multiple={ false }
+                  key={ `token-type-item-${size.index}` }
+                  text={ I18n.t(`common.token_types.${size.slug}`) }
+                  onSelect={ () => this.handleChange(size.index) }
+                  selected={ this.state.tokenType === size.index }
+                />
+              )
+            }) }
+          </ScrollView>
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ I18n.t('common.next') }
+            disabled={!this.state.isFormValid}
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 

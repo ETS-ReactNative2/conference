@@ -1,18 +1,16 @@
-import { Container, View } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
-import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { TICKET_SIZES, TOKEN_TYPES } from '../../../../enums'
+import { TICKET_SIZES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
 import { FlowContainer } from '../../../design/Container'
 import { FlowListItem } from '../../../design/list-items'
 import { StepTitle } from '../../../design/step-title'
-import { Subheader, SubheaderWithSwitch } from '../../../design/subheader'
+import { SubheaderWithSwitch } from '../../../design/subheader'
 import { InvestorCompanyFundingStage } from './index'
 
 class InvestorTicketSize extends React.Component {
@@ -36,11 +34,11 @@ class InvestorTicketSize extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-          <StepTitle text={ I18n.t('flow_page.investor.ticket_size.title') }/>
-        </View>
-        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
-          <ScrollView>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.investor.ticket_size.title') }/>
+            </View>
             <SubheaderWithSwitch
               selected={ this.state.all}
               onToggle={ this.selectAll }
@@ -57,11 +55,11 @@ class InvestorTicketSize extends React.Component {
                 />
               )
             }) }
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
-            text={ 'Next' }
+            text={ I18n.t('common.next') }
             onPress={ this.handleSubmit }
           />
         </View>
@@ -96,14 +94,6 @@ class InvestorTicketSize extends React.Component {
 InvestorTicketSize.propTypes = {
   onFill: PropTypes.func.isRequired
 }
-
-const styles = EStyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    height: `100% - ${Header.HEIGHT}`
-  }
-})
 
 const mapStateToProps = state => {
   return {

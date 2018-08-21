@@ -1,14 +1,24 @@
-import { Button, Card, Form, Text } from 'native-base'
+import { Form, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import FlowInputValidated from '../../../design/flow-input-validated'
+import FlowInput from '../../../design/flow-inputs'
+import { StepTitle } from '../../../design/step-title'
+import { Subheader } from '../../../design/subheader'
 import { InvesteeIndustry } from './index'
-import ValidatedInput from '../../../components/validated-input/validated-input'
 
 class InvesteeProjectSetup extends React.Component {
+
+  static BACKGROUND_COLOR = '#172D5C'
+
   constructor (props) {
     super(props)
     this.state = {
@@ -19,38 +29,62 @@ class InvesteeProjectSetup extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.project_setup.title') }</Text>
-        <Form>
-          <ValidatedInput floatingLabel
-                          value={ this.state.projectName }
-                          maxLength={40}
-                          labelText={I18n.t('flow_page.project_setup.project_name')}
-                          isError={!this.validateProjectName(this.state.projectName)}
-                          errorMessage={I18n.t('common.errors.incorrect_project_name')}
-                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectName')} />
-          <ValidatedInput floatingLabel
-                          value={ this.state.projectTagline }
-                          maxLength={60}
-                          labelText={I18n.t('flow_page.project_setup.project_tagline')}
-                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectTagline')} />
-          <ValidatedInput floatingLabel
-                          multiline={ true }
-                          numberOfLines={ 5 }
-                          maxLength={250}
-                          value={ this.state.projectDescription }
-                          labelText={I18n.t('flow_page.project_setup.project_description')}
-                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectDescription')} />
-        </Form>
-        <Button success
-                rounded
-                block
-                disabled={ !this.state.isFormValid }
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+      <FlowContainer>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+            <StepTitle
+              text={ I18n.t('flow_page.project_setup.title') }
+            />
+          </View>
+
+          <Subheader
+            text={ I18n.t('flow_page.project_setup.header') }
+          />
+          <View style={ styles.contentContainer }>
+            <Form>
+              <View style={ styles.inputContainer }>
+                <FlowInputValidated
+                  floatingLabel
+                  value={ this.state.projectName }
+                  placeholder={ I18n.t('flow_page.project_setup.project_name') }
+                  labelText={ I18n.t('flow_page.project_setup.project_name') }
+                  isError={ !this.validateProjectName(this.state.projectName) }
+                  errorMessage={ I18n.t('common.errors.incorrect_project_name') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectName') }/>
+              </View>
+              <View style={ styles.inputContainer }>
+                <FlowInput
+                  floatingLabel
+                  placeholder={ I18n.t('flow_page.project_setup.project_tagline') }
+                  labelText={ I18n.t('flow_page.project_setup.project_tagline') }
+                  value={ this.state.projectTagline }
+                  maxLength={ 60 }
+                  status='regular'
+                  onChangeText={ newValue => this.handleFieldChange(newValue, 'projectTagline') }/>
+              </View>
+              <View style={ styles.inputContainer }>
+                <FlowInput
+                  floatingLabel
+                  multiline
+                  numberOfLines={ 5 }
+                  maxLength={ 250 }
+                  value={ this.state.projectDescription }
+                  placeholder={ I18n.t('flow_page.project_setup.project_description') }
+                  labelText={ I18n.t('flow_page.project_setup.project_description') }
+                  status='regular'
+                  onChangeText={ newValue => this.handleFieldChange(newValue, 'projectDescription') }/>
+              </View>
+            </Form>
+          </View>
+        </ScrollView>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            disabled={ !this.state.isFormValid }
+            text={ I18n.t('common.next') }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 
@@ -86,6 +120,19 @@ class InvesteeProjectSetup extends React.Component {
     }, this.validateForm)
   }
 }
+
+const styles = EStyleSheet.create({
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'flex-start'
+  },
+  inputContainer: {
+    flex: 1,
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingBottom: 16
+  }
+})
 
 InvesteeProjectSetup.propTypes = {
   onFill: PropTypes.func.isRequired

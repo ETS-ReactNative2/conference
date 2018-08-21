@@ -120,10 +120,10 @@ class EmployerJobs extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-          <StepTitle text={ I18n.t('flow_page.employer.job.title') }/>
-        </View>
-        <ScrollView>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+            <StepTitle text={ I18n.t('flow_page.employer.job.title') }/>
+          </View>
           { this.props.employer.roles
             .map(role => ROLES.find(job => job.index === role).slug)
             .map(role => {
@@ -246,12 +246,6 @@ class EmployerJobs extends React.Component {
     const { isFormValid, ...jobs } = this.state
     return Object.values(jobs)
       .map(({ link, description, payments, location, city }) => {
-        console.log(this.validateJobLink(link,
-          description) && payments.length > 0 && location.length > 0 && (location.includes(1) ? this.validateJobCity(
-          city) : true))
-        console.log({
-          location: location.includes(1) ? this.validateJobCity(city) : true
-        })
         return this.validateJobLink(link,
           description) && payments.length > 0 && location.length > 0 && (location.includes(1) ? this.validateJobCity(
           city) : true)

@@ -1,6 +1,7 @@
 import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
@@ -88,25 +89,26 @@ class InvestorIndustries extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-          <StepTitle text={ I18n.t('flow_page.investor.industries.title') }/>
-        </View>
-        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
-          <SubheaderWithSwitch
-            selected={ this.state.all }
-            text={ I18n.t(`common.industries.header`) }
-            onToggle={ this.selectAll }
-          />
-          <FlatList
-            data={ this.state.items }
-            keyExtractor={ (item) => item.slug }
-            renderItem={ this.renderItem }
-          />
-        </View>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.investor.industries.title') }/>
+            </View>
+            <SubheaderWithSwitch
+              selected={ this.state.all }
+              text={ I18n.t(`common.industries.header`) }
+              onToggle={ this.selectAll }
+            />
+            <FlatList
+              data={ this.state.items }
+              keyExtractor={ (item) => item.slug }
+              renderItem={ this.renderItem }
+            />
+            </View>
+        </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
-            text={ 'Next' }
-            disabled={ false }
+            text={ I18n.t('common.next') }
             onPress={ this.handleSubmit }
           />
         </View>

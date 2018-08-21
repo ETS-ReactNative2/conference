@@ -37,10 +37,10 @@ class EmployeeRole extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-          <StepTitle text={ I18n.t('flow_page.employee.role.title') }/>
-        </View>
-        <ScrollView contentContainerStyle={ { paddingLeft: 16, paddingRight: 16 } }>
+        <ScrollView contentContainerStyle={ { flexGrow: 1, paddingLeft: 16, paddingRight: 16 } }>
+          <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+            <StepTitle text={ I18n.t('flow_page.employee.role.title') }/>
+          </View>
           <View style={ { flex: 1, flexWrap: 'wrap', justifyContent: 'flex-start', flexDirection: 'row' } }>
             {
               ROLES.map(({ slug: option, index }) => {
@@ -54,12 +54,12 @@ class EmployeeRole extends React.Component {
               })
             }
           </View>
-          <Text style={ { color: 'white', fontWeight: 'bold', margin: 16, textAlign: 'center' } }
-                onPress={ this.onAbortClick }>{ I18n.t('flow_page.employee.role.not_looking_for_job') }</Text>
         </ScrollView>
         <View style={ { margin: 8 } }>
+          <Text style={ { color: 'white', fontWeight: 'bold', margin: 16, textAlign: 'center' } }
+                onPress={ this.onAbortClick }>{ I18n.t('flow_page.employee.role.not_looking_for_job') }</Text>
           <FlowButton
-            text={ 'Next' }
+            text={ I18n.t('common.next') }
             disabled={ !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />

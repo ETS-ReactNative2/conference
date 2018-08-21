@@ -136,7 +136,7 @@ export function uploadProfile() {
                         ticketSizes: investor.ticketSizes,
                         tokenTypes: investor.investments,
                         industries: investor.industries,
-                        region: investor.marketLocation ? investor.marketLocation.index : "",
+                        region: investor.marketLocation,
                         nationality: investor.nationality ? investor.nationality.cca2 : "",
                         regionOtherText: investor.regionOtherText
                     })

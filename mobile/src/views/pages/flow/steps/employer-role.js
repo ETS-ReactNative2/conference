@@ -1,4 +1,4 @@
-import { Button, Card, Content, Left, ListItem, Radio, Right, Text, View } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
@@ -28,10 +28,10 @@ class EmployerRole extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-          <StepTitle text={ I18n.t('flow_page.employer.role.title') }/>
-        </View>
-        <ScrollView contentContainerStyle={ { paddingLeft: 16, paddingRight: 16 } }>
+        <ScrollView contentContainerStyle={ { flexGrow: 1, paddingLeft: 16, paddingRight: 16 } }>
+          <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+            <StepTitle text={ I18n.t('flow_page.employer.role.title') }/>
+          </View>
           <View style={ { flex: 1, flexWrap: 'wrap', justifyContent: 'flex-start', flexDirection: 'row' } }>
             {
               ROLES.map(({ slug: option, index }) => {

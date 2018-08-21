@@ -44,42 +44,42 @@ class InvestorMarketLocation extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-          <StepTitle text={ I18n.t('flow_page.investor.market_location.title') }/>
-        </View>
-        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
-          <Subheader
-            text={ I18n.t(`common.regions.header`) }
-          />
-          <ScrollView>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.investor.market_location.title') }/>
+            </View>
+            <Subheader
+              text={ I18n.t(`common.regions.header`) }
+            />
             { REGIONS.map((region) => {
-              return (
-                <FlowListItem
-                  multiple={ false }
-                  key={ `product_stage-item-${region.slug}` }
-                  text={ I18n.t(`common.regions.${region.slug}`) }
-                  onSelect={ () => this.handleCheckboxClick(region.index) }
-                  selected={ this.state.location === region.index }
-                />
-              )
+                return (
+                  <FlowListItem
+                    multiple={ false }
+                    key={ `product_stage-item-${region.slug}` }
+                    text={ I18n.t(`common.regions.${region.slug}`) }
+                    onSelect={ () => this.handleCheckboxClick(region.index) }
+                    selected={ this.state.location === region.index }
+                  />
+                )
             }) }
             { this.state.location === REGIONS.find(r => r.slug === 'other').index && (
-              <View style={ { marginLeft: 8, marginRight: 8 } }>
-                <FlowInputValidated
-                  floatingLabel
-                  value={ this.state.regionOtherText }
-                  labelText={ I18n.t('flow_page.investor.market_location.other_location_placeholder') }
-                  isError={ this.state.regionOtherText.length > 40 }
-                  errorMessage={ I18n.t('common.errors.incorrect_investor_custom_location') }
-                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'regionOtherText') }/>
-              </View>
+                <View style={ { marginLeft: 8, marginRight: 8 } }>
+                  <FlowInputValidated
+                    floatingLabel
+                    value={ this.state.regionOtherText }
+                    labelText={ I18n.t('flow_page.investor.market_location.other_location_placeholder') }
+                    isError={ this.state.regionOtherText.length > 40 }
+                    errorMessage={ I18n.t('common.errors.incorrect_investor_custom_location') }
+                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'regionOtherText') }/>
+                </View>
             ) }
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
-            text={ 'Next' }
-            disabled={ this.state.location.slug === 'other' && this.state.regionOtherText.length > 40 }
+            text={ I18n.t('common.next') }
+            disabled={ this.state.location === REGIONS.find(r => r.slug === 'other').index && this.state.regionOtherText.length > 40 }
             onPress={ this.handleSubmit }
           />
         </View>

@@ -1,8 +1,7 @@
-import { Container, View } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import EStyleSheet from 'react-native-extended-stylesheet'
-import { Header } from 'react-navigation'
+import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { FUNDING_STAGES, TOKEN_TYPES } from '../../../../enums'
@@ -58,30 +57,32 @@ class InvestorCompanyFundingStage extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-          <StepTitle text={ I18n.t('flow_page.investor.company_funding_stage.title') }/>
-        </View>
-        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
-          <SubheaderWithSwitch
-            selected={ this.state.all }
-            text={ I18n.t(`common.funding_stages.header`) }
-            onToggle={ this.selectAll }
-          />
-          { FUNDING_STAGES.map((singleInvestment) => {
-            return (
-              <FlowListItem
-                multiple={ true }
-                key={ `investment-item-${singleInvestment.slug}` }
-                text={ I18n.t(`common.funding_stages.${singleInvestment.slug}`) }
-                onSelect={ () => this.handleCheckboxClick(singleInvestment.index) }
-                selected={ this.isCheckboxSelected(singleInvestment.index) }
-              />
-            )
-          }) }
-        </View>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.investor.company_funding_stage.title') }/>
+            </View>
+            <SubheaderWithSwitch
+              selected={ this.state.all }
+              text={ I18n.t(`common.funding_stages.header`) }
+              onToggle={ this.selectAll }
+            />
+            { FUNDING_STAGES.map((singleInvestment) => {
+              return (
+                <FlowListItem
+                  multiple={ true }
+                  key={ `investment-item-${singleInvestment.slug}` }
+                  text={ I18n.t(`common.funding_stages.${singleInvestment.slug}`) }
+                  onSelect={ () => this.handleCheckboxClick(singleInvestment.index) }
+                  selected={ this.isCheckboxSelected(singleInvestment.index) }
+                />
+              )
+            }) }
+          </View>
+        </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
-            text={ 'Next' }
+            text={ I18n.t('common.next') }
             onPress={ this.handleSubmit }
           />
         </View>

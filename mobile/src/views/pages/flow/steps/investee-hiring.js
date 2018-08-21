@@ -1,12 +1,21 @@
-import { Button, Card, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { Subheader } from '../../../design/subheader'
 import { EmployerRole } from './index'
 
 class InvesteeHiring extends React.Component {
+
+  static BACKGROUND_COLOR = '#172D5C'
+
   constructor (props) {
     super(props)
     this.state = {
@@ -16,36 +25,34 @@ class InvesteeHiring extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.hiring.title') }</Text>
-        <ListItem style={ { width: '100%' } } onPress={ () => this.setState({ hiring: false }) }>
-          <Left>
-            <Text>{ I18n.t('common.no') }</Text>
-          </Left>
-          <Right>
-            <Radio
-              onPress={ () => this.setState({ hiring: false }) }
+      <FlowContainer>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.hiring.title') }/>
+            </View>
+            <Subheader
+              text={ I18n.t(`flow_page.hiring.header`) }
+            />
+            <FlowListItem
+              multiple={ false }
+              text={ I18n.t('common.no') }
+              onSelect={ () => this.setState({ hiring: false }) }
               selected={ !this.state.hiring }/>
-          </Right>
-        </ListItem>
-        <ListItem style={ { width: '100%' } } onPress={ () => this.setState({ hiring: true }) }>
-          <Left>
-            <Text>{ I18n.t('common.yes') }</Text>
-          </Left>
-          <Right>
-            <Radio
-              onPress={ () => this.setState({ hiring: true }) }
+            <FlowListItem
+              multiple={ false }
+              text={ I18n.t('common.yes') }
+              onSelect={ () => this.setState({ hiring: true }) }
               selected={ this.state.hiring }/>
-          </Right>
-        </ListItem>
-        <Button success
-                rounded
-                block
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+          </ScrollView>
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ I18n.t('common.next') }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 

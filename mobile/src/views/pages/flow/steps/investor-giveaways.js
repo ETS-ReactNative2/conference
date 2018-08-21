@@ -1,6 +1,7 @@
-import { Button, Card, Content, Body, ListItem, CheckBox, Text, Radio, View } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { GIVEAWAY_TYPES, TOKEN_TYPES } from '../../../../enums'
@@ -34,30 +35,32 @@ class InvestorGiveaways extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-          <StepTitle text={ I18n.t('flow_page.investor.giveaways.title') }/>
-        </View>
-        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
-          <SubheaderWithSwitch
-            selected={ this.state.all }
-            text={ I18n.t(`common.giveaway.header`) }
-            onToggle={ this.selectAll }
-          />
-          { GIVEAWAY_TYPES.map((giveaway) => {
-            return (
-              <FlowListItem
-                multiple={ true }
-                key={ `giveaway-item-${giveaway.slug}` }
-                text={ I18n.t(`common.giveaway.${giveaway.slug}`) }
-                onSelect={ () => this.handleChange(giveaway.index) }
-                selected={ this.state.selectedGiveaways.indexOf(giveaway.index) !== -1 }
-              />
-            )
-          }) }
-        </View>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.investor.giveaways.title') }/>
+            </View>
+            <SubheaderWithSwitch
+              selected={ this.state.all }
+              text={ I18n.t(`common.giveaway.header`) }
+              onToggle={ this.selectAll }
+            />
+            { GIVEAWAY_TYPES.map((giveaway) => {
+              return (
+                <FlowListItem
+                  multiple={ true }
+                  key={ `giveaway-item-${giveaway.slug}` }
+                  text={ I18n.t(`common.giveaway.${giveaway.slug}`) }
+                  onSelect={ () => this.handleChange(giveaway.index) }
+                  selected={ this.state.selectedGiveaways.indexOf(giveaway.index) !== -1 }
+                />
+              )
+            }) }
+          </View>
+        </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
-            text={ 'Next' }
+            text={ I18n.t('common.next') }
             disabled={ !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />

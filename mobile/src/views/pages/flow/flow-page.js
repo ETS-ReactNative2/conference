@@ -1,17 +1,10 @@
-import { Button, Container, Content, Icon } from 'native-base'
+import { Button, Icon, View } from 'native-base'
 import React from 'react'
 import { BackHandler, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { PAGES_NAMES } from '../../../navigation'
 import { signUpActions } from '../../../signup'
-import {
-  EmployeeKeywords,
-  EmployeeRole, EmployerRole,
-  InvesteeProjectSetup, InvestorCompanyFundingStage,
-  InvestorCompanyLocation, InvestorGiveaways, InvestorIndustries,
-  InvestorInvestIn, InvestorMarketLocation,
-  InvestorTicketSize,
-} from './steps'
+import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation } from './steps'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
 
 class FlowPage extends React.Component {
@@ -30,7 +23,7 @@ class FlowPage extends React.Component {
         </Button>
       ),
       headerRight: (
-        <Image style={{ marginRight: 20 }} source={ WhiteLogo }/>
+        <Image style={ { marginRight: 20 } } source={ WhiteLogo }/>
       )
 
     })
@@ -135,15 +128,14 @@ class FlowPage extends React.Component {
     const { CurrentStep } = this.state
 
     return (
-      // TODO: needs to add property to each step
-      <Container style={ { backgroundColor: this.state.CurrentStep.BACKGROUND_COLOR || 'white' } }>
-        <Content>
+      <View style={ { flex:1, backgroundColor: this.state.CurrentStep.BACKGROUND_COLOR || 'white' } }>
+        <View style={ { flex: 1 } }>
           <CurrentStep
             onFill={ this.onFill }
             style={ { marginBottom: 16, marginTop: 16 } }
           />
-        </Content>
-      </Container>
+        </View>
+      </View>
     )
   }
 }

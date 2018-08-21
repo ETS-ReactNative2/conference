@@ -36,11 +36,7 @@ class EmployeeKeywords extends React.Component {
       mostInfo: this.props.employee.mostInfo,
       relocate: this.props.employee.relocate,
       remote: this.props.employee.remote,
-      country: this.props.employee.country || {
-        cca2: 'US',
-        countryName: 'United States of America',
-        callingCode: '1'
-      },
+      country: this.props.employee.country,
       city: this.props.employee.city
     }
     this.state.isFormValid = this.isFormValid()
@@ -58,12 +54,17 @@ class EmployeeKeywords extends React.Component {
     return mostInfo.length > 0
   }
 
+  validateJobCity = (city) => {
+    return !validator.isEmpty(city)
+  }
+
   isFormValid = () => {
-    const { skills, traits, mostInfo } = this.state
+    const { skills, traits, mostInfo, city } = this.state
     const skillsFilled = this.validateSkills(skills)
     const traitsFilled = this.validateTraits(traits)
     const mostInfoFilled = this.validateMostInfo(mostInfo)
-    return skillsFilled && traitsFilled && mostInfoFilled
+    const jobCityFilled = this.validateJobCity(city)
+    return skillsFilled && traitsFilled && mostInfoFilled && jobCityFilled
   }
 
   validateForm = () => {
@@ -77,17 +78,13 @@ class EmployeeKeywords extends React.Component {
     }, this.validateForm)
   }
 
-  validateJobCity = (city) => {
-    return !validator.isEmpty(city)
-  }
-
   render () {
     return (
       <FlowContainer>
-        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-          <StepTitle text={ I18n.t('flow_page.employee.role.about') }/>
-        </View>
-        <ScrollView>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+            <StepTitle text={ I18n.t('flow_page.employee.role.about') }/>
+          </View>
           <Subheader
             text={ I18n.t('flow_page.employee.skills.title') }
           />
@@ -147,12 +144,13 @@ class EmployeeKeywords extends React.Component {
               labelText={ I18n.t('flow_page.employee.most_info.placeholder') }
               isError={ !this.validateJobCity(this.state.city) }
               errorMessage={ I18n.t('common.errors.incorrect_job_city') }
+              errorStyleOverride={ errorStyleOverride }
               onChangeText={ (newValue) => this.handleFieldChange(newValue, 'city') }/>
           </View>
         </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
-            text={ 'Next' }
+            text={ I18n.t('common.next') }
             disabled={ !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />
@@ -172,23 +170,16 @@ class EmployeeKeywords extends React.Component {
       skills: this.state.skills,
       traits: this.state.traits,
       mostInfo: this.state.mostInfo,
+      relocate: this.state.relocate,
+      remote: this.state.remote,
+      country: this.state.country,
+      city: this.state.city
     })
     this.props.onFill({
       done: true
     })
   }
 }
-
-const styles = StyleSheet.create({
-  listRow: {
-    paddingVertical: 8,
-    paddingHorizontal: 10
-  },
-  errorText: {
-    alignSelf: 'center',
-    color: 'red'
-  }
-})
 
 EmployeeKeywords.propTypes = {
   onFill: PropTypes.func.isRequired

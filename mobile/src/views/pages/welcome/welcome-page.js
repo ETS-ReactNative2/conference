@@ -90,28 +90,6 @@ const styles = EStyleSheet.create({
     height: 60,
     alignSelf: 'center',
     justifyContent: 'center'
-  },
-  telegramButton: {
-    width: '100%',
-    maxWidth: 270,
-    height: 60,
-    backgroundColor: '#33BAE7',
-    alignSelf: 'center',
-    justifyContent: 'center'
-  },
-  telegramButtonText: {
-    justifyContent: 'center',
-    fontSize: 12
-  },
-  buttonText: {
-    justifyContent: 'center'
-  },
-  connectWith: {
-    color: 'white',
-    alignSelf: 'center',
-    fontSize: 12,
-    fontFamily: 'Montserrat-Regular',
-    marginBottom: '1rem'
   }
 })
 

@@ -15,6 +15,7 @@
     },
     "errors": {
       "email_exists": "This email address is already bound to user, please try different one",
+      "incorrect_amount": "Please enter number greater than 0 and less than 2147483647",
       "incorrect_email": "Please enter correct email address",
       "incorrect_investor_custom_location": "Location can be maximum 40 characters long",
       "incorrect_job_city": "Please enter city",
@@ -35,6 +36,11 @@
       "server_error": "We have some issues, please try again or contact us"
     },
     "facebook": "Facebook",
+    "flow_pages": {
+      "titles": {
+        "industries": "Industries"
+      }
+    },
     "funding_stages": {
       "post": "Post ICO",
       "pre": "Pre ICO",
@@ -228,7 +234,7 @@
       "role": {
         "looking_for_job": "Are you looking for job?",
         "title": "Please select the role you are searching for",
-        "not_looking_for_job": "I'm not looking for job",
+        "not_looking_for_job": "I'm not looking for a job",
         "about": "Tell us more abut your skills, traits and knowledge"
       },
       "skills": {
@@ -272,14 +278,16 @@
       }
     },
     "funding_stage": {
-      "title": "Funding stage"
+      "header": "Funding stage",
+      "title": "At which stage of investement are you?"
     },
     "giveaway": {
-      "title": "Giveaway"
+      "title": "How do you plan to involve your investor?",
+      "header": "Giveaway"
     },
     "hiring": {
-      "question": "Are you hiring?",
-      "title": "Hiring"
+      "title": "Are you looking for talent?",
+      "header": "Hiring"
     },
     "ico": {
       "question": "Are you going to do an ICO?",
@@ -295,6 +303,14 @@
         "legal": "Company legal location",
         "main": "Main office location",
         "title": "Project location"
+      },
+      "industries": {
+        "title": "What do you work with",
+        "header": "Industries"
+      },
+      "token_type": {
+        "title": "What is your project's token type?",
+        "header": "Token type"
       }
     },
     "investor": {
@@ -331,30 +347,34 @@
     },
     "links": {
       "telegram": "Telegram",
-      "title": "Links",
+      "title": "Share with us your project's links",
       "website": "Website",
-      "whitepaper": "Whitepaper"
+      "whitepaper": "Whitepaper",
+      "header": "Links"
     },
     "members": {
-      "label": "Who are your notable members or advisors, if any?",
+      "header": "Who are your notable members or advisors, if any?",
       "size": "Team size",
       "title": "Members"
     },
     "money": {
-      "amount": "How much money are you looking for?",
+      "amount": "Money (€)",
       "nationality": "Investor nationality",
       "need_money": "Are you looking for money?",
-      "title": "Money source",
+      "title": "How much money are you planning to raise?",
+      "not_looking_for_money": "I am not looking for money",
       "other_location_placeholder": "Enter location"
     },
     "product_stage": {
-      "title": "Product stage"
+      "title": "What is your product's stage?",
+      "header": "Product stage"
     },
     "project_setup": {
       "project_description": "Project description",
       "project_name": "Project name",
       "project_tagline": "Project tagline",
-      "title": "Project setup"
+      "title": "Tell us more about your project",
+      "header": "Project setup"
     },
     "title": "Signup flow DEV",
     "token_type": {
@@ -373,8 +393,6 @@
   "login_page": {
     "button": "Log in",
     "change_mind": "I have changed my mind",
-    "connect_with": "Or connect with:",
-    "connect_with_telegram": "CONNECT WITH TELEGRAM",
     "email_placeholder": "Email",
     "password_placeholder": "Password",
     "privacy_policy": "PRIVACY POLICY",
