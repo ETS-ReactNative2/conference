@@ -34,12 +34,6 @@ class WelcomePage extends React.Component {
                       text={ I18n.t('welcome_page.signup') }
                     />
                   </View>
-                  <Text style={ styles.connectWith }>{ I18n.t('welcome_page.connect_with') }</Text>
-                  <View style={ styles.buttonContainer }>
-                    <BlueButton
-                      icon={ 'md-paper-plane' }
-                      text={ I18n.t('welcome_page.connect_with_telegram') }/>
-                  </View>
                 </View>
               </ScrollView>
             </View>
