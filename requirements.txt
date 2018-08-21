@@ -32,4 +32,6 @@ psycopg2==2.7
 setproctitle==1.1.10
 jinja2==2.8
 Fabric==1.11.1
+uwsgi==2.0.15
+gevent==1.2.2
 
