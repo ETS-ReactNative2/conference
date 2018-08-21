@@ -38,13 +38,15 @@
     "funding_stages": {
       "post": "Post ICO",
       "pre": "Pre ICO",
-      "seed": "Seed"
+      "seed": "Seed",
+      "header": "Funding stage"
     },
     "github": "Github",
     "giveaway": {
       "both": "Both",
       "equity": "Equity",
-      "token": "Token"
+      "token": "Token",
+      "header": "Giveaway"
     },
     "giveaways": {
       "both": "Both",
@@ -52,6 +54,7 @@
       "token": "Token"
     },
     "industries": {
+      "header": "Industries",
       "other": "Other",
       "accounting": "Accounting",
       "agriculture": "Agriculture",
@@ -133,13 +136,15 @@
     "product_stages": {
       "live": "Live product",
       "pre": "Pre-product",
-      "revenue": "Live product + $ Revenue"
+      "revenue": "Live product + $ Revenue",
+      "header": "Product stage"
     },
     "regions": {
       "other": "Other",
       "anywhere": "Anywhere",
       "anywhere_except_us": "Anywhere except US",
-      "korea_only": "Korea only"
+      "korea_only": "Korea only",
+      "header": "Region"
     },
     "roles": {
       "other": "Other",
@@ -173,7 +178,8 @@
     "token_types": {
       "app_tokens": "App Tokens",
       "protocols": "Protocols",
-      "security_tokens": "Security Tokens"
+      "security_tokens": "Security Tokens",
+      "header": "Token types"
     },
     "twitter": "Twitter",
     "yes": "Yes"
@@ -286,7 +292,7 @@
     },
     "investor": {
       "company_funding_stage": {
-        "title": "What is your funding stage?"
+        "title": "At which funding stage should the project you want to invest in be?"
       },
       "company_location": {
         "localization": "My company is located in:",
@@ -299,20 +305,21 @@
         "title": "Investor buys"
       },
       "industries": {
-        "title": "Which industries you\"re instrested in?"
+        "title": "Where do you want to invest?"
       },
       "invest_in": {
-        "title": "I want to invest in:"
+        "title": "What is your preferred type of investment?"
       },
       "market_location": {
         "other_location_placeholder": "Enter location",
-        "title": "Where should the company be located?"
+        "title": "Where do you want to invest?"
       },
       "product_stage": {
-        "title": "Product stage"
+        "title": "What stage do you expect the product to be at?"
       },
       "ticket_size": {
-        "title": "Ticket size:"
+        "title": "How much money are you planning to invest?",
+        "header": "Ticket size"
       }
     },
     "links": {
@@ -344,7 +351,7 @@
     },
     "title": "Signup flow DEV",
     "token_type": {
-      "title": "Token type"
+      "title": "What is your preferred type of investment?"
     }
   },
   "header": {

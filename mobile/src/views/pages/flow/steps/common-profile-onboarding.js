@@ -75,7 +75,7 @@ class CommonProfileOnboarding extends React.Component {
       facebook: this.state.facebook,
       telegram: this.state.telegram,
       linkedin: this.state.linkedin
-    }, PAGES_NAMES.FLOW_PAGE)
+    }, PAGES_NAMES.PROFILE_TYPE_PAGE)
   }
 
   handleFieldChange = (newValue, name) => {

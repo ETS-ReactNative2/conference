@@ -1,53 +1,69 @@
-import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { Button, Card, Content, Left, ListItem, Radio, Right, Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { PRODUCT_STAGES } from '../../../../enums'
+import { GIVEAWAY_TYPES, PRODUCT_STAGES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { SubheaderWithSwitch } from '../../../design/subheader'
 import { InvestorMarketLocation } from './index'
 
 
 class InvestorProductStages extends React.Component {
+
+  static BACKGROUND_COLOR = '#2C65E2'
+
   constructor (props) {
     super(props)
     this.state = {
-      productStages: this.props.investor.productStages
+      productStages: this.props.investor.productStages,
+      all: this.props.investor.productStages.length === PRODUCT_STAGES.length
     }
     this.state.isFormValid = this.isFormValid()
   }
 
+  selectAll = () => {
+    this.state.all ?
+      this.setState({ productStages: [], all: false }) :
+      this.setState({ productStages: PRODUCT_STAGES.map(tt => tt.index), all: true })
+  }
+
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.product_stage.title') }</Text>
-        <Content>
-          {
-            PRODUCT_STAGES.map((option) => {
-              return (
-                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(option.index) }>
-                  <Left>
-                    <Text>{ I18n.t(`common.product_stages.${option.slug}`) }</Text>
-                  </Left>
-                  <Right>
-                    <Radio
-                      onPress={ () => this.handleChange(option.index) }
-                      selected={ this.state.productStages.indexOf(option.index) !== -1 }/>
-                  </Right>
-                </ListItem>
-              )
-            })
-          }
-        </Content>
-        <Button success
-                rounded
-                block
-                disabled={ !this.state.isFormValid }
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+      <FlowContainer>
+        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+          <StepTitle text={ I18n.t('flow_page.investor.product_stage.title') }/>
+        </View>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <SubheaderWithSwitch
+            selected={ this.state.all }
+            text={ I18n.t(`common.product_stages.header`) }
+            onToggle={ this.selectAll }
+          />
+          { PRODUCT_STAGES.map((stage) => {
+            return (
+              <FlowListItem
+                multiple={ true }
+                key={ `product_stage-item-${stage.slug}` }
+                text={ I18n.t(`common.product_stages.${stage.slug}`) }
+                onSelect={ () => this.handleChange(stage.index) }
+                selected={ this.state.productStages.indexOf(stage.index) !== -1 }
+              />
+            )
+          }) }
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ 'Next' }
+            disabled={ !this.state.isFormValid }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 
@@ -78,7 +94,8 @@ class InvestorProductStages extends React.Component {
       selectedProductStagesCopy.splice(clickedItemIndex, 1);
     }
     this.setState({
-      productStages: selectedProductStagesCopy
+      productStages: selectedProductStagesCopy,
+      all: selectedProductStagesCopy.length === PRODUCT_STAGES.length
     }, this.validateForm)
   }
 }

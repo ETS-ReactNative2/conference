@@ -1,16 +1,32 @@
-import { Button, Card, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { INVESTOR_INDUSTRIES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { SubheaderWithSwitch } from '../../../design/subheader'
 
 class InvestorIndustries extends React.Component {
+
+  static BACKGROUND_COLOR = '#2C65E2'
+
   constructor (props) {
     super(props)
     this.state = {
-      industries: this.props.industries
+      industries: this.props.industries,
+      all: this.props.industries.length === INVESTOR_INDUSTRIES.length,
+      items: INVESTOR_INDUSTRIES.map(industry => {
+        return {
+          ...industry,
+          checked: this.props.industries.indexOf(industry.index) !== -1
+        }
+      })
     }
   }
 
@@ -27,41 +43,74 @@ class InvestorIndustries extends React.Component {
     } else {
       industries.push(fieldName)
     }
-    this.setState({ industries })
+    this.setState({
+      industries,
+      all: industries.length === INVESTOR_INDUSTRIES.length,
+      items: this.state.items.map(it => {
+        if (it.index === fieldName) {
+          it.checked = !it.checked
+        }
+        return it
+      })
+    })
   }
 
   isCheckboxSelected = fieldName => {
     return this.state.industries.indexOf(fieldName) !== -1
   }
 
+  selectAll = () => {
+    this.state.all ?
+      this.setState({
+        industries: [],
+        all: false,
+        items: this.state.items.map(it => { return { ...it, checked: false }})
+      }) :
+      this.setState({
+        industries: INVESTOR_INDUSTRIES.map(tt => tt.index),
+        all: true,
+        items: this.state.items.map(it => { return { ...it, checked: true }})
+      })
+  }
+
+  renderItem = obj => {
+    const industry = obj.item
+    return (
+      <FlowListItem
+        multiple={ true }
+        text={ I18n.t(`common.industries.${industry.slug}`) }
+        onSelect={ () => this.handleCheckboxClick(industry.index) }
+        selected={ industry.checked }
+      />
+    )
+  }
+
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.industries.title') }</Text>
-        { INVESTOR_INDUSTRIES.map((singleIndustry) => {
-          return (
-            <ListItem
-              onPress={ () => this.handleCheckboxClick(singleIndustry.index) }
-              key={ `investment-item-${singleIndustry.slug}` }>
-              <Left>
-                <Text>{ I18n.t(`common.industries.${singleIndustry.slug}`) }</Text>
-              </Left>
-              <Right>
-                <Radio
-                  onPress={ () => this.handleCheckboxClick(singleIndustry.index) }
-                  selected={ this.isCheckboxSelected(singleIndustry.index) }/>
-              </Right>
-            </ListItem>
-          )
-        }) }
-        <Button success
-                rounded
-                block
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+      <FlowContainer>
+        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+          <StepTitle text={ I18n.t('flow_page.investor.industries.title') }/>
+        </View>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <SubheaderWithSwitch
+            selected={ this.state.all }
+            text={ I18n.t(`common.industries.header`) }
+            onToggle={ this.selectAll }
+          />
+          <FlatList
+            data={ this.state.items }
+            keyExtractor={ (item) => item.slug }
+            renderItem={ this.renderItem }
+          />
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ 'Next' }
+            disabled={ false }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 }

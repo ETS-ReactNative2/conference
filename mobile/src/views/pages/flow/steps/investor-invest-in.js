@@ -1,17 +1,28 @@
-import { Button, Card, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { Container, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { TOKEN_TYPES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { SubheaderWithSwitch } from '../../../design/subheader'
 import { InvestorTicketSize } from './index'
 
 class InvestorInvestIn extends React.Component {
+
+  static BACKGROUND_COLOR = '#2C65E2'
+
   constructor (props) {
     super(props)
     this.state = {
-      investments: this.props.investments
+      investments: this.props.investments,
+      all: this.props.investments.length === TOKEN_TYPES.length
     }
   }
 
@@ -28,7 +39,16 @@ class InvestorInvestIn extends React.Component {
     } else {
       investments.push(fieldName)
     }
-    this.setState({ investments })
+    this.setState({
+      investments,
+      all: investments.length === TOKEN_TYPES.length
+    })
+  }
+
+  selectAll = () => {
+    this.state.all ?
+      this.setState({ investments: [], all: false }) :
+      this.setState({ investments: TOKEN_TYPES.map(tt => tt.index), all: true })
   }
 
   isCheckboxSelected = fieldName => {
@@ -37,32 +57,35 @@ class InvestorInvestIn extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.invest_in.title') }</Text>
-        { TOKEN_TYPES.map((singleInvestment) => {
-          return (
-            <ListItem
-              onPress={ () => this.handleCheckboxClick(singleInvestment.index) }
-              key={ `investment-item-${singleInvestment.slug}` }>
-              <Left>
-                <Text>{ I18n.t(`common.token_types.${singleInvestment.slug}`) }</Text>
-              </Left>
-              <Right>
-                <Radio
-                  onPress={ () => this.handleCheckboxClick(singleInvestment.index) }
-                  selected={ this.isCheckboxSelected(singleInvestment.index) }/>
-              </Right>
-            </ListItem>
-          )
-        }) }
-        <Button success
-                rounded
-                block
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+      <FlowContainer>
+        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+          <StepTitle text={ I18n.t('flow_page.investor.invest_in.title') }/>
+        </View>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <SubheaderWithSwitch
+            selected={ this.state.all }
+            text={ I18n.t(`common.token_types.header`) }
+            onToggle={ this.selectAll }
+          />
+          { TOKEN_TYPES.map((singleInvestment) => {
+            return (
+              <FlowListItem
+                multiple={ true }
+                key={ `investment-item-${singleInvestment.slug}` }
+                text={ I18n.t(`common.token_types.${singleInvestment.slug}`) }
+                onSelect={ () => this.handleCheckboxClick(singleInvestment.index) }
+                selected={ this.isCheckboxSelected(singleInvestment.index) }
+              />
+            )
+          }) }
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ 'Next' }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 }

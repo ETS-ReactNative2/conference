@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
 import { CountrySelect } from '../../../design/select'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
@@ -25,7 +26,7 @@ class InvestorCompanyLocation extends React.Component {
 
   render () {
     return (
-      <Container style={ styles.container }>
+      <FlowContainer>
         <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
           <StepTitle text={ I18n.t('flow_page.investor.company_location.title') }/>
         </View>
@@ -47,7 +48,7 @@ class InvestorCompanyLocation extends React.Component {
             onPress={ this.handleSubmit }
           />
         </View>
-      </Container>
+      </FlowContainer>
     )
   }
 
@@ -61,14 +62,6 @@ class InvestorCompanyLocation extends React.Component {
     })
   }
 }
-
-const styles = EStyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    height: `100% - ${Header.HEIGHT}`
-  }
-})
 
 InvestorCompanyLocation.propTypes = {
   onFill: PropTypes.func.isRequired

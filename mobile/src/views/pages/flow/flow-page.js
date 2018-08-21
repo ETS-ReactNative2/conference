@@ -4,7 +4,13 @@ import { BackHandler, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { PAGES_NAMES } from '../../../navigation'
 import { signUpActions } from '../../../signup'
-import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation, } from './steps'
+import {
+  EmployeeRole,
+  InvesteeProjectSetup, InvestorCompanyFundingStage,
+  InvestorCompanyLocation, InvestorGiveaways, InvestorIndustries,
+  InvestorInvestIn, InvestorMarketLocation,
+  InvestorTicketSize,
+} from './steps'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
 
 class FlowPage extends React.Component {
@@ -58,8 +64,6 @@ class FlowPage extends React.Component {
       case 'investee':
         return InvesteeProjectSetup
     }
-
-    return InvestorCompanyLocation
   }
 
   getBackgroundColor = () => {

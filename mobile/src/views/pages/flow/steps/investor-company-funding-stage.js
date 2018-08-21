@@ -1,17 +1,28 @@
-import { Button, Card, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { Container, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { FUNDING_STAGES } from '../../../../enums'
+import { FUNDING_STAGES, TOKEN_TYPES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { SubheaderWithSwitch } from '../../../design/subheader'
 import { InvestorGiveaways } from './index'
 
 class InvestorCompanyFundingStage extends React.Component {
+
+  static BACKGROUND_COLOR = '#2C65E2'
+
   constructor (props) {
     super(props)
     this.state = {
-      stages: this.props.stages
+      stages: this.props.stages,
+      all: this.props.stages.length === FUNDING_STAGES.length
     }
   }
 
@@ -28,7 +39,16 @@ class InvestorCompanyFundingStage extends React.Component {
     } else {
       stages.push(fieldName)
     }
-    this.setState({ stages })
+    this.setState({
+      stages,
+      all: stages.length === TOKEN_TYPES.length
+    })
+  }
+
+  selectAll = () => {
+    this.state.all ?
+      this.setState({ stages: [], all: false }) :
+      this.setState({ stages: FUNDING_STAGES.map(tt => tt.index), all: true })
   }
 
   isCheckboxSelected = fieldName => {
@@ -37,32 +57,35 @@ class InvestorCompanyFundingStage extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.company_funding_stage.title') }</Text>
-        { FUNDING_STAGES.map(singleStage => {
-          return (
-            <ListItem
-              onPress={ () => this.handleCheckboxClick(singleStage.index) }
-              key={ `funding-item-${singleStage.slug}` }>
-              <Left>
-                <Text>{ I18n.t(`common.funding_stages.${singleStage.slug}`) }</Text>
-              </Left>
-              <Right>
-                <Radio
-                  onPress={ () => this.handleCheckboxClick(singleStage.index) }
-                  selected={ this.isCheckboxSelected(singleStage.index) }/>
-              </Right>
-            </ListItem>
-          )
-        }) }
-        <Button success
-                rounded
-                block
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+      <FlowContainer>
+        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+          <StepTitle text={ I18n.t('flow_page.investor.company_funding_stage.title') }/>
+        </View>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <SubheaderWithSwitch
+            selected={ this.state.all }
+            text={ I18n.t(`common.funding_stages.header`) }
+            onToggle={ this.selectAll }
+          />
+          { FUNDING_STAGES.map((singleInvestment) => {
+            return (
+              <FlowListItem
+                multiple={ true }
+                key={ `investment-item-${singleInvestment.slug}` }
+                text={ I18n.t(`common.funding_stages.${singleInvestment.slug}`) }
+                onSelect={ () => this.handleCheckboxClick(singleInvestment.index) }
+                selected={ this.isCheckboxSelected(singleInvestment.index) }
+              />
+            )
+          }) }
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ 'Next' }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 }

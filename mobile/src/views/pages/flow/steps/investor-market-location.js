@@ -1,14 +1,23 @@
-import { Button, Card, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { signUpActions } from '../../../../signup'
 import { REGIONS } from '../../../../enums'
+import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import FlowInputValidated from '../../../design/flow-input-validated'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { Subheader } from '../../../design/subheader'
 import { InvestorIndustries } from './index'
-import ValidatedInput from '../../../components/validated-input/validated-input'
 
 class InvestorMarketLocation extends React.Component {
+
+  static BACKGROUND_COLOR = '#2C65E2'
+
   constructor (props) {
     super(props)
     this.state = {
@@ -23,52 +32,58 @@ class InvestorMarketLocation extends React.Component {
   }
 
   handleCheckboxClick = newValue => {
-    this.setState({ location: newValue});
+    this.setState({ location: newValue })
   }
 
   handleFieldChange = (newValue, name) => {
     this.setState({
       [ name ]: newValue
     })
-  };
+  }
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.market_location.title') }</Text>
-        { REGIONS.map((singleRegion) => {
-          return (
-            <ListItem
-              onPress={ () => this.handleCheckboxClick(singleRegion) }
-              key={ `market-location-${singleRegion.slug}`}>
-              <Left>
-                <Text>{ I18n.t(`common.regions.${singleRegion.slug}`) }</Text>
-              </Left>
-              <Right>
-                <Radio
-                  onPress={ () => this.handleCheckboxClick(singleRegion) }
-                  selected={ this.state.location.index === singleRegion.index }/>
-              </Right>
-            </ListItem>
-          )})
-        }
-        {this.state.location.slug === "other" && (
-          <ValidatedInput floatingLabel
-            value={ this.state.regionOtherText }
-            labelText={ I18n.t('flow_page.investor.market_location.other_location_placeholder') }
-            isError={ this.state.regionOtherText.length > 40 }
-            errorMessage={ I18n.t('common.errors.incorrect_investor_custom_location') }
-            onChangeText={ (newValue) => this.handleFieldChange(newValue, 'regionOtherText') }/>
-        )}
-        <Button success
-                rounded
-                block
-                disabled={ this.state.location.slug === "other" && this.state.regionOtherText.length > 40}
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+      <FlowContainer>
+        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+          <StepTitle text={ I18n.t('flow_page.investor.market_location.title') }/>
+        </View>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <Subheader
+            text={ I18n.t(`common.regions.header`) }
+          />
+          <ScrollView>
+            { REGIONS.map((region) => {
+              return (
+                <FlowListItem
+                  multiple={ false }
+                  key={ `product_stage-item-${region.slug}` }
+                  text={ I18n.t(`common.regions.${region.slug}`) }
+                  onSelect={ () => this.handleCheckboxClick(region.index) }
+                  selected={ this.state.location === region.index }
+                />
+              )
+            }) }
+            { this.state.location === REGIONS.find(r => r.slug === 'other').index && (
+              <View style={ { marginLeft: 8, marginRight: 8 } }>
+                <FlowInputValidated
+                  floatingLabel
+                  value={ this.state.regionOtherText }
+                  labelText={ I18n.t('flow_page.investor.market_location.other_location_placeholder') }
+                  isError={ this.state.regionOtherText.length > 40 }
+                  errorMessage={ I18n.t('common.errors.incorrect_investor_custom_location') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'regionOtherText') }/>
+              </View>
+            ) }
+          </ScrollView>
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ 'Next' }
+            disabled={ this.state.location.slug === 'other' && this.state.regionOtherText.length > 40 }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 }
