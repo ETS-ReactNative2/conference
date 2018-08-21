@@ -64,7 +64,7 @@ class InvesteeGiveaway extends React.Component {
         </View>
         <View style={ { margin: 8 } }>
           <FlowButton
-            text={ 'Next' }
+            text={ I18n.t('common.next') }
             disabled={!this.state.isFormValid}
             onPress={ this.handleSubmit }
           />

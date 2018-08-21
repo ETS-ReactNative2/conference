@@ -8,6 +8,7 @@ import {
   PRIMARY_DISABLED_COLOR,
   PRIMARY_DISABLED_TEXT_COLOR
 } from './constants'
+import I18n from "../../../locales/i18n";
 
 function BaseButton({onPress, disabled, style, children}) {
   const styles = baseButton
@@ -66,7 +67,7 @@ export function BlueButton ({ text, onPress, disabled, icon}){
   )
 }
 
-export function FlowButton ({ text = 'Next', onPress, disabled }) {
+export function FlowButton ({ text = I18n.t('common.next'), onPress, disabled }) {
   const styles = flowButton
   return (
     <BaseButton disabled={ disabled } style={ disabled ? styles.disabledButton : styles.button } onPress={ ev => onPress(ev) }>

@@ -14,7 +14,7 @@
       "usa": "USA"
     },
     "errors": {
-      "email_exists": "This email address is already bound to user, please try different one",
+      "email_exists": "This email address is already bound to a user, please try a different one",
       "incorrect_amount": "Please enter number greater than 0 and less than 2147483647",
       "incorrect_email": "Please enter correct email address",
       "incorrect_investor_custom_location": "Location can be maximum 40 characters long",
@@ -42,17 +42,17 @@
       }
     },
     "funding_stages": {
+      "header": "Funding stage",
       "post": "Post ICO",
       "pre": "Pre ICO",
-      "seed": "Seed",
-      "header": "Funding stage"
+      "seed": "Seed"
     },
     "github": "Github",
     "giveaway": {
       "both": "Both",
       "equity": "Equity",
-      "token": "Token",
-      "header": "Giveaway"
+      "header": "Investor buys",
+      "token": "Token"
     },
     "giveaways": {
       "both": "Both",
@@ -60,7 +60,6 @@
       "token": "Token"
     },
     "industries": {
-      "header": "Industries",
       "other": "Other",
       "accounting": "Accounting",
       "agriculture": "Agriculture",
@@ -82,6 +81,7 @@
       "finance": "Finance",
       "green_energy": "Green Energy",
       "hardware": "Hardware",
+      "header": "Industries",
       "health": "Health",
       "human_resources": "Human Resources",
       "human_rights": "Human Rights",
@@ -127,7 +127,7 @@
       "korean": "Korean",
       "polish": "Polish"
     },
-    "news": "News publication about your project",
+    "news": "Featured press article URL",
     "next": "Save",
     "no": "No",
     "payment": {
@@ -140,17 +140,17 @@
     "personal_telegram": "PERSONAL TELEGRAM",
     "personal_twitter": "PERSONAL TWITTER",
     "product_stages": {
+      "header": "Product stage",
       "live": "Live product",
       "pre": "Pre-product",
-      "revenue": "Live product + $ Revenue",
-      "header": "Product stage"
+      "revenue": "Live product + $ Revenue"
     },
     "regions": {
       "other": "Other",
       "anywhere": "Anywhere",
       "anywhere_except_us": "Anywhere except US",
-      "korea_only": "Korea only",
-      "header": "Region"
+      "header": "Region",
+      "korea_only": "Korea only"
     },
     "roles": {
       "other": "Other",
@@ -182,10 +182,10 @@
     },
     "telegram": "Telegram",
     "token_types": {
-      "app_tokens": "App Tokens",
-      "protocols": "Protocols",
-      "security_tokens": "Security Tokens",
-      "header": "Token types"
+      "app_tokens": "App Token",
+      "header": "Token type",
+      "protocols": "Protocol",
+      "security_tokens": "Security Token"
     },
     "twitter": "Twitter",
     "yes": "Yes"
@@ -208,10 +208,10 @@
         "titleField": "JOB TITLE"
       },
       "profile_type": {
-        "meeting": "Meet people",
-        "metting_investors": "Meet investors",
-        "projects": "Invest",
-        "title": "I am here to"
+        "meeting": "Find a new job",
+        "metting_investors": "Edit my company profile",
+        "projects": "Edit my investor profile",
+        "title": "What would you like to do?"
       }
     },
     "employee": {
@@ -232,21 +232,21 @@
       "relocate": "Are you willing to relocate?",
       "remote": "Are you willing to work remote?",
       "role": {
-        "looking_for_job": "Are you looking for job?",
-        "title": "Please select the role you are searching for",
-        "not_looking_for_job": "I'm not looking for a job",
-        "about": "Tell us more abut your skills, traits and knowledge"
+        "about": "Tell us more about your skills, traits and knowledge",
+        "looking_for_job": "Are you looking for a job?",
+        "not_looking_for_job": "I'm not looking for job",
+        "title": "Role"
       },
       "skills": {
         "error": "Please select from 1 to 3 skills",
         "header": "What are your top 3 skills?",
-        "placeholder": "What are your top 3 skills?",
-        "title": "Skills and traits"
+        "placeholder": "Python, SEO, Photoshop",
+        "title": "Skills"
       },
       "traits": {
         "error": "Please select from 1 to 3 traits",
         "header": "What are your top 3 traits?",
-        "placeholder": "What are your top 3 traits?",
+        "placeholder": "Goal Oriented, Autonomous, Great Communicator",
         "title": "Traits"
       }
     },
@@ -257,15 +257,15 @@
         "link": "Link",
         "max": "Max. salary",
         "min": "Min. salary",
-        "title": "Share with us your project's links",
-        "part_time": "Part-time possible"
+        "part_time": "Part-time possible",
+        "title": "Job"
       },
       "keyword": {
         "full_time": "Part time possible?",
+        "links": "Links",
         "placeholder": "Select skills for job listing",
         "remote": "Remote possible?",
-        "title": "Keywords",
-        "links": "Links"
+        "title": "Keywords"
       },
       "location": {
         "title": "Job location"
@@ -274,20 +274,20 @@
         "title": "Type of payment"
       },
       "role": {
-        "title": "Please select role you are interested in:"
+        "title": "Select the roles for which you're hiring"
       }
     },
     "funding_stage": {
-      "header": "Funding stage",
-      "title": "At which stage of investement are you?"
+      "header": "At which stage of investment are you?",
+      "title": "Funding stage"
     },
     "giveaway": {
-      "title": "How do you plan to involve your investor?",
-      "header": "Giveaway"
+      "header": "Investor buys",
+      "title": "How do you plan to involve your investor?"
     },
     "hiring": {
-      "title": "Are you looking for talent?",
-      "header": "Hiring"
+      "header": "Hiring",
+      "title": "Are you hiring?"
     },
     "ico": {
       "question": "Are you going to do an ICO?",
@@ -298,19 +298,19 @@
       "title": "Which industry you work in?"
     },
     "investee": {
+      "industries": {
+        "header": "Industry",
+        "title": "What do you work with?"
+      },
       "project_location": {
         "country_picker_placeholder": "Choose country",
         "legal": "Company legal location",
         "main": "Main office location",
         "title": "Project location"
       },
-      "industries": {
-        "title": "What do you work with",
-        "header": "Industries"
-      },
       "token_type": {
-        "title": "What is your project's token type?",
-        "header": "Token type"
+        "header": "Token type",
+        "title": "What is your project's token type?"
       }
     },
     "investor": {
@@ -318,14 +318,12 @@
         "title": "At which funding stage should the project you want to invest in be?"
       },
       "company_location": {
-        "localization": "My company is located in:",
-        "localization_placeholder": "Country",
-        "nationality": "My nationality is:",
+        "nationality": "Nationality",
         "nationality_placeholder": "Nationality",
-        "title": "Where are you running your business?"
+        "title": "What is your nationality?"
       },
       "giveaways": {
-        "title": "Investor buys"
+        "title": "How do you want to be involved?"
       },
       "industries": {
         "title": "Where do you want to invest?"
@@ -341,40 +339,41 @@
         "title": "What stage do you expect the product to be at?"
       },
       "ticket_size": {
-        "title": "How much money are you planning to invest?",
-        "header": "Ticket size"
+        "header": "Ticket size",
+        "title": "How much money are you planning to invest?"
       }
     },
     "links": {
+      "header": "Links",
       "telegram": "Telegram",
       "title": "Share with us your project's links",
       "website": "Website",
-      "whitepaper": "Whitepaper",
-      "header": "Links"
+      "whitepaper": "Whitepaper"
     },
     "members": {
       "header": "Who are your notable members or advisors, if any?",
+      "label": "Who are your notable members or advisors, if any?",
       "size": "Team size",
       "title": "Members"
     },
     "money": {
-      "amount": "Money (€)",
+      "amount": "Money ($)",
       "nationality": "Investor nationality",
       "need_money": "Are you looking for money?",
-      "title": "How much money are you planning to raise?",
       "not_looking_for_money": "I am not looking for money",
-      "other_location_placeholder": "Enter location"
+      "other_location_placeholder": "Enter location",
+      "title": "How much money are you planning to raise?"
     },
     "product_stage": {
-      "title": "What is your product's stage?",
-      "header": "Product stage"
+      "header": "Product stage",
+      "title": "What is your product's stage?"
     },
     "project_setup": {
+      "header": "Project setup",
       "project_description": "Project description",
       "project_name": "Project name",
       "project_tagline": "Project tagline",
-      "title": "Tell us more about your project",
-      "header": "Project setup"
+      "title": "Tell us more about your project"
     },
     "title": "Signup flow DEV",
     "token_type": {
