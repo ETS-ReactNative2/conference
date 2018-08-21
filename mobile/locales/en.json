@@ -367,6 +367,9 @@
   "investor_page": {
     "title": "Investor details"
   },
+  "location_page": {
+    "title": "COMPANY LOCATION"
+  },
   "login_page": {
     "button": "Log in",
     "change_mind": "I have changed my mind",
@@ -387,10 +390,13 @@
     "title": "Project details"
   },
   "search_page": {
+    "change_profile": "No other Investors to diplay with these filters",
     "investor_header": "Investors",
+    "no_profile": "No profiles found. Try to change filters",
     "professional_header": "Professionals",
     "projects_header": "Projects",
-    "title": "Search"
+    "title": "Search",
+    "update_filter": "UPDATE SEARCH FILTERS"
   },
   "signup_page": {
     "account_type_employee": "Employee",

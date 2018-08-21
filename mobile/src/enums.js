@@ -227,12 +227,12 @@ export const PAYMENTS = [
 ]
 
 export const TICKET_SIZES = [
-  { index: 1, min: '0', max: '5000', label: '<5k' },
-  { index: 2, min: '5000', max: '25000', label: '5k-25k' },
-  { index: 3, min: '25000', max: '100000', label: '25k-100k' },
-  { index: 4, min: '100000', max: '500000', label: '100k-1M' },
-  { index: 5, min: '500000', max: '1000000', label: '1M-10M' },
-  { index: 6, min: '1000000', max: Number.POSITIVE_INFINITY, label: '>10M' }
+  { index: 1, min: '0', max: '5000', label: '<5k', minlabel: '0', maxlabel: '5K' },
+  { index: 2, min: '5000', max: '25000', label: '5k-25k', minlabel: '5K', maxlabel: '25K' },
+  { index: 3, min: '25000', max: '100000', label: '25k-100k', minlabel: '25K', maxlabel: '100K' },
+  { index: 4, min: '100000', max: '500000', label: '100k-500k', minlabel: '100K', maxlabel: '500K' },
+  { index: 5, min: '500000', max: '1000000', label: '500k-10M', minlabel: '500K', maxlabel: '10M' },
+  { index: 6, min: '1000000', max: Number.POSITIVE_INFINITY, label: '>10M', minlabel: '10M', maxlabel: '10M+' }
 ]
 
 export const REGIONS = [
