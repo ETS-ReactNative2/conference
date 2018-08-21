@@ -1,77 +1,80 @@
-import { Button, Card, Content, Left, ListItem, Radio, Right, Switch, Text } from 'native-base'
+import { Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { ROLES } from '../../../../enums'
-import { signUpActions } from '../../../../signup'
+import * as signUpActions from '../../../../signup/actions'
+import { FlowButton } from '../../../design/buttons'
+import { Chip } from '../../../design/chips'
+import { FlowContainer } from '../../../design/Container'
+import { StepTitle } from '../../../design/step-title'
 import { EmployeeKeywords } from './index'
 
 class EmployeeRole extends React.Component {
+
+  static BACKGROUND_COLOR = '#c72355'
+
   constructor (props) {
     super(props)
     this.state = {
       selected: this.props.employee.role,
-      lookingForJob: this.props.employee.lookingForJob
     }
-    this.state.isFormValid = this.props.employee.lookingForJob ? this.state.selected !== -1 : true
+    this.state.isFormValid = this.state.selected !== -1
+  }
+
+  onAbortClick = () => {
+    this.props.save({
+      lookingForJob: false
+    })
+    this.props.onFill({
+      nextStep: null,
+      done: true
+    })
   }
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <ListItem>
-          <Left>
-            <Switch
-              onValueChange={ () => this.handleCheck() }
-              value={ this.state.lookingForJob }/>
-            <Text style={ { marginLeft: 8 } }>{ I18n.t('flow_page.employee.role.looking_for_job') }</Text>
-          </Left>
-        </ListItem>
-        {
-          this.state.lookingForJob &&
-          <React.Fragment>
-            <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employee.role.title') }</Text>
-            <Content>
-              {
-                ROLES.map(({ slug: option, index }) => {
-                  return (
-                    <ListItem style={ { width: '100%' } } key={ option } onPress={ () => this.handleChange(index) }>
-                      <Left>
-                        <Text>{ I18n.t(`common.roles.${option}`) }</Text>
-                      </Left>
-                      <Right>
-                        <Radio
-                          onPress={ () => this.handleChange(index) }
-                          selected={ this.state.selected === index }/>
-                      </Right>
-                    </ListItem>
-                  )
-                })
-              }
-            </Content>
-          </React.Fragment>
-        }
-        <Button success
-                rounded
-                block
-                disabled={ !this.state.isFormValid }
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+      <FlowContainer>
+        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+          <StepTitle text={ I18n.t('flow_page.employee.role.title') }/>
+        </View>
+        <ScrollView contentContainerStyle={ { paddingLeft: 16, paddingRight: 16 } }>
+          <View style={ { flex: 1, flexWrap: 'wrap', justifyContent: 'flex-start', flexDirection: 'row' } }>
+            {
+              ROLES.map(({ slug: option, index }) => {
+                return (
+                  <Chip
+                    key={`role-item-${index}`}
+                    onSelect={ () => this.handleChange(index) }
+                    selected={ this.state.selected === index }
+                    text={ I18n.t(`common.roles.${option}`) }/>
+                )
+              })
+            }
+          </View>
+          <Text style={ { color: 'white', fontWeight: 'bold', margin: 16, textAlign: 'center' } }
+                onPress={ this.onAbortClick }>{ I18n.t('flow_page.employee.role.not_looking_for_job') }</Text>
+        </ScrollView>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ 'Next' }
+            disabled={ !this.state.isFormValid }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 
   handleSubmit = () => {
     this.props.save({
-      role: this.state.lookingForJob ? this.state.selected : -1,
-      lookingForJob: this.state.lookingForJob
+      role: this.state.selected,
+      lookingForJob: true
     })
     this.props.onFill({
-      nextStep: this.state.lookingForJob ? EmployeeKeywords : null,
-      done: !this.state.lookingForJob
+      nextStep: EmployeeKeywords
     })
   }
 

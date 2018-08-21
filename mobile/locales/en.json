@@ -209,6 +209,9 @@
       }
     },
     "employee": {
+      "condition": {
+        "title": "Job conditions"
+      },
       "job": {
         "city": "City"
       },
@@ -224,13 +227,15 @@
       "remote": "Are you willing to work remote?",
       "role": {
         "looking_for_job": "Are you looking for job?",
-        "title": "Role"
+        "title": "Please select the role you are searching for",
+        "not_looking_for_job": "I'm not looking for job",
+        "about": "Tell us more abut your skills, traits and knowledge"
       },
       "skills": {
         "error": "Please select from 1 to 3 skills",
         "header": "What are your top 3 skills?",
         "placeholder": "What are your top 3 skills?",
-        "title": "Skills"
+        "title": "Skills and traits"
       },
       "traits": {
         "error": "Please select from 1 to 3 traits",
@@ -246,13 +251,15 @@
         "link": "Link",
         "max": "Max. salary",
         "min": "Min. salary",
-        "title": "Job"
+        "title": "Share with us your project's links",
+        "part_time": "Part-time possible"
       },
       "keyword": {
         "full_time": "Part time possible?",
         "placeholder": "Select skills for job listing",
         "remote": "Remote possible?",
-        "title": "Keywords"
+        "title": "Keywords",
+        "links": "Links"
       },
       "location": {
         "title": "Job location"
@@ -261,7 +268,7 @@
         "title": "Type of payment"
       },
       "role": {
-        "title": "Select the roles for which you\"re hiring"
+        "title": "Please select role you are interested in:"
       }
     },
     "funding_stage": {

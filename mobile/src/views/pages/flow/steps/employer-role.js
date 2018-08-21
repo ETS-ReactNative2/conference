@@ -1,13 +1,22 @@
-import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { Button, Card, Content, Left, ListItem, Radio, Right, Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { Chip } from '../../../design/chips'
+import { FlowContainer } from '../../../design/Container'
+import { StepTitle } from '../../../design/step-title'
 import { EmployerJobs } from './index'
 import {ROLES} from '../../../../enums'
 
 class EmployerRole extends React.Component {
+
+  static BACKGROUND_COLOR = '#182E5B'
+  static TITLE = 'Select role'
+
   constructor (props) {
     super(props)
     this.state = {
@@ -18,36 +27,33 @@ class EmployerRole extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.employer.role.title') }</Text>
-        <Content>
-          {
-            ROLES.map(({slug, index}) => {
-              return (
-                <ListItem style={ { width: '100%' } } key={ slug }
-                          onPress={ () => this.handleCheckboxClick(index) }>
-                  <Left>
-                    <Text>{ I18n.t(`common.roles.${slug}`) }</Text>
-                  </Left>
-                  <Right>
-                    <Radio
-                      onPress={ () => this.handleCheckboxClick(index) }
-                      selected={ this.isCheckboxSelected(index) }/>
-                  </Right>
-                </ListItem>
-              )
-            })
-          }
-        </Content>
-        <Button success
-                rounded
-                block
-                disabled={ !this.state.isFormValid }
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+      <FlowContainer>
+        <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+          <StepTitle text={ I18n.t('flow_page.employer.role.title') }/>
+        </View>
+        <ScrollView contentContainerStyle={ { paddingLeft: 16, paddingRight: 16 } }>
+          <View style={ { flex: 1, flexWrap: 'wrap', justifyContent: 'flex-start', flexDirection: 'row' } }>
+            {
+              ROLES.map(({ slug: option, index }) => {
+                return (
+                  <Chip
+                    key={`role-item-${index}`}
+                    onSelect={ () => this.handleCheckboxClick(index) }
+                    selected={ this.isCheckboxSelected(index) }
+                    text={ I18n.t(`common.roles.${option}`) }/>
+                )
+              })
+            }
+          </View>
+        </ScrollView>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ 'Next' }
+            disabled={ !this.state.isFormValid }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 

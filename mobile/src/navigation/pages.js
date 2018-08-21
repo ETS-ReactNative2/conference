@@ -106,7 +106,8 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: nav => ({
       title: I18n.t('flow_page.title'),
       ...flowNavbarStyle,
-      ...FlowPage.navigationOptions(nav)
+      ...FlowPage.navigationOptions(nav),
+      gesturesEnabled: false
     })
   },
   SEARCH_PAGE: {

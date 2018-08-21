@@ -1,4 +1,4 @@
-import { Icon, Left, ListItem, Right, Text, View } from 'native-base'
+import { Icon, Left, ListItem, Right, Switch, Text, View } from 'native-base'
 import React from 'react'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { SECONDARY_COLOR } from './constants'
@@ -80,6 +80,27 @@ export class FlowListItem extends React.Component {
   }
 }
 
+export class FlowListSwitch extends React.Component {
+
+  render () {
+    const {selected = false, onToggle, text = '', switchText = '' } = this.props
+    return (
+      <View style={ styles.container }>
+        <ListItem noIndent style={ [ styles.switchListItem ] } onPress={() => onToggle()}>
+          <Left style={{ flex: 1}}>
+            <Text style={ [ styles.text, { fontWeight: 'bold'} ] }>{ text.toUpperCase() }</Text>
+          </Left>
+          <Right style={{ flex: 1, flexDirection: 'row', alignContent: 'flex-end', justifyContent: 'flex-end'}}>
+            <Text style={ styles.switchTextStyle }>{ switchText.toUpperCase() }</Text>
+            <Switch
+              onValueChange={() => onToggle()} onTintColor={ SECONDARY_COLOR } style={ styles.switch } value={ selected }/>
+          </Right>
+        </ListItem>
+      </View>
+    )
+  }
+}
+
 const styles = EStyleSheet.create({
   container: {
     marginLeft: 8,
@@ -94,6 +115,24 @@ const styles = EStyleSheet.create({
   },
   listItemSelected: {
     borderBottomColor: SECONDARY_COLOR,
+  },
+  switchListItem: {
+    width: '100%',
+    borderBottomWidth: 2,
+    borderBottomColor: '#fff',
+    paddingBottom: 16,
+    paddingTop: 16,
+  },
+  switch: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginRight: 8
+  },
+  switchTextStyle: {
+    marginRight: 8,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white'
   },
   text: {
     fontSize: 16,

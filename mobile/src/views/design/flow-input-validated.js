@@ -34,7 +34,7 @@ const styles = EStyleSheet.create({
 
 FlowInputValidated.propTypes = {
   floatingLabel: PropTypes.bool,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   value: PropTypes.string,
   labelText: PropTypes.string.isRequired,
   isError: PropTypes.bool.isRequired,

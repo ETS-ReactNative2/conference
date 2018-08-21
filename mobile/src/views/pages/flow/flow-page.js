@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import { PAGES_NAMES } from '../../../navigation'
 import { signUpActions } from '../../../signup'
 import {
-  EmployeeRole,
+  EmployeeKeywords,
+  EmployeeRole, EmployerRole,
   InvesteeProjectSetup, InvestorCompanyFundingStage,
   InvestorCompanyLocation, InvestorGiveaways, InvestorIndustries,
   InvestorInvestIn, InvestorMarketLocation,
