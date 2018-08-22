@@ -36,6 +36,34 @@
 			"response": []
 		},
 		{
+			"name": "/api/investors/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/investors/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"investors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/investors/<id>/",
 			"request": {
 				"method": "GET",
@@ -538,6 +566,62 @@
 						"my_project",
 						"members",
 						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/professionals/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/professionals/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"professionals",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/projects/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/projects/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"projects",
 						""
 					]
 				}
