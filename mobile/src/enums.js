@@ -84,16 +84,6 @@ export const ROLES = [
   { index: 12, slug: 'other' }
 ]
 
-//TODO: Remove as soon as search filter alogirthm uses REGIONS enum
-export const REGION = [
-  { slug: 'korea' },
-  { slug: 'north_america' },
-  { slug: 'south_america' },
-  { slug: 'africa' },
-  { slug: 'asia' },
-  { slug: 'europe' }
-]
-
 export const INVESTOR_INDUSTRIES = [
   {
     slug: 'accounting',

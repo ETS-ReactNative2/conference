@@ -2,7 +2,7 @@ import { Body, Button, Left, ListItem, Radio, Right, Switch, Text, View } from '
 import PropTypes from 'prop-types'
 import React from 'react'
 import I18n from '../../../../../locales/i18n'
-import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGION, REGIONS, TOKEN_TYPES } from '../../../../enums'
+import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGIONS, TOKEN_TYPES } from '../../../../enums'
 
 // todo filters for professionals
 
