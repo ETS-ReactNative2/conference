@@ -1,8 +1,20 @@
 {
+  "home_page": {
+    "title": "Home"
+  },
+  "navigator": {
+    "conference": "Conference",
+    "profile": "Profile",
+    "search": "Find Matches",
+    "home": "Home"
+  },
   "agenda_event": {
     "until": "UNTIL"
   },
   "common": {
+    "investors": "Investors",
+    "projects": "Projects",
+    "attendees": "Professionals attending",
     "errors": {
       "email_exists": "This email address is already bound to a user, please try a different one",
       "incorrect_amount": "Please enter number greater than 0 and less than 2147483647",

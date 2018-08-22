@@ -8,7 +8,7 @@ import { ROLES } from '../../../../enums'
 import * as signUpActions from '../../../../signup/actions'
 import { FlowButton } from '../../../design/buttons'
 import { Chip } from '../../../design/chips'
-import { FlowContainer } from '../../../design/Container'
+import { FlowContainer } from '../../../design/container'
 import { StepTitle } from '../../../design/step-title'
 import { EmployeeKeywords } from './index'
 

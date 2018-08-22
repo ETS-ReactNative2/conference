@@ -1,6 +1,6 @@
 import { decamelizeKeys } from 'humps'
 import * as api from '../api/api'
-import { LOAD_PROFILES, LOAD_PROFILES_ERROR, LOAD_PROFILES_SUCCESS } from './action-types'
+import { LOAD_PROFILES, LOAD_PROFILES_ERROR, LOAD_PROFILES_SUCCESS, LOAD_DEFAULT_PROFILES, LOAD_DEFAULT_PROFILES_SUCCESS, LOAD_DEFAULT_PROFILES_ERROR} from './action-types'
 
 export function fetchMatches () {
   return async dispatch => {
@@ -18,6 +18,28 @@ export function fetchMatches () {
     } catch (err) {
       console.log({err})
       dispatch({ type: LOAD_PROFILES_ERROR })
+    }
+  }
+}
+
+export function fetchDefaults () {
+  return async dispatch => {
+    try {
+      dispatch({ type: LOAD_DEFAULT_PROFILES })
+      const projectResponse = await api.fetchProjects({defaults: true})
+      const investorResponse = await api.fetchInvestors({defaults: true})
+      const professionalResponse = await api.getProfessionals({default: true})
+      dispatch({
+        type: LOAD_DEFAULT_PROFILES_SUCCESS,
+        data: {
+          projects: projectResponse.data,
+          investors: investorResponse.data,
+          professionals: professionalResponse.data
+        }
+      })
+    } catch (err) {
+      console.log({err})
+      dispatch({ type: LOAD_DEFAULT_PROFILES_ERROR })
     }
   }
 }

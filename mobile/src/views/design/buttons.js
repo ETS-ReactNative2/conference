@@ -48,6 +48,15 @@ export function OutlineWhiteButton ({ text = 'Example text', onPress, disabled, 
   )
 }
 
+export function SearchButton ({ text = 'Example text', onPress }) {
+  const styles = searchButtonStyles
+  return (
+    <BaseButton onPress={ ev => onPress(ev) } style={ styles.button }>
+      <Text style={ styles.text }>{ text.toUpperCase() }</Text>
+    </BaseButton>
+  )
+}
+
 export function PrimaryButton ({ text = 'Example text', onPress, disabled }) {
   const styles = primaryButtonStyles
   return (
@@ -102,6 +111,18 @@ const baseButton = EStyleSheet.create({
     justifyContent: 'center',
     fontWeight: 'bold',
     fontFamily: 'Montserrat-SemiBold'
+  }
+})
+
+
+const searchButtonStyles = EStyleSheet.create({
+  button: {
+    backgroundColor: '#fff',
+    maxWidth: 10000
+  },
+  text: {
+    color: BLACK_DISABLED_COLOR,
+    fontWeight: 'bold'
   }
 })
 

@@ -30,7 +30,7 @@ class AgendaPage extends Component {
 }
 
 AgendaPage.propTypes = {
-  fetchAgenda: PropTypes.func.isRequired,
+  fetchConferenceAgenda: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired
 }
