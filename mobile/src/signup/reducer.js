@@ -48,7 +48,7 @@ const initialState = {
     investments: [],
     ticketSizes: [],
     stages: [],
-    marketLocation: '',
+    marketLocation: -1,
     regionOtherText: '',
     industries: []
   },
@@ -71,6 +71,7 @@ const initialState = {
     amount: '',
     tokenType: -1,
     investorNationality: 0,
+    regionOtherText: '',
     legal: '',
     main: '',
     giveaway: -1,
@@ -81,8 +82,8 @@ const initialState = {
   },
   employee: {
     role: -1,
-    skills: [],
-    traits: [],
+    skills: '',
+    traits: '',
     mostInfo: '',
     lookingForJob: false,
     relocate: false,
@@ -154,7 +155,7 @@ export function signUpReducer (state = initialState, action) {
         action.employerInfo.roles.forEach(role => {
           const jobName = ROLES.find(job => job.index === role).slug
           jobs[ jobName ] = state.employer[ jobName ] ? state.employer[ jobName ] : {
-            keywords: [],
+            keywords: '',
             link: '',
             description: '',
             partTime: false,

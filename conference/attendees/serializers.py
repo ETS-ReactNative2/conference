@@ -23,6 +23,8 @@ class ConferenceUserSerializer(serializers.ModelSerializer):
 
 
 class InvestorSerializer(serializers.ModelSerializer):
+    user = ConferenceUserSerializer(source='conference_user')
+
     class Meta:
         model = models.Investor
         fields = (
@@ -36,6 +38,7 @@ class InvestorSerializer(serializers.ModelSerializer):
             'region_other_text',
             'ticket_sizes',
             'token_types',
+            'user',
         )
 
     @transaction.atomic
@@ -78,7 +81,7 @@ class JobListingSerializer(serializers.ModelSerializer):
             'id',
             'role',
             'role_other_text',
-            'skills',
+            'skills_text',
             'link',
             'description',
             'part_time',
@@ -91,13 +94,14 @@ class JobListingSerializer(serializers.ModelSerializer):
 
 class ProfessionalSerializer(serializers.ModelSerializer):
     user = ConferenceUserSerializer()
+
     class Meta:
         model = models.Professional
         fields = (
             'role',
             'role_other_text',
-            'skills',
-            'traits',
+            'skills_text',
+            'traits_text',
             'know_most',
             'local_remote_options',
             'country',
@@ -120,13 +124,21 @@ class ProjectSerializer(serializers.ModelSerializer):
             'fundraising_amount',
             'github',
             'giveaway',
+            'image_url',
             'industry',
+            'is_sponsor',
             'legal_country',
             'main_country',
             'name',
             'news',
             'notable',
             'product_stage',
+            'region',
+            'region_other_text',
+            'services_consumed',
+            'services_consumed_other_text',
+            'services_provided',
+            'services_provided_other_text',
             'size',
             'tagline',
             'telegram',

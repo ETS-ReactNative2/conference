@@ -2,15 +2,10 @@
 from __future__ import unicode_literals
 
 from rest_framework import generics
-from django.contrib.auth.hashers import make_password
-from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
-from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from . import models
 from . import serializers
 
@@ -115,10 +110,19 @@ class MyProject(APIView):
                 giveaway and 1 <= giveaway <= 3
         ) else None
 
+        image_url = json_body.get('image_url')
+        try:
+            clean_image_url = image_url[:models.URL_MAX_LENGTH] if image_url else ''
+        except:
+            clean_image_url = ''
+
         industry = json_body.get('industry')
         clean_industry = models.Industry.objects.get(pk=industry) if (
                 industry and 1 <= industry <= 41
         ) else models.Industry.objects.get(pk=41)
+
+        is_sponsor = json_body.get('is_sponsor')
+        clean_is_sponsor = is_sponsor if isinstance(is_sponsor, bool) else False
 
         legal_country = json_body.get('legal_country')
         clean_legal_country = legal_country[:models.COUNTRY_MAX_LENGTH] if legal_country else ''
@@ -142,6 +146,28 @@ class MyProject(APIView):
         clean_product_stage = models.ProductStage.objects.get(pk=product_stage) if (
                 product_stage and 1 <= product_stage <= 3
         ) else None
+
+        region = json_body.get('region')
+        clean_region = models.Region.objects.get(pk=region) if (
+            region and 1 <= region <= 4
+        ) else None
+
+        region_other_text = json_body.get('region_other_text')
+        clean_region_other_text = region_other_text[:models.REGION_OTHER_TEXT_MAX_LENGTH] if (
+            region_other_text and clean_region.pk == models.Region.OTHER
+        ) else ''
+
+        services_consumed_other_text = json_body.get('services_consumed_other_text')
+        clean_services_consumed_other_text =\
+            services_consumed_other_text[:models.Project.SERVICES_CONSUMED_OTHER_TEXT_MAX_LENGTH] if (
+                services_consumed_other_text
+            ) else ''
+
+        services_provided_other_text = json_body.get('services_provided_other_text')
+        clean_services_provided_other_text =\
+            services_provided_other_text[:models.Project.SERVICES_PROVIDED_OTHER_TEXT_MAX_LENGTH] if (
+                services_provided_other_text
+            ) else ''
 
         size = json_body.get('size')
         clean_size = size if size and size >= 0 else 0
@@ -177,13 +203,19 @@ class MyProject(APIView):
         project.fundraising_amount = clean_fundraising_amount
         project.github = clean_github
         project.giveaway = clean_giveaway
+        project.image_url = clean_image_url
         project.industry = clean_industry
+        project.is_sponsor = clean_is_sponsor
         project.legal_country = clean_legal_country
         project.main_country = clean_main_country
         project.name = clean_name
         project.news = clean_news
         project.notable = clean_notable
         project.product_stage = clean_product_stage
+        project.region = clean_region
+        project.region_other_text = clean_region_other_text
+        project.services_consumed_other_text = clean_services_consumed_other_text
+        project.services_provided_other_text = clean_services_provided_other_text
         project.size = clean_size
         project.tagline = clean_tagline
         project.telegram = clean_telegram
@@ -191,8 +223,22 @@ class MyProject(APIView):
         project.twitter = clean_twitter
         project.website = clean_website
         project.whitepaper = clean_whitepaper
-
         project.save()
+
+        services_consumed = json_body.get('services_consumed')
+        clean_services_consumed = [models.Service.objects.get(pk=pk) for pk in services_consumed] if (
+            services_consumed
+        ) else []
+
+        services_provided = json_body.get('services_provided')
+        clean_services_provided = [models.Service.objects.get(pk=pk) for pk in services_provided] if (
+            services_provided
+        ) else []
+
+        project.services_consumed = clean_services_consumed
+        project.services_provided = clean_services_provided
+        project.save()
+
         request.user.conference_user.project = project
         request.user.conference_user.save()
         return JsonResponse(serializers.ProjectSerializer(project).data, status=status.HTTP_201_CREATED)
@@ -239,8 +285,8 @@ class MyProjectJobs(APIView):
             role_other_text and clean_role.pk == models.JobRole.OTHER
         ) else ''
 
-        skills = json_body.get('skills')
-        clean_skills = [models.Skill.objects.get(pk=pk) for pk in skills] if skills else []
+        skills = json_body.get('skills_text')
+        clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
 
         link = json_body.get('link')
         clean_link = link[:models.URL_MAX_LENGTH] if link else ''
@@ -274,6 +320,7 @@ class MyProjectJobs(APIView):
         job_listing = models.JobListing.objects.create(
             role=clean_role,
             role_other_text=clean_role_other_text,
+            skills_text=clean_skills,
             link=clean_link,
             description=clean_description,
             part_time=clean_part_time,
@@ -281,7 +328,6 @@ class MyProjectJobs(APIView):
             city=clean_city,
             project=project,
         )
-        job_listing.skills = clean_skills
         job_listing.payments = clean_payments
         job_listing.local_remote_options = clean_local_remote_options
         job_listing.save()
@@ -375,7 +421,7 @@ class MyProjectJobsId(APIView):
         ) else ''
 
         skills = json_body.get('skills')
-        clean_skills = [models.Skill.objects.get(pk=pk) for pk in skills] if skills else []
+        clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
 
         link = json_body.get('link')
         clean_link = link[:models.URL_MAX_LENGTH] if link else ''
@@ -412,7 +458,7 @@ class MyProjectJobsId(APIView):
         job_listing.part_time = clean_part_time
         job_listing.country = clean_country
         job_listing.city = clean_city
-        job_listing.skills = clean_skills
+        job_listing.skills_text = clean_skills
         job_listing.payments = clean_payments
         job_listing.local_remote_options = clean_local_remote_options
         job_listing.save()

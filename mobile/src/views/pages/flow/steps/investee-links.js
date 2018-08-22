@@ -1,12 +1,21 @@
-import { Button, Card, Form, Icon, Input, Item, Label, Text } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import FlowInput from '../../../design/flow-inputs'
+import { StepTitle } from '../../../design/step-title'
+import { Subheader, SubheaderWithSwitch } from '../../../design/subheader'
 import { InvesteeProjectLocation } from './index'
+import { ScrollView} from 'react-native'
 
 class InvesteeLinks extends React.Component {
+
+  static BACKGROUND_COLOR = '#172D5C'
+
   constructor (props) {
     super(props)
     this.state = {
@@ -17,65 +26,63 @@ class InvesteeLinks extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.links.title') }</Text>
-        <Form>
-          <Item floatingLabel>
-            <Icon active name='globe'/>
-            <Label>{ I18n.t('flow_page.links.website') }</Label>
-            <Input
-              onChangeText={ text => this.handleFieldChange(text, 'website') }
-              value={ this.state.website }/>
-          </Item>
-          <Item floatingLabel>
-            <Icon active name='copy'/>
-            <Label>{ I18n.t('flow_page.links.whitepaper') }</Label>
-            <Input
-              onChangeText={ text => this.handleFieldChange(text, 'whitepaper') }
-              value={ this.state.whitepaper }
+      <FlowContainer>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.links.title') }/>
+            </View>
+            <Subheader
+              text={ I18n.t(`flow_page.links.header`) }
             />
-          </Item>
-          <Item floatingLabel>
-            <Icon active name='paper-plane'/>
-            <Label>{ I18n.t('flow_page.links.telegram') }</Label>
-            <Input
-              onChangeText={ text => this.handleFieldChange(text, 'telegram') }
-              value={ this.state.telegram }/>
-          </Item>
-          <Item floatingLabel>
-            <Icon active name='logo-twitter'/>
-            <Label>{ I18n.t('common.twitter') }</Label>
-            <Input
-              onChangeText={ text => this.handleFieldChange(text, 'twitter') }
-              value={ this.state.twitter }
-            />
-          </Item>
-          <Item floatingLabel>
-            <Icon active name='logo-github'/>
-            <Label>{ I18n.t('common.github') }</Label>
-            <Input
-              onChangeText={ text => this.handleFieldChange(text, 'github') }
-              value={ this.state.github }
-            />
-          </Item>
-          <Item floatingLabel>
-            <Icon active name='paper'/>
-            <Label>{ I18n.t('common.news') }</Label>
-            <Input
-              onChangeText={ text => this.handleFieldChange(text, 'news') }
-              value={ this.state.news }
-            />
-          </Item>
-        </Form>
-        <Button success
-                rounded
-                block
-                disabled={!this.state.isFormValid}
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+            <View style={{ marginLeft: 8, marginRight: 8}}>
+              <FlowInput
+                floatingLabel
+                labelText={I18n.t('flow_page.links.website')}
+                status={ this.state.website.length > 0 ? 'ok' : 'regular' }
+                onChangeText={ text => this.handleFieldChange(text, 'website') }
+                value={ this.state.website }/>
+              <FlowInput
+                floatingLabel
+                labelText={I18n.t('flow_page.links.whitepaper')}
+                status={ this.state.whitepaper.length > 0 ? 'ok' : 'regular' }
+                onChangeText={ text => this.handleFieldChange(text, 'whitepaper') }
+                value={ this.state.whitepaper }/>
+              <FlowInput
+                floatingLabel
+                labelText={I18n.t('flow_page.links.telegram')}
+                status={ this.state.telegram.length > 0 ? 'ok' : 'regular' }
+                onChangeText={ text => this.handleFieldChange(text, 'telegram') }
+                value={ this.state.telegram }/>
+              <FlowInput
+                floatingLabel
+                labelText={I18n.t('common.twitter')}
+                status={ this.state.twitter.length > 0 ? 'ok' : 'regular' }
+                onChangeText={ text => this.handleFieldChange(text, 'twitter') }
+                value={ this.state.twitter }/>
+              <FlowInput
+                floatingLabel
+                labelText={I18n.t('common.github')}
+                status={ this.state.github.length > 0 ? 'ok' : 'regular' }
+                onChangeText={ text => this.handleFieldChange(text, 'github') }
+                value={ this.state.github }/>
+              <FlowInput
+                floatingLabel
+                labelText={I18n.t('common.news')}
+                status={ this.state.news.length > 0 ? 'ok' : 'regular' }
+                onChangeText={ text => this.handleFieldChange(text, 'news') }
+                value={ this.state.news }/>
+            </View>
+          </ScrollView>
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ I18n.t('common.next') }
+            disabled={!this.state.isFormValid}
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 

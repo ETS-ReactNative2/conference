@@ -75,7 +75,7 @@ class CommonProfileOnboarding extends React.Component {
       facebook: this.state.facebook,
       telegram: this.state.telegram,
       linkedin: this.state.linkedin
-    }, PAGES_NAMES.FLOW_PAGE)
+    }, PAGES_NAMES.PROFILE_TYPE_PAGE)
   }
 
   handleFieldChange = (newValue, name) => {
@@ -96,8 +96,8 @@ class CommonProfileOnboarding extends React.Component {
             <View style={ styles.content }>
               <ScrollView contentContainerStyle={{flexGrow: 1}}>
                 <HeaderSkip title={I18n.t('flow_page.common.profile_onboarding.header')}
-                            rightIconSource={WhiteLogo} 
-                            titleStyle={styles.headerTitle} 
+                            rightIconSource={WhiteLogo}
+                            titleStyle={styles.headerTitle}
                             onSkipClick={() => { navigate(PAGES_NAMES.HOME_PAGE) } }/>
                 <View style={styles.pageTitleContainer}>
                   <StepTitle text={ I18n.t('flow_page.common.profile_onboarding.title') } textStyle={styles.pageTitle}/>
@@ -132,7 +132,6 @@ class CommonProfileOnboarding extends React.Component {
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInput
                         floatingLabel={ true }
-                        status={ 'error' }
                         placeholder={ 'Job title' }
                         labelText={ I18n.t('flow_page.common.profile_onboarding.titleField') }
                         value={ this.state.title }
@@ -142,7 +141,6 @@ class CommonProfileOnboarding extends React.Component {
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInput
                         floatingLabel={ true }
-                        status={ 'error' }
                         placeholder={ 'Company' }
                         labelText={ I18n.t('flow_page.common.profile_onboarding.company') }
                         value={ this.state.company }

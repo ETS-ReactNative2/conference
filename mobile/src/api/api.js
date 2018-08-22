@@ -33,12 +33,12 @@ export async function fetchInvestors (filters) {
 }
 
 export async function createJob ({
-  role, skills, city, country, link, description, partTime, localRemoteOptions, payments, project
+  role, skillsText, city, country, link, description, partTime, localRemoteOptions, payments, project
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.post(
     '/api/my_project/jobs/',
-    decamelizeKeys({ role, skills, city, country, link, description, partTime, localRemoteOptions, payments, project }),
+    decamelizeKeys({ role, skillsText, city, country, link, description, partTime, localRemoteOptions, payments, project }),
     {
       headers: {
         'X-Authorization': `Bearer ${token}`
@@ -77,7 +77,9 @@ export async function createInvestee ({
   telegram,
   twitter,
   website,
-  whitepaper
+  whitepaper,
+  region,
+  regionOtherText
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put('/api/my_project/', decamelizeKeys({
@@ -99,7 +101,9 @@ export async function createInvestee ({
     telegram,
     twitter,
     website,
-    whitepaper
+    whitepaper,
+    region,
+    regionOtherText
   }), {
     headers: {
       'X-Authorization': `Bearer ${token}`
@@ -129,14 +133,14 @@ export async function createInvestor ({
 }
 
 export async function putMyProfessional ({
-  role, roleOtherText, skills, traits, knowMost, localRemoteOptions, country, city, age, experience
+  role, roleOtherText, skillsText, traitsText, knowMost, localRemoteOptions, country, city, age, experience
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put('/api/my_professional/', decamelizeKeys({
     role,
     roleOtherText,
-    skills,
-    traits,
+    skillsText,
+    traitsText,
     knowMost,
     localRemoteOptions,
     country,

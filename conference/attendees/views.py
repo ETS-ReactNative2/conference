@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from rest_framework import generics
 from django.contrib.auth.hashers import make_password
-from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -13,12 +12,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models
 from . import serializers
-from .views_investor import (
-    ListInvestor, RetrieveInvestor, MyInvestor
-)
-from .views_project import (
-    ListProject, RetrieveProject, MyProject, MyProjectJobs, MyProjectJobsId, MyProjectMembers, MyProjectMembersId
-)
 
 
 class MyPerson(APIView):
@@ -120,11 +113,11 @@ class MyProfessional(APIView):
             role_other_text and clean_role.pk == models.JobRole.OTHER
         ) else ''
 
-        skills = json_body.get('skills')
-        clean_skills = [models.Skill.objects.get(pk=skill.get('id')) for skill in skills] if skills else []
+        skills = json_body.get('skills_text')
+        clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
 
-        traits = json_body.get('traits')
-        clean_traits = [models.Trait.objects.get(pk=trait.get('id')) for trait in traits] if traits else []
+        traits = json_body.get('traits_text')
+        clean_traits = traits[:models.TRAITS_MAX_LENGTH] if traits else ''
 
         know_most = json_body.get('know_most')
         clean_know_most = know_most[:models.Professional.KNOW_MOST_MAX_LENGTH] if know_most else ''
@@ -154,8 +147,8 @@ class MyProfessional(APIView):
 
         professional.role = clean_role
         professional.role_other_text = clean_role_other_text
-        professional.skills = clean_skills
-        professional.traits = clean_traits
+        professional.skills_text = clean_skills
+        professional.traits_text = clean_traits
         professional.know_most = clean_know_most
         professional.local_remote_options = clean_local_remote_options
         professional.country = clean_country
@@ -223,6 +216,13 @@ class ListCreateUser(APIView):
             password=make_password(password),
             username=clean_email,
         )
+        project_member_queryset = models.ProjectMember.objects.filter(email=clean_email)
+        if project_member_queryset.exists():
+            project_member = project_member_queryset.get()
+            conference_user = models.ConferenceUser.objects.get(user=user)
+            conference_user.project = project_member.project
+            conference_user.save()
+            project_member.delete()
         serializer = serializers.UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 

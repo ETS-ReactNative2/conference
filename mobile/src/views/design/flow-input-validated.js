@@ -16,6 +16,7 @@ class FlowInputValidated extends Component {
           onChangeText={ this.props.onChangeText }
           status={ this.props.isError ? 'error' : 'ok' }
           errorStyleOverride={this.props.errorStyleOverride}
+          keyboardType={this.props.keyboardType}
         />
         { this.props.isError && (
           <Text style={ [styles.errorText, this.props.errorStyleOverride ? this.props.errorStyleOverride.text : ''] }>{ this.props.errorMessage }</Text>
@@ -33,8 +34,9 @@ const styles = EStyleSheet.create({
 })
 
 FlowInputValidated.propTypes = {
+  keyboardType: PropTypes.string,
   floatingLabel: PropTypes.bool,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   value: PropTypes.string,
   labelText: PropTypes.string.isRequired,
   isError: PropTypes.bool.isRequired,

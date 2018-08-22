@@ -1,17 +1,22 @@
 import { Text } from 'native-base'
+import PropTypes from 'prop-types'
 import React from 'react'
-import PropTypes from "prop-types"
-import { Image, View } from 'react-native';
+import { Image, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 
 export class Header extends React.Component {
   render () {
     return (
-        <View style={styles.container}>
-            {this.props.left}
-            <Text style={[styles.title, this.props.titleStyle]} adjustsFontSizeToFit>{ this.props.title.toUpperCase() }</Text>
-            <Image style={styles.logo} source={this.props.rightIconSource} />
+      <View style={ styles.container }>
+        <View style={ styles.leftContainer }>
+          { this.props.left }
         </View>
+        <Text style={ [ styles.title, this.props.titleStyle ] }
+              adjustsFontSizeToFit>{ this.props.title.toUpperCase() }</Text>
+        <View style={ styles.logoContainer }>
+          <Image style={ styles.logo } source={ this.props.rightIconSource }/>
+        </View>
+      </View>
     )
   }
 }
@@ -20,17 +25,22 @@ const styles = EStyleSheet.create({
   container: {
     paddingTop: 15,
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  leftContainer: {
+    flex: 1
+  },
+  logoContainer: {
+    flex: 1, alignItems: 'flex-end'
   },
   logo: {
-    position: 'absolute',
-    right: 0,
-    top: 10,
     marginRight: 10
   },
   title: {
+    flex: 2,
     textAlign: 'center',
-    flexGrow: 1,
+    justifyContent: 'center',
     color: '#4A4A4A',
     fontSize: 18,
     fontFamily: 'Montserrat-SemiBold'
@@ -38,10 +48,10 @@ const styles = EStyleSheet.create({
 })
 
 Header.propTypes = {
-    left: PropTypes.node,
-    title: PropTypes.string.isRequired,
-    titleStyle: PropTypes.any,
-    rightIconSource: PropTypes.node.isRequired
+  left: PropTypes.node,
+  title: PropTypes.string.isRequired,
+  titleStyle: PropTypes.any,
+  rightIconSource: PropTypes.node.isRequired
 }
 
 export default Header

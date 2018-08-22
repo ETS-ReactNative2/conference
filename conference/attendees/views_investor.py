@@ -2,15 +2,12 @@
 from __future__ import unicode_literals
 
 from rest_framework import generics
-from django.contrib.auth.hashers import make_password
-from django.core.exceptions import ValidationError
+from django.core.mail import EmailMessage
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
-from rest_framework import permissions
+from django.utils.html import escape, strip_tags
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from . import models
 from . import serializers
 
@@ -45,6 +42,54 @@ class ListInvestor(generics.ListAPIView):
 class RetrieveInvestor(generics.RetrieveAPIView):
     queryset = models.Investor.objects.all()
     serializer_class = serializers.InvestorSerializer
+
+
+class InvestorsIdMessages(APIView):
+
+    @transaction.atomic
+    def post(self, request, pk, format=None):
+
+        project = request.user.conference_user.project
+        if not project:
+            return JsonResponse({'code': 'user_not_in_project'}, status=status.HTTP_403_FORBIDDEN)
+
+        queryset = models.Investor.objects.filter(pk=pk)
+        if not queryset.exists():
+            return JsonResponse({'code': 'no_such_investor'}, status=status.HTTP_404_NOT_FOUND)
+
+        investor = queryset.get()
+        investor_user = investor.conference_user.user
+
+        json_body = request.data
+        message = json_body.get('message')
+        if not message:
+            return JsonResponse({'code': 'no_message'}, status=status.HTTP_400_BAD_REQUEST)
+        clean_message = escape(strip_tags(message))
+
+        body = """Dear {},
+
+you have received the following message from a verified Block Seoul conference attendee. You can reach this attendee by replying directly to this email.
+
+Best regards,
+Luna
+
+Name: {} {}
+
+Project: {}
+
+Message:
+
+{}""".format(investor_user.first_name, request.user.first_name, request.user.last_name, project.name, clean_message)
+
+        email = EmailMessage(
+            'Block Seoul project message',
+            body,
+            'noreply@meetluna.com',
+            [investor_user.email],
+            reply_to=[request.user.email],
+        )
+        email.send()
+        return HttpResponse(status=status.HTTP_201_CREATED)
 
 
 class MyInvestor(APIView):
@@ -101,7 +146,7 @@ class MyInvestor(APIView):
         ) else models.Region.objects.get(pk=models.Region.ANYWHERE)
 
         region_other_text = json_body.get('region_other_text')
-        clean_region_other_text = region_other_text[:models.Investor.REGION_OTHER_TEXT_MAX_LENGTH] if (
+        clean_region_other_text = region_other_text[:models.REGION_OTHER_TEXT_MAX_LENGTH] if (
                 region_other_text and clean_region.pk == models.Region.OTHER
         ) else ''
 

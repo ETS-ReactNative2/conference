@@ -23,8 +23,11 @@ export class FlowInput extends Component {
     return stylesArray
   }
 
-  getInputTextStyling (inputValue, inputStatus) {
+  getInputTextStyling (inputValue, inputStatus, isSingleLine) {
     const stylesArray = [ styles.input ]
+    if (isSingleLine) {
+      stylesArray.push(styles.inputSingleLine)
+    }
     if (inputValue.length === 0) {
       stylesArray.push(styles.placeholder)
     } else if (inputStatus === 'error') {
@@ -60,6 +63,14 @@ export class FlowInput extends Component {
     }
   }
 
+  renderLeftIcon = () => {
+    if (this.props.leftIcon) {
+      console.log(this.props.leftIcon)
+      return <Icon active name={ this.props.leftIcon } color={ 'white' } style={ { color: 'white' } }/>
+    }
+    return <View/>
+  }
+
   render () {
     return (
       <View style={ styles.container }>
@@ -71,11 +82,16 @@ export class FlowInput extends Component {
               error={ this.props.status === 'error' }
               success={ this.props.status === 'ok' }
               style={ this.getBorderStyle(this.props.status) }>
+          { this.renderLeftIcon() }
           { this.props.floatingLabel &&
           <Label style={ styles.floatingLabel }>{ this.props.labelText }</Label>
           }
           <NativeBaseInput
-            style={ this.getInputTextStyling(this.props.value, this.props.status) }
+            keyboardType={ this.props.keyboardType || 'default' }
+            multiline={ this.props.multiline }
+            numberOfLines={ this.props.numberOfLines }
+            maxLength={ this.props.maxLength }
+            style={ this.getInputTextStyling(this.props.value, this.props.status, !this.props.multiline) }
             value={ this.props.value }
             onChangeText={ newValue => this.props.onChangeText(newValue) }/>
           { this.renderIcon() }
@@ -115,11 +131,13 @@ const styles = EStyleSheet.create({
     color: OK_COLOR
   },
   input: {
-    height: 70,
     paddingLeft: 10,
     color: 'white',
     fontWeight: 'bold',
     borderBottomWidth: 0
+  },
+  inputSingleLine: {
+    height: 70
   },
   placeholder: {
     fontFamily: 'Montserrat-ExtraLight',
@@ -143,9 +161,13 @@ const styles = EStyleSheet.create({
 })
 
 FlowInput.propTypes = {
+  keyboardType: PropTypes.string,
+  leftIcon: PropTypes.string,
   floatingLabel: PropTypes.bool,
-  placeholder: PropTypes.string.isRequired,
   value: PropTypes.string,
+  multiline: PropTypes.bool,
+  numberOfLines: PropTypes.number,
+  maxLength: PropTypes.number,
   labelText: PropTypes.string.isRequired,
   onChangeText: PropTypes.func.isRequired,
   status: PropTypes.oneOf([ 'regular', 'ok', 'warning', 'error' ]).isRequired,

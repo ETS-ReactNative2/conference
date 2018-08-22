@@ -34,12 +34,6 @@ class WelcomePage extends React.Component {
                       text={ I18n.t('welcome_page.signup') }
                     />
                   </View>
-                  <Text style={ styles.connectWith }>{ I18n.t('welcome_page.connect_with') }</Text>
-                  <View style={ styles.buttonContainer }>
-                    <BlueButton
-                      icon={ 'md-paper-plane' }
-                      text={ I18n.t('welcome_page.connect_with_telegram') }/>
-                  </View>
                 </View>
               </ScrollView>
             </View>
@@ -96,28 +90,6 @@ const styles = EStyleSheet.create({
     height: 60,
     alignSelf: 'center',
     justifyContent: 'center'
-  },
-  telegramButton: {
-    width: '100%',
-    maxWidth: 270,
-    height: 60,
-    backgroundColor: '#33BAE7',
-    alignSelf: 'center',
-    justifyContent: 'center'
-  },
-  telegramButtonText: {
-    justifyContent: 'center',
-    fontSize: 12
-  },
-  buttonText: {
-    justifyContent: 'center'
-  },
-  connectWith: {
-    color: 'white',
-    alignSelf: 'center',
-    fontSize: 12,
-    fontFamily: 'Montserrat-Regular',
-    marginBottom: '1rem'
   }
 })
 

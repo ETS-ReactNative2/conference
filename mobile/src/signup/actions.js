@@ -94,7 +94,7 @@ export function uploadProfile() {
                         fundraisingAmount: investee.amount,
                         giveaway: investee.giveaway,
                         notable: investee.teamMembers,
-                        size: investee.teamSize,
+                        size: Number(investee.teamSize) || 0,
                         tagline: investee.projectTagline,
                         tokenType: investee.tokenType,
                         github: investee.github,
@@ -105,7 +105,9 @@ export function uploadProfile() {
                         news: investee.news,
                         legalCountry: investee.legal.cca2,
                         mainCountry: investee.main.cca2,
-                        industry: investee.industry
+                        industry: investee.industry,
+                        region: investee.investorNationality ? investee.investorNationality.index : '',
+                        regionOtherText: investee.regionOtherText
                     })
                     if (investee.hiring) {
                         const {roles, ...jobs} = employer
@@ -114,7 +116,7 @@ export function uploadProfile() {
                             const job = employer[key]
                             return api.createJob({
                                 role: ROLES.find(role => role.slug === key).index,
-                                skills: job.keywords.map(key => key.id),
+                                skillsText: job.keywords,
                                 link: job.link,
                                 description: job.description,
                                 partTime: job.partTime,
@@ -134,7 +136,7 @@ export function uploadProfile() {
                         ticketSizes: investor.ticketSizes,
                         tokenTypes: investor.investments,
                         industries: investor.industries,
-                        region: investor.marketLocation ? investor.marketLocation.index : "",
+                        region: investor.marketLocation,
                         nationality: investor.nationality ? investor.nationality.cca2 : "",
                         regionOtherText: investor.regionOtherText
                     })
@@ -142,8 +144,8 @@ export function uploadProfile() {
                     return await api.putMyProfessional({
                         role: employee.role,
                         roleOtherText: employee.roleOtherText,
-                        skills: employee.skills,
-                        traits: employee.traits,
+                        skillsText: employee.skills,
+                        traitsText: employee.traits,
                         knowMost: employee.knowMost,
                         localRemoteOptions: employee.localRemoteOptions,
                         country: employee.country,

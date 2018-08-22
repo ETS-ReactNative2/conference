@@ -12,6 +12,12 @@ CITY_MAX_LENGTH = 40
 
 COUNTRY_MAX_LENGTH = 2
 
+REGION_OTHER_TEXT_MAX_LENGTH = 40
+
+SKILLS_MAX_LENGTH = 100
+
+TRAITS_MAX_LENGTH = 100
+
 URL_MAX_LENGTH = 200
 
 
@@ -92,6 +98,16 @@ class Region(models.Model):
         return self.name
 
 
+class Service(models.Model):
+
+    id = models.IntegerField(primary_key=True, verbose_name='ID')
+
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
 class TicketSize(models.Model):
 
     POSITIVE_INFINITY = 2147483647
@@ -154,26 +170,6 @@ class Payment(models.Model):
         return self.name
 
 
-class Skill(models.Model):
-
-    id = models.IntegerField(primary_key=True, verbose_name='ID')
-
-    name = models.CharField(max_length=56)
-
-    def __str__(self):
-        return self.name
-
-
-class Trait(models.Model):
-
-    id = models.IntegerField(primary_key=True, verbose_name='ID')
-
-    name = models.CharField(max_length=24)
-
-    def __str__(self):
-        return self.name
-
-
 class Project(models.Model):
     """
     A company potentially raising funds.
@@ -187,6 +183,10 @@ class Project(models.Model):
     NAME_MAX_LENGTH = 40
 
     NOTABLE_MAX_LENGTH = 250
+
+    SERVICES_CONSUMED_OTHER_TEXT_MAX_LENGTH = 100
+
+    SERVICES_PROVIDED_OTHER_TEXT_MAX_LENGTH = 100
 
     TAGLINE_MAX_LENGTH = 60
 
@@ -204,7 +204,11 @@ class Project(models.Model):
 
     giveaway = models.ForeignKey(Giveaway, db_index=True, null=True, blank=True)
 
+    image_url = models.URLField(blank=True, default='')
+
     industry = models.ForeignKey(Industry, db_index=True)
+
+    is_sponsor = models.BooleanField(db_index=True, default=False)
 
     legal_country = models.CharField(db_index=True, max_length=COUNTRY_MAX_LENGTH)
 
@@ -218,7 +222,23 @@ class Project(models.Model):
 
     product_stage = models.ForeignKey(ProductStage, db_index=True, null=True, blank=True)
 
-    size = models.PositiveIntegerField()
+    # Desired Investor's Region
+    region = models.ForeignKey(Region, null=True, blank=True)
+
+    # Desired Investor's Region Other Text
+    region_other_text = models.CharField(max_length=REGION_OTHER_TEXT_MAX_LENGTH, blank=True, default='')
+
+    services_consumed = models.ManyToManyField(Service, blank=True, related_name='projects_consuming')
+
+    services_consumed_other_text = models.CharField(max_length=SERVICES_CONSUMED_OTHER_TEXT_MAX_LENGTH, blank=True,
+                                                    default='')
+
+    services_provided = models.ManyToManyField(Service, blank=True, related_name='projects_providing')
+
+    services_provided_other_text = models.CharField(max_length=SERVICES_PROVIDED_OTHER_TEXT_MAX_LENGTH, blank=True,
+                                                    default='')
+
+    size = models.PositiveIntegerField(default=0)
 
     tagline = models.CharField(max_length=TAGLINE_MAX_LENGTH, blank=True, default='')
 
@@ -233,12 +253,17 @@ class Project(models.Model):
     whitepaper = models.URLField(blank=True, default='')
 
 
+class ProjectMember(models.Model):
+
+    email = models.EmailField(primary_key=True)
+
+    project = models.ForeignKey(Project)
+
+
 class Investor(models.Model):
     """
     A company doing investing.
     """
-
-    REGION_OTHER_TEXT_MAX_LENGTH = 40
 
     funding_stages = models.ManyToManyField(FundingStage, blank=True)
 
@@ -269,9 +294,9 @@ class Professional(models.Model):
 
     role_other_text = models.CharField(max_length=JobRole.ROLE_OTHER_TEXT_MAX_LENGTH, blank=True, default='')
 
-    skills = models.ManyToManyField(Skill, blank=True)
+    skills_text = models.CharField(max_length=SKILLS_MAX_LENGTH, blank=True, default='')
 
-    traits = models.ManyToManyField(Trait, blank=True)
+    traits_text = models.CharField(max_length=TRAITS_MAX_LENGTH, blank=True, default='')
 
     know_most = models.CharField(max_length=KNOW_MOST_MAX_LENGTH, blank=True, default='')
 
@@ -325,7 +350,8 @@ class ConferenceUser(models.Model):
         Professional, related_name='user', null=True, blank=True, on_delete=models.SET_NULL
     )
 
-    investor = models.ForeignKey(Investor, related_name='users', db_index=True, null=True, blank=True)
+    investor = models.OneToOneField(Investor, related_name='conference_user', db_index=True, null=True, blank=True,
+                                    on_delete=models.SET_NULL)
 
     project = models.ForeignKey(Project, related_name='members', db_index=True, null=True, blank=True)
 
@@ -340,7 +366,7 @@ class JobListing(models.Model):
 
     role_other_text = models.CharField(max_length=JobRole.ROLE_OTHER_TEXT_MAX_LENGTH, blank=True, default='')
 
-    skills = models.ManyToManyField(Skill, blank=True)
+    skills_text = models.CharField(max_length=SKILLS_MAX_LENGTH, blank=True, default='')
 
     link = models.URLField(blank=True, default='')
 

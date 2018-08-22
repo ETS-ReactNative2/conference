@@ -1,13 +1,22 @@
-import { Button, Card, Content, Left, ListItem, Radio, Right, Text } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { PRODUCT_STAGES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { Subheader } from '../../../design/subheader'
 import { InvesteeFundingStage } from './index'
 
 class InvesteeProductStage extends React.Component {
+
+  static BACKGROUND_COLOR = '#172D5C'
+
   constructor (props) {
     super(props)
     this.state = {
@@ -18,35 +27,36 @@ class InvesteeProductStage extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.product_stage.title') }</Text>
-        <Content>
-          {
-            PRODUCT_STAGES.map((option) => {
+      <FlowContainer>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.product_stage.title') }/>
+            </View>
+            <Subheader
+              text={ I18n.t(`flow_page.product_stage.header`) }
+            />
+            { PRODUCT_STAGES.map((size) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(option.index) }>
-                  <Left>
-                    <Text>{ I18n.t(`common.product_stages.${option.slug}`) }</Text>
-                  </Left>
-                  <Right>
-                    <Radio
-                      onPress={ () => this.handleChange(option.index) }
-                      selected={ this.state.selected === option.index }/>
-                  </Right>
-                </ListItem>
+                <FlowListItem
+                  multiple={ false }
+                  key={ `product-stage-item-${size.index}` }
+                  text={ I18n.t(`common.product_stages.${size.slug}`) }
+                  onSelect={ () => this.handleChange(size.index) }
+                  selected={ this.state.selected === size.index }
+                />
               )
-            })
-          }
-        </Content>
-        <Button success
-                rounded
-                block
-                disabled={ !this.state.isFormValid }
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+            }) }
+          </ScrollView>
+        </View>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ I18n.t('common.next') }
+            disabled={!this.state.isFormValid}
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 

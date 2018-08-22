@@ -1,13 +1,21 @@
-import { Button, Card, Container, Text, View } from 'native-base'
+import { View } from 'native-base'
+import { ScrollView } from 'react-native'
 import PropTypes from 'prop-types'
 import React from 'react'
-import CountryPicker from 'react-native-country-picker-modal'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import { CountrySelect } from '../../../design/select'
+import { StepTitle } from '../../../design/step-title'
+import { Subheader } from '../../../design/subheader'
 import { InvestorInvestIn } from './index'
 
 class InvestorCompanyLocation extends React.Component {
+
+  static BACKGROUND_COLOR = '#2C65E2'
+
   constructor (props) {
     super(props)
     this.state = {
@@ -17,44 +25,31 @@ class InvestorCompanyLocation extends React.Component {
 
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.company_location.title') }</Text>
-        <Text style={ { marginTop: 16, marginBottom: 16 } }>{ I18n.t('flow_page.investor.company_location.nationality') }</Text>
-        <CountryPicker
-          onChange={ value => {
-            this.setState({ nationality: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
-          } }
-          filterable
-          closeable
-          cca2={ this.state.nationality ? this.state.nationality.cca2 : '' }
-          translation="eng"
-          styles={ {
-            touchFlag: {
-              alignItems: 'flex-start',
-              justifyContent: 'center',
-              height: 24
-            },
-          } }
-        >
-          <View style={ {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            height: 19
-          } }>
-            { CountryPicker.renderFlag(this.state.nationality ? this.state.nationality.cca2 : '') }
-            <Text style={ { marginLeft: 8 } }>{ this.state.nationality ? this.state.nationality.countryName : I18n.t('flow_page.investor.company_location.nationality_placeholder')}</Text>
+      <FlowContainer>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.investor.company_location.title') }/>
+            </View>
+            <Subheader
+              text={ I18n.t('flow_page.investor.company_location.nationality') }
+            />
+            <CountrySelect
+              onChange={ value => {
+                this.setState({ nationality: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
+              } }
+              value={ this.state.nationality }
+              placeholder={ I18n.t('flow_page.investor.company_location.nationality_placeholder') }
+            />
           </View>
-        </CountryPicker>
-        <Button success
-                rounded
-                block
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+        </ScrollView>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ I18n.t('common.next') }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 

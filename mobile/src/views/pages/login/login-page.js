@@ -95,13 +95,6 @@ class LoginPage extends React.Component {
                   <Text>{ I18n.t('login_page.change_mind')}</Text>
                   <Text onPress={() => this.props.navigation.navigate(PAGES_NAMES.SIGNUP_PAGE)} style={styles.signup}>{I18n.t('login_page.signup')}</Text>
                 </View>
-                <Text style={styles.connectWith}>{I18n.t('login_page.connect_with')}</Text>
-                <View style={{paddingBottom: 20}}>
-                  <OutlineBlackButton
-                    icon={'md-paper-plane'}
-                    text={ I18n.t('login_page.connect_with_telegram')  }
-                    onPress={() => {}} />
-                </View>
                 <View style={styles.policyAndConditionsWrapper}>
                   <Text style={styles.policyAndConditions}>{ I18n.t('login_page.privacy_policy') } &amp; { I18n.t('login_page.terms_and_conditions')}</Text>
                 </View>
@@ -153,11 +146,6 @@ const styles = EStyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 14,
     textDecorationLine: 'underline'
-  },
-  connectWith: {
-    alignSelf: 'center',
-    fontSize: 12,
-    fontFamily: 'Montserrat-ExtraLight'
   }
 });
 

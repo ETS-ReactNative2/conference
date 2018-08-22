@@ -65,6 +65,36 @@
 			"response": []
 		},
 		{
+			"name": "/api/investors/<id>/messages/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"Hello, World!\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/investors/1/messages/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"investors",
+						"1",
+						"messages",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/my_investor/",
 			"request": {
 				"method": "GET",
@@ -216,7 +246,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other_text\": \"aaaaaaaa\",\n    \"skills\": [1, 2, 3],\n    \"traits\": [1, 2, 3],\n    \"know_most\": \"aaaaaaaa\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"aaaaaaaa\",\n    \"age\": 42,\n    \"experience\": 23\n}"
+					"raw": "{\n    \"role\": 12,\n    \"role_other_text\": \"aaaaaaaa\",\n    \"skills_text\": \"skills\",\n    \"traits_text\": \"traits\",\n    \"know_most\": \"aaaaaaaa\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"aaaaaaaa\",\n    \"age\": 42,\n    \"experience\": 23\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_professional/",
@@ -272,7 +302,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"description\": \"aaaaaaaa\",\n    \"funding_stage\": 1,\n    \"fundraising_amount\": 2147483647,\n    \"github\": \"http://www.example.com\",\n    \"giveaway\": 1,\n    \"industry\": 1,\n    \"legal_country\": \"us\",\n    \"main_country\": \"us\",\n    \"name\": \"aaaaaaaa\",\n    \"news\": \"http://www.example.com\",\n    \"notable\": \"aaaaaaaa\",\n    \"product_stage\": 1,\n    \"size\": 2147483647,\n    \"tagline\": \"aaaaaaaa\",\n    \"telegram\": \"aaaaaaaa\",\n    \"token_type\": 1,\n    \"twitter\": \"aaaaaaaa\",\n    \"website\": \"http://www.example.com\",\n    \"whitepaper\": \"http://www.example.com\"\n}"
+					"raw": "{\n    \"description\": \"aaaaaaaa\",\n    \"funding_stage\": 1,\n    \"fundraising_amount\": 2147483647,\n    \"github\": \"aaaaaaaa\",\n    \"giveaway\": 1,\n    \"image_url\": \"http://www.example.com\",\n    \"industry\": 1,\n    \"is_sponsor\": true,\n    \"legal_country\": \"us\",\n    \"main_country\": \"us\",\n    \"name\": \"aaaaaaaa\",\n    \"news\": \"http://www.example.com\",\n    \"notable\": \"aaaaaaaa\",\n    \"product_stage\": 1,\n    \"region\": 4,\n    \"region_other_text\": \"region_other_text\",\n    \"services_consumed\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],\n    \"services_consumed_other_text\": \"services consumed other text\",\n    \"services_provided\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],\n    \"services_provided_other_text\": \"services provided other text\",\n    \"size\": 2147483647,\n    \"tagline\": \"aaaaaaaa\",\n    \"telegram\": \"aaaaaaaa\",\n    \"token_type\": 1,\n    \"twitter\": \"aaaaaaaa\",\n    \"website\": \"http://www.example.com\",\n    \"whitepaper\": \"http://www.example.com\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_project/",
@@ -329,7 +359,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills\": [1, 2, 3],\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
+					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills_text\": \"skills\",\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_project/jobs/",
@@ -413,7 +443,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills\": [1, 2, 3],\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
+					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills_text\": \"skills\",\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_project/jobs/1/",
@@ -595,6 +625,35 @@
 					],
 					"path": [
 						"schedule",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/schedule/presentation/<id>/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/schedule/presentation/1/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"schedule",
+						"presentation",
+						"1",
 						""
 					]
 				}

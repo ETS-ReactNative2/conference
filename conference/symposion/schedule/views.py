@@ -52,7 +52,7 @@ def schedule_conference(request):
     ctx = {
         "sections": sections,
     }
-
+    # begin Luna customization
     if request.META.get('HTTP_ACCEPT') == 'application/json':
         sections = []
         for schedule in schedules:
@@ -76,7 +76,7 @@ def schedule_conference(request):
         ctx = {
             "sections": sections,
         }
-
+        # end Luna customization
         return JsonResponse(ctx)
 
     return render(request, "symposion/schedule/schedule_conference.html", ctx)
@@ -202,6 +202,10 @@ def schedule_slot_edit(request, slug, slot_pk):
 def schedule_presentation_detail(request, pk):
 
     presentation = get_object_or_404(Presentation, pk=pk)
+    # begin Luna customization
+    if request.META.get('HTTP_ACCEPT') == 'application/json':
+        return JsonResponse(serializers.PresentationSerializer(presentation).data)
+    # end Luna customization
     if presentation.slot:
         schedule = presentation.slot.day.schedule
         if not schedule.published and not request.user.is_staff:

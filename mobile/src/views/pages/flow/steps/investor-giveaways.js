@@ -1,50 +1,71 @@
-import { Button, Card, Content, Body, ListItem, CheckBox, Text, Radio } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { GIVEAWAY_TYPES } from '../../../../enums'
+import { GIVEAWAY_TYPES, TOKEN_TYPES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
+import { FlowButton } from '../../../design/buttons'
+import { FlowContainer } from '../../../design/Container'
+import { FlowListItem } from '../../../design/list-items'
+import { StepTitle } from '../../../design/step-title'
+import { SubheaderWithSwitch } from '../../../design/subheader'
 import { InvestorProductStages } from './index'
 
 class InvestorGiveaways extends React.Component {
+
+  static BACKGROUND_COLOR = '#2C65E2'
+
   constructor (props) {
     super(props)
     this.state = {
-      selectedGiveaways: this.props.investor.giveaways
+      selectedGiveaways: this.props.investor.giveaways,
+      all: this.props.investor.giveaways.length === GIVEAWAY_TYPES.length
     }
     this.state.isFormValid = this.isFormValid()
   }
 
+  selectAll = () => {
+    this.state.all ?
+      this.setState({ selectedGiveaways: [], all: false }) :
+      this.setState({ selectedGiveaways: GIVEAWAY_TYPES.map(tt => tt.index), all: true })
+  }
+
   render () {
     return (
-      <Card style={ { padding: 8 } }>
-        <Text style={ { fontSize: 24 } }>{ I18n.t('flow_page.investor.giveaways.title') }</Text>
-        <Content>
-          {
-            GIVEAWAY_TYPES.map((option) => {
+      <FlowContainer>
+        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+          <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+              <StepTitle text={ I18n.t('flow_page.investor.giveaways.title') }/>
+            </View>
+            <SubheaderWithSwitch
+              selected={ this.state.all }
+              text={ I18n.t(`common.giveaway.header`) }
+              onToggle={ this.selectAll }
+            />
+            { GIVEAWAY_TYPES.map((giveaway) => {
               return (
-                <ListItem style={ { width: '100%' } } key={ option.slug } onPress={ () => this.handleChange(option.index) }>
-                  <Body>
-                    <Text>{ I18n.t(`common.giveaways.${option.slug}`) }</Text>
-                  </Body>
-                  <Radio
-                    onPress={ () => this.handleChange(option.index) }
-                    selected={ this.state.selectedGiveaways.indexOf(option.index) !== -1  }/>
-                </ListItem>
+                <FlowListItem
+                  multiple={ true }
+                  key={ `giveaway-item-${giveaway.slug}` }
+                  text={ I18n.t(`common.giveaway.${giveaway.slug}`) }
+                  onSelect={ () => this.handleChange(giveaway.index) }
+                  selected={ this.state.selectedGiveaways.indexOf(giveaway.index) !== -1 }
+                />
               )
-            })
-          }
-        </Content>
-        <Button success
-                rounded
-                block
-                disabled={ !this.state.isFormValid }
-                onPress={ this.handleSubmit }
-                style={ { marginTop: 16 } }>
-          <Text>{ I18n.t('common.next') }</Text>
-        </Button>
-      </Card>
+            }) }
+          </View>
+        </ScrollView>
+        <View style={ { margin: 8 } }>
+          <FlowButton
+            text={ I18n.t('common.next') }
+            disabled={ !this.state.isFormValid }
+            onPress={ this.handleSubmit }
+          />
+        </View>
+      </FlowContainer>
     )
   }
 
@@ -75,7 +96,8 @@ class InvestorGiveaways extends React.Component {
       giveaways.push(index)
     }
     this.setState({
-      selectedGiveaways: giveaways
+      selectedGiveaways: giveaways,
+      all: giveaways.length === GIVEAWAY_TYPES.length
     }, this.validateForm)
   }
 }
