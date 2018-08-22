@@ -98,6 +98,7 @@ class ProfessionalSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Professional
         fields = (
+            'id',
             'role',
             'role_other_text',
             'skills_text',
