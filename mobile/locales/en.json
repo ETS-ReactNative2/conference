@@ -3,16 +3,6 @@
     "until": "UNTIL"
   },
   "common": {
-    "country": {
-      "africa": "Africa",
-      "asia": "Asia",
-      "europe": "Europe",
-      "korea": "Korea",
-      "north_america": "North America",
-      "poland": "Poland",
-      "south_america": "South America",
-      "usa": "USA"
-    },
     "errors": {
       "email_exists": "This email address is already bound to a user, please try a different one",
       "incorrect_amount": "Please enter number greater than 0 and less than 2147483647",
