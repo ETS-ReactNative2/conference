@@ -229,7 +229,7 @@ class MyProfessionalTest(AuthMixin):
         self.assertEqual(response_dict.get('city'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('age'), 42)
         self.assertEqual(response_dict.get('experience'), 23)
-        self.assertNotIn('id', response_dict)
+        self.assertIn('id', response_dict)
 
         self.assertEqual(models.Professional.objects.count(), 1)
 
@@ -247,7 +247,7 @@ class MyProfessionalTest(AuthMixin):
         self.assertEqual(response_dict.get('city'), '')
         self.assertEqual(response_dict.get('age'), None)
         self.assertEqual(response_dict.get('experience'), None)
-        self.assertNotIn('id', response_dict)
+        self.assertIn('id', response_dict)
 
         self.assertEqual(models.Professional.objects.count(), 1)
 
@@ -285,7 +285,7 @@ class MyProfessionalTest(AuthMixin):
         self.assertEqual(response_dict.get('city'), '')
         self.assertEqual(response_dict.get('age'), None)
         self.assertEqual(response_dict.get('experience'), None)
-        self.assertNotIn('id', response_dict)
+        self.assertIn('id', response_dict)
 
         self.assertEqual(models.Professional.objects.count(), 1)
 
