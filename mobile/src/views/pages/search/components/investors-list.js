@@ -49,7 +49,7 @@ class InvestorsList extends React.Component {
 
     return (
       <Container style={{ flex: 1 }}>
-        <ScrollView style={styles.scrollView}>
+        <ScrollView contentContainerStyle={{ paddingTop: 8}} style={styles.scrollView}>
           <List>
             {
               this.props.profiles.length > 0 &&
@@ -167,7 +167,7 @@ const styles = EStyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#e8e8e8',
   },
   listItem: {
     height: 100,

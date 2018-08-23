@@ -39,6 +39,7 @@ export class NavigationHeader extends React.Component {
 const styles = EStyleSheet.create({
   container: {
     paddingTop: 15,
+    paddingBottom: 8,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
