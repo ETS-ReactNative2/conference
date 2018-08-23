@@ -90,8 +90,8 @@ class MyPersonTest(AuthMixin):
 
         user = models.ConferenceUser.objects.get(pk=self.user.id)
         self.assertEqual(user.user, self.user)
-        self.assertEqual(user.user.first_name, 'foo')
-        self.assertEqual(user.user.last_name, 'bar')
+        self.assertEqual(user.first_name, 'foo')
+        self.assertEqual(user.last_name, 'bar')
         self.assertEqual(user.title, 'aaaaaaaa')
         self.assertEqual(user.company, 'aaaaaaaa')
         self.assertEqual(user.twitter, 'aaaaaaaa')
@@ -296,9 +296,8 @@ class ProfessionalsTest(AuthMixin):
         return 'professionals'
 
     def test_get_one(self):
-        self.user.first_name = 'foo'
-        self.user.last_name = 'bar'
-        self.user.save()
+        self.user.conference_user.first_name = 'foo'
+        self.user.conference_user.last_name = 'bar'
         self.user.conference_user.title = 'title'
         self.user.conference_user.company = 'company'
         self.user.conference_user.twitter = 'twitter'

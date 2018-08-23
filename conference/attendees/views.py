@@ -37,14 +37,10 @@ class MyPerson(APIView):
             conference_user.user = request.user
 
         first_name = json_body.get('first_name')
-        clean_first_name = first_name[:models.ConferenceUser.FIRST_NAME_MAX_LENGTH] if first_name is not None else ''
+        clean_first_name = first_name[:models.FIRST_NAME_MAX_LENGTH] if first_name else ''
 
         last_name = json_body.get('last_name')
-        clean_last_name = last_name[:models.ConferenceUser.LAST_NAME_MAX_LENGTH] if last_name is not None else ''
-
-        request.user.first_name = clean_first_name
-        request.user.last_name = clean_last_name
-        request.user.save()
+        clean_last_name = last_name[:models.LAST_NAME_MAX_LENGTH] if last_name else ''
 
         title = json_body.get('title')
         clean_title = title[:models.ConferenceUser.TITLE_MAX_LENGTH] if title else ''
@@ -64,6 +60,8 @@ class MyPerson(APIView):
         linkedin = json_body.get('linkedin')
         clean_linkedin = linkedin[:models.ConferenceUser.LINKEDIN_MAX_LENGTH] if linkedin else ''
 
+        conference_user.first_name = clean_first_name
+        conference_user.last_name = clean_last_name
         conference_user.title = clean_title
         conference_user.company = clean_company
         conference_user.twitter = clean_twitter
@@ -222,6 +220,7 @@ class ListCreateUser(APIView):
 
         conference_user = models.ConferenceUser.objects.get(user=user)
         conference_user.phone = clean_phone
+        conference_user.save()
 
         project_member_queryset = models.ProjectMember.objects.filter(email=clean_email)
         if project_member_queryset.exists():
@@ -229,8 +228,6 @@ class ListCreateUser(APIView):
             conference_user.project = project_member.project
             conference_user.save()
             project_member.delete()
-        else:
-            conference_user.save()
 
         serializer = serializers.UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
