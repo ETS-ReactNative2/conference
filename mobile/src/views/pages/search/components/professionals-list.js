@@ -1,3 +1,4 @@
+import I18n from '../../../../../locales/i18n'
 import { Body, Button, Col, Container, Grid, Header, Icon, Left, List, ListItem, Right, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -41,7 +42,7 @@ class ProfessionalsList extends React.Component {
         <ScrollView>
           <Header>
             <Left>
-              <Text>Professionals</Text>
+              <Text>{ I18n.t('search_page.professional_header') }</Text>
             </Left>
             <Right>
               <Button
@@ -51,7 +52,7 @@ class ProfessionalsList extends React.Component {
                 iconLeft
                 onPress={ this.handleShowFilter }>
                 <Icon active name={ 'cog' }/>
-                <Text>Filters</Text>
+                <Text>{ I18n.t('search_page.filters') }</Text>
               </Button>
             </Right>
           </Header>
@@ -61,7 +62,7 @@ class ProfessionalsList extends React.Component {
           { this.props.profiles.length === 0 && (
             <Grid style={ { alignItems: 'center', justifyContent: 'center' } }>
               <Col>
-                <Text>No profiles found. Try to change filters</Text>
+                <Text>{ I18n.t('search_page.no_profile') }</Text>
               </Col>
             </Grid>
           ) }

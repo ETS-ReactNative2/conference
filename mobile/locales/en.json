@@ -414,14 +414,20 @@
     "terms_and_conditions": "TERMS AND CONDITIONS",
     "title": "Login"
   },
-  "professionals_page": {
-    "title": "Professionals"
+  "notifications": {
+    "button_is_read": "Read",
+    "button_is_unread": "Mark as read",
+    "mark_all_read": "Mark all as read"
+  },
+  "professional_page": {
+    "title": "Professional details"
   },
   "project_page": {
     "title": "Projects"
   },
   "search_page": {
     "change_profile": "No other Investors to diplay with these filters",
+    "filters": "Filters",
     "investor_header": "Investors",
     "no_profile": "No profiles found. Try to change filters",
     "professional_header": "Professionals",

@@ -1,3 +1,4 @@
+import I18n from '../../../../../locales/i18n'
 import { Body, Button, Col, Container, Grid, Header, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -40,7 +41,7 @@ class ProjectsList extends React.Component {
         <ScrollView>
           <Header>
             <Left>
-              <Text>Projects</Text>
+              <Text>{ I18n.t('search_page.projects_header') }</Text>
             </Left>
             <Right>
               <Button
@@ -50,7 +51,7 @@ class ProjectsList extends React.Component {
                 iconLeft
                 onPress={ this.handleShowFilter }>
                 <Icon active name={ 'cog' }/>
-                <Text>Filters</Text>
+                <Text>{ I18n.t('search_page.filters') }</Text>
               </Button>
             </Right>
           </Header>
