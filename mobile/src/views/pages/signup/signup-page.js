@@ -34,7 +34,8 @@ export class SignupPage extends React.Component {
   }
 
   validatePhoneNumber = (phoneNumber) => {
-    return validator.isMobilePhone(phoneNumber, 'any') && validator.isLength(phoneNumber, { min: 4, max: 20 })
+    return validator.isLength(phoneNumber, { min: 0, max: 0 }) ||
+      validator.isMobilePhone(phoneNumber, 'any') && validator.isLength(phoneNumber, { min: 4, max: 20 })
   }
 
   validateForm = () => {

@@ -320,6 +320,8 @@ class ConferenceUser(models.Model):
 
     LAST_NAME_MAX_LENGTH = 30
 
+    PHONE_MAX_LENGTH = 20
+
     TITLE_MAX_LENGTH = 40
 
     COMPANY_MAX_LENGTH = 40
@@ -333,6 +335,8 @@ class ConferenceUser(models.Model):
     LINKEDIN_MAX_LENGTH = 50
 
     user = models.OneToOneField(User, related_name='conference_user', on_delete=models.CASCADE)
+
+    phone = models.CharField(max_length=PHONE_MAX_LENGTH, blank=True, default='')
 
     title = models.CharField(max_length=TITLE_MAX_LENGTH, blank=True, default='')
 

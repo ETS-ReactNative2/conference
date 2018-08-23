@@ -192,6 +192,7 @@ class ListCreateUser(APIView):
         json_body = request.data
         email = json_body.get('email')
         password = json_body.get('password')
+        phone = json_body.get('phone')
 
         # email None or ''
         if not email:
@@ -202,6 +203,8 @@ class ListCreateUser(APIView):
             return Response('password_missing', status=status.HTTP_400_BAD_REQUEST)
 
         clean_email = email.lower()
+
+        clean_phone = phone[:models.ConferenceUser.PHONE_MAX_LENGTH] if phone else ''
 
         if models.User.objects.filter(email=clean_email).exists():
             return Response('email_exists', status=status.HTTP_409_CONFLICT)
@@ -216,13 +219,19 @@ class ListCreateUser(APIView):
             password=make_password(password),
             username=clean_email,
         )
+
+        conference_user = models.ConferenceUser.objects.get(user=user)
+        conference_user.phone = clean_phone
+
         project_member_queryset = models.ProjectMember.objects.filter(email=clean_email)
         if project_member_queryset.exists():
             project_member = project_member_queryset.get()
-            conference_user = models.ConferenceUser.objects.get(user=user)
             conference_user.project = project_member.project
             conference_user.save()
             project_member.delete()
+        else:
+            conference_user.save()
+
         serializer = serializers.UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
