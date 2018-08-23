@@ -131,7 +131,7 @@ export async function createInvestor ({
 }
 
 export async function putMyProfessional ({
-  role, roleOtherText, skillsText, traitsText, knowMost, localRemoteOptions, country, city, age, experience
+  role, roleOtherText, skillsText, traitsText, knowMost, relocate, remote, country, city, age, experience
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put('/api/my_professional/', decamelizeKeys({
@@ -140,7 +140,8 @@ export async function putMyProfessional ({
     skillsText,
     traitsText,
     knowMost,
-    localRemoteOptions,
+    relocate,
+    remote,
     country,
     city,
     age,

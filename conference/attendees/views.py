@@ -120,10 +120,23 @@ class MyProfessional(APIView):
         know_most = json_body.get('know_most')
         clean_know_most = know_most[:models.Professional.KNOW_MOST_MAX_LENGTH] if know_most else ''
 
+        relocate = json_body.get('relocate')
+        clean_relocate = relocate if relocate else False
+
+        remote = json_body.get('remote')
+        if remote is not None:
+            clean_local_remote_options = models.LocalRemoteOption.objects.all() if (
+                remote
+            ) else [models.LocalRemoteOption.objects.get(pk=1)]
+
         local_remote_options = json_body.get('local_remote_options')
-        clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
-            local_remote_options
-        ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
+        if local_remote_options is not None:
+            clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
+              local_remote_options
+            ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
+
+        if remote is None and local_remote_options is None:
+            clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL)]
 
         country = json_body.get('country')
         clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
@@ -151,6 +164,7 @@ class MyProfessional(APIView):
         professional.local_remote_options = clean_local_remote_options
         professional.country = clean_country
         professional.city = clean_city
+        professional.is_relocate = clean_relocate
         professional.age = clean_age
         professional.experience = clean_experience
         professional.save()

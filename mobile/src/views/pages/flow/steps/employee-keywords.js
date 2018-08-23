@@ -141,7 +141,7 @@ class EmployeeKeywords extends React.Component {
             <FlowInputValidated
               floatingLabel
               value={ this.state.city }
-              labelText={ I18n.t('flow_page.employee.most_info.placeholder') }
+              labelText={ I18n.t('flow_page.employee.job.city') }
               isError={ !this.validateJobCity(this.state.city) }
               errorMessage={ I18n.t('common.errors.incorrect_job_city') }
               errorStyleOverride={ errorStyleOverride }

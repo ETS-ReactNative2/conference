@@ -147,9 +147,10 @@ export function uploadProfile() {
             roleOtherText: employee.roleOtherText,
             skillsText: employee.skills,
             traitsText: employee.traits,
-            knowMost: employee.knowMost,
-            localRemoteOptions: employee.localRemoteOptions,
-            country: employee.country,
+            knowMost: employee.mostInfo,
+            relocate: employee.relocate,
+            remote: employee.remote,
+            country: employee.country ? employee.country.cca2 : '',
             city: employee.city,
             age: employee.age,
             experience: employee.experience
