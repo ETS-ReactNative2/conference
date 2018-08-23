@@ -230,14 +230,25 @@
       }
     },
     "employee": {
+      "age": {
+        "error": "Numbers between 18 and 120",
+        "placeholder": "How old are you?"
+      },
       "condition": {
         "title": "Job conditions"
+      },
+      "experience": {
+        "error": "Numbers between 0 and 120",
+        "placeholder": "How many years of experience do you have?"
       },
       "job": {
         "city": "City"
       },
       "location": {
         "header": "Where are you located?"
+      },
+      "more": {
+        "title": "More about you"
       },
       "most_info": {
         "error": "Please enter info",

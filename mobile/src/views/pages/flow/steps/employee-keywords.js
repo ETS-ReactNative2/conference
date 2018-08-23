@@ -37,7 +37,9 @@ class EmployeeKeywords extends React.Component {
       relocate: this.props.employee.relocate,
       remote: this.props.employee.remote,
       country: this.props.employee.country,
-      city: this.props.employee.city
+      city: this.props.employee.city,
+      age: this.props.employee.age,
+      experience: this.props.employee.experience
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -58,13 +60,23 @@ class EmployeeKeywords extends React.Component {
     return !validator.isEmpty(city)
   }
 
+    validateAge = (amount) => {
+        return validator.isEmpty(amount) ? true : validator.isNumeric(amount) && Number(amount) >= 18 && Number(amount) <= 120
+    }
+
+    validateExperience = (amount) => {
+        return validator.isEmpty(amount) ? true : validator.isNumeric(amount) && Number(amount) >= 0 && Number(amount) <= 120
+    }
+
   isFormValid = () => {
-    const { skills, traits, mostInfo, city } = this.state
+    const { skills, traits, mostInfo, city, age, experience } = this.state
     const skillsFilled = this.validateSkills(skills)
     const traitsFilled = this.validateTraits(traits)
     const mostInfoFilled = this.validateMostInfo(mostInfo)
     const jobCityFilled = this.validateJobCity(city)
-    return skillsFilled && traitsFilled && mostInfoFilled && jobCityFilled
+    const ageValid = this.validateAge(age)
+    const experienceValid = this.validateExperience(experience)
+    return skillsFilled && traitsFilled && mostInfoFilled && jobCityFilled && ageValid && experienceValid
   }
 
   validateForm = () => {
@@ -147,6 +159,31 @@ class EmployeeKeywords extends React.Component {
               errorStyleOverride={ errorStyleOverride }
               onChangeText={ (newValue) => this.handleFieldChange(newValue, 'city') }/>
           </View>
+          <Subheader
+            text={ I18n.t('flow_page.employee.more.title') }
+          />
+          <View style={ { marginLeft: 8, marginRight: 8 } }>
+              <FlowInputValidated
+                  floatingLabel
+                  keyboardType={'numeric'}
+                  value={ this.state.age }
+                  placeholder={ I18n.t('flow_page.employee.age.placeholder') }
+                  labelText={ I18n.t('flow_page.employee.age.placeholder') }
+                  isError={ !this.validateAge(this.state.age) }
+                  errorMessage={ I18n.t('flow_page.employee.age.error') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'age') } />
+          </View>
+          <View style={ { marginLeft: 8, marginRight: 8 } }>
+              <FlowInputValidated
+                  floatingLabel
+                  keyboardType={'numeric'}
+                  value={ this.state.experience }
+                  placeholder={ I18n.t('flow_page.employee.experience.placeholder') }
+                  labelText={ I18n.t('flow_page.employee.experience.placeholder') }
+                  isError={ !this.validateExperience(this.state.experience) }
+                  errorMessage={ I18n.t('flow_page.employee.experience.error') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'experience') } />
+          </View>
         </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
@@ -173,7 +210,9 @@ class EmployeeKeywords extends React.Component {
       relocate: this.state.relocate,
       remote: this.state.remote,
       country: this.state.country,
-      city: this.state.city
+      city: this.state.city,
+      age: this.state.age,
+      experience: this.state.experience
     })
     this.props.onFill({
       done: true

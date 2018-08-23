@@ -151,10 +151,16 @@ class MyProfessional(APIView):
         ) else ''
 
         age = json_body.get('age')
-        clean_age = age if age and 18 <= age <= 120 else None
+        try:
+            clean_age = int(age) if age and 18 <= int(age) <= 120 else None
+        except:
+            clean_age = None
 
         experience = json_body.get('experience')
-        clean_experience = experience if experience and 0 <= experience <= 120 else None
+        try:
+            clean_experience = int(experience) if experience and 0 <= int(experience) <= 120 else None
+        except:
+            clean_experience = None
 
         professional.role = clean_role
         professional.role_other_text = clean_role_other_text

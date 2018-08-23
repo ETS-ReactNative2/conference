@@ -89,7 +89,9 @@ const initialState = {
     relocate: false,
     remote: false,
     country: '',
-    city: ''
+    city: '',
+    age: '',
+    experience: ''
   }
 }
 
