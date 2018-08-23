@@ -11,7 +11,6 @@ from . import serializers
 
 
 class ListProject(generics.ListAPIView):
-    queryset = models.Project.objects.all()
     serializer_class = serializers.ProjectSerializer
 
     def get_queryset(self):
@@ -53,7 +52,7 @@ class ListProject(generics.ListAPIView):
             token_types = self.request.GET.getlist('token_type')
             if token_types:
                 filters['token_types__in'] = token_types
-        return models.Project.objects.filter(**filters).exclude(**excludes)
+        return models.Project.objects.filter(**filters).exclude(**excludes).distinct()
 
 
 class RetrieveProject(generics.RetrieveAPIView):

@@ -174,7 +174,6 @@ class MyProfessional(APIView):
 
 
 class Professionals(generics.ListAPIView):
-    queryset = models.Professional.objects.all()
     serializer_class = serializers.ProfessionalSerializer
 
     def get_queryset(self):
@@ -188,7 +187,7 @@ class Professionals(generics.ListAPIView):
         country = self.request.GET.get('country')
         if country:
             filters['country'] = country
-        return models.Professional.objects.filter(**filters)
+        return models.Professional.objects.filter(**filters).distinct()
 
 
 class ProfessionalsId(generics.RetrieveAPIView):

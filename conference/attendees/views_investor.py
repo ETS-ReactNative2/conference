@@ -13,7 +13,6 @@ from . import serializers
 
 
 class ListInvestor(generics.ListAPIView):
-    queryset = models.Investor.objects.all()
     serializer_class = serializers.InvestorSerializer
 
     def get_queryset(self):
@@ -52,7 +51,7 @@ class ListInvestor(generics.ListAPIView):
             token_types = self.request.GET.getlist('token_type')
             if token_types:
                 filters['token_types__in'] = token_types
-        return models.Investor.objects.filter(**filters).exclude(**excludes)
+        return models.Investor.objects.filter(**filters).exclude(**excludes).distinct()
 
 
 class RetrieveInvestor(generics.RetrieveAPIView):
