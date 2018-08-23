@@ -4,14 +4,15 @@ import { TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import { TICKET_SIZES } from '../../../../enums'
+import { getUrl } from '../../../../fake-randomizer'
 
 export const InvestorItem = ({ investor, onMark, onClick }) => {
-  const portraitPlaceholderUri = 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
-  const firstName = investor.user.firstName
-  const lastName = investor.user.lastName
+  const portraitPlaceholderUri = getUrl()
+  const firstName = investor.user ? investor.user.firstName : ''
+  const lastName = investor.user ? investor.user.lastName : ''
   const ticketCount = investor.ticketSizes.length
-  const minTicketSize = TICKET_SIZES[ investor.ticketSizes[ 0 ] - 1 ].minlabel
-  const maxTicketSize = TICKET_SIZES[ investor.ticketSizes[ ticketCount - 1 ] - 1 ].maxlabel
+  const minTicketSize = ticketCount === 0 ? '.' : TICKET_SIZES[ investor.ticketSizes[ 0 ] - 1 ].minlabel
+  const maxTicketSize = ticketCount === 0 ? '.' : TICKET_SIZES[ investor.ticketSizes[ ticketCount - 1 ] - 1 ].maxlabel
   const moneyRange = minTicketSize + ' ~ ' + maxTicketSize
 
   return (

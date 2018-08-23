@@ -5,10 +5,6 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { SECONDARY_COLOR } from './constants'
 
 export function Chip ({ text = '', selected = false, onSelect }) {
-  function onClick () {
-    console.log('CLICK')
-  }
-
   return (
     <TouchableHighlight onPress={ onSelect } underlayColor='transparent'>
       <View style={ [ styles.chip, selected ? styles.selected : '' ] }>

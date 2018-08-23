@@ -10,7 +10,6 @@ export async function signup ({ email, password, phone }) {
 
 export async function fetchProjects (filters) {
   const token = await storageService.getItem(TOKEN_NAME)
-  console.log(token)
   return axios.get('/api/projects/', {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
@@ -22,7 +21,6 @@ export async function fetchProjects (filters) {
 
 export async function fetchInvestors (filters) {
   const token = await storageService.getItem(TOKEN_NAME)
-  console.log(token)
   return axios.get('/api/investors/', {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
@@ -211,7 +209,6 @@ export async function deleteMyProjectMembersId ({ id }) {
 
 export async function getProfessionals (filters) {
     const token = await storageService.getItem(TOKEN_NAME)
-    console.log(token)
     return axios.get('/api/professionals/', {
         params: filters,
         paramsSerializer: params => transformRequestOptions(params),

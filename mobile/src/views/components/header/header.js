@@ -1,4 +1,4 @@
-import { Text } from 'native-base'
+import { Text, Button, Icon } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, View } from 'react-native'
@@ -17,6 +17,21 @@ export class Header extends React.Component {
           <Image style={ styles.logo } source={ this.props.rightIconSource }/>
         </View>
       </View>
+    )
+  }
+}
+
+export class NavigationHeader extends React.Component {
+  render () {
+    return (
+      <Header
+        {...this.props}
+        left={
+          <Button transparent onPress={ this.props.onBack}>
+            <Icon style={{color: 'white'}} name='arrow-back' />
+          </Button>
+        }
+      />
     )
   }
 }

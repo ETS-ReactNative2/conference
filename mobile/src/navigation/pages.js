@@ -1,4 +1,4 @@
-import { Button, Container, Icon, Spinner, Text } from 'native-base'
+import { Container, Spinner, Text } from 'native-base'
 import React from 'react'
 import { Image, View } from 'react-native'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
@@ -179,21 +179,24 @@ const AppStackNavigator = createStackNavigator({
     screen: InvestorPage,
     navigationOptions: () => ({
       title: I18n.t('investor_page.title'),
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
+      header: null
     })
   },
   PROFESSIONAL_PAGE: {
     screen: ProfessionalPage,
     navigationOptions: () => ({
       title: I18n.t('professional_page.title'),
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
+      header: null
     })
   },
   PROJECT_PAGE: {
     screen: ProjectPage,
     navigationOptions: () => ({
       title: I18n.t('project_page.title'),
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
+      header: null
     })
   }
 })

@@ -1,6 +1,6 @@
 import { Container } from 'native-base'
 import React from 'react'
-import { ScrollView, View, Text } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
@@ -10,33 +10,42 @@ import { PAGES_NAMES } from '../../../navigation'
 import * as searchActions from '../../../search/actions'
 import ErrorMessage from '../../components/error-message/error-message'
 import Header from '../../components/header/header'
-import { InvestorItem } from './components/investor-item'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
-import { OutlineWhiteButton, SearchButton } from '../../design/buttons'
+import { SearchButton } from '../../design/buttons'
+import { InvestorItem } from './components/investor-item'
 import { ProfessionalItem } from './components/professional-item'
 import { ProjectItem } from './components/project-item'
 
 class HomePage extends React.Component {
 
-  componentDidMount() {
+  shouldComponentUpdate (nextProps) {
+    return nextProps.isLoading !== this.props.isLoading ||
+      nextProps.error !== this.props.error
+
+  }
+
+  componentDidMount () {
     this.props.fetchDefaults()
   }
 
   handleInvestorClick = investor => {
     this.props.navigation.navigate(PAGES_NAMES.INVESTOR_PAGE, {
-      investor
+      investor,
+      defaults: true
     })
   }
 
   handleProfessionalClick = professional => {
     this.props.navigation.navigate(PAGES_NAMES.PROFESSIONAL_PAGE, {
-      professional
+      professional,
+      defaults: true
     })
   }
 
   handleProjectClick = project => {
     this.props.navigation.navigate(PAGES_NAMES.PROJECT_PAGE, {
-      project
+      project,
+      defaults: true
     })
   }
 
@@ -48,7 +57,7 @@ class HomePage extends React.Component {
 
   render () {
     const {
-      projects, professionals, investors, isLoading, error, fetchMatches, updateInvestors, updateProfessionals, updateProjects
+      projects, professionals, investors, isLoading, error, fetchMatches
     } = this.props
 
     if (isLoading) {
@@ -62,9 +71,6 @@ class HomePage extends React.Component {
           onRetry={ fetchMatches }/>
       )
     }
-    console.log({
-      projects,professionals,investors
-    })
     return (
       <SafeAreaView style={ { flex: 1, backgroundColor: '#e8e8e8' } } forceInset={ { top: 'always' } }>
         <Container style={ { backgroundColor: '#e8e8e8' } }>
@@ -76,11 +82,11 @@ class HomePage extends React.Component {
               <View style={ { marginTop: 16, marginLeft: 8, marginRight: 8 } }>
                 <SearchButton
                   text={ 'Search' }
-                  onPress={ (ev) => this.props.navigation.navigate(PAGES_NAMES.SEARCH_PAGE)}
+                  onPress={ (ev) => this.props.navigation.navigate(PAGES_NAMES.SEARCH_PAGE) }
                 />
               </View>
-              <View style={{marginTop: 16}}>
-                <Text style={ styles.subheader}>{I18n.t('common.investors')}</Text>
+              <View style={ { marginTop: 16 } }>
+                <Text style={ styles.subheader }>{ I18n.t('common.investors') }</Text>
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 16 } } horizontal>
                   {
                     this.props.investors.map(investor => (
@@ -92,11 +98,11 @@ class HomePage extends React.Component {
                   }
                 </ScrollView>
               </View>
-              <View style={{marginTop: 8}}>
-                <Text style={styles.subheader}>{I18n.t('common.projects')}</Text>
+              <View style={ { marginTop: 8 } }>
+                <Text style={ styles.subheader }>{ I18n.t('common.projects') }</Text>
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 16 } } horizontal>
                   {
-                    this.props.projects.map(project => (
+                    projects.map(project => (
                       <ProjectItem
                         key={ project.id } project={ project } onMark={ () => {} }
                         onClick={ () => this.handleProjectClick(project) }
@@ -105,8 +111,8 @@ class HomePage extends React.Component {
                   }
                 </ScrollView>
               </View>
-              <View style={{marginTop: 8}}>
-                <Text style={styles.subheader}>{I18n.t('common.attendees')}</Text>
+              <View style={ { marginTop: 8 } }>
+                <Text style={ styles.subheader }>{ I18n.t('common.attendees') }</Text>
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 16 } } horizontal>
                   {
                     this.props.professionals.map((professional, index) => (

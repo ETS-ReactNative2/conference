@@ -1,9 +1,9 @@
 import {
-  LOAD_PROFILES_SUCCESS,
-  LOAD_PROFILES,
-  LOAD_PROFILES_ERROR,
   LOAD_DEFAULT_PROFILES,
-  LOAD_DEFAULT_PROFILES_SUCCESS
+  LOAD_DEFAULT_PROFILES_ERROR,
+  LOAD_DEFAULT_PROFILES_SUCCESS,
+  LOAD_PROFILES,
+  LOAD_PROFILES_ERROR, LOAD_PROFILES_SUCCESS,
 } from './action-types'
 
 const initialState = {
@@ -59,12 +59,29 @@ export function searchReducer (state = initialState, action) {
           ...state.defaults,
           isLoading: false,
           error: false,
-          professionals: action.data.professionals ? action.data.professionals : state.professionals,
+          // TODO: It is for testing purposes, remove it after development or at some point
+          professionals: action.data.professionals ? [ ...action.data.professionals,
+            ...action.data.professionals,
+            ...action.data.professionals,
+            ...action.data.professionals,
+            ...action.data.professionals,
+            ...action.data.professionals,
+            ...action.data.professionals,
+            ...action.data.professionals ] : state.professionals,
           projects: action.data.projects ? action.data.projects : state.projects,
           investors: action.data.investors ? action.data.investors : state.investors
         }
       }
+    case LOAD_DEFAULT_PROFILES_ERROR:
+      return {
+        ...state,
+        defaults: {
+          ...state.defaults,
+          isLoading: false,
+          error: true
+        }
+      }
     default:
-      return state;
+      return state
   }
 }

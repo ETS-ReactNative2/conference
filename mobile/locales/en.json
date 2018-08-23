@@ -1,4 +1,17 @@
 {
+  "cards": {
+    "technology": "Technology",
+    "stage": "Funding",
+    "product": "Product",
+    "market": "Market: ",
+    "message": "Message",
+    "save": "Save",
+    "team": "Team",
+    "industry": "Industry",
+    "skills": "3 skills",
+    "traits": "3 traits",
+    "most": "I know the most about:"
+  },
   "home_page": {
     "title": "Home"
   },
@@ -145,7 +158,7 @@
       "header": "Product stage",
       "live": "Live product",
       "pre": "Pre-product",
-      "revenue": "Live product + $ Revenue"
+      "revenue": "Live + Revenue"
     },
     "regions": {
       "other": "Other",
@@ -385,7 +398,7 @@
     "skip": "SKIP"
   },
   "investor_page": {
-    "title": "Investor details"
+    "title": "Investors"
   },
   "location_page": {
     "title": "COMPANY LOCATION"
@@ -401,11 +414,11 @@
     "terms_and_conditions": "TERMS AND CONDITIONS",
     "title": "Login"
   },
-  "professional_page": {
-    "title": "Professional details"
+  "professionals_page": {
+    "title": "Professionals"
   },
   "project_page": {
-    "title": "Project details"
+    "title": "Projects"
   },
   "search_page": {
     "change_profile": "No other Investors to diplay with these filters",

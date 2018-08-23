@@ -7,6 +7,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import PropTypes from 'prop-types';
+import { getUrl } from '../../../../fake-randomizer'
 import * as searchActions from '../../../../search/actions';
 import Filters from './filters';
 import { FUNDING_STAGES, TOKEN_TYPES, REGIONS, TICKET_SIZES } from '../../../../enums.js';
@@ -80,7 +81,7 @@ class InvestorsList extends React.Component {
 }
 
 InvestorItem = ({ investor, onMark, onClick }) => {
-  const portraitPlaceholderUri = 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
+  const portraitPlaceholderUri = getUrl()
   const firstName = investor.user.firstName;
   const lastName = investor.user.lastName;
   const ticketCount = investor.ticketSizes.length;

@@ -5,9 +5,10 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import { ROLES, TICKET_SIZES } from '../../../../enums'
 import I18n from '../../../../../locales/i18n'
+import { getUrl } from '../../../../fake-randomizer'
 
 export const ProfessionalItem = ({ professional, onMark, onClick }) => {
-  const portraitPlaceholderUri = 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
+  const portraitPlaceholderUri = getUrl()
   const firstName = professional.user.firstName
   const lastName = professional.user.lastName
   const role = professional.role
