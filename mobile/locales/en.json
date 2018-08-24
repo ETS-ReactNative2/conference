@@ -481,6 +481,29 @@
         "header": "Ticket Size"
       }
     },
+    "project_filter": {
+      "header": "Tell us more about the projects you are searching for",
+      "token_types": {
+        "title": "Search investors looking for:",
+        "header": "Token Type"
+      },
+      "funding_stages": {
+        "title": "Search investors looking for:",
+        "header": "Funding Stages"
+      },
+      "giveaway": {
+        "title": "Search investors looking for:",
+        "header": "Investor buys"
+      },
+      "product_stages": {
+        "title": "Search investors looking for:",
+        "header": "Product Stage"
+      },
+      "regions": {
+        "title": "Search investors with these nationalities:",
+        "header": "Regions"
+      }
+    },
     "tab_label_investor": "Investors",
     "tab_label_professional": "Professionals",
     "tab_label_projects": "Projects"

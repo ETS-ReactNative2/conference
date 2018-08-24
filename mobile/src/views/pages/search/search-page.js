@@ -98,14 +98,14 @@ class SearchPage extends React.Component {
                     activeTabStyle={ { backgroundColor: '#fff' } }
                     tabStyle={ { backgroundColor: '#e8e8e8' } }
                     heading={ I18n.t('search_page.tab_label_professional') }>
-                    <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick }/>
+                    <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick } navigation={ this.props.navigation }/>
                   </Tab>
                   <Tab
                     activeTextStyle={ { color: 'black' } }
                     activeTabStyle={ { backgroundColor: '#fff' } }
                     tabStyle={ { backgroundColor: '#e8e8e8' } }
                     heading={ I18n.t('search_page.tab_label_projects') }>
-                    <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick }/>
+                    <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick } navigation={ this.props.navigation }/>
                   </Tab>
                 </Tabs>
               </ScrollView>

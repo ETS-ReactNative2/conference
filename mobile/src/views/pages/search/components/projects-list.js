@@ -4,23 +4,20 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 import { ScrollView } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as searchActions from '../../../../search/actions';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { PAGES_NAMES } from '../../../../navigation';
 import { FUNDING_STAGES, TOKEN_TYPES, PRODUCT_STAGES } from '../../../../enums.js';
 import I18n from '../../../../../locales/i18n';
 
 class ProjectsList extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      defaults: {
-      }
-    }
+  state = {
+    defaults: {}
   }
 
   handleClickFilter = () => {
-
+    this.props.navigation.navigate(PAGES_NAMES.PROJECT_MAIN_FILTER_PAGE);
   }
 
   handleSearch = newDefaults => {

@@ -27,6 +27,7 @@ import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 import FilterPage from '../views/pages/filters/filter-page';
 import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page';
+import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-page';
 
 const PAGES_NAMES = {
     WELCOME_PAGE: 'WELCOME_PAGE',
@@ -44,7 +45,8 @@ const PAGES_NAMES = {
     PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
     LOCATION_PAGE: 'LOCATION_PAGE',
     FILTER_PAGE: 'FILTER_PAGE',
-    INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE'
+    INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE',
+    PROJECT_MAIN_FILTER_PAGE: 'PROJECT_MAIN_FILTER_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -213,6 +215,9 @@ const AppStackNavigator = createStackNavigator({
   },
   INVESTOR_MAIN_FILTER_PAGE: {
       screen: InvestorMainFilterPage,
+  },
+  PROJECT_MAIN_FILTER_PAGE: {
+    screen: ProjectMainFilterPage,
   }
 })
 
