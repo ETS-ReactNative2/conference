@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native';
 import {connect} from 'react-redux';
 import * as searchActions from '../../../../search/actions';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { FUNDING_STAGES, TOKEN_TYPES, REGIONS, TICKET_SIZES } from '../../../../enums.js';
+import { FUNDING_STAGES, TOKEN_TYPES, PRODUCT_STAGES } from '../../../../enums.js';
 import I18n from '../../../../../locales/i18n';
 
 class ProjectsList extends React.Component {
@@ -70,6 +70,7 @@ ProjectItem = ({ project, onMark, onClick }) => {
   const projectName = project.name ? project.name : 'Undefined Name';
   const tokenType = TOKEN_TYPES.find(item => item.index === project.tokenType);
   const fundingStage = FUNDING_STAGES.find(item => item.index === project.fundingStage);
+  const productStage = PRODUCT_STAGES.find(item => item.index === project.productStage);
   
   return (
     <ListItem thumbnail onPress={ onClick } style={styles.listItem} >
@@ -97,7 +98,12 @@ ProjectItem = ({ project, onMark, onClick }) => {
               }
             </Text>
           </View>
-          <View style={{flex: 0.5}}>
+          <View style={{flex: 1}}>
+            <Text style={styles.normalText}>
+              {
+                productStage ? I18n.t(`common.product_stages.${productStage.slug}`) : ''
+              }
+            </Text>
           </View>
         </View>
       </View>
