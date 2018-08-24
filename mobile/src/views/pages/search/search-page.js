@@ -91,7 +91,7 @@ class SearchPage extends React.Component {
                     activeTabStyle={ { backgroundColor: '#fff' } }
                     tabStyle={ { backgroundColor: '#e8e8e8' } }
                     heading={ I18n.t('search_page.investor_header') }>
-                    <InvestorsList onClick={ this.handleInvestorClick }/>
+                    <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
                   </Tab>
                   <Tab
                     activeTextStyle={ { color: 'black' } }

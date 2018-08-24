@@ -74,6 +74,14 @@
       "equity": "Equity",
       "token": "Token"
     },
+    "ticket_size": {
+      "range1": "0 ~ 5K",
+      "range2": "5K ~ 25K",
+      "range3": "25K ~ 100K",
+      "range4": "100K ~ 500K",
+      "range5": "500K ~ 10M",
+      "range6": "10M ~ "
+    },
     "industries": {
       "other": "Other",
       "accounting": "Accounting",
@@ -437,14 +445,45 @@
     "title": "Projects"
   },
   "search_page": {
-    "change_profile": "No other Investors to diplay with these filters",
-    "filters": "Filters",
+    "change_investor": "No other Investors to diplay with these filters",
+    "change_project": "No other Projects to diplay with these filters",
     "investor_header": "Investors",
     "no_profile": "No profiles found. Try to change filters",
     "professional_header": "Professionals",
     "projects_header": "Projects",
     "title": "Search",
-    "update_filter": "UPDATE SEARCH FILTERS"
+    "update_filter": "UPDATE SEARCH FILTERS",
+    "investor": {
+      "header": "These are the filters for searching for investors",
+      "token_types": {
+        "title": "Search investors looking for:",
+        "header": "Token Type"
+      },
+      "funding_stages": {
+        "title": "Search investors looking for:",
+        "header": "Funding Stages"
+      },
+      "giveaway": {
+        "title": "Search investors looking for:",
+        "header": "Investor buys"
+      },
+      "product_stages": {
+        "title": "Search investors looking for:",
+        "header": "Product Stage"
+      },
+      "regions": {
+        "title": "Search investors with these nationalities:",
+        "header": "Regions"
+      },
+      "industries": {
+        "title": "Search investors looking for:",
+        "header": "Industries"
+      },
+      "ticket_size" : {
+        "title": "Search investors offering:",
+        "header": "Ticket Size"
+      }
+    }
   },
   "signup_page": {
     "account_type_employee": "Employee",
@@ -475,5 +514,8 @@
     "login": "Login",
     "search": "Search - temp",
     "signup": "Sign Up"
+  },
+  "location_page": {
+    "title": "COMPANY LOCATION"
   }
 }

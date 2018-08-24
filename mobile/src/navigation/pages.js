@@ -25,21 +25,26 @@ import ProjectPage from '../views/pages/project/project-page'
 import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
+import FilterPage from '../views/pages/filters/filter-page';
+import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page';
 
 const PAGES_NAMES = {
-  WELCOME_PAGE: 'WELCOME_PAGE',
-  FLOW_PAGE: 'FLOW_PAGE',
-  LOGIN_PAGE: 'LOGIN_PAGE',
-  SIGNUP_PAGE: 'SIGNUP_PAGE',
-  SEARCH_PAGE: 'SEARCH_PAGE',
-  HOME_PAGE: 'HOME_PAGE',
-  AGENDA_PAGE: 'AGENDA_PAGE',
-  NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE',
-  INVESTOR_PAGE: 'INVESTOR_PAGE',
-  PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
-  PROJECT_PAGE: 'PROJECT_PAGE',
-  PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
-  PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE'
+    WELCOME_PAGE: 'WELCOME_PAGE',
+    FLOW_PAGE: 'FLOW_PAGE',
+    LOGIN_PAGE: 'LOGIN_PAGE',
+    SIGNUP_PAGE: 'SIGNUP_PAGE',
+    SEARCH_PAGE: 'SEARCH_PAGE',
+    HOME_PAGE: 'HOME_PAGE',
+    AGENDA_PAGE: 'AGENDA_PAGE',
+    NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE',
+    INVESTOR_PAGE: 'INVESTOR_PAGE',
+    PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
+    PROJECT_PAGE: 'PROJECT_PAGE',
+    PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
+    PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
+    LOCATION_PAGE: 'LOCATION_PAGE',
+    FILTER_PAGE: 'FILTER_PAGE',
+    INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -198,6 +203,16 @@ const AppStackNavigator = createStackNavigator({
       ...commonNavBarStyle,
       header: null
     })
+  },
+  FILTER_PAGE: {
+    screen: FilterPage,
+    navigationOptions: () => ({
+        title: 'Filter',
+        ...commonNavBarStyle
+    })
+  },
+  INVESTOR_MAIN_FILTER_PAGE: {
+      screen: InvestorMainFilterPage,
   }
 })
 

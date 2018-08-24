@@ -5,7 +5,6 @@ import React from 'react'
 import { ScrollView } from 'react-native'
 import {connect} from 'react-redux'
 import * as searchActions from '../../../../search/actions'
-import Filters from './filters'
 
 class ProfessionalsList extends React.Component {
   constructor (props) {
@@ -56,9 +55,6 @@ class ProfessionalsList extends React.Component {
               </Button>
             </Right>
           </Header>
-          { showFilters && (
-            <Filters defaults={ defaults } onSearch={ this.handleSearch }/>
-          ) }
           { this.props.profiles.length === 0 && (
             <Grid style={ { alignItems: 'center', justifyContent: 'center' } }>
               <Col>
