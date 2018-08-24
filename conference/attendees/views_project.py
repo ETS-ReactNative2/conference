@@ -482,6 +482,22 @@ class MyProjectJobsId(APIView):
         return JsonResponse(serializers.JobListingSerializer(job_listing).data, status=status.HTTP_200_OK)
 
 
+class MyProjectLeave(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        # Check if the current user even has a project
+        conference_user = request.user.conference_user
+        if not conference_user.project:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        # Remove the user from the project
+        conference_user.project = None
+        conference_user.project_request = None
+        conference_user.save()
+        return HttpResponse(status=status.HTTP_200_OK)
+
+
 class MyProjectMembers(APIView):
 
     @transaction.atomic

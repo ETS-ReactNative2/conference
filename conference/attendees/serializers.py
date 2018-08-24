@@ -36,6 +36,7 @@ class InvestorSerializer(serializers.ModelSerializer):
             'ticket_sizes',
             'token_types',
             'user',
+            'is_active',
         )
 
     @transaction.atomic
@@ -107,6 +108,7 @@ class ProfessionalSerializer(serializers.ModelSerializer):
             'age',
             'experience',
             'user',
+            'is_active',
         )
 
 

@@ -307,6 +307,8 @@ class Investor(models.Model):
     # For Investor sign-ups through the website form, before the investor has signed up in the app
     email = models.EmailField(null=True, unique=True, db_index=True)
 
+    is_active = models.BooleanField(default=True)
+
 
 class Professional(models.Model):
 
@@ -333,6 +335,8 @@ class Professional(models.Model):
     age = models.PositiveSmallIntegerField(null=True, blank=True)
 
     experience = models.PositiveSmallIntegerField(null=True, blank=True)
+
+    is_active = models.BooleanField(default=True)
 
 
 class ConferenceUser(models.Model):

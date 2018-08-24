@@ -16,7 +16,9 @@ class ListInvestor(generics.ListAPIView):
     serializer_class = serializers.InvestorSerializer
 
     def get_queryset(self):
-        filters = {}
+        filters = {
+            'is_active': True,
+        }
         excludes = {}
         if self.request.GET.get('defaults') == 'true':
             project = self.request.user.conference_user.project
@@ -184,8 +186,38 @@ class MyInvestor(APIView):
         investor.region_other_text = clean_region_other_text
         investor.ticket_sizes = clean_ticket_sizes
         investor.token_types = clean_token_types
-
+        investor.is_active = True
         investor.save()
         request.user.conference_user.investor = investor
         request.user.conference_user.save()
         return JsonResponse(serializers.InvestorSerializer(investor).data, status=status.HTTP_201_CREATED)
+
+
+class MyInvestorDeactivate(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        investor = request.user.conference_user.investor
+
+        # Check if the current user even has an investor
+        if not investor:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        investor.is_active = False
+        investor.save()
+        return HttpResponse()
+
+
+class MyInvestorReactivate(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        investor = request.user.conference_user.investor
+
+        # Check if the current user even has an investor
+        if not investor:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        investor.is_active = True
+        investor.save()
+        return HttpResponse()

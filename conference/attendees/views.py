@@ -173,17 +173,50 @@ class MyProfessional(APIView):
         professional.is_relocate = clean_relocate
         professional.age = clean_age
         professional.experience = clean_experience
+        professional.is_active = True
         professional.save()
         request.user.conference_user.professional = professional
         request.user.conference_user.save()
         return JsonResponse(serializers.ProfessionalSerializer(professional).data, status=status.HTTP_201_CREATED)
 
 
+class MyProfessionalDeactivate(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        professional = request.user.conference_user.professional
+
+        # Check if the current user even has a Professional
+        if not professional:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        professional.is_active = False
+        professional.save()
+        return HttpResponse()
+
+
+class MyProfessionalReactivate(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        professional = request.user.conference_user.professional
+
+        # Check if the current user even has a Professional
+        if not professional:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        professional.is_active = True
+        professional.save()
+        return HttpResponse()
+
+
 class Professionals(generics.ListAPIView):
     serializer_class = serializers.ProfessionalSerializer
 
     def get_queryset(self):
-        filters = {}
+        filters = {
+            'is_active': True,
+        }
         roles = self.request.GET.get('roles')
         if roles:
             filters['role__in'] = roles
