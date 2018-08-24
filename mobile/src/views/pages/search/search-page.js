@@ -90,21 +90,21 @@ class SearchPage extends React.Component {
                     activeTextStyle={ { color: 'black' } }
                     activeTabStyle={ { backgroundColor: '#fff' } }
                     tabStyle={ { backgroundColor: '#e8e8e8' } }
-                    heading={ I18n.t('search_page.investor_header') }>
+                    heading={ I18n.t('search_page.tab_label_investor') }>
                     <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
                   </Tab>
                   <Tab
                     activeTextStyle={ { color: 'black' } }
                     activeTabStyle={ { backgroundColor: '#fff' } }
                     tabStyle={ { backgroundColor: '#e8e8e8' } }
-                    heading={ I18n.t('search_page.professional_header') }>
+                    heading={ I18n.t('search_page.tab_label_professional') }>
                     <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick }/>
                   </Tab>
                   <Tab
                     activeTextStyle={ { color: 'black' } }
                     activeTabStyle={ { backgroundColor: '#fff' } }
                     tabStyle={ { backgroundColor: '#e8e8e8' } }
-                    heading={ I18n.t('search_page.projects_header') }>
+                    heading={ I18n.t('search_page.tab_label_projects') }>
                     <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick }/>
                   </Tab>
                 </Tabs>

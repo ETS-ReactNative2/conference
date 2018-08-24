@@ -38,7 +38,7 @@ class InvestorMainFilter extends React.Component {
       <Container style={styles.container}>
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>{ I18n.t('search_page.investor.header') }</Text>
+            <Text style={styles.headerText}>{ I18n.t('search_page.investor_filter.header') }</Text>
           </View>
           <List style={styles.filterList}>
             {

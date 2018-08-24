@@ -69,12 +69,12 @@ class FilterPage extends Component {
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.headerContainer}>
             <Text style={styles.headerText}>
-              { I18n.t(`search_page.investor.${key}.title`) }
+              { I18n.t(`search_page.investor_filter.${key}.title`) }
             </Text>
           </View>
           <SubheaderWithSwitch
               selected={ isAllSelected }
-              text={ I18n.t(`search_page.investor.${key}.header`) }
+              text={ I18n.t(`search_page.investor_filter.${key}.header`) }
               onToggle={ this.selectAll }
             />
           <View style={{ flex: 1 }}>

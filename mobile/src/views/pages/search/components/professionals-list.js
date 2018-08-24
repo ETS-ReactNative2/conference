@@ -41,7 +41,7 @@ class ProfessionalsList extends React.Component {
         <ScrollView>
           <Header>
             <Left>
-              <Text>{ I18n.t('search_page.professional_header') }</Text>
+              <Text>{ I18n.t('search_page.tab_label_professional') }</Text>
             </Left>
             <Right>
               <Button
