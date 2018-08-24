@@ -40,7 +40,16 @@ class ProjectsList extends React.Component {
 
     return (
       <Container style={ { flex: 1 } }>
-        <ScrollView>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.comment}>{ comment }</Text>
+            <Button
+              transparent
+              style={styles.fullWidth}
+              onPress={this.handleClickFilter}>
+              <Text style={[styles.underline, styles.centerText, styles.largeText, styles.fullWidth]}>{I18n.t('search_page.update_filter')}</Text>
+            </Button>
+          </View>
           <List>
             {
               this.props.profiles.length > 0 &&
@@ -49,16 +58,7 @@ class ProjectsList extends React.Component {
               )
             }
           </List>
-          <View style={styles.footerContainer}>
-            <Text style={styles.comment}>{ comment }</Text>
-            <Button
-              transparent
-              style={styles.fullWidth}
-              onPress={this.handleClickFilter}>
-              <Text style={[styles.underline, styles.centerText, styles.largeText, styles.fullWidth]}>{I18n.t('search_page.update_filter')}</Text>
-            </Button>
-            <View style = {{ height: 190, width: '100%'}} />
-          </View>
+          <View style = {{ height: 190, width: '100%'}} />
         </ScrollView>
       </Container>
     )
@@ -112,6 +112,11 @@ const styles = EStyleSheet.create({
   fullWidth: {
     width: '100%'
   },
+  scrollView: {
+    flex: 1,
+    backgroundColor: '#e8e8e8',
+    paddingTop: 8
+  },
   listItem: {
     height: 100,
     marginLeft: 5,
@@ -164,7 +169,7 @@ const styles = EStyleSheet.create({
     marginBottom: 8,
     textAlign: 'center'
   },
-  footerContainer: {
+  headerContainer: {
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
