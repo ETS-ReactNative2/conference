@@ -9,6 +9,13 @@ const initialState = {
     region: [],
     ticketSize: [],
     industry: []
+  },
+  project: {
+    fundingStage: [],
+    giveaway: [],
+    productStage: [],
+    tokenType: [],
+    region: [],
   }
 }
 
@@ -19,6 +26,14 @@ export function filterReducer (state = initialState, action) {
         ...state,
         investor: {
           ...state.investor,
+          [action.data.filterType]: action.data.values,
+        }
+      };
+    case SET_PROJECT_FILTERS:
+      return {
+        ...state,
+        project: {
+          ...state.project,
           [action.data.filterType]: action.data.values,
         }
       };
