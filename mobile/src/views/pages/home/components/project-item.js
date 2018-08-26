@@ -47,7 +47,8 @@ const styles = EStyleSheet.create({
   portrait: {
     width: 50,
     height: 50,
-    margin: 15
+    margin: 15,
+    borderRadius: 4
   },
   rowHeader: {
     flex: 1,

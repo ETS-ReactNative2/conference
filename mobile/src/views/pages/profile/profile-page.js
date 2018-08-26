@@ -13,6 +13,7 @@ import { signUpActions } from '../../../signup'
 import Header from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { OutlineWhiteButton, ProfileWhiteButton } from '../../design/buttons'
+import { ImagePageContainer } from '../../design/image-page-container'
 import { Subheader } from '../../design/subheader'
 
 class ProfilePage extends React.Component {
@@ -105,15 +106,23 @@ class ProfilePage extends React.Component {
     const {isLoading} = this.props
 
     if (isLoading) {
-      return <LunaSpinner/>
+      return (
+        <ImagePageContainer>
+          <View style={ { flex: 1 } }>
+            <View style={ styles.content }>
+              <LunaSpinner/>
+            </View>
+          </View>
+        </ImagePageContainer>
+      )
     }
 
     return (
-      <SafeAreaView style={ { flex: 1, backgroundColor: '#2C65E2' } } forceInset={ { top: 'always' } }>
-        <Container style={ { backgroundColor: '#2C65E2' } }>
+      <ImagePageContainer>
+        <Container style={ { backgroundColor: 'transparent' } }>
           <View style={ styles.content }>
             <ScrollView>
-              <View style={ { backgroundColor: '#2C65E2' } }>
+              <View style={ { backgroundColor: 'transparent' } }>
                 <Header title={ I18n.t('profile_page.title') }
                         titleStyle={ { color: 'white', marginTop: 8 } }
                         rightIconSource={ WhiteLogo }/>
@@ -195,7 +204,7 @@ class ProfilePage extends React.Component {
             </ScrollView>
           </View>
         </Container>
-      </SafeAreaView>
+      </ImagePageContainer>
     )
   }
 }
@@ -209,7 +218,8 @@ const styles = EStyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: '#2C65E2'
+    backgroundColor: 'transparent',
+    paddingBottom: 49
   },
   pageTitleContainer: {
     marginTop: 20,

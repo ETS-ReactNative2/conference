@@ -1,9 +1,8 @@
-import { Container, Tab, Tabs } from 'native-base'
+import { Tab, Tabs } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import BlackLogo from '../../../assets/logos/logo-black.png'
@@ -12,6 +11,7 @@ import { searchActions } from '../../../search'
 import ErrorMessage from '../../components/error-message/error-message'
 import Header from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
+import { ImagePageContainer } from '../../design/image-page-container'
 import InvestorsList from './components/investors-list'
 import ProfessionalsList from './components/professionals-list'
 import ProjectsList from './components/projects-list'
@@ -61,7 +61,15 @@ class SearchPage extends React.Component {
     } = this.props
 
     if (isLoading) {
-      return <LunaSpinner/>
+      return (
+        <ImagePageContainer>
+          <View style={ { flex: 1 } }>
+            <View style={ styles.content }>
+              <LunaSpinner/>
+            </View>
+          </View>
+        </ImagePageContainer>
+      )
     }
 
     if (error) {
@@ -72,46 +80,52 @@ class SearchPage extends React.Component {
       )
     }
     return (
-        <SafeAreaView style={ { flex: 1, backgroundColor: '#fff' } } forceInset={ { top: 'always' } }>
-          <Container style={ { backgroundColor: '#fff' } }>
-            <View style={ styles.content }>
-              <ScrollView>
-                <View style={ { backgroundColor: '#fff' } }>
-                  <Header title={ I18n.t('search_page.title') }
-                          titleStyle={ { color: '#868686', marginTop: 8 } }
-                          rightIconSource={ BlackLogo }/>
-                </View>
-                <Tabs
-                  tabContainerStyle={{ borderBottomWidth: 0 }}
-                  style={ { borderColor: '#e8e8e8' } }
-                  tabBarUnderlineStyle={ { backgroundColor: 'black', height: 1 } }
-                  onChangeTab={ this.onTabChange }>
-                  <Tab
-                    activeTextStyle={ { color: 'black' } }
-                    activeTabStyle={ { backgroundColor: '#fff' } }
-                    tabStyle={ { backgroundColor: '#e8e8e8' } }
-                    heading={ I18n.t('search_page.tab_label_investor') }>
-                    <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
-                  </Tab>
-                  <Tab
-                    activeTextStyle={ { color: 'black' } }
-                    activeTabStyle={ { backgroundColor: '#fff' } }
-                    tabStyle={ { backgroundColor: '#e8e8e8' } }
-                    heading={ I18n.t('search_page.tab_label_professional') }>
-                    <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick } navigation={ this.props.navigation }/>
-                  </Tab>
-                  <Tab
-                    activeTextStyle={ { color: 'black' } }
-                    activeTabStyle={ { backgroundColor: '#fff' } }
-                    tabStyle={ { backgroundColor: '#e8e8e8' } }
-                    heading={ I18n.t('search_page.tab_label_projects') }>
-                    <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick } navigation={ this.props.navigation }/>
-                  </Tab>
-                </Tabs>
-              </ScrollView>
-            </View>
-          </Container>
-        </SafeAreaView>
+      <ImagePageContainer>
+        <View style={ { flex: 1 } }>
+          <View style={ styles.content }>
+            <ScrollView>
+              <View style={ { backgroundColor: '#fff' } }>
+                <Header title={ I18n.t('search_page.title') }
+                        titleStyle={ { color: '#868686', marginTop: 8 } }
+                        rightIconSource={ BlackLogo }/>
+              </View>
+              <Tabs
+                tabContainerStyle={ { borderBottomWidth: 0, backgroundColor: 'transparent' } }
+                style={ { borderColor: '#e8e8e8' } }
+                tabBarUnderlineStyle={ { backgroundColor: 'black', height: 1 } }
+                onChangeTab={ this.onTabChange }>
+                <Tab
+                  style={ { backgroundColor: 'transparent' } }
+                  textStyle={ { color: 'white' } }
+                  activeTextStyle={ { color: 'black' } }
+                  activeTabStyle={ { backgroundColor: '#fff' } }
+                  tabStyle={ { backgroundColor: 'transparent', color: 'white' } }
+                  heading={ I18n.t('search_page.tab_label_investor') }>
+                  <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
+                </Tab>
+                <Tab
+                  style={ { backgroundColor: 'transparent' } }
+                  textStyle={ { color: 'white' } }
+                  activeTextStyle={ { color: 'black' } }
+                  activeTabStyle={ { backgroundColor: '#fff' } }
+                  tabStyle={ { backgroundColor: 'transparent' } }
+                  heading={ I18n.t('search_page.tab_label_professional') }>
+                  <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick } navigation={ this.props.navigation }/>
+                </Tab>
+                <Tab
+                  style={ { backgroundColor: 'transparent' } }
+                  textStyle={ { color: 'white' } }
+                  activeTextStyle={ { color: 'black' } }
+                  activeTabStyle={ { backgroundColor: '#fff' } }
+                  tabStyle={ { backgroundColor: 'transparent', color: 'white' } }
+                  heading={ I18n.t('search_page.tab_label_projects') }>
+                  <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick } navigation={ this.props.navigation }/>
+                </Tab>
+              </Tabs>
+            </ScrollView>
+          </View>
+        </View>
+      </ImagePageContainer>
     )
   }
 }
@@ -125,7 +139,7 @@ const styles = EStyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: '#e8e8e8'
+    paddingBottom: 49
   },
   pageTitleContainer: {
     marginTop: 20,

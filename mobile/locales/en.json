@@ -15,6 +15,9 @@
   "home_page": {
     "title": "Home"
   },
+  "agenda_page": {
+    "title": "Schedule"
+  },
   "profile_page": {
     "title": "My profile",
     "personal": "Personal data",

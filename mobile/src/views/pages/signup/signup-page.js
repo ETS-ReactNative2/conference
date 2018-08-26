@@ -1,6 +1,6 @@
 import { Container, Content, Text } from 'native-base'
 import React from 'react'
-import { View } from 'react-native'
+import { Image, View } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
@@ -11,6 +11,7 @@ import { signUpActions } from '../../../signup'
 import Header from '../../components/header/header'
 import InputValidated from '../../design/input-validated'
 import BlackLogo from '../../../assets/logos/logo-black.png'
+import PoweredLuna from '../../../assets/logos/powered_luna_black.png'
 import { BlackButton, OutlineBlackButton } from '../../design/buttons'
 import Alert from '../../components/alert/alert'
 
@@ -100,6 +101,9 @@ export class SignupPage extends React.Component {
                     labelText={ I18n.t('signup_page.phone_placeholder') }
                     placeholder="+48123456789"
                     onChangeText={ (newValue) => this.handleFieldChange(newValue, 'phone') }/>
+              <View style={ styles.lunaContainer }>
+                <Image source={ PoweredLuna }/>
+              </View>
               <View style={styles.button}>
                 <BlackButton
                   disabled={ !this.state.isFormValid }
@@ -150,6 +154,14 @@ const styles = EStyleSheet.create({
     fontSize: 18,
     textDecorationLine: 'underline',
     marginLeft: 20
+  },
+  lunaContainer: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 16,
+    marginLeft: 16,
+    marginRight: 16
   },
   policyAndConditionsWrapper: {
     flex: 1,

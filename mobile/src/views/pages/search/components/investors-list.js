@@ -12,7 +12,6 @@ import * as searchActions from '../../../../search/actions';
 import { PAGES_NAMES } from '../../../../navigation';
 import { FUNDING_STAGES, TOKEN_TYPES, REGIONS, TICKET_SIZES } from '../../../../enums.js';
 import I18n from '../../../../../locales/i18n'
-import InvestorMainPage from '../../filters/investor-main-filter-page'
 
 
 class InvestorsList extends React.Component {
@@ -22,7 +21,7 @@ class InvestorsList extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { filters, updateInvestors } = this.props;
-    
+
     if (filters !== nextProps.filters) {
       updateInvestors(nextProps.filters);
     }
@@ -44,15 +43,12 @@ class InvestorsList extends React.Component {
   }
 
   render () {
-    const { defaults } = this.state;
     const comment = this.props.profiles.length === 0
       ? I18n.t('search_page.no_profile')
       : I18n.t('search_page.change_investor');
 
-    console.log("investors-list-search-state", defaults);
-
     return (
-      <Container style={{ flex: 1 }}>
+      <Container style={{ flex: 1, backgroundColor: 'transparent' }}>
         <ScrollView contentContainerStyle={{ paddingTop: 8 }} style={styles.scrollView}>
           <View style={styles.headerContainer}>
             <Text style={styles.comment}>{ comment }</Text>
@@ -77,7 +73,7 @@ class InvestorsList extends React.Component {
         </ScrollView>
       </Container>
     )
-  } 
+  }
 }
 
 InvestorItem = ({ investor, onMark, onClick }) => {
@@ -168,7 +164,7 @@ const styles = EStyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    backgroundColor: '#e8e8e8'
+    backgroundColor: '#00000000'
   },
   listItem: {
     height: 100,
@@ -228,7 +224,8 @@ const styles = EStyleSheet.create({
     fontFamily: 'Helvetica',
     marginTop: 2,
     marginBottom: 8,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'white'
   },
   headerContainer: {
     width: '100%',

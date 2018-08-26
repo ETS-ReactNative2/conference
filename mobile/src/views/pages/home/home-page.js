@@ -5,13 +5,15 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
-import BlackLogo from '../../../assets/logos/logo-black.png'
+import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { PAGES_NAMES } from '../../../navigation'
 import * as searchActions from '../../../search/actions'
 import ErrorMessage from '../../components/error-message/error-message'
 import Header from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { SearchButton } from '../../design/buttons'
+import { ImagePageContainer } from '../../design/image-page-container'
+import { Subheader } from '../../design/subheader'
 import { InvestorItem } from './components/investor-item'
 import { ProfessionalItem } from './components/professional-item'
 import { ProjectItem } from './components/project-item'
@@ -61,7 +63,13 @@ class HomePage extends React.Component {
     } = this.props
 
     if (isLoading) {
-      return <LunaSpinner/>
+      <ImagePageContainer>
+        <View style={ { flex: 1 } }>
+          <View style={ styles.content }>
+            <LunaSpinner/>
+          </View>
+        </View>
+      </ImagePageContainer>
     }
 
     if (error) {
@@ -72,22 +80,16 @@ class HomePage extends React.Component {
       )
     }
     return (
-      <SafeAreaView style={ { flex: 1, backgroundColor: '#e8e8e8' } } forceInset={ { top: 'always' } }>
-        <Container style={ { backgroundColor: '#e8e8e8' } }>
+      <ImagePageContainer>
+        <Container style={ { backgroundColor: 'transparent' } }>
           <View style={ styles.content }>
             <ScrollView>
               <Header title={ I18n.t('home_page.title') }
-                      titleStyle={ { color: '#868686', marginTop: 8 } }
-                      rightIconSource={ BlackLogo }/>
-              <View style={ { marginTop: 16, marginLeft: 8, marginRight: 8 } }>
-                <SearchButton
-                  text={ 'Search' }
-                  onPress={ (ev) => this.props.navigation.navigate(PAGES_NAMES.SEARCH_PAGE) }
-                />
-              </View>
+                      titleStyle={ { color: 'white', marginTop: 8 } }
+                      rightIconSource={ WhiteLogo }/>
               <View style={ { marginTop: 16 } }>
-                <Text style={ styles.subheader }>{ I18n.t('common.investors') }</Text>
-                <ScrollView style={ { minWidth: '100%', paddingBottom: 16 } } horizontal>
+                <Subheader text={I18n.t('common.investors')}/>
+                <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
                   {
                     this.props.investors.map(investor => (
                       <InvestorItem
@@ -98,9 +100,9 @@ class HomePage extends React.Component {
                   }
                 </ScrollView>
               </View>
-              <View style={ { marginTop: 8 } }>
-                <Text style={ styles.subheader }>{ I18n.t('common.projects') }</Text>
-                <ScrollView style={ { minWidth: '100%', paddingBottom: 16 } } horizontal>
+              <View>
+                <Subheader text={I18n.t('common.projects')}/>
+                <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
                   {
                     projects.map(project => (
                       <ProjectItem
@@ -111,9 +113,9 @@ class HomePage extends React.Component {
                   }
                 </ScrollView>
               </View>
-              <View style={ { marginTop: 8 } }>
-                <Text style={ styles.subheader }>{ I18n.t('common.attendees') }</Text>
-                <ScrollView style={ { minWidth: '100%', paddingBottom: 16 } } horizontal>
+              <View>
+                <Subheader text={I18n.t('common.attendees')}/>
+                <ScrollView style={ { minWidth: '100%', paddingBottom: 4, marginBottom: 4, marginTop: 8 } } horizontal>
                   {
                     this.props.professionals.map((professional, index) => (
                       <ProfessionalItem
@@ -127,7 +129,7 @@ class HomePage extends React.Component {
             </ScrollView>
           </View>
         </Container>
-      </SafeAreaView>
+      </ImagePageContainer>
     )
   }
 }
@@ -141,7 +143,8 @@ const styles = EStyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: '#e8e8e8'
+    backgroundColor: 'transparent',
+    paddingBottom: 49
   },
   pageTitleContainer: {
     marginTop: 20,
