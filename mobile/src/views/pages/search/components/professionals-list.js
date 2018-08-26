@@ -63,7 +63,7 @@ ProfessionalItem = ({ professional, onMark, onClick }) => {
   const lastName = professional.user.lastName;
   const role = professional.role === 12 
               ? professional.roleOtherText
-              : I18n.t(`common.roles.${ROLES.find(item => item.index = professional.role).slug}`);
+              : I18n.t(`common.roles.${ROLES.find(item => item.index === professional.role).slug}`);
   const skills = professional.skillsText;
   const isRelocated = 'Relocate';
   const localRemoteOptions = professional.localRemoteOptions;
