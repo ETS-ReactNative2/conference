@@ -21,53 +21,27 @@ class ProfessionalsList extends React.Component {
     }
   }
 
-  handleShowFilter = () => {
-    this.setState({
-      showFilters: !this.state.showFilters
-    })
-  }
+  handleClickFilter = () => {
 
-  handleSearch = newDefaults => {
-    this.setState({
-      showFilters: false,
-      defaults: {
-        ...this.state.defaults,
-        ...newDefaults
-      }
-    }, () => {
-      this.props.updateProfessionals(newDefaults)
-    })
   }
 
   render () {
-    const { showFilters, defaults } = this.state
+    const comment = this.props.profiles.length === 0
+    ? I18n.t('search_page.no_profile')
+    : I18n.t('search_page.change_professional');
 
     return (
       <Container style={ { flex: 1 } }>
-        <ScrollView>
-          <Header>
-            <Left>
-              <Text>{ I18n.t('search_page.tab_label_professional') }</Text>
-            </Left>
-            <Right>
-              <Button
-                transparent
-                dark={ !showFilters }
-                info={ showFilters }
-                iconLeft
-                onPress={ this.handleShowFilter }>
-                <Icon active name={ 'cog' }/>
-                <Text>{ I18n.t('search_page.filters') }</Text>
-              </Button>
-            </Right>
-          </Header>
-          { this.props.profiles.length === 0 && (
-            <Grid style={ { alignItems: 'center', justifyContent: 'center' } }>
-              <Col>
-                <Text>{ I18n.t('search_page.no_profile') }</Text>
-              </Col>
-            </Grid>
-          ) }
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.comment}>{ comment }</Text>
+            <Button
+              transparent
+              style={styles.fullWidth}
+              onPress={this.handleClickFilter}>
+              <Text style={[styles.underline, styles.centerText, styles.largeText, styles.fullWidth]}>{I18n.t('search_page.update_filter')}</Text>
+            </Button>
+          </View>
           <List>
             {
               this.props.profiles.length > 0 &&
@@ -138,6 +112,7 @@ const styles = EStyleSheet.create({
     width: '100%'
   },
   scrollView: {
+    paddingTop: 8,
     flex: 1,
     backgroundColor: '#00000000'
   },
