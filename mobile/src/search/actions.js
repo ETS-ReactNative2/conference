@@ -9,11 +9,14 @@ export function fetchMatches () {
       dispatch({ type: LOAD_PROFILES })
       const projectResponse = await api.fetchProjects({})
       const investorResponse = await api.fetchInvestors({})
+      const professionalResponse = await api.fetchProfessionals({})
+
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {
           projects: projectResponse.data,
-          investors: investorResponse.data
+          investors: investorResponse.data,
+          professionals: professionalResponse.data
         }
       })
     } catch (err) {
