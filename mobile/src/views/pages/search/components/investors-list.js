@@ -7,7 +7,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import PropTypes from 'prop-types';
-import { getUrl } from '../../../../fake-randomizer'
+import { getUrl } from '../../../../common/fake-randomizer'
 import * as searchActions from '../../../../search/actions';
 import { PAGES_NAMES } from '../../../../navigation';
 import { FUNDING_STAGES, TOKEN_TYPES, REGIONS, TICKET_SIZES } from '../../../../enums.js';

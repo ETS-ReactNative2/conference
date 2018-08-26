@@ -3,7 +3,7 @@ import React from 'react'
 import { TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 
-import { getUrl } from '../../../../fake-randomizer'
+import { getUrl } from '../../../../common/fake-randomizer'
 
 export const ProjectItem = ({ project, onMark, onClick }) => {
   const portraitPlaceholderUri = getUrl()

@@ -4,7 +4,7 @@ import { TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import { TICKET_SIZES } from '../../../../enums'
-import { getUrl } from '../../../../fake-randomizer'
+import { getUrl } from '../../../../common/fake-randomizer'
 
 export const InvestorItem = ({ investor, onMark, onClick }) => {
   const portraitPlaceholderUri = getUrl()

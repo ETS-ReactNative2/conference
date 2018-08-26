@@ -14,37 +14,42 @@ import TriangleBlack from '../assets/icons/Triangle-Black.png'
 import TriangleRed from '../assets/icons/Triangle-Red.png'
 import { navigationService } from '../services'
 import AgendaPage from '../views/pages/agenda/agenda-page'
+import FilterPage from '../views/pages/filters/filter-page'
+import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page'
 import FlowPage from '../views/pages/flow/flow-page'
 import { CommonProfileType } from '../views/pages/flow/steps'
-import CommonProfileOnboarding from '../views/pages/flow/steps/common-profile-onboarding'
+import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/flow/steps/common-profile-onboarding'
 import HomePage from '../views/pages/home/home-page'
 import InvestorPage from '../views/pages/investor/investor-page'
 import LoginPage from '../views/pages/login/login-page'
 import ProfessionalPage from '../views/pages/professional/professional-page'
+import ProfilePage from '../views/pages/profile/profile-page'
 import ProjectPage from '../views/pages/project/project-page'
 import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
+import WebviewPage from '../views/pages/webview/webview-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
-import FilterPage from '../views/pages/filters/filter-page';
-import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page';
 
 const PAGES_NAMES = {
-    WELCOME_PAGE: 'WELCOME_PAGE',
-    FLOW_PAGE: 'FLOW_PAGE',
-    LOGIN_PAGE: 'LOGIN_PAGE',
-    SIGNUP_PAGE: 'SIGNUP_PAGE',
-    SEARCH_PAGE: 'SEARCH_PAGE',
-    HOME_PAGE: 'HOME_PAGE',
-    AGENDA_PAGE: 'AGENDA_PAGE',
-    NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE',
-    INVESTOR_PAGE: 'INVESTOR_PAGE',
-    PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
-    PROJECT_PAGE: 'PROJECT_PAGE',
-    PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
-    PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
-    LOCATION_PAGE: 'LOCATION_PAGE',
-    FILTER_PAGE: 'FILTER_PAGE',
-    INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE'
+  WELCOME_PAGE: 'WELCOME_PAGE',
+  FLOW_PAGE: 'FLOW_PAGE',
+  LOGIN_PAGE: 'LOGIN_PAGE',
+  SIGNUP_PAGE: 'SIGNUP_PAGE',
+  SEARCH_PAGE: 'SEARCH_PAGE',
+  HOME_PAGE: 'HOME_PAGE',
+  AGENDA_PAGE: 'AGENDA_PAGE',
+  NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE',
+  INVESTOR_PAGE: 'INVESTOR_PAGE',
+  PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
+  PROJECT_PAGE: 'PROJECT_PAGE',
+  PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
+  PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
+  EDIT_BASIC_PROFILE: 'EDIT_BASIC_PROFILE',
+  WEBVIEW_PAGE: 'WEBVIEW_PAGE',
+  PROFILE_PAGE: 'PROFILE_PAGE',
+  LOCATION_PAGE: 'LOCATION_PAGE',
+  FILTER_PAGE: 'FILTER_PAGE',
+  INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -99,15 +104,15 @@ const DrawerStack = createBottomTabNavigator({
       })
     },
     PROFILE_PAGE: {
-      // todo profile page
-      screen: SearchPage,
+      screen: ProfilePage,
       navigationOptions: ({ navigation }) => ({
         title: I18n.t('navigator.profile'),
         tabBarIcon: ({ focused }) => {
           return <Image style={ { width: 20, height: 20 } } source={ focused ? RectangleRed : RectangleBlack }/>
         }
       })
-    }
+    },
+
   },
   {
     tabBarOptions: {
@@ -145,6 +150,12 @@ const AppStackNavigator = createStackNavigator({
   },
   PROFILE_TYPE_PAGE: {
     screen: CommonProfileType,
+    navigationOptions: () => ({
+      header: null
+    })
+  },
+  EDIT_BASIC_PROFILE: {
+    screen: EditBasicInfo,
     navigationOptions: () => ({
       header: null
     })
@@ -204,15 +215,21 @@ const AppStackNavigator = createStackNavigator({
       header: null
     })
   },
+  WEBVIEW_PAGE: {
+    screen: WebviewPage,
+    navigationOptions: () => ({
+      // header: null
+    })
+  },
   FILTER_PAGE: {
     screen: FilterPage,
     navigationOptions: () => ({
-        title: 'Filter',
-        ...commonNavBarStyle
+      title: 'Filter',
+      ...commonNavBarStyle
     })
   },
   INVESTOR_MAIN_FILTER_PAGE: {
-      screen: InvestorMainFilterPage,
+    screen: InvestorMainFilterPage
   }
 })
 

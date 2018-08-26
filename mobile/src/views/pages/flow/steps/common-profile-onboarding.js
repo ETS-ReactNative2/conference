@@ -1,23 +1,25 @@
 import { Form } from 'native-base'
 import React from 'react'
 import { ImageBackground, ScrollView, View } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
-import LinearGradient from 'react-native-linear-gradient'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import LinearGradient from 'react-native-linear-gradient'
+import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
-import validator from 'validator'
 import { batchActions } from 'redux-batch-enhancer'
+import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
+import WelcomePageBackgroundImage from '../../../../assets/images/welcome_screen_background.png'
+import WhiteLogo from '../../../../assets/logos/logo-white.png'
+import { PAGES_NAMES } from '../../../../navigation/index'
+import { profileActions } from '../../../../profile'
 import { signUpActions } from '../../../../signup'
+import Alert from '../../../components/alert/alert'
+import { NavigationHeader } from '../../../components/header/header'
+import HeaderSkip from '../../../components/header/header-skip'
+import { BlackButton } from '../../../design/buttons'
 import FlowInputValidated from '../../../design/flow-input-validated'
 import FlowInput from '../../../design/flow-inputs'
 import { StepTitle } from '../../../design/step-title'
-import WelcomePageBackgroundImage from '../../../../assets/images/welcome_screen_background.png'
-import HeaderSkip from '../../../components/header/header-skip'
-import WhiteLogo from '../../../../assets/logos/logo-white.png'
-import { PAGES_NAMES } from '../../../../navigation/index'
-import { BlackButton } from '../../../design/buttons'
-import Alert from '../../../components/alert/alert'
 
 const errorStyleOverride = {
   border: {
@@ -76,11 +78,14 @@ class CommonProfileOnboarding extends React.Component {
       telegram: this.state.telegram,
       linkedin: this.state.linkedin
     }, PAGES_NAMES.PROFILE_TYPE_PAGE)
+    if(this.props.edit) {
+      this.props.navigation.goBack()
+    }
   }
 
   handleFieldChange = (newValue, name) => {
     if (this.props.isError) {
-      this.props.clearErrors();
+      this.props.clearErrors()
     }
     this.setState({
       [ name ]: newValue
@@ -88,24 +93,38 @@ class CommonProfileOnboarding extends React.Component {
   }
 
   render () {
-    const { navigate } = this.props.navigation
+    const { edit, navigation } = this.props
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: '#000000'}} forceInset={{top: 'always'}}>
-        <ImageBackground source={WelcomePageBackgroundImage} style={styles.imageContainer} blurRadius={1}>
-          <LinearGradient style={{flex: 1}} locations={[0,0.4,0.8]} colors={['rgba(0, 0, 0, 1)', 'rgba(255, 0, 92 ,0.8)', 'rgba(156, 26, 73, 0.7)']}>
+      <SafeAreaView style={ { flex: 1, backgroundColor: '#000000' } } forceInset={ { top: 'always' } }>
+        <ImageBackground source={ WelcomePageBackgroundImage } style={ styles.imageContainer } blurRadius={ 1 }>
+          <LinearGradient style={ { flex: 1 } } locations={ [ 0, 0.4, 0.8 ] }
+                          colors={ [ 'rgba(0, 0, 0, 1)', 'rgba(255, 0, 92 ,0.8)', 'rgba(156, 26, 73, 0.7)' ] }>
             <View style={ styles.content }>
-              <ScrollView contentContainerStyle={{flexGrow: 1}}>
-                <HeaderSkip title={I18n.t('flow_page.common.profile_onboarding.header')}
-                            rightIconSource={WhiteLogo}
-                            titleStyle={styles.headerTitle}
-                            onSkipClick={() => { navigate(PAGES_NAMES.HOME_PAGE) } }/>
-                <View style={styles.pageTitleContainer}>
-                  <StepTitle text={ I18n.t('flow_page.common.profile_onboarding.title') } textStyle={styles.pageTitle}/>
+              <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+                {
+                  edit && (
+                    <NavigationHeader title={ I18n.t( 'flow_page.common.profile_onboarding.edit_header') }
+                                rightIconSource={ WhiteLogo }
+                                titleStyle={ [styles.headerTitle, { marginTop: 12}] }
+                                onBack={ () => { navigation.goBack() }}/>
+
+                  )
+                }
+                { !edit && (
+                  <HeaderSkip title={ I18n.t( edit ? 'common.back' : 'flow_page.common.profile_onboarding.header') }
+                              rightIconSource={ WhiteLogo }
+                              titleStyle={ styles.headerTitle }
+                              onSkipClick={ () => { navigation.navigate(PAGES_NAMES.HOME_PAGE) } }/>
+                )
+                }
+                <View style={ styles.pageTitleContainer }>
+                  <StepTitle text={ I18n.t('flow_page.common.profile_onboarding.title') }
+                             textStyle={ styles.pageTitle }/>
                 </View>
-                {this.props.isError && (
-                  <Alert color="error" message={this.props.errorMessage} errorStyleOverride={errorStyleOverride} />
-                )}
-                <View style={ { flex: 1}}>
+                { this.props.isError && (
+                  <Alert color="error" message={ this.props.errorMessage } errorStyleOverride={ errorStyleOverride }/>
+                ) }
+                <View style={ { flex: 1 } }>
                   <Form>
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInputValidated
@@ -116,7 +135,7 @@ class CommonProfileOnboarding extends React.Component {
                         isError={ !this.validateProfileFirstName(this.state.firstName) }
                         errorMessage={ I18n.t('common.errors.incorrect_profile_first_name') }
                         onChangeText={ (newValue) => this.handleFieldChange(newValue, 'firstName') }
-                        errorStyleOverride={errorStyleOverride}/>
+                        errorStyleOverride={ errorStyleOverride }/>
                     </View>
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInputValidated
@@ -127,7 +146,7 @@ class CommonProfileOnboarding extends React.Component {
                         isError={ !this.validateProfileLastName(this.state.lastName) }
                         errorMessage={ I18n.t('common.errors.incorrect_profile_last_name') }
                         onChangeText={ (newValue) => this.handleFieldChange(newValue, 'lastName') }
-                        errorStyleOverride={errorStyleOverride}/>
+                        errorStyleOverride={ errorStyleOverride }/>
                     </View>
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInput
@@ -155,7 +174,7 @@ class CommonProfileOnboarding extends React.Component {
                         value={ this.state.twitter }
                         placeholder=''
                         labelText={ I18n.t('common.personal_twitter') }
-                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'twitter') } />
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'twitter') }/>
                     </View>
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInput
@@ -164,7 +183,7 @@ class CommonProfileOnboarding extends React.Component {
                         value={ this.state.facebook }
                         placeholder=''
                         labelText={ I18n.t('common.personal_facebook') }
-                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'facebook') } />
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'facebook') }/>
                     </View>
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInput
@@ -173,7 +192,7 @@ class CommonProfileOnboarding extends React.Component {
                         value={ this.state.telegram }
                         placeholder=''
                         labelText={ I18n.t('common.personal_telegram') }
-                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'telegram') } />
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'telegram') }/>
                     </View>
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInput
@@ -182,7 +201,7 @@ class CommonProfileOnboarding extends React.Component {
                         value={ this.state.linkedin }
                         placeholder=''
                         labelText={ I18n.t('common.personal_linkedin') }
-                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'linkedin') } />
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'linkedin') }/>
                     </View>
                   </Form>
                 </View>
@@ -242,16 +261,34 @@ const mapStateToProps = state => {
     telegram: state.signUp.profile.telegram,
     linkedin: state.signUp.profile.linkedin,
     isError: state.signUp.auth.profile.isError,
-    errorMessage: state.signUp.auth.profile.errorMessage
+    errorMessage: state.signUp.auth.profile.errorMessage,
+    edit: false
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveProfileInfo: (profileInfo, redirectPage) => dispatch(batchActions([signUpActions.saveProfileInfo(profileInfo),
-                                                                           signUpActions.saveProfileOnboardingInfo(profileInfo, redirectPage)])),
+    saveProfileInfo: (profileInfo, redirectPage) => dispatch(batchActions([ signUpActions.saveProfileInfo(profileInfo),
+      signUpActions.saveProfileOnboardingInfo(profileInfo, redirectPage) ])),
     clearErrors: () => dispatch(signUpActions.clearSaveProfileError())
   }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(CommonProfileOnboarding)
+
+export const EditBasicInfo = connect(
+  state => ({
+    firstName: state.profile.basic.firstName,
+    lastName: state.profile.basic.lastName,
+    title: state.profile.basic.title,
+    company: state.profile.basic.company,
+    twitter: state.profile.basic.twitter,
+    facebook: state.profile.basic.facebook,
+    telegram: state.profile.basic.telegram,
+    linkedin: state.profile.basic.linkedin,
+    edit: true
+  }),
+  dispatch => ({
+    saveProfileInfo: (profile) => {dispatch(profileActions.updateBasic(profile))},
+    clearErrors: () => {}
+  })
+)(CommonProfileOnboarding)
