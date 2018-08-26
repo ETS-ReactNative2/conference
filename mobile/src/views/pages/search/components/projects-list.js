@@ -116,7 +116,7 @@ const styles = EStyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    backgroundColor: '#e8e8e8',
+    backgroundColor: 'transparent',
     paddingTop: 8
   },
   listItem: {
@@ -169,7 +169,8 @@ const styles = EStyleSheet.create({
     fontFamily: 'Helvetica',
     marginTop: 2,
     marginBottom: 8,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#fff'
   },
   headerContainer: {
     width: '100%',
