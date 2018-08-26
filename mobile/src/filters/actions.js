@@ -14,7 +14,7 @@ export function setInvestorFilter (filters) {
   }
 }
 
-export function setInvestorFilter (filters) {
+export function setProjectFilter (filters) {
   return async (dispatch, getState) => {
     try {
       dispatch({

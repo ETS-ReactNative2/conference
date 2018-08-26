@@ -1,4 +1,5 @@
 import { SET_INVESTOR_FILTERS } from './action-types'
+import { SET_PROJECT_FILTERS } from './action-types'
 
 const initialState = {
   investor: {

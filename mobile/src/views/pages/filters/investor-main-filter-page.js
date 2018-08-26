@@ -15,7 +15,7 @@ import { BLUE_BACKGROUND_COLOR } from '../../design/constants';
 
 class InvestorMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {
-    this.props.navigation.navigate(PAGES_NAMES.FILTER_PAGE, { filterSetting });
+    this.props.navigation.navigate(PAGES_NAMES.FILTER_PAGE, { filterSetting, 'filterField': 'investor' });
   }
 
   handleSubmit = () => {

@@ -16,17 +16,16 @@ class ProjectsList extends React.Component {
     defaults: {}
   }
 
-  handleClickFilter = () => {
-    this.props.navigation.navigate(PAGES_NAMES.PROJECT_MAIN_FILTER_PAGE);
+  componentWillReceiveProps(nextProps) {
+    const { filters, updateProjects } = this.props;
+    
+    if (filters !== nextProps.filters) {
+      updateProjects(nextProps.filters);
+    }
   }
 
-  handleSearch = newDefaults => {
-    this.setState({
-      defaults: {
-        ...this.state.defaults,
-        ...newDefaults
-      }
-    }, () => this.props.updateProjects(newDefaults))
+  handleClickFilter = () => {
+    this.props.navigation.navigate(PAGES_NAMES.PROJECT_MAIN_FILTER_PAGE);
   }
 
   render () {
@@ -188,7 +187,8 @@ ProjectsList.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    profiles: state.search.projects
+    profiles: state.search.projects,
+    filters: state.filter.project
   }
 }
 
