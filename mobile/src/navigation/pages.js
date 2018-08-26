@@ -1,7 +1,7 @@
-import { Container, Spinner, Text } from 'native-base'
 import React from 'react'
-import { Image, View } from 'react-native'
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
+import { Image, ImageBackground, ScrollView, StatusBar, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+import { createBottomTabNavigator, createStackNavigator, SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../locales/i18n'
 import GlassBlack from '../assets/icons/Glass-Black.png'
@@ -12,7 +12,11 @@ import RectangleBlack from '../assets/icons/Rectangle-Black.png'
 import RectangleRed from '../assets/icons/Rectangle-Red.png'
 import TriangleBlack from '../assets/icons/Triangle-Black.png'
 import TriangleRed from '../assets/icons/Triangle-Red.png'
+import BackgroundImage from '../assets/images/background_image.png'
+import LoadingLogo from '../assets/logos/logo_glow_blue.png'
 import { navigationService } from '../services'
+import Header from '../views/components/header/header'
+import { StepTitle } from '../views/design/step-title'
 import AgendaPage from '../views/pages/agenda/agenda-page'
 import FilterPage from '../views/pages/filters/filter-page'
 import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page'
@@ -116,7 +120,14 @@ const DrawerStack = createBottomTabNavigator({
   },
   {
     tabBarOptions: {
-      activeTintColor: '#000'
+      style: {
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0
+      },
+      activeTintColor: 'white'
     }
   }
 )
@@ -235,17 +246,36 @@ const AppStackNavigator = createStackNavigator({
 
 const AppStackNavigatorWithSpinner = ({ isLoading, message }) => {
   return (
-    <Container style={ styles.container }>
+    <View style={ { flex: 1 } } forceInset={ { top: 'always' } }>
       <AppStackNavigator ref={ navigatorRef => {
         navigationService.setTopLevelNavigator(navigatorRef)
       } } styles={ { position: 'absolute' } }/>
       { isLoading && (
-        <View style={ styles.spinnerContainer }>
-          <Spinner color={ '#603695' }/>
-          <Text style={ styles.message }>{ message }</Text>
-        </View>
+        <SafeAreaView style={ styles.spinnerContainer } forceInset={ { top: 'always' } }>
+          <StatusBar
+            translucent={ true }
+            barStyle="light-content"
+          />
+          <ImageBackground source={ BackgroundImage } style={ styles.imageContainer } blurRadius={ 1 }>
+            <LinearGradient style={ { flex: 1 } } locations={ [ 0, 1 ] }
+                            colors={ [ 'rgba(22, 25 ,45 , .83)', 'rgba(31, 91, 228, .83)' ] }>
+              <View style={ styles.content }>
+                <ScrollView style={ { width: '100%' } } contentContainerStyle={ { flexGrow: 1 } }>
+                  <Header title="LOADING" titleStyle={ styles.title }/>
+                  <View style={ { marginTop: 32, marginLeft: 16, marginRight: 16, marginBottom: 16 } }>
+                    <StepTitle
+                      text={ message }/>
+                  </View>
+                  <View style={ styles.logoContainer }>
+                    <Image source={ LoadingLogo }/>
+                  </View>
+                </ScrollView>
+              </View>
+            </LinearGradient>
+          </ImageBackground>
+        </SafeAreaView>
       ) }
-    </Container>
+    </View>
   )
 }
 
@@ -265,17 +295,41 @@ const styles = {
     flex: 1
   },
   spinnerContainer: {
-    backgroundColor: 'white',
     flex: 1,
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    backgroundColor: '#14192E'
   },
   message: {
     color: '#603695',
     fontWeight: 'bold'
+  },
+  imageContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: 'transparent'
+  },
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 10
+  },
+  title: {
+    textAlign: 'center',
+    flexGrow: 1,
+    color: '#D8D8D8',
+    fontSize: 18,
+    fontFamily: 'Montserrat-SemiBold'
+  },
+
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 32,
+    marginLeft: 16,
+    marginRight: 16
   }
 }

@@ -1,5 +1,6 @@
 import { ListItem, Text, Thumbnail, View } from 'native-base'
 import React from 'react'
+import { Image } from 'react-native'
 import { TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
@@ -18,8 +19,8 @@ export const InvestorItem = ({ investor, onMark, onClick }) => {
   return (
     <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
     <View style={ styles.listItem }>
-      <View style={ { flex: 1}}>
-        <Thumbnail square large style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
+      <View style={ { flex: 1, borderTopLeftRadius: 8, borderTopRightRadius: 8, overflow: 'hidden'}}>
+        <Image style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
         <Flag style={ styles.countryFlag } code={ investor.nationality }/>
       </View>
       <View style={ { marginTop: 16, marginBottom: 16, marginLeft: 16 } }>
@@ -35,10 +36,10 @@ const styles = EStyleSheet.create({
   listItem: {
     flexDirection: 'column',
     width: 200,
-    marginLeft: 5,
-    marginRight: 5,
-    marginBottom: 5,
-    borderRadius: 7,
+    marginLeft: 4,
+    marginRight: 4,
+    marginBottom: 4,
+    borderRadius: 8,
     backgroundColor: '#ffffff',
     shadowOffset: {
       width: 0,

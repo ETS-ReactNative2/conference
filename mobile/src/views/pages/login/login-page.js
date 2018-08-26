@@ -1,10 +1,11 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Image, View } from 'react-native'
 import { Content, Container, Text } from 'native-base'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
+import PoweredLuna from '../../../assets/logos/powered_luna_black.png'
 import { signUpActions } from '../../../signup'
 import { SafeAreaView } from 'react-navigation'
 import Header from '../../components/header/header'
@@ -85,6 +86,9 @@ class LoginPage extends React.Component {
                                 labelText={ I18n.t('login_page.password_placeholder').toUpperCase() }
                                 placeholder='********'
                                 onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password') }/>
+              <View style={ styles.lunaContainer }>
+                <Image source={ PoweredLuna }/>
+              </View>
                 <View style={styles.button}>
                   <BlackButton
                     disabled={ !this.state.isFormValid }
@@ -129,6 +133,14 @@ const styles = EStyleSheet.create({
   button: {
     marginTop: 30,
     flex: 0
+  },
+  lunaContainer: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 16,
+    marginLeft: 16,
+    marginRight: 16
   },
   signup: {
     fontFamily: 'Montserrat-SemiBold',

@@ -16,7 +16,7 @@ export const ProfessionalItem = ({ professional, onMark, onClick }) => {
   return (
     <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
     <View style={ styles.listItem }>
-      <View>
+      <View style={ { flex: 1, borderTopLeftRadius: 8, borderTopRightRadius: 8, overflow: 'hidden'}}>
         <Thumbnail square large style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
         <Flag style={ styles.countryFlag } code={ professional.country }/>
       </View>
@@ -34,10 +34,10 @@ const styles = EStyleSheet.create({
     flexDirection: 'column',
     width: 200,
     minHeight: 200,
-    marginLeft: 5,
-    marginRight: 5,
-    marginBottom: 5,
-    borderRadius: 7,
+    marginLeft: 4,
+    marginRight: 4,
+    marginBottom: 4,
+    borderRadius: 8,
     backgroundColor: '#ffffff',
     shadowOffset: {
       width: 0,

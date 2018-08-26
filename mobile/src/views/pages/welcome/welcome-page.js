@@ -1,45 +1,45 @@
-import { Text } from 'native-base'
 import React from 'react'
-import { ImageBackground, ScrollView, View } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
-import LinearGradient from 'react-native-linear-gradient'
+import { Image, ScrollView, View } from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
+import ColorLogo from '../../../assets/logos/conference_logo_welcome_medium.png'
+import PoweredLuna from '../../../assets/logos/powered_luna.png'
 import { PAGES_NAMES } from '../../../navigation'
 import Header from '../../components/header/header'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
-import EStyleSheet from 'react-native-extended-stylesheet'
-import WelcomePageBackgroundImage from '../../../assets/images/welcome_screen_background.png'
-import { BlueButton, OutlineWhiteButton, PrimaryButton } from '../../design/buttons'
+import { OutlineWhiteButton, PrimaryButton } from '../../design/buttons'
+import { ImagePageContainer } from '../../design/image-page-container'
 
 class WelcomePage extends React.Component {
 
   render () {
     const { navigate } = this.props.navigation
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: '#000000'}} forceInset={{top: 'always'}}>
-        <ImageBackground source={WelcomePageBackgroundImage} style={styles.imageContainer} blurRadius={1}>
-          <LinearGradient style={{flex: 1}} locations={[0,0.4,0.8]} colors={['rgba(0, 0, 0, 1)', 'rgba(255, 0, 92 ,0.8)', 'rgba(156, 26, 73, 0.7)']}>
-            <View style={styles.content}>
-              <ScrollView contentContainerStyle={{flexGrow: 1}}>
-                <Header title="BLOCK SEOUL" rightIconSource={WhiteLogo} titleStyle={styles.title} />
-                <View style={styles.buttonsContainer}>
-                  <View style={styles.buttonContainer}>
-                    <PrimaryButton
-                      text={ I18n.t('welcome_page.login') }
-                      onPress={ () => {navigate(PAGES_NAMES.LOGIN_PAGE)} }/>
-                  </View>
-                  <View style={ styles.buttonContainer }>
-                    <OutlineWhiteButton
-                      onPress={ () => {navigate(PAGES_NAMES.SIGNUP_PAGE)} }
-                      text={ I18n.t('welcome_page.signup') }
-                    />
-                  </View>
-                </View>
-              </ScrollView>
+      <ImagePageContainer>
+        <View style={ styles.content }>
+          <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+            <Header title="BLOCK SEOUL" titleStyle={ styles.title }/>
+            <View style={ styles.logoContainer }>
+              <Image style={ { width: 125, height: 160 } } source={ ColorLogo }/>
             </View>
-          </LinearGradient>
-        </ImageBackground>
-      </SafeAreaView>
+            <View style={ styles.lunaContainer }>
+              <Image source={ PoweredLuna }/>
+            </View>
+            <View style={ styles.buttonsContainer }>
+              <View style={ styles.buttonContainer }>
+                <PrimaryButton
+                  text={ I18n.t('welcome_page.login') }
+                  onPress={ () => {navigate(PAGES_NAMES.LOGIN_PAGE)} }/>
+              </View>
+              <View style={ styles.buttonContainer }>
+                <OutlineWhiteButton
+                  onPress={ () => {navigate(PAGES_NAMES.SIGNUP_PAGE)} }
+                  text={ I18n.t('welcome_page.signup') }
+                />
+              </View>
+            </View>
+          </ScrollView>
+        </View>
+      </ImagePageContainer>
     )
   }
 }
@@ -68,9 +68,24 @@ const styles = EStyleSheet.create({
   },
   buttonsContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 40,
+    marginLeft: 16,
+    marginRight: 16
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 32,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 32
+  },
+  lunaContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 16,
     marginLeft: 16,
     marginRight: 16
   },

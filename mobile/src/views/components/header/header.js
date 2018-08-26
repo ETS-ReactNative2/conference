@@ -38,9 +38,9 @@ export class NavigationHeader extends React.Component {
 
 const styles = EStyleSheet.create({
   container: {
-    paddingTop: 15,
+    paddingTop: 16,
     paddingBottom: 8,
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
@@ -58,7 +58,8 @@ const styles = EStyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     color: '#4A4A4A',
-    fontSize: 18,
+    fontSize: 16,
+    marginTop: 8,
     fontFamily: 'Montserrat-SemiBold'
   }
 })
@@ -67,7 +68,7 @@ Header.propTypes = {
   left: PropTypes.node,
   title: PropTypes.string.isRequired,
   titleStyle: PropTypes.any,
-  rightIconSource: PropTypes.node.isRequired
+  rightIconSource: PropTypes.node
 }
 
 export default Header

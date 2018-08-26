@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { batchActions } from 'redux-batch-enhancer'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
-import WelcomePageBackgroundImage from '../../../../assets/images/welcome_screen_background.png'
+import BackgroundImage from '../../../../assets/images/background_image.png'
 import WhiteLogo from '../../../../assets/logos/logo-white.png'
 import { PAGES_NAMES } from '../../../../navigation/index'
 import { profileActions } from '../../../../profile'
@@ -16,20 +16,21 @@ import { signUpActions } from '../../../../signup'
 import Alert from '../../../components/alert/alert'
 import { NavigationHeader } from '../../../components/header/header'
 import HeaderSkip from '../../../components/header/header-skip'
-import { BlackButton } from '../../../design/buttons'
+import { BlackButton, PrimaryButton } from '../../../design/buttons'
 import FlowInputValidated from '../../../design/flow-input-validated'
 import FlowInput from '../../../design/flow-inputs'
+import { ImagePageContainer } from '../../../design/image-page-container'
 import { StepTitle } from '../../../design/step-title'
 
-const errorStyleOverride = {
-  border: {
-    borderColor: '#000000',
-    borderBottomColor: '#000000'
-  },
-  text: {
-    color: '#000000'
-  }
-}
+// const errorStyleOverride = {
+//   border: {
+//     borderColor: '#000000',
+//     borderBottomColor: '#000000'
+//   },
+//   text: {
+//     color: '#000000'
+//   }
+// }
 
 class CommonProfileOnboarding extends React.Component {
 
@@ -95,10 +96,11 @@ class CommonProfileOnboarding extends React.Component {
   render () {
     const { edit, navigation } = this.props
     return (
-      <SafeAreaView style={ { flex: 1, backgroundColor: '#000000' } } forceInset={ { top: 'always' } }>
-        <ImageBackground source={ WelcomePageBackgroundImage } style={ styles.imageContainer } blurRadius={ 1 }>
-          <LinearGradient style={ { flex: 1 } } locations={ [ 0, 0.4, 0.8 ] }
-                          colors={ [ 'rgba(0, 0, 0, 1)', 'rgba(255, 0, 92 ,0.8)', 'rgba(156, 26, 73, 0.7)' ] }>
+      <ImagePageContainer>
+      {/*<SafeAreaView style={ { flex: 1, backgroundColor: '#000000' } } forceInset={ { top: 'always' } }>*/}
+        {/*<ImageBackground source={ BackgroundImage } style={ styles.imageContainer } blurRadius={ 1 }>*/}
+          {/*<LinearGradient style={ { flex: 1 } } locations={ [ 0, 0.4, 0.8 ] }*/}
+                          {/*colors={ [ 'rgba(0, 0, 0, 1)', 'rgba(255, 0, 92 ,0.8)', 'rgba(156, 26, 73, 0.7)' ] }>*/}
             <View style={ styles.content }>
               <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
                 {
@@ -134,8 +136,7 @@ class CommonProfileOnboarding extends React.Component {
                         labelText={ I18n.t('flow_page.common.profile_onboarding.first_name') }
                         isError={ !this.validateProfileFirstName(this.state.firstName) }
                         errorMessage={ I18n.t('common.errors.incorrect_profile_first_name') }
-                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'firstName') }
-                        errorStyleOverride={ errorStyleOverride }/>
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'firstName') }/>
                     </View>
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInputValidated
@@ -145,8 +146,7 @@ class CommonProfileOnboarding extends React.Component {
                         labelText={ I18n.t('flow_page.common.profile_onboarding.last_name') }
                         isError={ !this.validateProfileLastName(this.state.lastName) }
                         errorMessage={ I18n.t('common.errors.incorrect_profile_last_name') }
-                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'lastName') }
-                        errorStyleOverride={ errorStyleOverride }/>
+                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'lastName') }/>
                     </View>
                     <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                       <FlowInput
@@ -207,16 +207,17 @@ class CommonProfileOnboarding extends React.Component {
                 </View>
               </ScrollView>
               <View style={ { margin: 8 } }>
-                <BlackButton
+                <PrimaryButton
                   text={ I18n.t('common.next') }
                   disabled={ !this.state.isFormValid }
                   onPress={ this.handleSubmit }
                 />
               </View>
             </View>
-          </LinearGradient>
-        </ImageBackground>
-      </SafeAreaView>
+          {/*</LinearGradient>*/}
+        {/*</ImageBackground>*/}
+      {/*</SafeAreaView>*/}
+      </ImagePageContainer>
     )
   }
 }
