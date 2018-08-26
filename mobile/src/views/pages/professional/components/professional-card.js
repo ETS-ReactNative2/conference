@@ -4,9 +4,9 @@ import { Image, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
-import { itemWidth } from '../../../../dimension-utils'
+import { itemWidth } from '../../../../common/dimension-utils'
 import { INVESTOR_INDUSTRIES, ROLES } from '../../../../enums'
-import { getUrl } from '../../../../fake-randomizer'
+import { getUrl } from '../../../../common/fake-randomizer'
 
 export class ProfessionalCard extends React.Component {
 

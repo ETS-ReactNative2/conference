@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import { ROLES, TICKET_SIZES } from '../../../../enums'
 import I18n from '../../../../../locales/i18n'
-import { getUrl } from '../../../../fake-randomizer'
+import { getUrl } from '../../../../common/fake-randomizer'
 
 export const ProfessionalItem = ({ professional, onMark, onClick }) => {
   const portraitPlaceholderUri = getUrl()

@@ -79,12 +79,11 @@ export function signup (signupData) {
   }
 }
 
-export function uploadProfile() {
+export function uploadProfile () {
   return async (dispatch, getState) => {
     try {
       const flow = getState().signUp
-      const {profile: {type, ...profileRest}, investor, investee, employer, employee} = flow
-      await api.createConferenceUser({...profileRest})
+      const { profile: { type, ...profileRest }, investor, investee, employer, employee } = flow
       switch (type) {
         case 'investee':
           await api.createInvestee({
@@ -107,14 +106,14 @@ export function uploadProfile() {
             legalCountry: investee.legal.cca2,
             mainCountry: investee.main.cca2,
             industry: investee.industry,
-            region: investee.investorNationality ? investee.investorNationality.index : '',
+            region: investee.investorNationality,
             regionOtherText: investee.regionOtherText
           })
           if (investee.hiring) {
-            const {roles, ...jobs} = employer
+            const { roles, ...jobs } = employer
 
             const promises = Object.keys(jobs).map(async key => {
-              const job = employer[key]
+              const job = employer[ key ]
               return api.createJob({
                 role: ROLES.find(role => role.slug === key).index,
                 skillsText: job.keywords,
@@ -138,7 +137,7 @@ export function uploadProfile() {
             tokenTypes: investor.investments,
             industries: investor.industries,
             region: investor.marketLocation,
-            nationality: investor.nationality ? investor.nationality.cca2 : "",
+            nationality: investor.nationality ? investor.nationality.cca2 : '',
             regionOtherText: investor.regionOtherText
           })
         case 'employee':
@@ -157,7 +156,7 @@ export function uploadProfile() {
           })
       }
     } catch (err) {
-      console.log({err})
+      console.log({ err })
     }
   }
 }
@@ -252,7 +251,7 @@ export const saveProfileOnboardingInfo = (profileInfo, redirectPage) => async di
   try {
     dispatch(batchActions([ clearSaveProfileError(),
       globalActions.setGlobalLoading(I18n.t('flow_page.common.profile_onboarding.spinner_text')) ]))
-    await api.createConferenceUser(profileInfo)
+    await api.createOrUpdateConferenceUser(profileInfo)
     navigationService.navigate(redirectPage)
   } catch (err) {
     if (!isNetworkUnavailable(err) && err.response.status === 401) {
@@ -261,6 +260,20 @@ export const saveProfileOnboardingInfo = (profileInfo, redirectPage) => async di
       const errorData = getErrorData(err)
       dispatch(saveProfileError(errorData.errorMessage))
     }
+  } finally {
+    dispatch(globalActions.unsetGlobalLoading())
+  }
+}
+
+export const logout = () => async dispatch => {
+  console.log('HERE')
+  try {
+    dispatch(batchActions([
+      globalActions.setGlobalLoading(I18n.t('common.spinner.logout')) ]))
+    await storageService.removeItem(TOKEN_NAME)
+    navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
+  } catch (err) {
+
   } finally {
     dispatch(globalActions.unsetGlobalLoading())
   }

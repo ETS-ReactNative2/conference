@@ -3,6 +3,7 @@ import React from 'react'
 import { BackHandler, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { PAGES_NAMES } from '../../../navigation'
+import { profileActions } from '../../../profile'
 import { signUpActions } from '../../../signup'
 import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation } from './steps'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
@@ -99,7 +100,7 @@ class FlowPage extends React.Component {
 
   onFill = async ({ nextStep, done }) => {
     const { PreviousSteps, CurrentStep } = this.state
-    const { navigation, uploadProfile } = this.props
+    const { navigation, uploadProfile, fetchProfiles } = this.props
     const previousStepsCopy = [ ...PreviousSteps ]
     previousStepsCopy.push(CurrentStep)
     if (!done) {
@@ -117,7 +118,8 @@ class FlowPage extends React.Component {
     else {
       try {
         await uploadProfile()
-        navigation.navigate(PAGES_NAMES.HOME_PAGE)
+        await fetchProfiles()
+        navigation.navigate(PAGES_NAMES.PROFILE_PAGE)
       } catch (err) {
         console.error(err)
       }
@@ -148,7 +150,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    uploadProfile: () => dispatch(signUpActions.uploadProfile())
+    uploadProfile: () => dispatch(signUpActions.uploadProfile()),
+    fetchProfiles: () => dispatch(profileActions.fetchProfiles())
   }
 }
 

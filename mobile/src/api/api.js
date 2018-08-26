@@ -30,13 +30,129 @@ export async function fetchInvestors (filters) {
   })
 }
 
+export async function fetchMyBasic () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return new Promise(async resolve => {
+    try {
+      resolve(await axios.get('/api/my_person/', {
+        headers: {
+          'X-Authorization': `Bearer ${token}`
+        }
+      }))
+    } catch (ex) {
+      resolve({ data: null })
+    }
+  })
+}
+
+export async function fetchMyProfile () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return new Promise(async resolve => {
+    try {
+      resolve(await axios.get('/api/my_professional/', {
+        headers: {
+          'X-Authorization': `Bearer ${token}`
+        }
+      }))
+    } catch (ex) {
+      resolve({ data: null })
+    }
+  })
+}
+
+export async function fetchMyProject () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return new Promise(async resolve => {
+    try {
+      resolve(await axios.get('/api/my_project/', {
+        headers: {
+          'X-Authorization': `Bearer ${token}`
+        }
+      }))
+    } catch (ex) {
+      resolve({ data: null })
+    }
+  })
+}
+
+export async function fetchMyInvestor () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return new Promise(async resolve => {
+    try {
+      resolve(await axios.get('/api/my_investor/', {
+        headers: {
+          'X-Authorization': `Bearer ${token}`
+        }
+      }))
+    } catch (ex) {
+      resolve({ data: null })
+    }
+  })
+}
+
+export async function reactivateProfile () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post('/api/my_professional/reactivate/', {}, {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+export async function deactivateProfile () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post('/api/my_professional/deactivate/', {}, {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+export async function reactivateInvestor () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post('/api/my_investor/reactivate/', {}, {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+export async function deactivateInvestor () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post('/api/my_investor/deactivate/', {}, {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+export async function leaveProject () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post('/api/my_project/leave/', {}, {
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
 export async function createJob ({
   role, skillsText, city, country, link, description, partTime, localRemoteOptions, payments, project
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.post(
     '/api/my_project/jobs/',
-    decamelizeKeys({ role, skillsText, city, country, link, description, partTime, localRemoteOptions, payments, project }),
+    decamelizeKeys({
+      role,
+      skillsText,
+      city,
+      country,
+      link,
+      description,
+      partTime,
+      localRemoteOptions,
+      payments,
+      project
+    }),
     {
       headers: {
         'X-Authorization': `Bearer ${token}`
@@ -44,7 +160,7 @@ export async function createJob ({
     })
 }
 
-export async function createConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram }) {
+export async function createOrUpdateConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put(
     '/api/my_person/',
@@ -209,14 +325,14 @@ export async function deleteMyProjectMembersId ({ id }) {
 }
 
 export async function getProfessionals (filters) {
-    const token = await storageService.getItem(TOKEN_NAME)
-    return axios.get('/api/professionals/', {
-        params: filters,
-        paramsSerializer: params => transformRequestOptions(params),
-        headers: {
-            'X-Authorization': `Bearer ${token}`
-        }
-    })
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.get('/api/professionals/', {
+    params: filters,
+    paramsSerializer: params => transformRequestOptions(params),
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
 }
 
 export async function fetchNotifications () {

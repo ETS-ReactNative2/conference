@@ -15,6 +15,13 @@
   "home_page": {
     "title": "Home"
   },
+  "profile_page": {
+    "title": "My profile",
+    "personal": "Personal data",
+    "job_profile": "Job profile",
+    "project": "Project",
+    "investor": "Investor"
+  },
   "navigator": {
     "conference": "Conference",
     "profile": "Profile",
@@ -25,6 +32,17 @@
     "until": "UNTIL"
   },
   "common": {
+    "back": "Back",
+    "view": "View",
+    "edit": "Edit",
+    "deactivate": "Deactivate",
+    "create": "Create",
+    "reactivate": "Reactivate",
+    "leave": "Leave",
+    "logout": "Logout",
+    "spinner": {
+      "logout": "You're being logout!"
+    },
     "investors": "Investors",
     "projects": "Projects",
     "attendees": "Professionals attending",
@@ -225,6 +243,7 @@
         "company": "COMPANY",
         "first_name": "GIVEN NAME",
         "header": "WELCOME",
+        "edit_header": "Edit basic info",
         "last_name": "FAMILY NAME",
         "spinner_text": "Saving your profile... Please wait",
         "title": "We would like to know more about you",

@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
-import { itemWidth, sliderWidth } from '../../../dimension-utils'
+import { itemWidth, sliderWidth } from '../../../common/dimension-utils'
 import { NavigationHeader } from '../../components/header/header'
 import { InvestorCard } from './components/investor-card'
 
@@ -38,6 +38,7 @@ class InvestorPage extends Component {
   _renderItem = ({ item: investor, index }) => <InvestorCard key={ index } investor={ investor }/>
 
   render () {
+    const showSingle = this.props.navigation.getParam('single', false)
     return (
       <SafeAreaView style={ { flex: 1, backgroundColor: '#2C65E2' } } forceInset={ { top: 'always' } }>
         <Container style={ { backgroundColor: '#2C65E2' } }>
@@ -49,21 +50,34 @@ class InvestorPage extends Component {
                 titleStyle={ { color: '#fff', marginTop: 12 } }
                 rightIconSource={ WhiteLogo }/>
               <View style={ { marginTop: 64 } }>
-                <Carousel
-                  ref={ (c) => { this._carousel = c } }
-                  data={ this.investors }
-                  renderItem={ this._renderItem }
-                  sliderWidth={ sliderWidth }
-                  firstItem={ this.state.currentIndex }
-                  itemWidth={ itemWidth }
-                  onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
-                />
-                { this.investors.length < 8 &&
-                <Pagination
-                  dotColor={ 'rgba(255, 255, 255, 0.95)' }
-                  inactiveDotColor={ 'rgba(255,255,255,0.75)' }
-                  activeDotIndex={ this.state.currentIndex } dotsLength={ this.investors.length }/>
-                }
+                { showSingle && (
+                  <Carousel
+                    ref={ (c) => { this._carousel = c } }
+                    data={ [this.props.navigation.getParam('investor', {})] }
+                    renderItem={ this._renderItem }
+                    sliderWidth={ sliderWidth }
+                    itemWidth={ itemWidth }
+                  />
+                ) }
+                { !showSingle && (
+                  <React.Fragment>
+                    <Carousel
+                      ref={ (c) => { this._carousel = c } }
+                      data={ this.investors }
+                      renderItem={ this._renderItem }
+                      sliderWidth={ sliderWidth }
+                      firstItem={ this.state.currentIndex }
+                      itemWidth={ itemWidth }
+                      onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
+                    />
+                    { this.investors.length < 8 &&
+                    <Pagination
+                      dotColor={ 'rgba(255, 255, 255, 0.95)' }
+                      inactiveDotColor={ 'rgba(255,255,255,0.75)' }
+                      activeDotIndex={ this.state.currentIndex } dotsLength={ this.investors.length }/>
+                    }
+                  </React.Fragment>
+                ) }
               </View>
             </ScrollView>
           </View>

@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
-import { itemWidth, sliderWidth } from '../../../dimension-utils'
+import { itemWidth, sliderWidth } from '../../../common/dimension-utils'
 import { NavigationHeader } from '../../components/header/header'
 import { ProjectCard } from './components/project-card'
 
@@ -37,6 +37,7 @@ class ProjectPage extends Component {
   _renderItem = ({ item: project, index }) => <ProjectCard key={ index } project={ project }/>
 
   render () {
+    const showSingle = this.props.navigation.getParam('single', false)
     return (
       <SafeAreaView style={ { flex: 1, backgroundColor: '#172D5C' } } forceInset={ { top: 'always' } }>
         <Container style={ { backgroundColor: '#172D5C' } }>
@@ -48,20 +49,33 @@ class ProjectPage extends Component {
                 titleStyle={ { color: '#fff', marginTop: 12 } }
                 rightIconSource={ WhiteLogo }/>
               <View style={ { marginTop: 64 } }>
-                <Carousel
-                  ref={ (c) => { this._carousel = c } }
-                  data={ this.projects }
-                  renderItem={ this._renderItem }
-                  sliderWidth={ sliderWidth }
-                  itemWidth={ itemWidth }
-                  firstItem={ this.state.currentIndex }
-                  onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
-                />
-                { this.props.projects.length > 8 && (
-                  <Pagination
-                    dotColor={ 'rgba(255, 255, 255, 0.95)' }
-                    inactiveDotColor={ 'rgba(255,255,255,0.75)' }
-                    activeDotIndex={ this.state.currentIndex } dotsLength={ this.projects.length }/>
+                { showSingle && (
+                  <Carousel
+                    ref={ (c) => { this._carousel = c } }
+                    data={ [this.props.navigation.getParam('project', {})] }
+                    renderItem={ this._renderItem }
+                    sliderWidth={ sliderWidth }
+                    itemWidth={ itemWidth }
+                  />
+                ) }
+                { !showSingle && (
+                  <React.Fragment>
+                    <Carousel
+                      ref={ (c) => { this._carousel = c } }
+                      data={ this.projects }
+                      renderItem={ this._renderItem }
+                      sliderWidth={ sliderWidth }
+                      firstItem={ this.state.currentIndex }
+                      itemWidth={ itemWidth }
+                      onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
+                    />
+                    { this.projects.length < 8 &&
+                    <Pagination
+                      dotColor={ 'rgba(255, 255, 255, 0.95)' }
+                      inactiveDotColor={ 'rgba(255,255,255,0.75)' }
+                      activeDotIndex={ this.state.currentIndex } dotsLength={ this.projects.length }/>
+                    }
+                  </React.Fragment>
                 ) }
               </View>
             </ScrollView>

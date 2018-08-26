@@ -63,8 +63,8 @@ class InvesteeMoneySource extends React.Component {
                   multiple={ false }
                   key={ `region-item-${region.slug}` }
                   text={ I18n.t(`common.regions.${region.slug}`) }
-                  onSelect={ () => this.handleChange(region) }
-                  selected={ this.state.nationality.index === region.index }
+                  onSelect={ () => this.handleChange(region.index) }
+                  selected={ this.state.nationality === region.index }
                 />
               )
             }) }

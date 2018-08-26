@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
-import { itemWidth, sliderWidth } from '../../../dimension-utils'
+import { itemWidth, sliderWidth } from '../../../common/dimension-utils'
 import { NavigationHeader } from '../../components/header/header'
 import { ProfessionalCard } from './components/professional-card'
 
@@ -37,6 +37,7 @@ class ProfessionalPage extends Component {
   _renderItem = ({ item: professional, index }) => <ProfessionalCard key={ index } professional={ professional }/>
 
   render () {
+    const showSingle = this.props.navigation.getParam('single', false)
     return (
       <SafeAreaView style={ { flex: 1, backgroundColor: '#c72355' } } forceInset={ { top: 'always' } }>
         <Container style={ { backgroundColor: '#c72355' } }>
@@ -44,25 +45,38 @@ class ProfessionalPage extends Component {
             <ScrollView>
               <NavigationHeader
                 onBack={ () => this.props.navigation.goBack() }
-                title={ I18n.t('professionals_page.title') }
+                title={ I18n.t('professional_page.title') }
                 titleStyle={ { color: '#fff', marginTop: 12 } }
                 rightIconSource={ WhiteLogo }/>
               <View style={ { marginTop: 64 } }>
-                <Carousel
-                  ref={ (c) => { this._carousel = c } }
-                  data={ this.professionals }
-                  renderItem={ this._renderItem }
-                  sliderWidth={ sliderWidth }
-                  firstItem={ this.state.currentIndex }
-                  itemWidth={ itemWidth }
-                  onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
-                />
-                { this.professionals.length < 8 &&
-                <Pagination
-                  dotColor={ 'rgba(255, 255, 255, 0.95)' }
-                  inactiveDotColor={ 'rgba(255,255,255,0.75)' }
-                  activeDotIndex={ this.state.currentIndex } dotsLength={ this.professionals.length }/>
-                }
+                { showSingle && (
+                  <Carousel
+                    ref={ (c) => { this._carousel = c } }
+                    data={ [this.props.navigation.getParam('professional', {})] }
+                    renderItem={ this._renderItem }
+                    sliderWidth={ sliderWidth }
+                    itemWidth={ itemWidth }
+                  />
+                ) }
+                { !showSingle && (
+                  <React.Fragment>
+                    <Carousel
+                      ref={ (c) => { this._carousel = c } }
+                      data={ this.professionals }
+                      renderItem={ this._renderItem }
+                      sliderWidth={ sliderWidth }
+                      firstItem={ this.state.currentIndex }
+                      itemWidth={ itemWidth }
+                      onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
+                    />
+                    { this.professionals.length < 8 &&
+                    <Pagination
+                      dotColor={ 'rgba(255, 255, 255, 0.95)' }
+                      inactiveDotColor={ 'rgba(255,255,255,0.75)' }
+                      activeDotIndex={ this.state.currentIndex } dotsLength={ this.professionals.length }/>
+                    }
+                  </React.Fragment>
+                ) }
               </View>
             </ScrollView>
           </View>
