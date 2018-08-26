@@ -128,11 +128,12 @@ const styles = EStyleSheet.create({
       height: 2
     },
     shadowOpacity: 0.2,
-    shadowRadius: 3
+    shadowRadius: 3,
+    overflow: 'hidden'
   },
   portrait: {
     width: 97,
-    height: 100
+    height: 100,
   },
   countryFlag: {
     width: 15,
