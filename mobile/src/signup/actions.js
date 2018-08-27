@@ -2,12 +2,19 @@ import { batchActions } from 'redux-batch-enhancer'
 import I18n from '../../locales/i18n'
 import * as api from '../api/api'
 import { ROLES } from '../enums'
+import { CLEAR as FILTER_CLEAR } from '../filters/action-types'
 
 import { globalActions } from '../global'
 import { PAGES_NAMES } from '../navigation'
+import { CLEAR as NOTIFICATION_CLEAR } from '../notifications/action-types'
+import { CLEAR as PROFILE_CLEAR } from '../profile/action-types'
+import { deactivateProfile } from '../profile/actions'
+
+import { CLEAR as SEARCH_CLEAR } from '../search/action-types'
 import { fetchDefaults } from '../search/actions'
 import { navigationService, storageService } from '../services'
 import {
+  CLEAR as SIGNUP_CLEAR,
   CLEAR_LOGIN_USER_ERROR,
   CLEAR_SAVE_PROFILE_ERROR,
   CLEAR_SIGN_UP_USER_ERROR,
@@ -67,8 +74,8 @@ const signUpError = (isEmailFieldError, errorMsg) => ({
 export function signup (signupData) {
   return async dispatch => {
     try {
-      dispatch(batchActions([ clearSignUpError(), globalActions.setGlobalLoading(I18n.t('signup_page.spinner_text')) ]))
       await api.signup(signupData)
+      dispatch(batchActions([ clearSignUpError(), globalActions.setGlobalLoading(I18n.t('signup_page.spinner_text')) ]))
       await dispatch(login(signupData.email, signupData.password, PAGES_NAMES.PROFILE_ONBOARDING_PAGE))
     } catch (err) {
       const errorData = getErrorData(err)
@@ -141,19 +148,26 @@ export function uploadProfile () {
             regionOtherText: investor.regionOtherText
           })
         case 'employee':
-          return await api.putMyProfessional({
-            role: employee.role,
-            roleOtherText: employee.roleOtherText,
-            skillsText: employee.skills,
-            traitsText: employee.traits,
-            knowMost: employee.mostInfo,
-            relocate: employee.relocate,
-            remote: employee.remote,
-            country: employee.country ? employee.country.cca2 : '',
-            city: employee.city,
-            age: employee.age,
-            experience: employee.experience
-          })
+          if(employee.lookingForJob) {
+            return await api.putMyProfessional({
+              role: employee.role,
+              roleOtherText: employee.roleOtherText,
+              skillsText: employee.skills,
+              traitsText: employee.traits,
+              knowMost: employee.mostInfo,
+              relocate: employee.relocate,
+              remote: employee.remote,
+              country: employee.country ? employee.country.cca2 : '',
+              city: employee.city,
+              age: employee.age,
+              experience: employee.experience
+            })
+          } else {
+            if(getState().profile.professional){
+              await dispatch(deactivateProfile())
+              return
+            }
+          }
       }
     } catch (err) {
       console.log({ err })
@@ -254,24 +268,26 @@ export const saveProfileOnboardingInfo = (profileInfo, redirectPage) => async di
     await api.createOrUpdateConferenceUser(profileInfo)
     navigationService.navigate(redirectPage)
   } catch (err) {
-    if (!isNetworkUnavailable(err) && err.response.status === 401) {
-      navigationService.navigate(PAGES_NAMES.LOGIN_PAGE)
-    } else {
-      const errorData = getErrorData(err)
-      dispatch(saveProfileError(errorData.errorMessage))
-    }
+    const errorData = getErrorData(err)
+    dispatch(saveProfileError(errorData.errorMessage))
   } finally {
     dispatch(globalActions.unsetGlobalLoading())
   }
 }
 
 export const logout = () => async dispatch => {
-  console.log('HERE')
   try {
-    dispatch(batchActions([
-      globalActions.setGlobalLoading(I18n.t('common.spinner.logout')) ]))
+    dispatch(globalActions.setGlobalLoading(I18n.t('common.spinner.logout')))
     await storageService.removeItem(TOKEN_NAME)
-    navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
+    await navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
+    dispatch(batchActions([
+      { type: SIGNUP_CLEAR },
+      { type: SEARCH_CLEAR },
+      { type: PROFILE_CLEAR },
+      { type: NOTIFICATION_CLEAR },
+      { type: FILTER_CLEAR },
+      globalActions.setGlobalLoading(I18n.t('common.spinner.clear'))
+    ]))
   } catch (err) {
 
   } finally {

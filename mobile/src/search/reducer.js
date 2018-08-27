@@ -1,4 +1,5 @@
 import {
+  CLEAR,
   LOAD_DEFAULT_PROFILES,
   LOAD_DEFAULT_PROFILES_ERROR,
   LOAD_DEFAULT_PROFILES_SUCCESS,
@@ -59,15 +60,7 @@ export function searchReducer (state = initialState, action) {
           ...state.defaults,
           isLoading: false,
           error: false,
-          // TODO: It is for testing purposes, remove it after development or at some point
-          professionals: action.data.professionals ? [ ...action.data.professionals,
-            ...action.data.professionals,
-            ...action.data.professionals,
-            ...action.data.professionals,
-            ...action.data.professionals,
-            ...action.data.professionals,
-            ...action.data.professionals,
-            ...action.data.professionals ] : state.professionals,
+          professionals: action.data.professionals ? action.data.professionals : state.professionals,
           projects: action.data.projects ? action.data.projects : state.projects,
           investors: action.data.investors ? action.data.investors : state.investors
         }
@@ -81,6 +74,8 @@ export function searchReducer (state = initialState, action) {
           error: true
         }
       }
+    case CLEAR:
+      return initialState
     default:
       return state
   }

@@ -1,4 +1,4 @@
-import { LOAD_NOTIFICATIONS_SUCCESS, LOAD_NOTIFICATIONS, LOAD_NOTIFICATIONS_ERROR } from './action-types'
+import { CLEAR, LOAD_NOTIFICATIONS, LOAD_NOTIFICATIONS_ERROR, LOAD_NOTIFICATIONS_SUCCESS } from './action-types'
 
 const initialState = {
   isLoading: false,
@@ -27,7 +27,10 @@ export function notificationsReducer (state = initialState, action) {
         isLoading: false,
         error: true
       }
+    case CLEAR: {
+      return initialState
+    }
     default:
-      return state;
+      return state
   }
 }

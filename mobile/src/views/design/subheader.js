@@ -3,6 +3,15 @@ import React from 'react'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { BAR_COLOR, SECONDARY_COLOR } from './constants'
 
+export function SmallSubheader ({ text = ''}) {
+  return (
+    <View style={ styles.subheader }>
+      <View style={ styles.leftBar }/>
+      <Text style={ styles.textInSmall }>{ text.toUpperCase() }</Text>
+    </View>
+  )
+}
+
 export function Subheader ({ text = '' }) {
   return (
     <View style={ styles.subheader }>
@@ -53,6 +62,15 @@ const styles = EStyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: 32,
     paddingTop: 32
+  },
+  textInSmall: {
+    flex: 1,
+    color: BAR_COLOR,
+    marginLeft: 16,
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingBottom: 16,
+    paddingTop: 16
   },
   switchTextStyle: {
     marginRight: 8,
