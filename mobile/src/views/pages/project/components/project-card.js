@@ -150,8 +150,8 @@ const styles = EStyleSheet.create({
     shadowRadius: 3
   },
   portrait: {
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
     marginTop: 8,
     borderRadius: 8
   },

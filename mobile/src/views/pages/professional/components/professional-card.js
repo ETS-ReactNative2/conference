@@ -1,4 +1,4 @@
-import { Icon, Text } from 'native-base'
+import { Icon, Text, Button } from 'native-base'
 import React from 'react'
 import { Image, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -7,6 +7,7 @@ import I18n from '../../../../../locales/i18n'
 import { itemWidth } from '../../../../common/dimension-utils'
 import { INVESTOR_INDUSTRIES, ROLES, JOB_LOCATION } from '../../../../enums'
 import { getUrl } from '../../../../common/fake-randomizer'
+import { PAGES_NAMES } from '../../../../navigation'
 
 export class ProfessionalCard extends React.Component {
 
@@ -29,7 +30,18 @@ export class ProfessionalCard extends React.Component {
         flex: 1,
         alignItems: 'center'
       } }>
-        <Image style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex: 0.3 }} />
+          <Image style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
+          <View style={styles.linksContainer}>
+            <Button style={styles.linkButton}>
+              <Text style={styles.smallText}>Linkedin</Text>
+            </Button>
+            <Button style={styles.linkButton}>
+              <Text style={styles.smallText}>Telegram</Text>
+            </Button>
+          </View>
+        </View>
         <View style={ {
           marginTop: 16,
           marginBottom: 16,
@@ -92,15 +104,25 @@ const styles = EStyleSheet.create({
   },
   smallText: {
     fontSize: 12,
-    marginTop: 3
+    marginTop: 3,
+    color: '#000'
   },
   smallActionText: {
     fontSize: 12,
     color: '#888'
   },
+  linkButton: {
+    width: 80,
+    height: 30,
+    backgroundColor: '#fff'
+  },
+  linksContainer: {
+    flex: 0.3,
+    paddingTop: 40
+  },
   portrait: {
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
     marginTop: 8,
     borderRadius: 8
   },
