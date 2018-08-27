@@ -59,14 +59,11 @@ class ProfessionalsList extends React.Component {
 
 ProfessionalItem = ({ professional, onMark, onClick }) => {
   const portraitPlaceholderUri = getUrl()
-  const firstName = professional.user.firstName;
-  const lastName = professional.user.lastName;
+  const { firstName, lastName } = professional.user;
   const role = professional.role === 12 
               ? professional.roleOtherText
               : I18n.t(`common.roles.${ROLES.find(item => item.index === professional.role).slug}`);
-  const skills = professional.skillsText;
-  const isRelocated = 'Relocate';
-  const localRemoteOptions = professional.localRemoteOptions;
+  const { skillsText, localRemoteOptions, relocate } = professional;
 
   return (
     <ListItem thumbnail onPress={ onClick } style={styles.listItem} >
@@ -85,10 +82,10 @@ ProfessionalItem = ({ professional, onMark, onClick }) => {
         <View style={styles.rowDetail}>
           <View style={{flex: 1}}>
             <Text style={styles.normalText}>{role}</Text>
-            <Text style={styles.normalText}>{skills}</Text>
+            <Text style={styles.normalText}>{skillsText}</Text>
           </View>
           <View style={{flex: 0.3}}>
-            <Text style={styles.normalText}>{isRelocated}</Text>
+            {relocate && <Text style={styles.normalText}>Relocate</Text>}
             {
               localRemoteOptions.map(item => {
                 const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`);

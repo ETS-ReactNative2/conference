@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
 import { itemWidth } from '../../../../common/dimension-utils'
-import { INVESTOR_INDUSTRIES, ROLES } from '../../../../enums'
+import { INVESTOR_INDUSTRIES, ROLES, JOB_LOCATION } from '../../../../enums'
 import { getUrl } from '../../../../common/fake-randomizer'
 
 export class ProfessionalCard extends React.Component {
@@ -16,10 +16,9 @@ export class ProfessionalCard extends React.Component {
 
   render () {
     const { professional } = this.props
-    const { role, user, country, city, skillsText, traitsText, knowMost, age, experience } = professional
-    const { firstName, lastName, relocate } = user
+    const { role, user, country, city, skillsText, traitsText, knowMost, age, experience, relocate, localRemoteOptions } = professional
+    const { firstName, lastName } = user
     const portraitPlaceholderUri = getUrl()
-
 
     return (
       <View style={ {
@@ -46,8 +45,15 @@ export class ProfessionalCard extends React.Component {
             <Text style={ styles.smallText }>{ city ? city: 'No City'}</Text>
           </View>
           <View style={ styles.rowRemote }>
-            <Text style={ styles.smallText }>Relocate</Text>
-            <Text style={ styles.smallText }>Remote</Text>
+            {relocate && <Text style={styles.smallText}>Relocate</Text>}
+            {
+              localRemoteOptions.map(item => {
+                const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`);
+                return (
+                  <Text style={styles.smallText}>{option}</Text>
+                )
+              })
+            }
           </View>
           <Text style={ styles.smallText }>{ skillsText ? skillsText : 'No Skills Selected' }</Text>
           <Text style={ styles.smallText }>{ traitsText ? traitsText : 'No Traits Selected' }</Text>
@@ -125,10 +131,10 @@ const styles = EStyleSheet.create({
   },
   rowRemote: {
     flexDirection: 'row',
-    width: 140,
+    width: 240,
     height: 30,
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-around'
   },
   rowYears: {
     flexDirection: 'row',
