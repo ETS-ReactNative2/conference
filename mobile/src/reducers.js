@@ -6,6 +6,7 @@ import { searchReducer } from './search'
 import { signUpReducer } from './signup'
 import { scheduleReducer } from './schedule'
 import { filterReducer } from './filters'
+import { startUpReducer } from './startup'
 
 export default combineReducers({
   signUp: signUpReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   global: globalReducer,
   schedule: scheduleReducer,
   profile: profileReducer,
-  filter: filterReducer
+  filter: filterReducer,
+  startup: startUpReducer
 })

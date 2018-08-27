@@ -1,7 +1,6 @@
 import React from 'react'
-import { Image, ImageBackground, ScrollView, StatusBar, View } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import { createBottomTabNavigator, createStackNavigator, SafeAreaView } from 'react-navigation'
+import { Image, View } from 'react-native'
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../locales/i18n'
 import GlassBlack from '../assets/icons/Glass-Black.png'
@@ -12,11 +11,7 @@ import RectangleBlack from '../assets/icons/Rectangle-Black.png'
 import RectangleRed from '../assets/icons/Rectangle-Red.png'
 import TriangleBlack from '../assets/icons/Triangle-Black.png'
 import TriangleRed from '../assets/icons/Triangle-Red.png'
-import BackgroundImage from '../assets/images/background_image.png'
-import LoadingLogo from '../assets/logos/logo_glow_blue.png'
 import { navigationService } from '../services'
-import Header from '../views/components/header/header'
-import { StepTitle } from '../views/design/step-title'
 import AgendaPage from '../views/pages/agenda/agenda-page'
 import FilterPage from '../views/pages/filters/filter-page'
 import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page'
@@ -24,6 +19,7 @@ import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-pa
 import FlowPage from '../views/pages/flow/flow-page'
 import { CommonProfileType } from '../views/pages/flow/steps'
 import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/flow/steps/common-profile-onboarding'
+import LoadingPage from '../views/components/loading-page/loading-page'
 import HomePage from '../views/pages/home/home-page'
 import InvestorPage from '../views/pages/investor/investor-page'
 import LoginPage from '../views/pages/login/login-page'
@@ -254,31 +250,7 @@ const AppStackNavigatorWithSpinner = ({ isLoading, message }) => {
       <AppStackNavigator ref={ navigatorRef => {
         navigationService.setTopLevelNavigator(navigatorRef)
       } } styles={ { position: 'absolute' } }/>
-      { isLoading && (
-        <SafeAreaView style={ styles.spinnerContainer } forceInset={ { top: 'always' } }>
-          <StatusBar
-            translucent={ true }
-            barStyle="light-content"
-          />
-          <ImageBackground source={ BackgroundImage } style={ styles.imageContainer } blurRadius={ 1 }>
-            <LinearGradient style={ { flex: 1 } } locations={ [ 0, 1 ] }
-                            colors={ [ 'rgba(22, 25 ,45 , .83)', 'rgba(31, 91, 228, .83)' ] }>
-              <View style={ styles.content }>
-                <ScrollView style={ { width: '100%' } } contentContainerStyle={ { flexGrow: 1 } }>
-                  <Header title="LOADING" titleStyle={ styles.title }/>
-                  <View style={ { marginTop: 32, marginLeft: 16, marginRight: 16, marginBottom: 16 } }>
-                    <StepTitle
-                      text={ message }/>
-                  </View>
-                  <View style={ styles.logoContainer }>
-                    <Image source={ LoadingLogo }/>
-                  </View>
-                </ScrollView>
-              </View>
-            </LinearGradient>
-          </ImageBackground>
-        </SafeAreaView>
-      ) }
+        <LoadingPage isLoading={isLoading} message={message} />
     </View>
   )
 }

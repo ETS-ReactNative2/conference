@@ -268,12 +268,8 @@ export const saveProfileOnboardingInfo = (profileInfo, redirectPage) => async di
     await api.createOrUpdateConferenceUser(profileInfo)
     navigationService.navigate(redirectPage)
   } catch (err) {
-    if (!isNetworkUnavailable(err) && err.response.status === 401) {
-      navigationService.navigate(PAGES_NAMES.LOGIN_PAGE)
-    } else {
-      const errorData = getErrorData(err)
-      dispatch(saveProfileError(errorData.errorMessage))
-    }
+    const errorData = getErrorData(err)
+    dispatch(saveProfileError(errorData.errorMessage))
   } finally {
     dispatch(globalActions.unsetGlobalLoading())
   }
