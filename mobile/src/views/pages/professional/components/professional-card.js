@@ -79,24 +79,6 @@ export class ProfessionalCard extends React.Component {
             alignContent: 'space-between'
           } }>
           </View>
-          <View style={ {
-            marginTop: 32,
-            marginLeft: 16,
-            marginRight: 16,
-            width: (itemWidth - 2 * 16),
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignContent: 'space-between'
-          } }>
-            <View>
-              <Icon style={ { textAlign: 'center' } } name={ 'ios-mail-open' }/>
-              <Text style={ styles.smallActionText }>{ I18n.t('cards.message') }</Text>
-            </View>
-            <View>
-              <Icon style={ { textAlign: 'center' } } name={ 'ios-heart-outline' }/>
-              <Text style={ styles.smallActionText }>{ I18n.t('cards.save') }</Text>
-            </View>
-          </View>
         </View>
       </View>
     )
