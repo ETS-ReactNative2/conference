@@ -105,7 +105,7 @@ class ProfessionalSerializer(serializers.ModelSerializer):
             'local_remote_options',
             'country',
             'city',
-            'is_relocate',
+            'relocate',
             'age',
             'experience',
             'user',

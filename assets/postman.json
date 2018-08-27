@@ -332,7 +332,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other_text\": \"aaaaaaaa\",\n    \"skills_text\": \"skills\",\n    \"traits_text\": \"traits\",\n    \"know_most\": \"aaaaaaaa\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"aaaaaaaa\",\n    \"age\": 42,\n    \"experience\": 23\n}"
+					"raw": "{\n    \"role\": 12,\n    \"role_other_text\": \"aaaaaaaa\",\n    \"skills_text\": \"skills\",\n    \"traits_text\": \"traits\",\n    \"know_most\": \"aaaaaaaa\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"aaaaaaaa\",\n    \"relocate\": true,\n    \"age\": 42,\n    \"experience\": 23\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_professional/",
