@@ -18,17 +18,24 @@ class FilterPage extends Component {
   constructor(props) {
     super(props);
 
-    const { filters } = props;
+    const { investorFilters, projectFilters } = props;
+
     const filterSetting = this.props.navigation.getParam('filterSetting', {});
+    const filterField =  this.props.navigation.getParam('filterField', {});
+    
+    const filters = filterField === 'investor' ? investorFilters : projectFilters;
+
     this.state = {
       checkeds: filterSetting.items.map((item, index) => filters[filterSetting.stateKey].includes(index + 1)),
     };
   }
 
   handleSubmit = (event, values) => {
-    const { navigation: { goBack }, setFilter } =  this.props;
+    const { navigation: { goBack }, setInvestorFilter, setProjectFilter } =  this.props;
     const filterSetting = this.props.navigation.getParam('filterSetting', {});
+    const filterField = this.props.navigation.getParam('filterField', {});
     const { checkeds } = this.state;
+    const setFilter = filterField === 'investor' ? setInvestorFilter : setProjectFilter;
 
     setFilter({
       filterType: filterSetting.stateKey,
@@ -60,6 +67,7 @@ class FilterPage extends Component {
 
   render() {
     const filterSetting = this.props.navigation.getParam('filterSetting', {});
+    
     const key = filterSetting.key;
     const { checkeds } = this.state;
     const isAllSelected = checkeds.find(item => item === false);
@@ -69,12 +77,12 @@ class FilterPage extends Component {
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.headerContainer}>
             <Text style={styles.headerText}>
-              { I18n.t(`search_page.investor.${key}.title`) }
+              { I18n.t(`search_page.investor_filter.${key}.title`) }
             </Text>
           </View>
           <SubheaderWithSwitch
               selected={ isAllSelected }
-              text={ I18n.t(`search_page.investor.${key}.header`) }
+              text={ I18n.t(`search_page.investor_filter.${key}.header`) }
               onToggle={ this.selectAll }
             />
           <View style={{ flex: 1 }}>
@@ -128,13 +136,15 @@ const styles = EStyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    filters: state.filter.investor
+    investorFilters: state.filter.investor,
+    projectFilters: state.filter.project
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setFilter: filters => dispatch(filterActions.setInvestorFilter(filters))
+    setInvestorFilter: filters => dispatch(filterActions.setInvestorFilter(filters)),
+    setProjectFilter: filters => dispatch(filterActions.setProjectFilter(filters))
   }
 }
 

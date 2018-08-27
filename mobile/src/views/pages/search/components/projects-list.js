@@ -4,32 +4,28 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 import { ScrollView } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as searchActions from '../../../../search/actions';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { FUNDING_STAGES, TOKEN_TYPES, REGIONS, TICKET_SIZES } from '../../../../enums.js';
+import { PAGES_NAMES } from '../../../../navigation';
+import { FUNDING_STAGES, TOKEN_TYPES, PRODUCT_STAGES } from '../../../../enums.js';
 import I18n from '../../../../../locales/i18n';
 
 class ProjectsList extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      defaults: {
-      }
+  state = {
+    defaults: {}
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { filters, updateProjects } = this.props;
+    
+    if (filters !== nextProps.filters) {
+      updateProjects(nextProps.filters);
     }
   }
 
   handleClickFilter = () => {
-
-  }
-
-  handleSearch = newDefaults => {
-    this.setState({
-      defaults: {
-        ...this.state.defaults,
-        ...newDefaults
-      }
-    }, () => this.props.updateProjects(newDefaults))
+    this.props.navigation.navigate(PAGES_NAMES.PROJECT_MAIN_FILTER_PAGE);
   }
 
   render () {
@@ -40,7 +36,16 @@ class ProjectsList extends React.Component {
 
     return (
       <Container style={ { flex: 1 } }>
-        <ScrollView>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.comment}>{ comment }</Text>
+            <Button
+              transparent
+              style={styles.fullWidth}
+              onPress={this.handleClickFilter}>
+              <Text style={[styles.underline, styles.centerText, styles.largeText, styles.fullWidth]}>{I18n.t('search_page.update_filter')}</Text>
+            </Button>
+          </View>
           <List>
             {
               this.props.profiles.length > 0 &&
@@ -49,16 +54,7 @@ class ProjectsList extends React.Component {
               )
             }
           </List>
-          <View style={styles.footerContainer}>
-            <Text style={styles.comment}>{ comment }</Text>
-            <Button
-              transparent
-              style={styles.fullWidth}
-              onPress={this.handleClickFilter}>
-              <Text style={[styles.underline, styles.centerText, styles.largeText, styles.fullWidth]}>{I18n.t('search_page.update_filter')}</Text>
-            </Button>
-            <View style = {{ height: 190, width: '100%'}} />
-          </View>
+          <View style = {{ height: 190, width: '100%'}} />
         </ScrollView>
       </Container>
     )
@@ -70,6 +66,7 @@ ProjectItem = ({ project, onMark, onClick }) => {
   const projectName = project.name ? project.name : 'Undefined Name';
   const tokenType = TOKEN_TYPES.find(item => item.index === project.tokenType);
   const fundingStage = FUNDING_STAGES.find(item => item.index === project.fundingStage);
+  const productStage = PRODUCT_STAGES.find(item => item.index === project.productStage);
   
   return (
     <ListItem thumbnail onPress={ onClick } style={styles.listItem} >
@@ -97,7 +94,12 @@ ProjectItem = ({ project, onMark, onClick }) => {
               }
             </Text>
           </View>
-          <View style={{flex: 0.5}}>
+          <View style={{flex: 1}}>
+            <Text style={styles.normalText}>
+              {
+                productStage ? I18n.t(`common.product_stages.${productStage.slug}`) : ''
+              }
+            </Text>
           </View>
         </View>
       </View>
@@ -111,6 +113,11 @@ const styles = EStyleSheet.create({
   },
   fullWidth: {
     width: '100%'
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    paddingTop: 8
   },
   listItem: {
     height: 100,
@@ -162,9 +169,10 @@ const styles = EStyleSheet.create({
     fontFamily: 'Helvetica',
     marginTop: 2,
     marginBottom: 8,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#fff'
   },
-  footerContainer: {
+  headerContainer: {
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -180,7 +188,8 @@ ProjectsList.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    profiles: state.search.projects
+    profiles: state.search.projects,
+    filters: state.filter.project
   }
 }
 

@@ -8,6 +8,17 @@ export async function signup ({ email, password, phone }) {
   return axios.post('/api/users/', { email, password, phone })
 }
 
+export async function fetchProfessionals (filters) {
+  const token = await storageService.getItem(TOKEN_NAME);
+  return axios.get('/api/professionals/', {
+    params: filters,
+    paramsSerializer: params => transformRequestOptions(params),
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
 export async function fetchProjects (filters) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/projects/', {

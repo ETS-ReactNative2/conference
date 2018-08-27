@@ -51,7 +51,7 @@ class ListProject(generics.ListAPIView):
                 excludes['main_country'] = models.Region.COUNTRY_UNITED_STATES
             token_types = self.request.GET.getlist('token_type')
             if token_types:
-                filters['token_types__in'] = token_types
+                filters['token_type__in'] = token_types
         return models.Project.objects.filter(**filters).exclude(**excludes).distinct()
 
 

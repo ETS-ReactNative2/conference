@@ -4,18 +4,16 @@ import {
 import { ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Flag from 'react-native-flags';
 import I18n from '../../../../locales/i18n';
 import { PAGES_NAMES } from '../../../navigation';
 import { 
-  FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TICKET_SIZES, REGION, REGIONS, TOKEN_TYPES, INVESTOR_INDUSTRIES
+  FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGION, REGIONS, TOKEN_TYPES
 } from '../../../enums';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { BLUE_BACKGROUND_COLOR } from '../../design/constants';
 
-class InvestorMainFilter extends React.Component {
+class ProjectMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {
-    this.props.navigation.navigate(PAGES_NAMES.FILTER_PAGE, { filterSetting, 'filterField': 'investor' });
+    this.props.navigation.navigate(PAGES_NAMES.FILTER_PAGE, { filterSetting, 'filterField': 'project' });
   }
 
   handleSubmit = () => {
@@ -26,19 +24,17 @@ class InvestorMainFilter extends React.Component {
   render () {
     const fields = [
       { label: 'TOKEN TYPES', items: TOKEN_TYPES, key: 'token_types', stateKey: 'tokenType' },
-      { label: 'TICKET SIZE', items: TICKET_SIZES, key: 'ticket_size', stateKey: 'ticketSize' },
+      { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
       { label: 'FUNDING STAGE', items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
       { label: 'GIVE AWAY', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
-      { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
       { label: 'REGION', items: REGIONS, key: 'regions', stateKey: 'region' },
-      { label: 'INDUSTRIES', items: INVESTOR_INDUSTRIES, key: 'industries', stateKey: 'industry' }
     ];
 
     return (
       <Container style={styles.container}>
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>{ I18n.t('search_page.investor_filter.header') }</Text>
+            <Text style={styles.headerText}>{ I18n.t('search_page.project_filter.header') }</Text>
           </View>
           <List style={styles.filterList}>
             {
@@ -72,7 +68,7 @@ class InvestorMainFilter extends React.Component {
 const styles = EStyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#1F5BE4'
+    backgroundColor: '#0E224D'
   },
   filterList: {
     width: '100%',
@@ -85,7 +81,7 @@ const styles = EStyleSheet.create({
     height: 90,
     borderBottomColor: '#fff',
     borderBottomWidth: 1,
-    backgroundColor: '#1F5BE4',
+    backgroundColor: '#0E224D',
     marginLeft: 0,
     paddingLeft: 15,
   },
@@ -130,4 +126,4 @@ const styles = EStyleSheet.create({
   }
 });
 
-export default InvestorMainFilter;
+export default ProjectMainFilter;

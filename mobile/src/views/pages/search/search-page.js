@@ -100,7 +100,7 @@ class SearchPage extends React.Component {
                   activeTextStyle={ { color: 'black' } }
                   activeTabStyle={ { backgroundColor: '#fff' } }
                   tabStyle={ { backgroundColor: 'transparent', color: 'white' } }
-                  heading={ I18n.t('search_page.investor_header') }>
+                  heading={ I18n.t('search_page.tab_label_investor') }>
                   <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
                 </Tab>
                 <Tab
@@ -109,8 +109,8 @@ class SearchPage extends React.Component {
                   activeTextStyle={ { color: 'black' } }
                   activeTabStyle={ { backgroundColor: '#fff' } }
                   tabStyle={ { backgroundColor: 'transparent' } }
-                  heading={ I18n.t('search_page.professional_header') }>
-                  <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick }/>
+                  heading={ I18n.t('search_page.tab_label_professional') }>
+                  <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick } navigation={ this.props.navigation }/>
                 </Tab>
                 <Tab
                   style={ { backgroundColor: 'transparent' } }
@@ -118,8 +118,8 @@ class SearchPage extends React.Component {
                   activeTextStyle={ { color: 'black' } }
                   activeTabStyle={ { backgroundColor: '#fff' } }
                   tabStyle={ { backgroundColor: 'transparent', color: 'white' } }
-                  heading={ I18n.t('search_page.projects_header') }>
-                  <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick }/>
+                  heading={ I18n.t('search_page.tab_label_projects') }>
+                  <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick } navigation={ this.props.navigation }/>
                 </Tab>
               </Tabs>
             </ScrollView>

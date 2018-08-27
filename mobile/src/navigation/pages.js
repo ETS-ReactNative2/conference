@@ -20,6 +20,7 @@ import { StepTitle } from '../views/design/step-title'
 import AgendaPage from '../views/pages/agenda/agenda-page'
 import FilterPage from '../views/pages/filters/filter-page'
 import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page'
+import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-page';
 import FlowPage from '../views/pages/flow/flow-page'
 import { CommonProfileType } from '../views/pages/flow/steps'
 import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/flow/steps/common-profile-onboarding'
@@ -48,12 +49,10 @@ const PAGES_NAMES = {
   PROJECT_PAGE: 'PROJECT_PAGE',
   PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
   PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
-  EDIT_BASIC_PROFILE: 'EDIT_BASIC_PROFILE',
-  WEBVIEW_PAGE: 'WEBVIEW_PAGE',
-  PROFILE_PAGE: 'PROFILE_PAGE',
   LOCATION_PAGE: 'LOCATION_PAGE',
   FILTER_PAGE: 'FILTER_PAGE',
-  INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE'
+  INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE',
+  PROJECT_MAIN_FILTER_PAGE: 'PROJECT_MAIN_FILTER_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -240,7 +239,10 @@ const AppStackNavigator = createStackNavigator({
     })
   },
   INVESTOR_MAIN_FILTER_PAGE: {
-    screen: InvestorMainFilterPage
+      screen: InvestorMainFilterPage,
+  },
+  PROJECT_MAIN_FILTER_PAGE: {
+    screen: ProjectMainFilterPage,
   }
 })
 
