@@ -99,7 +99,7 @@ class SearchPage extends React.Component {
                   textStyle={ { color: 'white' } }
                   activeTextStyle={ { color: 'black' } }
                   activeTabStyle={ { backgroundColor: '#fff' } }
-                  tabStyle={ { backgroundColor: 'transparent', color: 'white' } }
+                  tabStyle={ { backgroundColor: 'transparent' } }
                   heading={ I18n.t('search_page.tab_label_investor') }>
                   <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
                 </Tab>
@@ -117,7 +117,7 @@ class SearchPage extends React.Component {
                   textStyle={ { color: 'white' } }
                   activeTextStyle={ { color: 'black' } }
                   activeTabStyle={ { backgroundColor: '#fff' } }
-                  tabStyle={ { backgroundColor: 'transparent', color: 'white' } }
+                  tabStyle={ { backgroundColor: 'transparent' } }
                   heading={ I18n.t('search_page.tab_label_projects') }>
                   <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick } navigation={ this.props.navigation }/>
                 </Tab>
