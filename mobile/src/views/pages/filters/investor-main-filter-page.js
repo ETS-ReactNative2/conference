@@ -28,7 +28,7 @@ class InvestorMainFilter extends React.Component {
       { label: 'TOKEN TYPES', items: TOKEN_TYPES, key: 'token_types', stateKey: 'tokenType' },
       { label: 'TICKET SIZE', items: TICKET_SIZES, key: 'ticket_size', stateKey: 'ticketSize' },
       { label: 'FUNDING STAGE', items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
-      { label: 'GIVE AWAY', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
+      { label: 'INVESTOR BUYS', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
       { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
       { label: 'REGION', items: REGIONS, key: 'regions', stateKey: 'region' },
       { label: 'INDUSTRIES', items: INVESTOR_INDUSTRIES, key: 'industries', stateKey: 'industry' }

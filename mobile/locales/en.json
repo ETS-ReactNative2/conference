@@ -51,7 +51,7 @@
     "projects": "Projects",
     "attendees": "Professionals attending",
     "errors": {
-      "email_exists": "This email address is already bound to a user, please try a different one",
+      "email_exists": "Error creating new user.",
       "incorrect_amount": "Please enter number greater than 0 and less than 2147483647",
       "incorrect_email": "Please enter correct email address",
       "incorrect_investor_custom_location": "Location can be maximum 40 characters long",
@@ -508,23 +508,23 @@
     "project_filter": {
       "header": "Tell us more about the projects you are searching for",
       "token_types": {
-        "title": "Search investors looking for:",
+        "title": "Search projects having:",
         "header": "Token Type"
       },
       "funding_stages": {
-        "title": "Search investors looking for:",
+        "title": "Search that are at:",
         "header": "Funding Stages"
       },
       "giveaway": {
-        "title": "Search investors looking for:",
+        "title": "Search projects offering:",
         "header": "Investor buys"
       },
       "product_stages": {
-        "title": "Search investors looking for:",
+        "title": "Search projects that are at:",
         "header": "Product Stage"
       },
       "regions": {
-        "title": "Search investors with these nationalities:",
+        "title": "Search projects with these countries:",
         "header": "Regions"
       }
     },
