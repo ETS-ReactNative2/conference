@@ -57,17 +57,17 @@ export class ProfessionalCard extends React.Component {
               })
             }
           </View>
-          <Text style={ styles.smallText }>{ skillsText ? skillsText : 'No Skills Selected' }</Text>
-          <Text style={ styles.smallText }>{ traitsText ? traitsText : 'No Traits Selected' }</Text>
-          <Text style={ styles.smallText }>{ knowMost ? knowMost : 'Now KnowsMost Selected'}</Text>
+          <Text style={ styles.smallText }>{ skillsText }</Text>
+          <Text style={ styles.smallText }>{ traitsText }</Text>
+          <Text style={ styles.smallText }>{ knowMost }</Text>
           <View style={ styles.rowYears }>
             <View style={ styles.row }>
-              <Text style={ [styles.smallText, styles.boldText] }>{`Age:`}</Text>
-              <Text style={ styles.smallText }>{ age ? `${age}year` : '?'}</Text>
+              <Text style={ [styles.smallText, styles.boldText] }>{`Age: `}</Text>
+              <Text style={ styles.smallText }>{ age ? (age > 1 ? `${age}years`: `${age}year`) : '' }</Text>
             </View>
             <View style={ styles.row }>
-              <Text style={ [styles.smallText, styles.boldText] }>{` Experience:`}</Text>
-              <Text style={ styles.smallText }>{ experience ? `${experience}year` : '?'}</Text>
+              <Text style={ [styles.smallText, styles.boldText] }>{`Experience:`}</Text>
+              <Text style={ styles.smallText }>{ experience ? (experience > 1 ? `${experience}years` : `${experience}year`) : '' }</Text>
             </View>
           </View>
           <View style={ {
