@@ -15,10 +15,14 @@ export class ProfessionalCard extends React.Component {
     return false
   }
 
+  handleToUrl = url => {
+    this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri: url });
+  }
+
   render () {
     const { professional } = this.props
     const { role, user, country, city, skillsText, traitsText, knowMost, age, experience, relocate, localRemoteOptions } = professional
-    const { firstName, lastName } = user
+    const { firstName, lastName, linkedinUrl, telegramUrl } = user
     const portraitPlaceholderUri = getUrl()
 
     return (
@@ -34,10 +38,10 @@ export class ProfessionalCard extends React.Component {
           <View style={{ flex: 0.3 }} />
           <Image style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
           <View style={styles.linksContainer}>
-            <Button style={styles.linkButton}>
+            <Button style={styles.linkButton} onPress={() => this.handleToUrl(linkedinUrl)}>
               <Text style={styles.smallText}>Linkedin</Text>
             </Button>
-            <Button style={styles.linkButton}>
+            <Button style={styles.linkButton} onPress={() => this.handleToUrl(telegramUrl)}>
               <Text style={styles.smallText}>Telegram</Text>
             </Button>
           </View>

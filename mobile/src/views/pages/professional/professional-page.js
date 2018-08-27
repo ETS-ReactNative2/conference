@@ -34,7 +34,7 @@ class ProfessionalPage extends Component {
     return defaults ? this.props.defaultProfessionals : this.props.professionals
   }
 
-  _renderItem = ({ item: professional, index }) => <ProfessionalCard key={ index } professional={ professional }/>
+  _renderItem = ({ item: professional, index }) => <ProfessionalCard key={ index } professional={ professional } navigation = { this.props.navigation }/>
 
   render () {
     const showSingle = this.props.navigation.getParam('single', false)
