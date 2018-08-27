@@ -135,6 +135,7 @@ export function uploadProfile () {
             })
             return Promise.all(promises)
           }
+          return
         case 'investor':
           return await api.createInvestor({
             giveaways: investor.giveaways,
