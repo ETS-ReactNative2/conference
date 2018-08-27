@@ -26,7 +26,7 @@ class ProjectMainFilter extends React.Component {
       { label: 'TOKEN TYPES', items: TOKEN_TYPES, key: 'token_types', stateKey: 'tokenType' },
       { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
       { label: 'FUNDING STAGE', items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
-      { label: 'GIVE AWAY', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
+      { label: 'INVESTOR BUYS', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
       { label: 'REGION', items: REGIONS, key: 'regions', stateKey: 'region' },
     ];
 

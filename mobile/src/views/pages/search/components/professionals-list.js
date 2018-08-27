@@ -26,15 +26,11 @@ class ProfessionalsList extends React.Component {
   }
 
   render () {
-    const comment = this.props.profiles.length === 0
-    ? I18n.t('search_page.no_profile')
-    : I18n.t('search_page.change_professional');
-
     return (
       <Container style={ { flex: 1 } }>
         <ScrollView style={styles.scrollView}>
           <View style={styles.headerContainer}>
-            <Text style={styles.comment}>{ comment }</Text>
+              { this.props.profiles.length === 0 && <Text style={styles.comment}>{ I18n.t('search_page.no_profile') }</Text> }
             <Button
               transparent
               style={styles.fullWidth}

@@ -32,15 +32,11 @@ class InvestorsList extends React.Component {
   }
 
   render () {
-    const comment = this.props.profiles.length === 0
-      ? I18n.t('search_page.no_profile')
-      : I18n.t('search_page.change_investor');
-
     return (
       <Container style={{ flex: 1, backgroundColor: 'transparent' }}>
         <ScrollView contentContainerStyle={{ paddingTop: 8 }} style={styles.scrollView}>
           <View style={styles.headerContainer}>
-            <Text style={styles.comment}>{ comment }</Text>
+            { this.props.profiles.length === 0 && <Text style={styles.comment}>{ I18n.t('search_page.no_profile') }</Text> }
             <Button
               transparent
               style={styles.fullWidth}
