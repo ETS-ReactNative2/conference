@@ -1,8 +1,7 @@
 import { Container } from 'native-base'
 import React from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
@@ -11,7 +10,6 @@ import * as searchActions from '../../../search/actions'
 import ErrorMessage from '../../components/error-message/error-message'
 import Header from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
-import { SearchButton } from '../../design/buttons'
 import { ImagePageContainer } from '../../design/image-page-container'
 import { Subheader } from '../../design/subheader'
 import { InvestorItem } from './components/investor-item'
@@ -19,12 +17,6 @@ import { ProfessionalItem } from './components/professional-item'
 import { ProjectItem } from './components/project-item'
 
 class HomePage extends React.Component {
-
-  shouldComponentUpdate (nextProps) {
-    return nextProps.isLoading !== this.props.isLoading ||
-      nextProps.error !== this.props.error
-
-  }
 
   componentDidMount () {
     this.props.fetchDefaults()
@@ -63,13 +55,15 @@ class HomePage extends React.Component {
     } = this.props
 
     if (isLoading) {
-      <ImagePageContainer>
-        <View style={ { flex: 1 } }>
-          <View style={ styles.content }>
-            <LunaSpinner/>
+      return (
+        <ImagePageContainer>
+          <View style={ { flex: 1 } }>
+            <View style={ styles.content }>
+              <LunaSpinner/>
+            </View>
           </View>
-        </View>
-      </ImagePageContainer>
+        </ImagePageContainer>
+      )
     }
 
     if (error) {
@@ -88,10 +82,10 @@ class HomePage extends React.Component {
                       titleStyle={ { color: 'white', marginTop: 8 } }
                       rightIconSource={ WhiteLogo }/>
               <View style={ { marginTop: 16 } }>
-                <Subheader text={I18n.t('common.investors')}/>
+                <Subheader text={ I18n.t('common.investors') }/>
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
                   {
-                    this.props.investors.map(investor => (
+                    investors.map(investor => (
                       <InvestorItem
                         key={ investor.id } investor={ investor } onMark={ () => {} }
                         onClick={ () => this.handleInvestorClick(investor) }
@@ -101,7 +95,7 @@ class HomePage extends React.Component {
                 </ScrollView>
               </View>
               <View>
-                <Subheader text={I18n.t('common.projects')}/>
+                <Subheader text={ I18n.t('common.projects') }/>
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
                   {
                     projects.map(project => (
@@ -114,10 +108,10 @@ class HomePage extends React.Component {
                 </ScrollView>
               </View>
               <View>
-                <Subheader text={I18n.t('common.attendees')}/>
+                <Subheader text={ I18n.t('common.attendees') }/>
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 4, marginBottom: 4, marginTop: 8 } } horizontal>
                   {
-                    this.props.professionals.map((professional, index) => (
+                    professionals.map((professional, index) => (
                       <ProfessionalItem
                         key={ index } professional={ professional } onMark={ () => {} }
                         onClick={ () => this.handleProfessionalClick(professional) }

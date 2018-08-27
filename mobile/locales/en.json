@@ -44,7 +44,8 @@
     "leave": "Leave",
     "logout": "Logout",
     "spinner": {
-      "logout": "You're being logout!"
+      "logout": "You're being logout!",
+      "clear": "Clearing app state!"
     },
     "investors": "Investors",
     "projects": "Projects",

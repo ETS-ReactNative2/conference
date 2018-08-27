@@ -2,8 +2,8 @@ import { Container } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { AppState, ScrollView, View } from 'react-native'
+import Config from 'react-native-config'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
@@ -55,14 +55,25 @@ class ProfilePage extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
   }
 
-  handleProjectCreate = () => {
-    // this.openLink('https://www.blockseoul.com/projects')
-    this.props.openEdit('project', false)
-    this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
+  handleProjectCreate = (devMode = false) => {
+    if (devMode) {
+      this.props.openEdit('project', false)
+      this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
+    }
+    else {
+      this.openLink('https://www.blockseoul.com/projects')
+    }
   }
 
-  handleInvestorCreate = () => {
-    this.openLink('https://www.blockseoul.com/investors')
+  handleInvestorCreate = (devMode = false) => {
+    console.log({devMode})
+    if (devMode) {
+      this.props.openEdit('investor', false)
+      this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
+    }
+    else {
+      this.openLink('https://www.blockseoul.com/investors')
+    }
   }
 
   handleOpenProfessionalDetails = () => {
@@ -103,7 +114,7 @@ class ProfilePage extends React.Component {
 
   render () {
 
-    const {isLoading} = this.props
+    const { isLoading } = this.props
 
     if (isLoading) {
       return (
@@ -168,7 +179,12 @@ class ProfilePage extends React.Component {
                   </React.Fragment>
                 ) }
                 { !this.props.project && (
-                  <ProfileWhiteButton onPress={ this.handleProjectCreate } text={ I18n.t('common.create') }/>
+                  <React.Fragment>
+                    <ProfileWhiteButton onPress={ () => this.handleProjectCreate(false) } text={ I18n.t('common.create') }/>
+                    { Config.APP_DEV_FLOW && (
+                      <ProfileWhiteButton onPress={ () => this.handleProjectCreate(true) } text={ 'DEV_CREATE' }/>
+                    ) }
+                  </React.Fragment>
                 ) }
               </View>
               <Subheader text={ I18n.t('profile_page.investor') }/>
@@ -192,7 +208,12 @@ class ProfilePage extends React.Component {
                   </React.Fragment>
                 ) }
                 { !this.props.investor && (
-                  <ProfileWhiteButton onPress={ this.handleInvestorCreate } text={ I18n.t('common.create') }/>
+                  <React.Fragment>
+                    <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(false) } text={ I18n.t('common.create') }/>
+                    { Config.APP_DEV_FLOW && (
+                      <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(true) } text={ 'DEV_CREATE' }/>
+                    ) }
+                  </React.Fragment>
                 ) }
               </View>
               <Subheader text={ I18n.t('common.logout') }/>

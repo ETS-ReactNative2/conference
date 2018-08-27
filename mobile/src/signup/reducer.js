@@ -2,6 +2,7 @@ import { fromCca2ToCountryObject } from '../common/countryParser'
 import { ROLES } from '../enums'
 import { PREFILL_EDIT } from '../profile/action-types'
 import {
+  CLEAR,
   CLEAR_LOGIN_USER_ERROR,
   CLEAR_SAVE_PROFILE_ERROR,
   CLEAR_SIGN_UP_USER_ERROR,
@@ -275,16 +276,15 @@ export function signUpReducer (state = initialState, action) {
           ...(action.data.prefill ? fillData(action.data.role, action.data.info) : {})
         }
       }
+    case CLEAR:
+      return initialState
+
     default:
       return state
   }
 }
 
 function fillData (role, info) {
-  console.log({
-    role, info
-  })
-
   switch (role) {
     case 'investee':
       return {
@@ -335,8 +335,8 @@ function fillData (role, info) {
         remote: info.localRemoteOptions.findIndex(lro => lro === 1) !== -1,
         country: fromCca2ToCountryObject(info.country || 'KR'),
         city: info.city,
-        age: String(info.age),
-        experience: String(info.experience)
+        age: info.age ? String(info.age) : '',
+        experience: info.age ? String(info.experience): ''
       }
   }
 }

@@ -1,4 +1,5 @@
 import {
+  CLEAR,
   DEACTIVATE_INVESTOR,
   DEACTIVATE_PROFILE,
   LEAVE_PROJECT,
@@ -109,6 +110,8 @@ export function profileReducer (state = initialState, action) {
           }
         } : null
       }
+    case CLEAR:
+      return initialState
     default:
       return state
   }

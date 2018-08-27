@@ -39,6 +39,7 @@ class InvesteeIndustries extends React.Component {
 
   flatListItem = ({ item }) => (
     <FlowListItem
+      multiple={false}
       text={ I18n.t(`common.industries.${item.slug}`) }
       selected={ this.isCheckboxSelected(item.index) }
       onSelect={ () => this.handleCheckboxClick(item.index) }

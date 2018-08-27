@@ -1,4 +1,4 @@
-import { SET_INVESTOR_FILTERS } from './action-types'
+import { CLEAR, SET_INVESTOR_FILTERS } from './action-types'
 import { SET_PROJECT_FILTERS } from './action-types'
 
 const initialState = {
@@ -38,6 +38,9 @@ export function filterReducer (state = initialState, action) {
           [action.data.filterType]: action.data.values,
         }
       };
+    case CLEAR: {
+      return initialState
+    }
     default:
       return state;
   }
