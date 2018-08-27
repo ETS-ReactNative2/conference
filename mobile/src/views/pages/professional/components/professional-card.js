@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
 import { itemWidth } from '../../../../common/dimension-utils'
-import { INVESTOR_INDUSTRIES, ROLES } from '../../../../enums'
+import { INVESTOR_INDUSTRIES, ROLES, JOB_LOCATION } from '../../../../enums'
 import { getUrl } from '../../../../common/fake-randomizer'
 
 export class ProfessionalCard extends React.Component {
@@ -16,11 +16,10 @@ export class ProfessionalCard extends React.Component {
 
   render () {
     const { professional } = this.props
-    const { role, user, country, city, skillsText, traitsText, knowMost } = professional
-    const { firstName, lastName, relocate } = user
-
+    const { role, user, country, city, skillsText, traitsText, knowMost, age, experience, relocate, localRemoteOptions } = professional
+    const { firstName, lastName } = user
     const portraitPlaceholderUri = getUrl()
-    console.log(professional)
+
     return (
       <View style={ {
         borderRadius: 8,
@@ -39,12 +38,38 @@ export class ProfessionalCard extends React.Component {
           justifyContent: 'center',
           alignItems: 'center'
         } }>
-          <Text style={ styles.largeText }>{ `${firstName} ${lastName} ` }</Text>
-          <Text style={ styles.normalText }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
-          <Text style={ styles.normalText }>{ `${country}, ${city} ${relocate ? '- Willing to relocate' : ''}` }</Text>
-          <Text style={ styles.normalText }>{ `${I18n.t('cards.skills')} - ${skillsText}`  }</Text>
-          <Text style={ styles.normalText }>{ `${I18n.t('cards.traits')} - ${traitsText}`  }</Text>
-          <Text style={ styles.normalText }>{ `${I18n.t('cards.most')} - ${knowMost}`  }</Text>
+          <Text style={ styles.largeText }>{ `${firstName} ${lastName}` }</Text>
+          <Text style={ [styles.normalText, styles.roleText] }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+          <View style={ styles.rowFlag }>
+            {
+              country && (<Flag style={ styles.countryFlag } code={ country }/>)
+            }
+            <Text style={ styles.smallText }>{ city }</Text>
+          </View>
+          <View style={ styles.rowRemote }>
+            {relocate && <Text style={styles.smallText}>Relocate</Text>}
+            {
+              localRemoteOptions.map(item => {
+                const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`);
+                return (
+                  <Text style={styles.smallText}>{option}</Text>
+                )
+              })
+            }
+          </View>
+          <Text style={ styles.smallText }>{ skillsText }</Text>
+          <Text style={ styles.smallText }>{ traitsText }</Text>
+          <Text style={ styles.smallText }>{ knowMost }</Text>
+          <View style={ styles.rowYears }>
+            <View style={ styles.row }>
+              <Text style={ [styles.smallText, styles.boldText] }>{ age && `Age: ` }</Text>
+              <Text style={ styles.smallText }>{ age && (age > 1 ? `${age} years`: `${age} year`) }</Text>
+            </View>
+            <View style={ styles.row }>
+              <Text style={ [styles.smallText, styles.boldText] }>{ experience && `Experience: ` }</Text>
+              <Text style={ styles.smallText }>{ experience && (experience > 1 ? `${experience} years` : `${experience} year`) }</Text>
+            </View>
+          </View>
           <View style={ {
             marginTop: 16,
             marginLeft: 32,
@@ -54,88 +79,24 @@ export class ProfessionalCard extends React.Component {
             alignContent: 'space-between'
           } }>
           </View>
-
-
-          <View style={ {
-            marginTop: 32,
-            marginLeft: 16,
-            marginRight: 16,
-            width: (itemWidth - 2 * 16),
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignContent: 'space-between'
-          } }>
-            <View>
-              <Icon style={ { textAlign: 'center' } } name={ 'ios-mail-open' }/>
-              <Text style={ styles.smallActionText }>{ I18n.t('cards.message') }</Text>
-            </View>
-            <View>
-              <Icon style={ { textAlign: 'center' } } name={ 'ios-heart-outline' }/>
-              <Text style={ styles.smallActionText }>{ I18n.t('cards.save') }</Text>
-            </View>
-          </View>
         </View>
-        <Flag style={ styles.countryFlag } code={ professional.country }/>
       </View>
     )
   }
 }
 
 const styles = EStyleSheet.create({
-  subheader: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    marginLeft: 16
-  },
   content: {
     flex: 1,
     backgroundColor: '#2C65E2'
   },
-  pageTitleContainer: {
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20
-  },
-  pageTitle: {
-    fontSize: 18,
-    fontFamily: 'Montserrat-SemiBold',
-    letterSpacing: 0.18,
-    lineHeight: 30
-  },
-  infoHeader: {
-    fontWeight: 'bold',
-    marginBottom: 16,
-    fontSize: 12
-  },
   smallText: {
-    fontSize: 12
+    fontSize: 12,
+    marginTop: 3
   },
   smallActionText: {
     fontSize: 12,
     color: '#888'
-  },
-  headerTitle: {
-    textAlign: 'center',
-    flexGrow: 1,
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontFamily: 'Montserrat-SemiBold'
-  },
-  listItem: {
-    flexDirection: 'column',
-    width: 300,
-    marginLeft: 5,
-    marginRight: 5,
-    marginBottom: 5,
-    borderRadius: 7,
-    backgroundColor: '#ffffff',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 3
   },
   portrait: {
     width: 150,
@@ -146,32 +107,40 @@ const styles = EStyleSheet.create({
   countryFlag: {
     width: 60,
     height: 45,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    marginTop: 8,
-    marginLeft: 8
+    marginRight: 10
   },
-  rowHeader: {
-    flex: 1,
+  row: {
     flexDirection: 'row',
-    fontSize: 11,
-    marginLeft: 16,
-    marginRight: 18
+    height: 30
   },
-  rowDetail: {
-    flex: 1,
+  rowRemote: {
     flexDirection: 'row',
-    fontSize: 11,
-    justifyContent: 'flex-start',
-    marginLeft: 16,
-    marginRight: 18,
-    marginBottom: 11
+    width: 240,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  rowYears: {
+    flexDirection: 'row',
+    width: (itemWidth - 2 * 30),
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 20
+  },
+  rowFlag: {
+    flexDirection: 'row',
+    height: 50,
+    alignItems: 'center'
   },
   normalText: {
     fontSize: 16,
     fontFamily: 'Helvetica',
     textAlign: 'center'
+  },
+  roleText: {
+    marginTop: 10,
+    marginBottom: 7
   },
   largeText: {
     fontSize: 20,
@@ -180,21 +149,7 @@ const styles = EStyleSheet.create({
     textAlign: 'center',
     marginBottom: 4
   },
-  underline: {
-    textDecorationLine: 'underline'
-  },
-  comment: {
-    width: '100%',
-    fontSize: 12,
-    fontFamily: 'Helvetica',
-    marginTop: 2,
-    marginBottom: 8,
-    textAlign: 'center'
-  },
-  footerContainer: {
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+  boldText: {
+    fontWeight: 'bold'
   }
 })

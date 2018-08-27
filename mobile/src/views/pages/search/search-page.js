@@ -5,7 +5,7 @@ import { ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
-import BlackLogo from '../../../assets/logos/logo-black.png'
+import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { PAGES_NAMES } from '../../../navigation'
 import { searchActions } from '../../../search'
 import ErrorMessage from '../../components/error-message/error-message'
@@ -84,10 +84,10 @@ class SearchPage extends React.Component {
         <View style={ { flex: 1 } }>
           <View style={ styles.content }>
             <ScrollView>
-              <View style={ { backgroundColor: '#fff' } }>
+              <View style={ { backgroundColor: 'transparent' } }>
                 <Header title={ I18n.t('search_page.title') }
-                        titleStyle={ { color: '#868686', marginTop: 8 } }
-                        rightIconSource={ BlackLogo }/>
+                        titleStyle={ { color: '#fff', marginTop: 8 } }
+                        rightIconSource={ WhiteLogo }/>
               </View>
               <Tabs
                 tabContainerStyle={ { borderBottomWidth: 0, backgroundColor: 'transparent' } }
@@ -99,7 +99,7 @@ class SearchPage extends React.Component {
                   textStyle={ { color: 'white' } }
                   activeTextStyle={ { color: 'black' } }
                   activeTabStyle={ { backgroundColor: '#fff' } }
-                  tabStyle={ { backgroundColor: 'transparent', color: 'white' } }
+                  tabStyle={ { backgroundColor: 'transparent' } }
                   heading={ I18n.t('search_page.tab_label_investor') }>
                   <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
                 </Tab>
@@ -117,7 +117,7 @@ class SearchPage extends React.Component {
                   textStyle={ { color: 'white' } }
                   activeTextStyle={ { color: 'black' } }
                   activeTabStyle={ { backgroundColor: '#fff' } }
-                  tabStyle={ { backgroundColor: 'transparent', color: 'white' } }
+                  tabStyle={ { backgroundColor: 'transparent' } }
                   heading={ I18n.t('search_page.tab_label_projects') }>
                   <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick } navigation={ this.props.navigation }/>
                 </Tab>

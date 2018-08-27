@@ -470,6 +470,7 @@
   "search_page": {
     "change_investor": "No other Investors to diplay with these filters",
     "change_project": "No other Projects to diplay with these filters",
+    "change_professional": "No other Professionals to diplay with these filters",
     "no_profile": "No profiles found. Try to change filters",
     "title": "Search",
     "update_filter": "UPDATE SEARCH FILTERS",

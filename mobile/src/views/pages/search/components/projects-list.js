@@ -131,7 +131,8 @@ const styles = EStyleSheet.create({
       height: 2
     },
     shadowOpacity: 0.2,
-    shadowRadius: 3
+    shadowRadius: 3,
+    overflow: 'hidden'
   },
   portrait: {
     width: 97,

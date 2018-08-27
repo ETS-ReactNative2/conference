@@ -31,17 +31,6 @@ class InvestorsList extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.INVESTOR_MAIN_FILTER_PAGE);
   }
 
-  handleSearch = newDefaults => {
-    this.setState({
-      defaults: {
-        ...this.state.defaults,
-        ...newDefaults
-      }
-    }, () => {
-      this.props.updateInvestors(newDefaults)
-    })
-  }
-
   render () {
     const comment = this.props.profiles.length === 0
       ? I18n.t('search_page.no_profile')
@@ -178,7 +167,8 @@ const styles = EStyleSheet.create({
       height: 2
     },
     shadowOpacity: 0.2,
-    shadowRadius: 3
+    shadowRadius: 3,
+    overflow: 'hidden'
   },
   portrait: {
     width: 97,
