@@ -41,8 +41,10 @@ export class ProfessionalCard extends React.Component {
           <Text style={ styles.largeText }>{ `${firstName} ${lastName}` }</Text>
           <Text style={ [styles.normalText, styles.roleText] }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
           <View style={ styles.rowFlag }>
-            <Flag style={ styles.countryFlag } code={ professional.country }/>
-            <Text style={ styles.smallText }>{ city ? city: 'No City'}</Text>
+            {
+              country && (<Flag style={ styles.countryFlag } code={ country }/>)
+            }
+            <Text style={ styles.smallText }>{ city }</Text>
           </View>
           <View style={ styles.rowRemote }>
             {relocate && <Text style={styles.smallText}>Relocate</Text>}
