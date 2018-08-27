@@ -170,7 +170,7 @@ class MyProfessional(APIView):
         professional.local_remote_options = clean_local_remote_options
         professional.country = clean_country
         professional.city = clean_city
-        professional.is_relocate = clean_relocate
+        professional.relocate = clean_relocate
         professional.age = clean_age
         professional.experience = clean_experience
         professional.is_active = True

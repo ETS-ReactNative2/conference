@@ -211,6 +211,7 @@ class MyProfessionalTest(AuthMixin):
                 'local_remote_options': [1, 2],
                 'country': 'us',
                 'city': 'aaaaaaaa',
+                'relocate': True,
                 'age': 42,
                 'experience': 23,
             }),
@@ -227,6 +228,7 @@ class MyProfessionalTest(AuthMixin):
         self.assertEqual(response_dict.get('local_remote_options'), [1, 2])
         self.assertEqual(response_dict.get('country'), 'us')
         self.assertEqual(response_dict.get('city'), 'aaaaaaaa')
+        self.assertEqual(response_dict.get('relocate'), True)
         self.assertEqual(response_dict.get('age'), 42)
         self.assertEqual(response_dict.get('experience'), 23)
         self.assertIn('id', response_dict)
@@ -245,6 +247,7 @@ class MyProfessionalTest(AuthMixin):
         self.assertEqual(response_dict.get('local_remote_options'), [1])
         self.assertEqual(response_dict.get('country'), '')
         self.assertEqual(response_dict.get('city'), '')
+        self.assertEqual(response_dict.get('relocate'), False)
         self.assertEqual(response_dict.get('age'), None)
         self.assertEqual(response_dict.get('experience'), None)
         self.assertIn('id', response_dict)
@@ -264,6 +267,7 @@ class MyProfessionalTest(AuthMixin):
                 'local_remote_options': [1, 2],
                 'country': 'us',
                 'city': 'aaaaaaaa',
+                'relocate': True,
                 'age': 42,
                 'experience': 23,
             }),
@@ -283,6 +287,7 @@ class MyProfessionalTest(AuthMixin):
         self.assertEqual(response_dict.get('local_remote_options'), [1])
         self.assertEqual(response_dict.get('country'), '')
         self.assertEqual(response_dict.get('city'), '')
+        self.assertEqual(response_dict.get('relocate'), False)
         self.assertEqual(response_dict.get('age'), None)
         self.assertEqual(response_dict.get('experience'), None)
         self.assertIn('id', response_dict)

@@ -330,7 +330,7 @@ class Professional(models.Model):
 
     city = models.CharField(max_length=CITY_MAX_LENGTH, blank=True, default='')
 
-    is_relocate = models.BooleanField(default=False)
+    relocate = models.BooleanField(default=False)
 
     age = models.PositiveSmallIntegerField(null=True, blank=True)
 
