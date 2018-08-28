@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-navigation'
 import Header from '../../components/header/header'
 import InputValidated from '../../design/input-validated'
 import BlackLogo from '../../../assets/logos/logo-black.png'
-import { BlackButton, OutlineBlackButton } from '../../design/buttons'
+import { BlackButton } from '../../design/buttons'
 import { PAGES_NAMES } from '../../../navigation/pages'
 import Alert from '../../components/alert/alert'
 

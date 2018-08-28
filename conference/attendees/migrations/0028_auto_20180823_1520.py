@@ -10,8 +10,10 @@ def migrate_names(apps, schema_editor):
     for conference_user in ConferenceUser.objects.all():
         conference_user.first_name = conference_user.user.first_name
         conference_user.last_name = conference_user.user.last_name
+        conference_user.save()
         conference_user.user.first_name = ''
         conference_user.user.last_name = ''
+        conference_user.user.save()
 
 
 class Migration(migrations.Migration):

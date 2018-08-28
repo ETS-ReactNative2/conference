@@ -1,13 +1,13 @@
 import { Container } from 'native-base'
 import React, { Component } from 'react'
-import { ScrollView, View } from 'react-native'
+import { Dimensions, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
-import { itemWidth, sliderWidth } from '../../../common/dimension-utils'
+import { getDimensions } from '../../../common/dimension-utils'
 import { NavigationHeader } from '../../components/header/header'
 import { ProjectCard } from './components/project-card'
 
@@ -27,6 +27,16 @@ class ProjectPage extends Component {
     this.setState({
       currentIndex: index
     })
+
+    Dimensions.addEventListener('change', this.handleDimensionsChange)
+  }
+
+  componentWillUnmount () {
+    Dimensions.removeEventListener('change', this.handleDimensionsChange)
+  }
+
+  handleDimensionsChange = () => {
+    this.forceUpdate()
   }
 
   get projects () {
@@ -37,6 +47,7 @@ class ProjectPage extends Component {
   _renderItem = ({ item: project, index }) => <ProjectCard key={ index } project={ project }/>
 
   render () {
+    const { itemWidth, sliderWidth } = getDimensions()
     const showSingle = this.props.navigation.getParam('single', false)
     return (
       <SafeAreaView style={ { flex: 1, backgroundColor: '#172D5C' } } forceInset={ { top: 'always' } }>
@@ -48,7 +59,7 @@ class ProjectPage extends Component {
                 title={ I18n.t('project_page.title') }
                 titleStyle={ { color: '#fff', marginTop: 12 } }
                 rightIconSource={ WhiteLogo }/>
-              <View style={ { marginTop: 64 } }>
+              <View style={ { marginTop: 32 } }>
                 { showSingle && (
                   <Carousel
                     ref={ (c) => { this._carousel = c } }
