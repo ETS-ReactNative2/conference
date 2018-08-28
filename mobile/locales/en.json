@@ -23,7 +23,8 @@
     "personal": "Personal data",
     "job_profile": "Job profile",
     "project": "Project",
-    "investor": "Investor"
+    "investor": "Investor",
+    "deactivate_warning": "Deactivated – your profile will not show up for others. Click 'Reactivate' to be included again."
   },
   "navigator": {
     "conference": "Conference",
