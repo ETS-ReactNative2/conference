@@ -7,7 +7,7 @@ import React from 'react';
 import I18n from '../../../../locales/i18n';
 import { PAGES_NAMES } from '../../../navigation';
 import { 
-  FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGION, REGIONS, TOKEN_TYPES
+  FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGIONS_FILTER, TOKEN_TYPES
 } from '../../../enums';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -27,7 +27,7 @@ class ProjectMainFilter extends React.Component {
       { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
       { label: 'FUNDING STAGE', items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
       { label: 'INVESTOR BUYS', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
-      { label: 'REGION', items: REGIONS, key: 'regions', stateKey: 'region' },
+      { label: 'REGION', items: REGIONS_FILTER, key: 'regions', stateKey: 'region' },
     ];
 
     return (

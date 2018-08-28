@@ -241,6 +241,19 @@ export const REGIONS = [
   }
 ]
 
+export const REGIONS_FILTER = [
+    {
+        slug: 'anywhere',
+        index: 1
+    }, {
+        slug: 'anywhere_except_us',
+        index: 2
+    }, {
+        slug: 'korea_only',
+        index: 3
+    }
+]
+
 export const JOB_LOCATION = [
   { index: 1, slug: 'local' },
   { index: 2, slug: 'remote' }
