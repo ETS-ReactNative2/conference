@@ -57,7 +57,7 @@ class SearchPage extends React.Component {
 
   render () {
     const {
-      projects, professionals, investors, isLoading, error, fetchMatches, updateInvestors, updateProfessionals, updateProjects
+      isLoading, error, fetchMatches
     } = this.props
 
     if (isLoading) {

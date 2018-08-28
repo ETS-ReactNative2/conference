@@ -12,7 +12,7 @@ import Header from '../../components/header/header'
 import InputValidated from '../../design/input-validated'
 import BlackLogo from '../../../assets/logos/logo-black.png'
 import PoweredLuna from '../../../assets/logos/powered_luna_black.png'
-import { BlackButton, OutlineBlackButton } from '../../design/buttons'
+import { BlackButton } from '../../design/buttons'
 import Alert from '../../components/alert/alert'
 
 export class SignupPage extends React.Component {

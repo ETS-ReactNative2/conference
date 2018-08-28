@@ -1,5 +1,5 @@
 import { 
-  Body, Button, Col, Card, CardItem, Container, Grid, Header, Footer, Icon, Left, List, ListItem, Thumbnail, Right, Text, View
+  Body, Button, Container, Left, List, ListItem, Thumbnail, Text, View
 } from 'native-base';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -56,7 +56,7 @@ class ProjectsList extends React.Component {
   }
 }
 
-ProjectItem = ({ project, onMark, onClick }) => {
+ProjectItem = ({ project, onClick }) => {
   const projectPlaceholderUri = 'https://cdn2.iconfinder.com/data/icons/ikooni-outline-seo-web/128/seo3-100-512.png';
   const projectName = project.name ? project.name : 'Undefined Name';
   const tokenType = TOKEN_TYPES.find(item => item.index === project.tokenType);

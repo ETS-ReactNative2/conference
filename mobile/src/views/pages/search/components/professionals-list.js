@@ -1,9 +1,9 @@
 import { 
-  Body, Button, Col, Card, CardItem, Container, Grid, Header, Footer, Icon, Left, List, ListItem, Thumbnail, Right, Text, View
+  Body, Button, Container, Left, List, ListItem, Thumbnail, Right, Text, View
 } from 'native-base';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ScrollView, ListView, Image } from 'react-native';
+import { ScrollView } from 'react-native';
 import {connect} from 'react-redux';
 import * as searchActions from '../../../../search/actions';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -53,7 +53,7 @@ class ProfessionalsList extends React.Component {
   }
 }
 
-ProfessionalItem = ({ professional, onMark, onClick }) => {
+ProfessionalItem = ({ professional, onClick }) => {
   const portraitPlaceholderUri = getUrl()
   const { firstName, lastName } = professional.user;
   const role = professional.role === 12 

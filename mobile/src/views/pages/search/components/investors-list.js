@@ -1,7 +1,7 @@
 import {
-  Body, Button, Col, Card, CardItem, Container, Grid, Header, Footer, Icon, Left, List, ListItem, Thumbnail, Right, Text, View,
+  Button, Container, Left, List, ListItem, Thumbnail, Right, Text, View,
 } from 'native-base';
-import { ScrollView, ListView, Image } from 'react-native';
+import { ScrollView } from 'react-native';
 import Flag from 'react-native-flags';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -61,7 +61,7 @@ class InvestorsList extends React.Component {
   }
 }
 
-InvestorItem = ({ investor, onMark, onClick }) => {
+InvestorItem = ({ investor, onClick }) => {
   const portraitPlaceholderUri = getUrl()
   const firstName = investor.user.firstName;
   const lastName = investor.user.lastName;

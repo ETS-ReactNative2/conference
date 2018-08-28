@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
 import { itemWidth } from '../../../../common/dimension-utils'
-import { FUNDING_STAGES, INVESTOR_INDUSTRIES, REGIONS, TOKEN_TYPES } from '../../../../enums'
+import { INVESTOR_INDUSTRIES } from '../../../../enums'
 import { getUrl } from '../../../../common/fake-randomizer'
 
 export class ProjectCard extends React.Component {
