@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "062346fd-822e-4907-8b31-b5006d59b112",
+		"_postman_id": "f42c904a-8c6a-40b6-960e-0d718edc5090",
 		"name": "Conference",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -57,6 +57,35 @@
 					"path": [
 						"api",
 						"investors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/investors/defaults/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/investors/defaults/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"investors",
+						"defaults",
 						""
 					]
 				}
@@ -746,6 +775,35 @@
 			"response": []
 		},
 		{
+			"name": "/api/professionals/defaults/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/professionals/defaults/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"professionals",
+						"defaults",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/projects/",
 			"request": {
 				"method": "GET",
@@ -767,6 +825,35 @@
 					"path": [
 						"api",
 						"projects",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/projects/defaults/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/projects/defaults/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"projects",
+						"defaults",
 						""
 					]
 				}

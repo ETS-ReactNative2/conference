@@ -229,6 +229,16 @@ class Professionals(generics.ListAPIView):
         return models.Professional.objects.filter(**filters).distinct()
 
 
+class ProfessionalsDefaults(APIView):
+
+    def get(self, request, format=None):
+        result = {
+            'role': []
+        }
+        return JsonResponse(result)
+
+
+
 class ProfessionalsId(generics.RetrieveAPIView):
     queryset = models.Professional.objects.all()
     serializer_class = serializers.ProfessionalSerializer

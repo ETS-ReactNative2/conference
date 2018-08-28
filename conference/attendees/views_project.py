@@ -55,6 +55,28 @@ class ListProject(generics.ListAPIView):
         return models.Project.objects.filter(**filters).exclude(**excludes).distinct()
 
 
+class ProjectsDefaults(APIView):
+
+    def get(self, request, format=None):
+        result = {}
+        investor = request.user.conference_user.investor
+        if not investor:
+            result['funding_stage'] = []
+            result['giveaway'] = []
+            result['product_stage'] = []
+            result['region'] = models.Region.ANYWHERE
+            result['token_type'] = []
+            result['industry'] = []
+        else:
+            result['funding_stage'] = [funding_stage.pk for funding_stage in investor.funding_stages.all()]
+            result['giveaway'] = [giveaway.pk for giveaway in investor.giveaways.all()]
+            result['product_stage'] = [product_stage.pk for product_stage in investor.product_stages.all()]
+            result['region'] = models.Region.ANYWHERE
+            result['token_type'] = [token_type.pk for token_type in investor.token_types.all()]
+            result['industry'] = [industry.pk for industry in investor.industries.all()]
+        return JsonResponse(result)
+
+
 class RetrieveProject(generics.RetrieveAPIView):
     queryset = models.Project.objects.all()
     serializer_class = serializers.ProjectSerializer
