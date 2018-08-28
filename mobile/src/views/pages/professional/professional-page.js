@@ -1,13 +1,13 @@
 import { Container } from 'native-base'
 import React, { Component } from 'react'
-import { ScrollView, View } from 'react-native'
+import { Dimensions, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
-import { itemWidth, sliderWidth } from '../../../common/dimension-utils'
+import { getDimensions } from '../../../common/dimension-utils'
 import { NavigationHeader } from '../../components/header/header'
 import { ProfessionalCard } from './components/professional-card'
 
@@ -27,6 +27,16 @@ class ProfessionalPage extends Component {
     this.setState({
       currentIndex: index
     })
+
+    Dimensions.addEventListener('change', this.handleDimensionsChange)
+  }
+
+  componentWillUnmount () {
+    Dimensions.removeEventListener('change', this.handleDimensionsChange)
+  }
+
+  handleDimensionsChange = () => {
+    this.forceUpdate()
   }
 
   get professionals () {
@@ -37,6 +47,7 @@ class ProfessionalPage extends Component {
   _renderItem = ({ item: professional, index }) => <ProfessionalCard key={ index } professional={ professional }/>
 
   render () {
+    const { itemWidth, sliderWidth } = getDimensions()
     const showSingle = this.props.navigation.getParam('single', false)
     return (
       <SafeAreaView style={ { flex: 1, backgroundColor: '#c72355' } } forceInset={ { top: 'always' } }>
@@ -48,7 +59,7 @@ class ProfessionalPage extends Component {
                 title={ I18n.t('professional_page.title') }
                 titleStyle={ { color: '#fff', marginTop: 12 } }
                 rightIconSource={ WhiteLogo }/>
-              <View style={ { marginTop: 64 } }>
+              <View style={ { marginTop: 32 } }>
                 { showSingle && (
                   <Carousel
                     ref={ (c) => { this._carousel = c } }
