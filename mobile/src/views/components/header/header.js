@@ -1,4 +1,4 @@
-import { Text } from 'native-base'
+import { Text, Button, Icon } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, View } from 'react-native'
@@ -21,10 +21,26 @@ export class Header extends React.Component {
   }
 }
 
+export class NavigationHeader extends React.Component {
+  render () {
+    return (
+      <Header
+        {...this.props}
+        left={
+          <Button transparent onPress={ this.props.onBack}>
+            <Icon style={{color: 'white'}} name='arrow-back' />
+          </Button>
+        }
+      />
+    )
+  }
+}
+
 const styles = EStyleSheet.create({
   container: {
-    paddingTop: 15,
-    flex: 1,
+    paddingTop: 16,
+    paddingBottom: 8,
+    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
@@ -42,7 +58,8 @@ const styles = EStyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     color: '#4A4A4A',
-    fontSize: 18,
+    fontSize: 16,
+    marginTop: 8,
     fontFamily: 'Montserrat-SemiBold'
   }
 })
@@ -51,7 +68,7 @@ Header.propTypes = {
   left: PropTypes.node,
   title: PropTypes.string.isRequired,
   titleStyle: PropTypes.any,
-  rightIconSource: PropTypes.node.isRequired
+  rightIconSource: PropTypes.node
 }
 
 export default Header

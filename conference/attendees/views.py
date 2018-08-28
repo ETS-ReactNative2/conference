@@ -37,14 +37,10 @@ class MyPerson(APIView):
             conference_user.user = request.user
 
         first_name = json_body.get('first_name')
-        clean_first_name = first_name[:models.ConferenceUser.FIRST_NAME_MAX_LENGTH] if first_name is not None else ''
+        clean_first_name = first_name[:models.FIRST_NAME_MAX_LENGTH] if first_name else ''
 
         last_name = json_body.get('last_name')
-        clean_last_name = last_name[:models.ConferenceUser.LAST_NAME_MAX_LENGTH] if last_name is not None else ''
-
-        request.user.first_name = clean_first_name
-        request.user.last_name = clean_last_name
-        request.user.save()
+        clean_last_name = last_name[:models.LAST_NAME_MAX_LENGTH] if last_name else ''
 
         title = json_body.get('title')
         clean_title = title[:models.ConferenceUser.TITLE_MAX_LENGTH] if title else ''
@@ -64,6 +60,8 @@ class MyPerson(APIView):
         linkedin = json_body.get('linkedin')
         clean_linkedin = linkedin[:models.ConferenceUser.LINKEDIN_MAX_LENGTH] if linkedin else ''
 
+        conference_user.first_name = clean_first_name
+        conference_user.last_name = clean_last_name
         conference_user.title = clean_title
         conference_user.company = clean_company
         conference_user.twitter = clean_twitter
@@ -122,10 +120,23 @@ class MyProfessional(APIView):
         know_most = json_body.get('know_most')
         clean_know_most = know_most[:models.Professional.KNOW_MOST_MAX_LENGTH] if know_most else ''
 
+        relocate = json_body.get('relocate')
+        clean_relocate = relocate if relocate else False
+
+        remote = json_body.get('remote')
+        if remote is not None:
+            clean_local_remote_options = models.LocalRemoteOption.objects.all() if (
+                remote
+            ) else [models.LocalRemoteOption.objects.get(pk=1)]
+
         local_remote_options = json_body.get('local_remote_options')
-        clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
-            local_remote_options
-        ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
+        if local_remote_options is not None:
+            clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
+              local_remote_options
+            ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
+
+        if remote is None and local_remote_options is None:
+            clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL)]
 
         country = json_body.get('country')
         clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
@@ -140,10 +151,16 @@ class MyProfessional(APIView):
         ) else ''
 
         age = json_body.get('age')
-        clean_age = age if age and 18 <= age <= 120 else None
+        try:
+            clean_age = int(age) if age and 18 <= int(age) <= 120 else None
+        except:
+            clean_age = None
 
         experience = json_body.get('experience')
-        clean_experience = experience if experience and 0 <= experience <= 120 else None
+        try:
+            clean_experience = int(experience) if experience and 0 <= int(experience) <= 120 else None
+        except:
+            clean_experience = None
 
         professional.role = clean_role
         professional.role_other_text = clean_role_other_text
@@ -153,20 +170,53 @@ class MyProfessional(APIView):
         professional.local_remote_options = clean_local_remote_options
         professional.country = clean_country
         professional.city = clean_city
+        professional.relocate = clean_relocate
         professional.age = clean_age
         professional.experience = clean_experience
+        professional.is_active = True
         professional.save()
         request.user.conference_user.professional = professional
         request.user.conference_user.save()
         return JsonResponse(serializers.ProfessionalSerializer(professional).data, status=status.HTTP_201_CREATED)
 
 
+class MyProfessionalDeactivate(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        professional = request.user.conference_user.professional
+
+        # Check if the current user even has a Professional
+        if not professional:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        professional.is_active = False
+        professional.save()
+        return HttpResponse()
+
+
+class MyProfessionalReactivate(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        professional = request.user.conference_user.professional
+
+        # Check if the current user even has a Professional
+        if not professional:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        professional.is_active = True
+        professional.save()
+        return HttpResponse()
+
+
 class Professionals(generics.ListAPIView):
-    queryset = models.Professional.objects.all()
     serializer_class = serializers.ProfessionalSerializer
 
     def get_queryset(self):
-        filters = {}
+        filters = {
+            'is_active': True,
+        }
         roles = self.request.GET.get('roles')
         if roles:
             filters['role__in'] = roles
@@ -176,7 +226,7 @@ class Professionals(generics.ListAPIView):
         country = self.request.GET.get('country')
         if country:
             filters['country'] = country
-        return models.Professional.objects.filter(**filters)
+        return models.Professional.objects.filter(**filters).distinct()
 
 
 class ProfessionalsId(generics.RetrieveAPIView):
@@ -192,6 +242,7 @@ class ListCreateUser(APIView):
         json_body = request.data
         email = json_body.get('email')
         password = json_body.get('password')
+        phone = json_body.get('phone')
 
         # email None or ''
         if not email:
@@ -202,6 +253,8 @@ class ListCreateUser(APIView):
             return Response('password_missing', status=status.HTTP_400_BAD_REQUEST)
 
         clean_email = email.lower()
+
+        clean_phone = phone[:models.ConferenceUser.PHONE_MAX_LENGTH] if phone else ''
 
         if models.User.objects.filter(email=clean_email).exists():
             return Response('email_exists', status=status.HTTP_409_CONFLICT)
@@ -216,13 +269,18 @@ class ListCreateUser(APIView):
             password=make_password(password),
             username=clean_email,
         )
+
+        conference_user = models.ConferenceUser.objects.get(user=user)
+        conference_user.phone = clean_phone
+        conference_user.save()
+
         project_member_queryset = models.ProjectMember.objects.filter(email=clean_email)
         if project_member_queryset.exists():
             project_member = project_member_queryset.get()
-            conference_user = models.ConferenceUser.objects.get(user=user)
             conference_user.project = project_member.project
             conference_user.save()
             project_member.delete()
+
         serializer = serializers.UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 

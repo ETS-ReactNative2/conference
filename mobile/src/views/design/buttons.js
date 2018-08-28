@@ -48,6 +48,25 @@ export function OutlineWhiteButton ({ text = 'Example text', onPress, disabled, 
   )
 }
 
+export function ProfileWhiteButton ({ text = 'Example text', onPress, disabled, icon }) {
+  const styles = profileWhiteButton
+  return (
+    <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
+      { icon && <Icon active style={{color: '#FFFFFF'}} name={icon}></Icon> }
+      <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
+    </BaseButton>
+  )
+}
+
+export function SearchButton ({ text = 'Example text', onPress }) {
+  const styles = searchButtonStyles
+  return (
+    <BaseButton onPress={ ev => onPress(ev) } style={ styles.button }>
+      <Text style={ styles.text }>{ text.toUpperCase() }</Text>
+    </BaseButton>
+  )
+}
+
 export function PrimaryButton ({ text = 'Example text', onPress, disabled }) {
   const styles = primaryButtonStyles
   return (
@@ -102,6 +121,18 @@ const baseButton = EStyleSheet.create({
     justifyContent: 'center',
     fontWeight: 'bold',
     fontFamily: 'Montserrat-SemiBold'
+  }
+})
+
+
+const searchButtonStyles = EStyleSheet.create({
+  button: {
+    backgroundColor: '#fff',
+    maxWidth: 10000
+  },
+  text: {
+    color: BLACK_DISABLED_COLOR,
+    fontWeight: 'bold'
   }
 })
 
@@ -161,6 +192,29 @@ const outlineWhiteButtonStyles = EStyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: '#fff'
+  },
+  disabledButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: DISABLED_COLOR
+  },
+  text: {
+    color: '#fff'
+  },
+  disabledText: {
+    color: DISABLED_COLOR
+  }
+})
+
+const profileWhiteButton = EStyleSheet.create({
+  button: {
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: '#fff',
+    maxWidth: null,
+    width: null,
+    height: null,
+    marginRight: 8
   },
   disabledButton: {
     backgroundColor: 'transparent',

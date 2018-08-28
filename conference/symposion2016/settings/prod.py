@@ -2,6 +2,8 @@ import dj_database_url
 from .base import *
 import socket
 
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 DEBUG = False
 
 # ELB HealthCheck uses the EC2 instance's IP for its Host header

@@ -65,7 +65,6 @@ export class FlowInput extends Component {
 
   renderLeftIcon = () => {
     if (this.props.leftIcon) {
-      console.log(this.props.leftIcon)
       return <Icon active name={ this.props.leftIcon } color={ 'white' } style={ { color: 'white' } }/>
     }
     return <View/>

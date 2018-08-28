@@ -11,7 +11,7 @@ import I18n from '../../../../../locales/i18n'
 import { REGIONS } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
-import { FlowContainer } from '../../../design/Container'
+import { FlowContainer } from '../../../design/container'
 import { FlowListItem } from '../../../design/list-items'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
@@ -63,8 +63,8 @@ class InvesteeMoneySource extends React.Component {
                   multiple={ false }
                   key={ `region-item-${region.slug}` }
                   text={ I18n.t(`common.regions.${region.slug}`) }
-                  onSelect={ () => this.handleChange(region) }
-                  selected={ this.state.nationality.index === region.index }
+                  onSelect={ () => this.handleChange(region.index) }
+                  selected={ this.state.nationality === region.index }
                 />
               )
             }) }

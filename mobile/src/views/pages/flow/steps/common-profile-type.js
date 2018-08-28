@@ -103,7 +103,6 @@ class CommonProfileType extends React.Component {
         break
     }
     this.props.saveProfileInfo({ type: this.state.selectedValue })
-    // this.props.onFill({ nextStep })
     this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
   }
 

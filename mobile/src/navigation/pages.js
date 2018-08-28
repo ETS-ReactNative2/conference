@@ -1,22 +1,34 @@
-import { Button, Container, Icon, Spinner, Text } from 'native-base'
 import React from 'react'
-import { View } from 'react-native'
-import { createDrawerNavigator, createStackNavigator } from 'react-navigation'
+import { Image, View } from 'react-native'
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../locales/i18n'
+import GlassBlack from '../assets/icons/Glass-Black.png'
+import GlassRed from '../assets/icons/Glass-Red.png'
+import PolygonBlack from '../assets/icons/Polygon-Black.png'
+import PolygonRed from '../assets/icons/Polygon-Red.png'
+import RectangleBlack from '../assets/icons/Rectangle-Black.png'
+import RectangleRed from '../assets/icons/Rectangle-Red.png'
+import TriangleBlack from '../assets/icons/Triangle-Black.png'
+import TriangleRed from '../assets/icons/Triangle-Red.png'
 import { navigationService } from '../services'
-import DrawerSideBar from '../views/components/drawer-sidebar/drawer-sidebar'
 import AgendaPage from '../views/pages/agenda/agenda-page'
+import FilterPage from '../views/pages/filters/filter-page'
+import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page'
+import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-page';
 import FlowPage from '../views/pages/flow/flow-page'
 import { CommonProfileType } from '../views/pages/flow/steps'
-import CommonProfileOnboarding from '../views/pages/flow/steps/common-profile-onboarding'
+import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/flow/steps/common-profile-onboarding'
+import LoadingPage from '../views/components/loading-page/loading-page'
+import HomePage from '../views/pages/home/home-page'
 import InvestorPage from '../views/pages/investor/investor-page'
 import LoginPage from '../views/pages/login/login-page'
-import NotificationsPage from '../views/pages/notifications/notifications-page'
 import ProfessionalPage from '../views/pages/professional/professional-page'
+import ProfilePage from '../views/pages/profile/profile-page'
 import ProjectPage from '../views/pages/project/project-page'
 import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
+import WebviewPage from '../views/pages/webview/webview-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 
 const PAGES_NAMES = {
@@ -32,7 +44,14 @@ const PAGES_NAMES = {
   PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
   PROJECT_PAGE: 'PROJECT_PAGE',
   PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
-  PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE'
+  PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
+  LOCATION_PAGE: 'LOCATION_PAGE',
+  FILTER_PAGE: 'FILTER_PAGE',
+  INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE',
+  PROJECT_MAIN_FILTER_PAGE: 'PROJECT_MAIN_FILTER_PAGE',
+  WEBVIEW_PAGE: 'WEBVIEW_PAGE',
+  PROFILE_PAGE: 'PROFILE_PAGE',
+  EDIT_BASIC_PROFILE: 'EDIT_BASIC_PROFILE'
 }
 
 const commonNavBarStyle = {
@@ -57,29 +76,66 @@ const flowNavbarStyle = {
   headerTintColor: '#FFF'
 }
 
-const DrawerStack = createDrawerNavigator({
-  AGENDA_PAGE: { screen: AgendaPage },
-  NOTIFICATIONS_PAGE: { screen: NotificationsPage }
-}, {
-  contentComponent: props => <DrawerSideBar { ...props } />
-})
+const DrawerStack = createBottomTabNavigator({
+    HOME_PAGE: {
+      screen: HomePage,
+      navigationOptions: ({ navigation }) => ({
+        title: I18n.t('navigator.home'),
+        tabBarIcon: ({ focused }) => {
+          return <Image style={ { width: 20, height: 20 } } source={ focused ? TriangleRed : TriangleBlack }/>
+        },
+        header: null
+      })
+    },
+    AGENDA_PAGE: {
+      screen: AgendaPage,
+      navigationOptions: ({ navigation }) => ({
+        title: I18n.t('navigator.conference'),
+        tabBarIcon: ({ focused }) => {
+          return <Image style={ { width: 20, height: 22 } } source={ focused ? PolygonRed : PolygonBlack }/>
+        }
+      })
+    },
+    SEARCH_PAGE: {
+      screen: SearchPage,
+      navigationOptions: ({ navigation }) => ({
+        title: I18n.t('navigator.search'),
+        tabBarIcon: ({ focused }) => {
+          return <Image style={ { width: 24, height: 21 } } source={ focused ? GlassRed : GlassBlack }/>
+        }
+      })
+    },
+    PROFILE_PAGE: {
+      screen: ProfilePage,
+      navigationOptions: ({ navigation }) => ({
+        title: I18n.t('navigator.profile'),
+        tabBarIcon: ({ focused }) => {
+          return <Image style={ { width: 20, height: 20 } } source={ focused ? RectangleRed : RectangleBlack }/>
+        }
+      })
+    },
+
+  },
+  {
+    tabBarOptions: {
+      style: {
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0
+      },
+      activeTintColor: 'white'
+    }
+  }
+)
 
 const DrawerNavigation = createStackNavigator({
   DrawerStack: {
     screen: DrawerStack
   }
 }, {
-  headerMode: 'float',
-  navigationOptions: ({ navigation }) => ({
-    title: 'Luna Conference',
-    ...commonNavBarStyle,
-    headerLeft:
-      <View style={ { flex: 1 } }>
-        <Button transparent onPress={ () => navigation.openDrawer() }>
-          <Icon name="menu" style={ { color: '#FFFFFF' } }/>
-        </Button>
-      </View>
-  })
+  headerMode: 'none',
 })
 
 const AppStackNavigator = createStackNavigator({
@@ -89,6 +145,12 @@ const AppStackNavigator = createStackNavigator({
       header: null
     }),
   },
+  HOME_PAGE: {
+    screen: DrawerNavigation,
+    navigationOptions: () => ({
+      header: null
+    })
+  },
   PROFILE_ONBOARDING_PAGE: {
     screen: CommonProfileOnboarding,
     navigationOptions: () => ({
@@ -97,6 +159,12 @@ const AppStackNavigator = createStackNavigator({
   },
   PROFILE_TYPE_PAGE: {
     screen: CommonProfileType,
+    navigationOptions: () => ({
+      header: null
+    })
+  },
+  EDIT_BASIC_PROFILE: {
+    screen: EditBasicInfo,
     navigationOptions: () => ({
       header: null
     })
@@ -132,48 +200,59 @@ const AppStackNavigator = createStackNavigator({
       header: null
     }),
   },
-  HOME_PAGE: {
-    screen: DrawerNavigation,
-    navigationOptions: () => ({
-      header: null
-    })
-  },
   INVESTOR_PAGE: {
     screen: InvestorPage,
     navigationOptions: () => ({
       title: I18n.t('investor_page.title'),
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
+      header: null
     })
   },
   PROFESSIONAL_PAGE: {
     screen: ProfessionalPage,
     navigationOptions: () => ({
       title: I18n.t('professional_page.title'),
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
+      header: null
     })
   },
   PROJECT_PAGE: {
     screen: ProjectPage,
     navigationOptions: () => ({
       title: I18n.t('project_page.title'),
+      ...commonNavBarStyle,
+      header: null
+    })
+  },
+  WEBVIEW_PAGE: {
+    screen: WebviewPage,
+    navigationOptions: () => ({
+      // header: null
+    })
+  },
+  FILTER_PAGE: {
+    screen: FilterPage,
+    navigationOptions: () => ({
+      title: 'Filter',
       ...commonNavBarStyle
     })
+  },
+  INVESTOR_MAIN_FILTER_PAGE: {
+      screen: InvestorMainFilterPage,
+  },
+  PROJECT_MAIN_FILTER_PAGE: {
+    screen: ProjectMainFilterPage,
   }
 })
 
 const AppStackNavigatorWithSpinner = ({ isLoading, message }) => {
   return (
-    <Container style={ styles.container }>
+    <View style={ { flex: 1 } } forceInset={ { top: 'always' } }>
       <AppStackNavigator ref={ navigatorRef => {
         navigationService.setTopLevelNavigator(navigatorRef)
       } } styles={ { position: 'absolute' } }/>
-      { isLoading && (
-        <View style={ styles.spinnerContainer }>
-          <Spinner color={ '#603695' }/>
-          <Text style={ styles.message }>{ message }</Text>
-        </View>
-      ) }
-    </Container>
+        <LoadingPage isLoading={isLoading} message={message} />
+    </View>
   )
 }
 
@@ -193,17 +272,41 @@ const styles = {
     flex: 1
   },
   spinnerContainer: {
-    backgroundColor: 'white',
     flex: 1,
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    backgroundColor: '#14192E'
   },
   message: {
     color: '#603695',
     fontWeight: 'bold'
+  },
+  imageContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: 'transparent'
+  },
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 10
+  },
+  title: {
+    textAlign: 'center',
+    flexGrow: 1,
+    color: '#D8D8D8',
+    fontSize: 18,
+    fontFamily: 'Montserrat-SemiBold'
+  },
+
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 32,
+    marginLeft: 16,
+    marginRight: 16
   }
 }

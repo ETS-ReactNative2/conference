@@ -13,30 +13,47 @@ from . import serializers
 
 
 class ListInvestor(generics.ListAPIView):
-    queryset = models.Investor.objects.all()
     serializer_class = serializers.InvestorSerializer
 
     def get_queryset(self):
-        filters = {}
+        filters = {
+            'is_active': True,
+        }
         excludes = {}
-        funding_stages = self.request.GET.getlist('funding_stage')
-        if funding_stages:
-            filters['funding_stages__in'] = funding_stages
-        giveaways = self.request.GET.getlist('giveaway')
-        if giveaways:
-            filters['giveaways__in'] = giveaways
-        product_stages = self.request.GET.getlist('product_stage')
-        if product_stages:
-            filters['product_stages__in'] = product_stages
-        region = self.request.GET.get('region')
-        if region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
-            excludes['nationality'] = models.Region.COUNTRY_UNITED_STATES
-        elif region == models.Region.SOUTH_KOREA_ONLY:
-            filters['nationality'] = models.Region.COUNTRY_SOUTH_KOREA
-        token_types = self.request.GET.getlist('token_type')
-        if token_types:
-            filters['token_types__in'] = token_types
-        return models.Investor.objects.filter(**filters).exclude(**excludes)
+        if self.request.GET.get('defaults') == 'true':
+            project = self.request.user.conference_user.project
+            if project:
+                if project.funding_stage:
+                    filters['funding_stages__in'] = [project.funding_stage.pk]
+                if project.giveaway and project.giveaway.pk != models.Giveaway.BOTH:
+                    filters['giveaways__in'] = [project.giveaway.pk]
+                if project.product_stage:
+                    filters['product_stages__in'] = [project.product_stage.pk]
+                if project.region and project.region.pk == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
+                    excludes['nationality'] = models.Region.COUNTRY_UNITED_STATES
+                elif project.region and project.region.pk == models.Region.SOUTH_KOREA_ONLY:
+                    filters['nationality'] = models.Region.COUNTRY_SOUTH_KOREA
+                if project.token_type:
+                    filters['token_types__in'] = [project.token_type.pk]
+        else:
+            funding_stages = self.request.GET.getlist('funding_stage')
+            if funding_stages:
+                filters['funding_stages__in'] = funding_stages
+            giveaways = self.request.GET.getlist('giveaway')
+            if giveaways:
+                filters['giveaways__in'] = giveaways
+            product_stages = self.request.GET.getlist('product_stage')
+            if product_stages:
+                filters['product_stages__in'] = product_stages
+            region = self.request.GET.get('region')
+            if region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
+                excludes['nationality'] = models.Region.COUNTRY_UNITED_STATES
+            elif region == models.Region.SOUTH_KOREA_ONLY:
+                filters['nationality'] = models.Region.COUNTRY_SOUTH_KOREA
+            token_types = self.request.GET.getlist('token_type')
+            if token_types:
+                filters['token_types__in'] = token_types
+        return models.Investor.objects.filter(**filters).exclude(**excludes).distinct()
 
 
 class RetrieveInvestor(generics.RetrieveAPIView):
@@ -169,8 +186,38 @@ class MyInvestor(APIView):
         investor.region_other_text = clean_region_other_text
         investor.ticket_sizes = clean_ticket_sizes
         investor.token_types = clean_token_types
-
+        investor.is_active = True
         investor.save()
         request.user.conference_user.investor = investor
         request.user.conference_user.save()
         return JsonResponse(serializers.InvestorSerializer(investor).data, status=status.HTTP_201_CREATED)
+
+
+class MyInvestorDeactivate(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        investor = request.user.conference_user.investor
+
+        # Check if the current user even has an investor
+        if not investor:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        investor.is_active = False
+        investor.save()
+        return HttpResponse()
+
+
+class MyInvestorReactivate(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        investor = request.user.conference_user.investor
+
+        # Check if the current user even has an investor
+        if not investor:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        investor.is_active = True
+        investor.save()
+        return HttpResponse()

@@ -8,9 +8,15 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+COMPANY_MAX_LENGTH = 40
+
 CITY_MAX_LENGTH = 40
 
 COUNTRY_MAX_LENGTH = 2
+
+FIRST_NAME_MAX_LENGTH = 30
+
+LAST_NAME_MAX_LENGTH = 30
 
 REGION_OTHER_TEXT_MAX_LENGTH = 40
 
@@ -30,7 +36,20 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_conference_user(sender, instance=None, created=False, **kwargs):
     if created:
-        ConferenceUser.objects.create(user=instance)
+        # Check if there is an Investor for the email address
+        investor_queryset = Investor.objects.filter(email=instance.email)
+        if investor_queryset.exists():
+            investor = investor_queryset.get()
+            # Check if there is a ConferenceUser for the Investor
+            conference_user_queryset = ConferenceUser.objects.filter(investor=investor)
+            if conference_user_queryset.exists():
+                conference_user = conference_user_queryset.get()
+                conference_user.user = instance
+                conference_user.save()
+            else:
+                ConferenceUser.objects.create(user=instance, investor=investor)
+        else:
+            ConferenceUser.objects.create(user=instance)
 
 
 class FundingStage(models.Model):
@@ -285,6 +304,11 @@ class Investor(models.Model):
 
     token_types = models.ManyToManyField(TokenType, blank=True)
 
+    # For Investor sign-ups through the website form, before the investor has signed up in the app
+    email = models.EmailField(null=True, unique=True, db_index=True)
+
+    is_active = models.BooleanField(default=True)
+
 
 class Professional(models.Model):
 
@@ -306,9 +330,13 @@ class Professional(models.Model):
 
     city = models.CharField(max_length=CITY_MAX_LENGTH, blank=True, default='')
 
+    relocate = models.BooleanField(default=False)
+
     age = models.PositiveSmallIntegerField(null=True, blank=True)
 
     experience = models.PositiveSmallIntegerField(null=True, blank=True)
+
+    is_active = models.BooleanField(default=True)
 
 
 class ConferenceUser(models.Model):
@@ -316,13 +344,9 @@ class ConferenceUser(models.Model):
     Extra information about a user that's not related to the authentication process.
     """
 
-    FIRST_NAME_MAX_LENGTH = 30
-
-    LAST_NAME_MAX_LENGTH = 30
+    PHONE_MAX_LENGTH = 20
 
     TITLE_MAX_LENGTH = 40
-
-    COMPANY_MAX_LENGTH = 40
 
     TWITTER_MAX_LENGTH = 15
 
@@ -332,7 +356,13 @@ class ConferenceUser(models.Model):
 
     LINKEDIN_MAX_LENGTH = 50
 
-    user = models.OneToOneField(User, related_name='conference_user', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, related_name='conference_user', on_delete=models.CASCADE)
+
+    phone = models.CharField(max_length=PHONE_MAX_LENGTH, blank=True, default='')
+
+    first_name = models.CharField(max_length=FIRST_NAME_MAX_LENGTH, blank=True, default='')
+
+    last_name = models.CharField(max_length=LAST_NAME_MAX_LENGTH, blank=True, default='')
 
     title = models.CharField(max_length=TITLE_MAX_LENGTH, blank=True, default='')
 

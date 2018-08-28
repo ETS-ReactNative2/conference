@@ -11,31 +11,48 @@ from . import serializers
 
 
 class ListProject(generics.ListAPIView):
-    queryset = models.Project.objects.all()
     serializer_class = serializers.ProjectSerializer
 
     def get_queryset(self):
         filters = {}
         excludes = {}
-        funding_stages = self.request.GET.getlist('funding_stage')
-        if funding_stages:
-            filters['funding_stage__in'] = funding_stages
-        giveaways = self.request.GET.getlist('giveaway')
-        if giveaways:
-            # Projects with giveaway BOTH are always found.
-            giveaways.append(models.Giveaway.BOTH)
-            filters['giveaway__in'] = giveaways
-        product_stages = self.request.GET.getlist('product_stage')
-        if product_stages:
-            filters['product_stage__in'] = product_stages
-        region = self.request.GET.get('region')
-        if region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
-            excludes['legal_country'] = models.Region.COUNTRY_UNITED_STATES
-            excludes['main_country'] = models.Region.COUNTRY_UNITED_STATES
-        token_types = self.request.GET.getlist('token_type')
-        if token_types:
-            filters['token_types__in'] = token_types
-        return models.Project.objects.filter(**filters).exclude(**excludes)
+        if self.request.GET.get('defaults') == 'true':
+            investor = self.request.user.conference_user.investor
+            if investor:
+                if investor.funding_stages:
+                    filters['funding_stage__in'] = [funding_stage.pk for funding_stage in investor.funding_stages.all()]
+                if investor.giveaways:
+                    giveaways = [giveaway.pk for giveaway in investor.giveaways.all()]
+                    # Projects with giveaway BOTH are always found.
+                    giveaways.append(models.Giveaway.BOTH)
+                    filters['giveaway__in'] = giveaways
+                if investor.product_stages:
+                    filters['product_stage__in'] = [product_stage.pk for product_stage in investor.product_stages.all()]
+                if investor.region and investor.region.pk == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
+                    excludes['legal_country'] = models.Region.COUNTRY_UNITED_STATES
+                    excludes['main_country'] = models.Region.COUNTRY_UNITED_STATES
+                if investor.token_types:
+                    filters['token_type__in'] = [token_type.pk for token_type in investor.token_types.all()]
+        else:
+            funding_stages = self.request.GET.getlist('funding_stage')
+            if funding_stages:
+                filters['funding_stage__in'] = funding_stages
+            giveaways = self.request.GET.getlist('giveaway')
+            if giveaways:
+                # Projects with giveaway BOTH are always found.
+                giveaways.append(models.Giveaway.BOTH)
+                filters['giveaway__in'] = giveaways
+            product_stages = self.request.GET.getlist('product_stage')
+            if product_stages:
+                filters['product_stage__in'] = product_stages
+            region = self.request.GET.get('region')
+            if region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
+                excludes['legal_country'] = models.Region.COUNTRY_UNITED_STATES
+                excludes['main_country'] = models.Region.COUNTRY_UNITED_STATES
+            token_types = self.request.GET.getlist('token_type')
+            if token_types:
+                filters['token_type__in'] = token_types
+        return models.Project.objects.filter(**filters).exclude(**excludes).distinct()
 
 
 class RetrieveProject(generics.RetrieveAPIView):
@@ -463,6 +480,22 @@ class MyProjectJobsId(APIView):
         job_listing.local_remote_options = clean_local_remote_options
         job_listing.save()
         return JsonResponse(serializers.JobListingSerializer(job_listing).data, status=status.HTTP_200_OK)
+
+
+class MyProjectLeave(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        # Check if the current user even has a project
+        conference_user = request.user.conference_user
+        if not conference_user.project:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        # Remove the user from the project
+        conference_user.project = None
+        conference_user.project_request = None
+        conference_user.save()
+        return HttpResponse(status=status.HTTP_200_OK)
 
 
 class MyProjectMembers(APIView):

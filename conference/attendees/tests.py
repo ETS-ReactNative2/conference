@@ -90,8 +90,8 @@ class MyPersonTest(AuthMixin):
 
         user = models.ConferenceUser.objects.get(pk=self.user.id)
         self.assertEqual(user.user, self.user)
-        self.assertEqual(user.user.first_name, 'foo')
-        self.assertEqual(user.user.last_name, 'bar')
+        self.assertEqual(user.first_name, 'foo')
+        self.assertEqual(user.last_name, 'bar')
         self.assertEqual(user.title, 'aaaaaaaa')
         self.assertEqual(user.company, 'aaaaaaaa')
         self.assertEqual(user.twitter, 'aaaaaaaa')
@@ -211,6 +211,7 @@ class MyProfessionalTest(AuthMixin):
                 'local_remote_options': [1, 2],
                 'country': 'us',
                 'city': 'aaaaaaaa',
+                'relocate': True,
                 'age': 42,
                 'experience': 23,
             }),
@@ -227,9 +228,10 @@ class MyProfessionalTest(AuthMixin):
         self.assertEqual(response_dict.get('local_remote_options'), [1, 2])
         self.assertEqual(response_dict.get('country'), 'us')
         self.assertEqual(response_dict.get('city'), 'aaaaaaaa')
+        self.assertEqual(response_dict.get('relocate'), True)
         self.assertEqual(response_dict.get('age'), 42)
         self.assertEqual(response_dict.get('experience'), 23)
-        self.assertNotIn('id', response_dict)
+        self.assertIn('id', response_dict)
 
         self.assertEqual(models.Professional.objects.count(), 1)
 
@@ -242,12 +244,13 @@ class MyProfessionalTest(AuthMixin):
         self.assertEqual(response_dict.get('skills_text'), '')
         self.assertEqual(response_dict.get('traits_text'), '')
         self.assertEqual(response_dict.get('know_most'), '')
-        self.assertEqual(response_dict.get('local_remote_options'), [2])
+        self.assertEqual(response_dict.get('local_remote_options'), [1])
         self.assertEqual(response_dict.get('country'), '')
         self.assertEqual(response_dict.get('city'), '')
+        self.assertEqual(response_dict.get('relocate'), False)
         self.assertEqual(response_dict.get('age'), None)
         self.assertEqual(response_dict.get('experience'), None)
-        self.assertNotIn('id', response_dict)
+        self.assertIn('id', response_dict)
 
         self.assertEqual(models.Professional.objects.count(), 1)
 
@@ -264,6 +267,7 @@ class MyProfessionalTest(AuthMixin):
                 'local_remote_options': [1, 2],
                 'country': 'us',
                 'city': 'aaaaaaaa',
+                'relocate': True,
                 'age': 42,
                 'experience': 23,
             }),
@@ -280,12 +284,13 @@ class MyProfessionalTest(AuthMixin):
         self.assertEqual(response_dict.get('skills_text'), '')
         self.assertEqual(response_dict.get('traits_text'), '')
         self.assertEqual(response_dict.get('know_most'), '')
-        self.assertEqual(response_dict.get('local_remote_options'), [2])
+        self.assertEqual(response_dict.get('local_remote_options'), [1])
         self.assertEqual(response_dict.get('country'), '')
         self.assertEqual(response_dict.get('city'), '')
+        self.assertEqual(response_dict.get('relocate'), False)
         self.assertEqual(response_dict.get('age'), None)
         self.assertEqual(response_dict.get('experience'), None)
-        self.assertNotIn('id', response_dict)
+        self.assertIn('id', response_dict)
 
         self.assertEqual(models.Professional.objects.count(), 1)
 
@@ -296,9 +301,8 @@ class ProfessionalsTest(AuthMixin):
         return 'professionals'
 
     def test_get_one(self):
-        self.user.first_name = 'foo'
-        self.user.last_name = 'bar'
-        self.user.save()
+        self.user.conference_user.first_name = 'foo'
+        self.user.conference_user.last_name = 'bar'
         self.user.conference_user.title = 'title'
         self.user.conference_user.company = 'company'
         self.user.conference_user.twitter = 'twitter'

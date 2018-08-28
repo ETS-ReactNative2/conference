@@ -8,7 +8,7 @@ import I18n from '../../../../../locales/i18n'
 import { INVESTOR_INDUSTRIES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
-import { FlowContainer } from '../../../design/Container'
+import { FlowContainer } from '../../../design/container'
 import { FlowListItem } from '../../../design/list-items'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
@@ -39,6 +39,7 @@ class InvesteeIndustries extends React.Component {
 
   flatListItem = ({ item }) => (
     <FlowListItem
+      multiple={false}
       text={ I18n.t(`common.industries.${item.slug}`) }
       selected={ this.isCheckboxSelected(item.index) }
       onSelect={ () => this.handleCheckboxClick(item.index) }

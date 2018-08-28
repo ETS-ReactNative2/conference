@@ -1,17 +1,21 @@
+import { fromCca2ToCountryObject } from '../common/countryParser'
 import { ROLES } from '../enums'
+import { PREFILL_EDIT } from '../profile/action-types'
 import {
+  CLEAR,
+  CLEAR_LOGIN_USER_ERROR,
+  CLEAR_SAVE_PROFILE_ERROR,
+  CLEAR_SIGN_UP_USER_ERROR,
+  LOGIN_USER_ERROR,
+  LOGIN_USER_SUCCESS,
   SAVE_EMPLOYEE,
   SAVE_INVESTOR,
   SAVE_PROFILE_EMPLOYER,
-  SAVE_PROFILE_INVESTEE,
-  SAVE_PROFILE_INFO,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_ERROR,
-  SIGN_UP_USER_ERROR,
-  CLEAR_SIGN_UP_USER_ERROR,
-  CLEAR_LOGIN_USER_ERROR,
   SAVE_PROFILE_ERROR,
-  CLEAR_SAVE_PROFILE_ERROR } from './action-types'
+  SAVE_PROFILE_INFO,
+  SAVE_PROFILE_INVESTEE,
+  SIGN_UP_USER_ERROR
+} from './action-types'
 
 const initialState = {
   auth: {
@@ -89,7 +93,9 @@ const initialState = {
     relocate: false,
     remote: false,
     country: '',
-    city: ''
+    city: '',
+    age: '',
+    experience: ''
   }
 }
 
@@ -258,7 +264,79 @@ export function signUpReducer (state = initialState, action) {
           }
         }
       }
+    case PREFILL_EDIT:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          type: action.data.role
+        },
+        [ action.data.role ]: {
+          ...state[ action.data.role ],
+          ...(action.data.prefill ? fillData(action.data.role, action.data.info) : {})
+        }
+      }
+    case CLEAR:
+      return initialState
+
     default:
       return state
+  }
+}
+
+function fillData (role, info) {
+  switch (role) {
+    case 'investee':
+      return {
+        projectName: info.name,
+        projectTagline: info.tagline,
+        projectDescription: info.description,
+        website: info.website,
+        whitepaper: info.whitepaper,
+        telegram: info.telegram,
+        twitter: info.twitter,
+        github: info.github,
+        news: info.news,
+        productStage: info.productStage,
+        fundingStage: info.fundingStage,
+        hiring: info.jobListings && info.jobListings.length > 0,
+        teamMembers: info.notable,
+        teamSize: String(info.size),
+        money: String(info.fundraisingAmount),
+        amount: String(info.fundraisingAmount),
+        tokenType: info.tokenType,
+        investorNationality: info.region ? info.region : 1,
+        regionOtherText: info.regionOtherText,
+        legal: fromCca2ToCountryObject(info.legalCountry || 'KR'),
+        main: fromCca2ToCountryObject(info.mainCountry || 'KR'),
+        giveaway: info.giveaway,
+        industry: info.industry,
+      }
+    case 'investor':
+      return {
+        productStages: info.productStages,
+        giveaways: info.giveaways,
+        nationality: fromCca2ToCountryObject(info.nationality || 'KR'),
+        investments: info.tokenTypes,
+        ticketSizes: info.ticketSizes,
+        stages: info.fundingStages,
+        marketLocation: info.region,
+        regionOtherText: info.regionOtherText,
+        industries: info.industries
+      }
+    case 'employee':
+      return {
+        role: info.role,
+        skills: info.skillsText,
+        traits: info.traitsText,
+        mostInfo: info.knowMost,
+        lookingForJob: true,
+        relocate: info.relocate,
+        remote: info.localRemoteOptions.findIndex(lro => lro === 2) !== -1,
+        country: fromCca2ToCountryObject(info.country || 'KR'),
+        city: info.city,
+        age: info.age ? String(info.age) : '',
+        experience: info.age ? String(info.experience): ''
+      }
   }
 }

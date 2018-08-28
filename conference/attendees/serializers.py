@@ -4,9 +4,6 @@ from . import models
 
 
 class ConferenceUserSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(max_length=models.ConferenceUser.FIRST_NAME_MAX_LENGTH, source='user.first_name')
-    last_name = serializers.CharField(max_length=models.ConferenceUser.LAST_NAME_MAX_LENGTH, source='user.last_name')
-
     class Meta:
         model = models.ConferenceUser
         fields = (
@@ -39,6 +36,7 @@ class InvestorSerializer(serializers.ModelSerializer):
             'ticket_sizes',
             'token_types',
             'user',
+            'is_active',
         )
 
     @transaction.atomic
@@ -98,6 +96,7 @@ class ProfessionalSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Professional
         fields = (
+            'id',
             'role',
             'role_other_text',
             'skills_text',
@@ -106,9 +105,11 @@ class ProfessionalSerializer(serializers.ModelSerializer):
             'local_remote_options',
             'country',
             'city',
+            'relocate',
             'age',
             'experience',
             'user',
+            'is_active',
         )
 
 

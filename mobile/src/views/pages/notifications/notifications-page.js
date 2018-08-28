@@ -1,3 +1,4 @@
+import I18n from '../../../../locales/i18n'
 import { Body, Button, Container, Content, List, ListItem, Right, Spinner, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -44,7 +45,7 @@ class NotificationsPage extends Component {
           { this.calculateUnreadNotifications() > 0 &&
           <ListItem itemDivider style={ { alignContent: 'flex-end', justifyContent: 'flex-end' } }>
             <Button small transparent danger onPress={ this.handleReadAllClick }>
-              <Text>Mark all as read</Text>
+              <Text>{ I18n.t('notifications.mark_all_read') }</Text>
             </Button>
           </ListItem>
           }
@@ -71,7 +72,7 @@ function NotificationItem ({ data, onRead }) {
       </Body>
       <Right>
         <Button small transparent danger disabled={ data.isRead } onPress={ onRead }>
-          <Text>{ data.isRead ? 'Readed' : 'Mark as read' }</Text>
+          <Text>{ data.isRead ? I18n.t('notifications.button_is_read') : I18n.t('notifications.button_is_unread') }</Text>
         </Button>
       </Right>
     </ListItem>

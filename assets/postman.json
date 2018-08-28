@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9011ce85-d09b-4836-8351-580317b50cb0",
+		"_postman_id": "062346fd-822e-4907-8b31-b5006d59b112",
 		"name": "Conference",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -29,6 +29,34 @@
 					],
 					"path": [
 						"api-token-auth",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/investors/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/investors/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"investors",
 						""
 					]
 				}
@@ -151,6 +179,64 @@
 			"response": []
 		},
 		{
+			"name": "/api/my_investor/deactivate/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_investor/deactivate/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_investor",
+						"deactivate",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_investor/reactivate/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_investor/reactivate/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_investor",
+						"reactivate",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/my_person/",
 			"request": {
 				"method": "GET",
@@ -246,7 +332,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other_text\": \"aaaaaaaa\",\n    \"skills_text\": \"skills\",\n    \"traits_text\": \"traits\",\n    \"know_most\": \"aaaaaaaa\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"aaaaaaaa\",\n    \"age\": 42,\n    \"experience\": 23\n}"
+					"raw": "{\n    \"role\": 12,\n    \"role_other_text\": \"aaaaaaaa\",\n    \"skills_text\": \"skills\",\n    \"traits_text\": \"traits\",\n    \"know_most\": \"aaaaaaaa\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"aaaaaaaa\",\n    \"relocate\": true,\n    \"age\": 42,\n    \"experience\": 23\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_professional/",
@@ -256,6 +342,64 @@
 					"path": [
 						"api",
 						"my_professional",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_professional/deactivate/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_professional/deactivate/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_professional",
+						"deactivate",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_professional/reactivate/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_professional/reactivate/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_professional",
+						"reactivate",
 						""
 					]
 				}
@@ -462,6 +606,35 @@
 			"response": []
 		},
 		{
+			"name": "/api/my_project/leave/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/leave/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						"leave",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/my_project/members/",
 			"request": {
 				"method": "GET",
@@ -545,6 +718,62 @@
 			"response": []
 		},
 		{
+			"name": "/api/professionals/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/professionals/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"professionals",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/projects/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/projects/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"projects",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/projects/<id>/",
 			"request": {
 				"method": "GET",
@@ -588,7 +817,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"foo@bar.baz\",\n\t\"password\": \"password\"\n}"
+					"raw": "{\n\t\"email\": \"foo@bar.baz\",\n\t\"password\": \"password\",\n\t\"phone\": \"12345678901234567890\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/users/",
