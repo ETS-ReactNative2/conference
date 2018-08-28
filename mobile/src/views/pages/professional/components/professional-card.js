@@ -1,11 +1,11 @@
-import { Icon, Text } from 'native-base'
+import { Text } from 'native-base'
 import React from 'react'
 import { Image, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
 import { itemWidth } from '../../../../common/dimension-utils'
-import { INVESTOR_INDUSTRIES, ROLES, JOB_LOCATION } from '../../../../enums'
+import { ROLES, JOB_LOCATION } from '../../../../enums'
 import { getUrl } from '../../../../common/fake-randomizer'
 
 export class ProfessionalCard extends React.Component {
@@ -42,7 +42,7 @@ export class ProfessionalCard extends React.Component {
           <Text style={ [styles.normalText, styles.roleText] }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
           <View style={ styles.rowFlag }>
             {
-              country && (<Flag style={ styles.countryFlag } code={ country }/>)
+              country ? (<Flag style={ styles.countryFlag } code={ country }/>) : null
             }
             <Text style={ styles.smallText }>{ city }</Text>
           </View>

@@ -69,12 +69,12 @@ class ProfessionalPage extends Component {
                       itemWidth={ itemWidth }
                       onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
                     />
-                    { this.professionals.length < 8 &&
+                    { this.professionals.length < 8 && (
                     <Pagination
                       dotColor={ 'rgba(255, 255, 255, 0.95)' }
                       inactiveDotColor={ 'rgba(255,255,255,0.75)' }
                       activeDotIndex={ this.state.currentIndex } dotsLength={ this.professionals.length }/>
-                    }
+                    )}
                   </React.Fragment>
                 ) }
               </View>
