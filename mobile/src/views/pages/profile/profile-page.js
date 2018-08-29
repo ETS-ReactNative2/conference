@@ -23,7 +23,6 @@ class ProfilePage extends React.Component {
   }
 
   componentDidMount () {
-    // this.props.fetchProfiles()
     AppState.addEventListener('change', this._handleAppStateChange)
   }
 
@@ -39,14 +38,6 @@ class ProfilePage extends React.Component {
   }
 
   openLink (url) {
-    // Linking.canOpenURL(url)
-    //   .then(supported => {
-    //     if (supported) {
-    //       Linking.openURL(url)
-    //     } else {
-    //       console.log('Don\'t know how to open URI: ' + url)
-    //     }
-    //   })
     this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri: url })
   }
 
@@ -66,7 +57,6 @@ class ProfilePage extends React.Component {
   }
 
   handleInvestorCreate = (devMode = false) => {
-    console.log({ devMode })
     if (devMode) {
       this.props.openEdit('investor', false)
       this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
@@ -175,7 +165,11 @@ class ProfilePage extends React.Component {
                 </View>
                 {
                   this.props.professional && (
-                    <Text style={ styles.warningText }>{ I18n.t('profile_page.deactivate_warning') }</Text>
+                    <Text style={ styles.warningText }>
+                      { this.props.professional.isActive
+                        ? I18n.t('profile_page.reactivate_warning')
+                        : I18n.t('profile_page.deactivate_warning') }
+                    </Text>
                   )
                 }
               </View>
@@ -232,8 +226,12 @@ class ProfilePage extends React.Component {
                   ) }
                 </View>
                 {
-                  this.props.professional && (
-                    <Text style={ styles.warningText }>{ I18n.t('profile_page.deactivate_warning') }</Text>
+                  this.props.investor && (
+                    <Text style={ styles.warningText }>
+                      { this.props.investor.isActive
+                        ? I18n.t('profile_page.reactivate_warning')
+                        : I18n.t('profile_page.deactivate_warning') }
+                    </Text>
                   )
                 }
               </View>

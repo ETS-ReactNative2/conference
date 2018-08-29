@@ -29,7 +29,8 @@
     "job_profile": "Job profile",
     "project": "Project",
     "investor": "Investor",
-    "deactivate_warning": "Deactivated – your profile will not show up for others. Click 'Reactivate' to be included again."
+    "deactivate_warning": "Deactivated – your profile will not show up for others. Click 'Reactivate' to be included again.",
+    "reactivate_warning": "Active – your profile is visible for others. Click 'Deactivate' to hide it."
   },
   "navigator": {
     "conference": "Conference",
