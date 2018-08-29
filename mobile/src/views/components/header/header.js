@@ -21,6 +21,21 @@ export class Header extends React.Component {
   }
 }
 
+export class MapHeader extends React.Component {
+  render () {
+    return (
+      <Header
+        {...this.props}
+        left={
+          <Button transparent onPress={ this.props.onMapClick}>
+            <Text style={{color: 'white', textDecorationLine: 'underline'}}>Map</Text>
+          </Button>
+        }
+      />
+    )
+  }
+}
+
 export class NavigationHeader extends React.Component {
   render () {
     return (
@@ -28,7 +43,7 @@ export class NavigationHeader extends React.Component {
         {...this.props}
         left={
           <Button transparent onPress={ this.props.onBack}>
-            <Icon style={this.props.iconStyle ? this.props.iconStyle : {color: 'white'}} name='arrow-back' />
+            <Text style={this.props.iconStyle ? this.props.iconStyle : {color: 'white'}} name='arrow-back' />
           </Button>
         }
       />

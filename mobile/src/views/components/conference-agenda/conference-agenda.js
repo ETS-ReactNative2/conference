@@ -24,7 +24,7 @@ class ConferenceAgenda extends Component {
               <View style={styles.sectionHeaderContainer}>{this.renderSectionHeader(singleSection.title)}</View>
               {singleSection.days.map(singleDayInSection => {
                 return (
-                  <ConferenceDay key={`section-${singleSection.title}-date-${singleDayInSection.date}`} day={singleDayInSection} />
+                  <ConferenceDay key={`section-${singleSection.title}-date-${singleDayInSection.date}`} day={singleDayInSection} showImages={this.props.showImages} />
                 )
               })}
             </React.Fragment>
@@ -71,7 +71,8 @@ ConferenceAgenda.propTypes = {
         }).isRequired
       ).isRequired
     }).isRequired
-  ).isRequired
+  ).isRequired,
+  showImages: PropTypes.func.isRequired
 }
 
 export default ConferenceAgenda

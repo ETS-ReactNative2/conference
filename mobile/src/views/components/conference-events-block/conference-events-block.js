@@ -38,6 +38,7 @@ class ConferenceEventsBlock extends Component {
                           >
                             <ConferenceEvent
                               event={singleClass}
+                              showImages={this.props.showImages}
                             />
                           </Block>
                         );
@@ -79,7 +80,8 @@ ConferenceEventsBlock.propTypes = {
         endDate: PropTypes.string.isRequired
       }).isRequired
     ).isRequired
-  }).isRequired
+  }).isRequired,
+  showImages: PropTypes.func.isRequired
 };
 
 export default ConferenceEventsBlock;

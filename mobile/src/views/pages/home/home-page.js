@@ -13,6 +13,7 @@ import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
 import { Subheader } from '../../design/subheader'
 import { InvestorItem } from './components/investor-item'
+import { SearchButton } from '../../design/buttons'
 import { ProfessionalItem } from './components/professional-item'
 import { ProjectItem } from './components/project-item'
 

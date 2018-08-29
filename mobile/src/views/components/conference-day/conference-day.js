@@ -25,7 +25,7 @@ class ConferenceDay extends Component {
     return events.map(singleEvent => {
       return (
         <View key={`row-event-${singleEvent.startDate}`}>
-          <ConferenceEventsBlock event={singleEvent} />
+          <ConferenceEventsBlock event={singleEvent} showImages={this.props.showImages} />
         </View>
       )
     })
@@ -70,7 +70,8 @@ ConferenceDay.propTypes = {
         ).isRequired
       }).isRequired
     ).isRequired
-  }).isRequired
+  }).isRequired,
+  showImages: PropTypes.func.isRequired
 }
 
 export default ConferenceDay

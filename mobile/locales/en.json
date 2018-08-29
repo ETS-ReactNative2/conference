@@ -41,6 +41,14 @@
   "agenda_event": {
     "until": "UNTIL"
   },
+  "agenda_page": {
+    "title": "Schedule",
+    "maps": {
+      "first_floor": "First Floor",
+      "rooftop": "Rooftop",
+      "second_floor": "Second Floor"
+    }
+  },
   "common": {
     "back": "Back",
     "view": "View",

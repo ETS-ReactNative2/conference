@@ -12,9 +12,11 @@ export const fetchConferenceSchedule = () => async dispatch => {
         events: singleDay.rows.map(singleRow => ({
           startDate: singleRow.time,
           classes: singleRow.slots.map(singleSlot => ({
+            label: singleSlot.kind.label,
             title: singleSlot.content ? singleSlot.content.title : singleSlot.kind.label,
             rooms: singleSlot.rooms ? singleSlot.rooms.map(singleRoom => singleRoom.name) : [],
             speakers: singleSlot.content ? [singleSlot.content.speaker.name, ...singleSlot.content.additionalSpeakers.map(singleAddSpeaker => singleAddSpeaker.name)] : [],
+            description: singleSlot.content ? singleSlot.content.description : null,
             endDate: singleSlot.end
           }))
         }))
