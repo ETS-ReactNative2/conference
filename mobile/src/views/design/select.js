@@ -17,7 +17,7 @@ export function CountrySelect ({ onChange, value, placeholder }) {
           {value.cca2 ? (<View style={ [ styles.touchFlag ] }>
             { CountryPicker.renderFlag(value.cca2 ? value.cca2 : '') }
           </View>) : null }
-          <Text style={ styles.text }>{ value.countryName ? value.countryName .toUpperCase() : placeholder }</Text>
+          <Text style={ styles.text }>{ value.countryName ? value.countryName.toUpperCase() : placeholder }</Text>
           <Icon style={ styles.icon } type={ 'FontAwesome' } color={ 'white' }
                 name={ 'chevron-down' }/>
         </View>

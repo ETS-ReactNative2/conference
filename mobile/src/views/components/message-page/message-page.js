@@ -34,7 +34,6 @@ class MessagePage extends React.Component {
 
   render () {
     const { showMessage, error } = this.props
-    console.log(error)
     return (
       <React.Fragment>
         { showMessage && (
