@@ -217,15 +217,9 @@ class Professionals(generics.ListAPIView):
         filters = {
             'is_active': True,
         }
-        roles = self.request.GET.get('roles')
+        roles = self.request.GET.getlist('role')
         if roles:
             filters['role__in'] = roles
-        local_remote_options = self.request.GET.get('local_remote_options')
-        if local_remote_options:
-            filters['local_remote_options__in'] = local_remote_options
-        country = self.request.GET.get('country')
-        if country:
-            filters['country'] = country.upper()
         return models.Professional.objects.filter(**filters).distinct()
 
 

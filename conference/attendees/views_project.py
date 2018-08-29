@@ -57,7 +57,8 @@ class ListProject(generics.ListAPIView):
             if product_stages:
                 filters['product_stage__in'] = product_stages
             region = self.request.GET.get('region')
-            if region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
+            clean_region = int(region) if region else None
+            if clean_region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
                 excludes['legal_country'] = models.Region.COUNTRY_UNITED_STATES
                 excludes['main_country'] = models.Region.COUNTRY_UNITED_STATES
             token_types = self.request.GET.getlist('token_type')

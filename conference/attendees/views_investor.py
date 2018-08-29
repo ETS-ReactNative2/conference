@@ -46,9 +46,10 @@ class ListInvestor(generics.ListAPIView):
             if product_stages:
                 filters['product_stages__in'] = product_stages
             region = self.request.GET.get('region')
-            if region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
+            clean_region = int(region) if region else None
+            if clean_region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
                 excludes['nationality'] = models.Region.COUNTRY_UNITED_STATES
-            elif region == models.Region.SOUTH_KOREA_ONLY:
+            elif clean_region == models.Region.SOUTH_KOREA_ONLY:
                 filters['nationality'] = models.Region.COUNTRY_SOUTH_KOREA
             ticket_sizes = self.request.GET.getlist('ticket_size')
             if ticket_sizes:
