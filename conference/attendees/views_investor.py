@@ -107,7 +107,13 @@ class InvestorsIdMessages(APIView):
             return JsonResponse({'code': 'no_such_investor'}, status=status.HTTP_404_NOT_FOUND)
 
         investor = queryset.get()
-        investor_user = investor.conference_user.user
+        investor_conference_user = investor.conference_user
+        if investor_conference_user.user:
+            investor_email = investor_conference_user.user.email
+        elif investor.email:
+            investor_email = investor.email
+        else:
+            return JsonResponse({'code': 'no_investor_email'}, status=status.HTTP_400_BAD_REQUEST)
 
         json_body = request.data
         message = json_body.get('message')
@@ -128,13 +134,19 @@ Project: {}
 
 Message:
 
-{}""".format(investor_user.first_name, request.user.first_name, request.user.last_name, project.name, clean_message)
+{}""".format(
+            investor_conference_user.first_name,
+            request.user.conference_user.first_name,
+            request.user.conference_user.last_name,
+            project.name,
+            clean_message
+        )
 
         email = EmailMessage(
             'Block Seoul project message',
             body,
             'noreply@meetluna.com',
-            [investor_user.email],
+            [investor_email],
             reply_to=[request.user.email],
         )
         email.send()

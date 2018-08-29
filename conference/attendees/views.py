@@ -295,7 +295,5 @@ def users_id(request, pk):
         return JsonResponse({
             'id': user.id,
             'email': user.email,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
         }, status=200)
     return HttpResponse(status=405)
