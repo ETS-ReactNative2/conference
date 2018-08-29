@@ -18,6 +18,10 @@
   "agenda_page": {
     "title": "Schedule"
   },
+  "message_page": {
+    "type_message": "Send message to investor",
+    "message": "Message"
+  },
   "profile_page": {
     "title": "My profile",
     "personal": "Personal data",
@@ -39,11 +43,13 @@
     "back": "Back",
     "view": "View",
     "edit": "Edit",
+    "send": "Send",
     "deactivate": "Deactivate",
     "create": "Create",
     "reactivate": "Reactivate",
     "leave": "Leave",
     "logout": "Logout",
+    "cancel": "Cancel",
     "spinner": {
       "logout": "You're being logout!",
       "clear": "Clearing app state!"

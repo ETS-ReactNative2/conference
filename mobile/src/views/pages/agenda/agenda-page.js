@@ -21,9 +21,9 @@ class AgendaPage extends Component {
     selected: 0
   }
 
-  componentDidMount () {
-    this.props.fetchConferenceAgenda()
-  }
+  // componentDidMount () {
+  //   this.props.fetchConferenceAgenda()
+  // }
 
   render () {
     const { isLoading, error, agenda, fetchAgenda } = this.props

@@ -12,14 +12,15 @@ import RectangleRed from '../assets/icons/square-pink.png'
 import TriangleBlack from '../assets/icons/triangle-white.png'
 import TriangleRed from '../assets/icons/triangle-pink.png'
 import { navigationService } from '../services'
+import LoadingPage from '../views/components/loading-page/loading-page'
+import MessagePage from '../views/components/message-page/message-page'
 import AgendaPage from '../views/pages/agenda/agenda-page'
 import FilterPage from '../views/pages/filters/filter-page'
 import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page'
-import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-page';
+import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-page'
 import FlowPage from '../views/pages/flow/flow-page'
 import { CommonProfileType } from '../views/pages/flow/steps'
 import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/flow/steps/common-profile-onboarding'
-import LoadingPage from '../views/components/loading-page/loading-page'
 import HomePage from '../views/pages/home/home-page'
 import InvestorPage from '../views/pages/investor/investor-page'
 import LoginPage from '../views/pages/login/login-page'
@@ -148,7 +149,8 @@ const AppStackNavigator = createStackNavigator({
   HOME_PAGE: {
     screen: DrawerNavigation,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   PROFILE_ONBOARDING_PAGE: {
@@ -238,20 +240,21 @@ const AppStackNavigator = createStackNavigator({
     })
   },
   INVESTOR_MAIN_FILTER_PAGE: {
-      screen: InvestorMainFilterPage,
+    screen: InvestorMainFilterPage,
   },
   PROJECT_MAIN_FILTER_PAGE: {
     screen: ProjectMainFilterPage,
   }
 })
 
-const AppStackNavigatorWithSpinner = ({ isLoading, message }) => {
+const AppStackNavigatorWithSpinner = ({ isLoading, message, showMessage }) => {
   return (
     <View style={ { flex: 1 } } forceInset={ { top: 'always' } }>
       <AppStackNavigator ref={ navigatorRef => {
         navigationService.setTopLevelNavigator(navigatorRef)
       } } styles={ { position: 'absolute' } }/>
-        <LoadingPage isLoading={isLoading} message={message} />
+      <LoadingPage isLoading={ isLoading } message={ message }/>
+      <MessagePage showMessage={ showMessage }/>
     </View>
   )
 }
@@ -259,7 +262,8 @@ const AppStackNavigatorWithSpinner = ({ isLoading, message }) => {
 const mapStateToProps = state => {
   return {
     isLoading: state.global.isLoading,
-    message: state.global.loadingMessage
+    message: state.global.loadingMessage,
+    showMessage: state.global.showMessage
   }
 }
 

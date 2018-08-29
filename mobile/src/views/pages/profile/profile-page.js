@@ -23,7 +23,7 @@ class ProfilePage extends React.Component {
   }
 
   componentDidMount () {
-    this.props.fetchProfiles()
+    // this.props.fetchProfiles()
     AppState.addEventListener('change', this._handleAppStateChange)
   }
 

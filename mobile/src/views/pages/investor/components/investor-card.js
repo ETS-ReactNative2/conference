@@ -1,12 +1,12 @@
 import { Icon, Text } from 'native-base'
 import React from 'react'
-import { Image, Linking, View } from 'react-native'
+import { Image, Linking, TouchableHighlight, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
 import { itemWidth } from '../../../../common/dimension-utils'
-import { FUNDING_STAGES, PRODUCT_STAGES, REGIONS, TICKET_SIZES, TOKEN_TYPES } from '../../../../enums'
 import { getUrl } from '../../../../common/fake-randomizer'
+import { FUNDING_STAGES, PRODUCT_STAGES, REGIONS, TICKET_SIZES, TOKEN_TYPES } from '../../../../enums'
 
 export class InvestorCard extends React.Component {
 
@@ -26,7 +26,7 @@ export class InvestorCard extends React.Component {
   }
 
   render () {
-    const { investor } = this.props
+    const { investor, onMessageClick, showMessage } = this.props
 
     const portraitPlaceholderUri = getUrl()
 
@@ -59,7 +59,8 @@ export class InvestorCard extends React.Component {
           alignItems: 'center'
         } }>
           <Text style={ styles.largeText }>{ `${firstName} ${lastName}` }</Text>
-          <Text style={ styles.normalText }>{ (investor.user && investor.user.company) ? investor.user.company : '' } </Text>
+          <Text
+            style={ styles.normalText }>{ (investor.user && investor.user.company) ? investor.user.company : '' } </Text>
           <Text style={ styles.normalText }>{ moneyRange }</Text>
           <Flag style={ styles.countryFlag } code={ investor.nationality }/>
           <View style={ {
@@ -92,7 +93,14 @@ export class InvestorCard extends React.Component {
               )) }
             </View>
           </View>
-          <View style={{ width: (itemWidth - 2 * 16), flexDirection: 'row', marginTop: 16, justifyContent: 'flex-start', alignItems: 'flex-start', alignContent: 'flex-start'}}>
+          <View style={ {
+            width: (itemWidth - 2 * 16),
+            flexDirection: 'row',
+            marginTop: 16,
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            alignContent: 'flex-start'
+          } }>
             <Text style={ styles.infoHeader }>{ I18n.t('cards.market') }</Text>
             { investor.region && investor.region !== 4 && (
               <Text style={ styles.smallText }>
@@ -114,14 +122,21 @@ export class InvestorCard extends React.Component {
             justifyContent: 'space-between',
             alignContent: 'space-between'
           } }>
-            <View>
-              <Icon style={ { textAlign: 'center' } } name={ 'ios-mail-open' }/>
-              <Text style={ styles.smallActionText }>{ I18n.t('cards.message') }</Text>
-            </View>
-            <View>
-              <Icon style={ { textAlign: 'center' } } name={ 'ios-heart-outline' }/>
-              <Text style={ styles.smallActionText }>{ I18n.t('cards.save') }</Text>
-            </View>
+            { showMessage && (
+              <TouchableHighlight onPress={ onMessageClick } underlayColor='transparent'>
+                <View>
+                  <Icon style={ { textAlign: 'center' } } name={ 'ios-mail-open' }/>
+                  <Text style={ styles.smallActionText }>{ I18n.t('cards.message') }</Text>
+                </View>
+              </TouchableHighlight>
+            ) }
+            { !showMessage && (<View/>) }
+            <TouchableHighlight onPress={ () => {} } underlayColor='transparent'>
+              <View>
+                <Icon style={ { textAlign: 'center' } } name={ 'ios-heart-outline' }/>
+                <Text style={ styles.smallActionText }>{ I18n.t('cards.save') }</Text>
+              </View>
+            </TouchableHighlight>
           </View>
         </View>
       </View>

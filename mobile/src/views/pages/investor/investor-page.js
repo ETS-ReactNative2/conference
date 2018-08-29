@@ -4,6 +4,7 @@ import { ScrollView, View, Dimensions } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { SafeAreaView } from 'react-navigation'
+import { globalActions } from '../../../global'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
@@ -39,12 +40,19 @@ class InvestorPage extends Component {
     this.forceUpdate()
   }
 
+  handleMessageClick = investor => {
+    this.props.openMessage(investor)
+  }
+
   get investors () {
     const defaults = this.props.navigation.getParam('defaults', false)
     return defaults ? this.props.defaultInvestors : this.props.investors
   }
 
-  _renderItem = ({ item: investor, index }) => <InvestorCard key={ index } investor={ investor }/>
+  _renderItem = ({ item: investor, index }) => {
+    const canShowMessaging = this.props.project !== null
+    return <InvestorCard key={ index } investor={ investor } showMessage={canShowMessaging} onMessageClick={ () => this.handleMessageClick(investor) }/>
+  }
 
   render () {
     const { itemWidth, sliderWidth } = getDimensions()
@@ -210,12 +218,15 @@ const styles = EStyleSheet.create({
 const mapStateToProps = state => {
   return {
     defaultInvestors: state.search.defaults.investors,
-    investors: state.search.investors
+    investors: state.search.investors,
+    project: state.profile.project
   }
 }
 
-const mapDispatchToProps = () => {
-  return {}
+const mapDispatchToProps = dispatch => {
+  return {
+    openMessage: investor => dispatch(globalActions.showMessage(investor))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvestorPage)

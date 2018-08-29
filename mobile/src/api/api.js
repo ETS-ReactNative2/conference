@@ -19,6 +19,15 @@ export async function fetchProfessionals (filters) {
   })
 }
 
+export async function sendMessage ({investorId, message}) {
+  const token = await storageService.getItem(TOKEN_NAME);
+  return axios.post(`/api/investors/${investorId}/messages/`, decamelizeKeys({message}) ,{
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
 export async function fetchProjects (filters) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/projects/', {

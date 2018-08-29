@@ -12,6 +12,8 @@ import { deactivateProfile } from '../profile/actions'
 
 import { CLEAR as SEARCH_CLEAR } from '../search/action-types'
 import { fetchDefaults } from '../search/actions'
+import { fetchProfiles } from '../profile/actions'
+import { fetchConferenceSchedule} from '../schedule/actions'
 import { navigationService, storageService } from '../services'
 import {
   CLEAR as SIGNUP_CLEAR,
@@ -235,6 +237,8 @@ export const login = (username, password, redirectPage) => async dispatch => {
     await storageService.setItem(TOKEN_NAME, token)
     dispatch(loginInSuccess())
     dispatch(fetchDefaults())
+    dispatch(fetchProfiles())
+    dispatch(fetchConferenceSchedule())
     navigationService.navigate(redirectPage)
   } catch (err) {
     let errorData = {}
