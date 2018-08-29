@@ -1,5 +1,5 @@
 import * as api from '../api/api'
-import { HIDE_MESSAGE, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING, SEND_MESSAGE_ERROR } from './action-types'
+import { HIDE_MESSAGE, SEND_MESSAGE_ERROR, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING } from './action-types'
 
 export function setGlobalLoading (message) {
   return {
@@ -20,9 +20,15 @@ export function sendMessage (msg) {
     try {
       await api.sendMessage({ investorId: investor.id, message: msg })
       dispatch(hideMessage())
-      return
     } catch (err) {
-      dispatch({type: SEND_MESSAGE_ERROR})
+      const { status } = err.response
+      dispatch({
+        type: SEND_MESSAGE_ERROR,
+        data: {
+          status
+        }
+      })
+      throw new Error('Error in send message')
     }
   }
 }

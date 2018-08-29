@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar, View } from 'react-native'
+import { StatusBar, View, Text } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
@@ -15,10 +15,14 @@ class MessagePage extends React.Component {
   }
 
   handleSend = async () => {
-    await this.props.sendMessage(this.state.message)
-    this.setState({
-      message: ''
-    })
+    try {
+      await this.props.sendMessage(this.state.message)
+      this.setState({
+        message: ''
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   handleCancel = () => {
@@ -29,7 +33,8 @@ class MessagePage extends React.Component {
   }
 
   render () {
-    const { showMessage } = this.props
+    const { showMessage, error } = this.props
+    console.log(error)
     return (
       <React.Fragment>
         { showMessage && (
@@ -50,6 +55,11 @@ class MessagePage extends React.Component {
                   numberOfLines={ 5 }
                   onChangeText={ value => this.setState({ message: value }) }
                   status={ this.state.message.length > 0 ? 'ok' : 'regular' }/>
+                {
+                  error && (
+                    <Text style={{color: 'red', marginTop: 8}}>{I18n.t('message_page.error')}</Text>
+                  )
+                }
                 <View style={ { marginTop: 16 } }>
                   <PrimaryButton
                     disabled={ this.state.message.length === 0 }
@@ -72,7 +82,8 @@ class MessagePage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    investor: state.global.investor
+    investor: state.global.investor,
+    error: state.global.showMessageError
   }
 }
 

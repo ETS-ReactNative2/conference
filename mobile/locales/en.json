@@ -20,7 +20,8 @@
   },
   "message_page": {
     "type_message": "Send message to investor",
-    "message": "Message"
+    "message": "Message",
+    "error": "Sending message to investor failed!"
   },
   "profile_page": {
     "title": "My profile",
