@@ -17,8 +17,8 @@ const LoadingPage = ({ isLoading, message }) => {
             barStyle="light-content"
           />
           <ImageBackground source={ BackgroundImage } style={ styles.imageContainer } blurRadius={ 1 }>
-            <LinearGradient style={ { flex: 1 } } locations={ [ 0, 1 ] }
-                            colors={ [ 'rgba(22, 25 ,45 , .83)', 'rgba(31, 91, 228, .83)' ] }>
+            <LinearGradient style={ { flex: 1 } } locations={ [ 0, 0.2, 1 ] }
+                            colors={ [ 'rgba(22, 25 ,45 , 1)', 'rgba(22, 25 ,45 , .83)', 'rgba(31, 91, 228, .83)' ] }>
               <View style={ styles.content }>
                 <ScrollView style={ { width: '100%' } } contentContainerStyle={ { flexGrow: 1 } }>
                   <Header title="LOADING" titleStyle={ styles.title }/>
