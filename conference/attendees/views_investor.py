@@ -50,6 +50,9 @@ class ListInvestor(generics.ListAPIView):
                 excludes['nationality'] = models.Region.COUNTRY_UNITED_STATES
             elif region == models.Region.SOUTH_KOREA_ONLY:
                 filters['nationality'] = models.Region.COUNTRY_SOUTH_KOREA
+            ticket_sizes = self.request.GET.getlist('ticket_size')
+            if ticket_sizes:
+                filters['ticket_sizes__in'] = ticket_sizes
             token_types = self.request.GET.getlist('token_type')
             if token_types:
                 filters['token_types__in'] = token_types

@@ -8,7 +8,7 @@ import Flag from 'react-native-flags';
 import I18n from '../../../../locales/i18n';
 import { PAGES_NAMES } from '../../../navigation';
 import { 
-  FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TICKET_SIZES, REGIONS_FILTER, TOKEN_TYPES, INVESTOR_INDUSTRIES
+  FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TICKET_SIZES, REGIONS_FILTER, TOKEN_TYPES
 } from '../../../enums';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { BLUE_BACKGROUND_COLOR } from '../../design/constants';
@@ -30,8 +30,7 @@ class InvestorMainFilter extends React.Component {
       { label: 'FUNDING STAGE', items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
       { label: 'INVESTOR BUYS', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
       { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
-      { label: 'REGION', items: REGIONS_FILTER, key: 'regions', stateKey: 'region' },
-      { label: 'INDUSTRIES', items: INVESTOR_INDUSTRIES, key: 'industries', stateKey: 'industry' }
+      { label: 'REGION', items: REGIONS_FILTER, key: 'regions', stateKey: 'region' }
     ];
 
     return (
