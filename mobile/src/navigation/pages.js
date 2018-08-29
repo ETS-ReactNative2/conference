@@ -31,6 +31,8 @@ import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WebviewPage from '../views/pages/webview/webview-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
+import PrivacyPolicyPage from '../views/pages/privacy-policy/privacy-policy'
+import TermsOfServicePage from '../views/pages/terms-of-service/terms-of-service'
 
 const PAGES_NAMES = {
   WELCOME_PAGE: 'WELCOME_PAGE',
@@ -52,7 +54,9 @@ const PAGES_NAMES = {
   PROJECT_MAIN_FILTER_PAGE: 'PROJECT_MAIN_FILTER_PAGE',
   WEBVIEW_PAGE: 'WEBVIEW_PAGE',
   PROFILE_PAGE: 'PROFILE_PAGE',
-  EDIT_BASIC_PROFILE: 'EDIT_BASIC_PROFILE'
+  EDIT_BASIC_PROFILE: 'EDIT_BASIC_PROFILE',
+  PRIVACY_POLICY_PAGE: 'PRIVACY_POLICY_PAGE',
+  TERMS_OF_SERVICE_PAGE: 'TERMS_OF_SERVICE_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -244,6 +248,20 @@ const AppStackNavigator = createStackNavigator({
   },
   PROJECT_MAIN_FILTER_PAGE: {
     screen: ProjectMainFilterPage,
+  },
+  PRIVACY_POLICY_PAGE: {
+    screen: PrivacyPolicyPage,
+    navigationOptions: () => ({
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  TERMS_OF_SERVICE_PAGE: {
+    screen: TermsOfServicePage,
+    navigationOptions: () => ({
+      header: null,
+      gesturesEnabled: false
+    })
   }
 })
 

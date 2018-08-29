@@ -100,7 +100,15 @@ class LoginPage extends React.Component {
                   <Text onPress={() => this.props.navigation.navigate(PAGES_NAMES.SIGNUP_PAGE)} style={styles.signup}>{I18n.t('login_page.signup')}</Text>
                 </View>
                 <View style={styles.policyAndConditionsWrapper}>
-                  <Text style={styles.policyAndConditions}>{ I18n.t('login_page.privacy_policy') } &amp; { I18n.t('login_page.terms_and_conditions')}</Text>
+                  <Text style={styles.policyAndConditions} onPress={() => this.props.navigation.navigate(PAGES_NAMES.PRIVACY_POLICY_PAGE)}>
+                    { I18n.t('login_page.privacy_policy')}
+                  </Text>
+                  <Text style={styles.policyAndConditions}>
+                    &amp;
+                  </Text>
+                  <Text style={styles.policyAndConditions} onPress={() => this.props.navigation.navigate(PAGES_NAMES.TERMS_OF_SERVICE_PAGE)}>
+                    { I18n.t('login_page.terms_and_conditions')}
+                  </Text>
                 </View>
             </View>
           </Content>
@@ -157,7 +165,8 @@ const styles = EStyleSheet.create({
   policyAndConditions: {
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 14,
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    marginRight: 10
   }
 });
 

@@ -28,7 +28,7 @@ export class NavigationHeader extends React.Component {
         {...this.props}
         left={
           <Button transparent onPress={ this.props.onBack}>
-            <Icon style={{color: 'white'}} name='arrow-back' />
+            <Icon style={this.props.iconStyle ? this.props.iconStyle : {color: 'white'}} name='arrow-back' />
           </Button>
         }
       />
