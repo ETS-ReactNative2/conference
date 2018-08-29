@@ -178,7 +178,7 @@ class MyInvestor(APIView):
         ) else models.Industry.objects.all()
 
         nationality = json_body.get('nationality')
-        clean_nationality = nationality[:models.COUNTRY_MAX_LENGTH] if nationality else ''
+        clean_nationality = nationality[:models.COUNTRY_MAX_LENGTH].upper() if nationality else ''
 
         product_stages = json_body.get('product_stages')
         clean_product_stages = [models.ProductStage.objects.get(pk=pk) for pk in product_stages] if (

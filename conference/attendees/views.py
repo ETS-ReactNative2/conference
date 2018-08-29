@@ -139,7 +139,7 @@ class MyProfessional(APIView):
             clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL)]
 
         country = json_body.get('country')
-        clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
+        clean_country = country[:models.COUNTRY_MAX_LENGTH].upper() if (
             country and
             models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
         ) else ''
@@ -225,7 +225,7 @@ class Professionals(generics.ListAPIView):
             filters['local_remote_options__in'] = local_remote_options
         country = self.request.GET.get('country')
         if country:
-            filters['country'] = country
+            filters['country'] = country.upper()
         return models.Professional.objects.filter(**filters).distinct()
 
 

@@ -164,10 +164,10 @@ class MyProject(APIView):
         clean_is_sponsor = is_sponsor if isinstance(is_sponsor, bool) else False
 
         legal_country = json_body.get('legal_country')
-        clean_legal_country = legal_country[:models.COUNTRY_MAX_LENGTH] if legal_country else ''
+        clean_legal_country = legal_country[:models.COUNTRY_MAX_LENGTH].upper() if legal_country else ''
 
         main_country = json_body.get('main_country')
-        clean_main_country = main_country[:models.COUNTRY_MAX_LENGTH] if main_country else ''
+        clean_main_country = main_country[:models.COUNTRY_MAX_LENGTH].upper() if main_country else ''
 
         name = json_body.get('name')
         clean_name = name[:models.Project.NAME_MAX_LENGTH] if name else '-'
