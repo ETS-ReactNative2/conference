@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^investors/defaults/$', InvestorsDefaults.as_view(), name='investors_defaults'),
     url(r'^investors/(?P<pk>\d+)/$', RetrieveInvestor.as_view(), name='investor_detail'),
     url(r'^investors/(?P<pk>\d+)/messages/$', InvestorsIdMessages.as_view(), name='investors_id_messages'),
+    url(r'^jobs/$', Jobs.as_view(), name='jobs'),
     url(r'^my_investor/$', MyInvestor.as_view(), name='my_investor'),
     url(r'^my_investor/deactivate/$', MyInvestorDeactivate.as_view(), name='my_investor_deactivate'),
     url(r'^my_investor/reactivate/$', MyInvestorReactivate.as_view(), name='my_investor_reactivate'),
