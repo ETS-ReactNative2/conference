@@ -278,8 +278,5 @@ const styles = EStyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  underline: {
-    textDecorationLine: 'underline'
   }
 })
