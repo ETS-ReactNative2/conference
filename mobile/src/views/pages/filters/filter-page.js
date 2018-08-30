@@ -1,14 +1,23 @@
-import { Container, Text, View } from 'native-base'
-import React, { Component } from 'react'
-import { ScrollView } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
-import { connect } from 'react-redux'
-import I18n from '../../../../locales/i18n'
-import * as filterActions from '../../../filters/actions'
-import { FlowButton } from '../../design/buttons'
-import { BLUE_BACKGROUND_COLOR } from '../../design/constants'
-import { FlowListItem } from '../../design/list-items'
-import { SubheaderWithSwitch } from '../../design/subheader'
+import { Button, Container, Left, Body, Right, ListItem, Text, View } from 'native-base';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
+import { BLUE_BACKGROUND_COLOR, 
+         PROJECT_FILTER_BACKGROUND_COLOR,
+         INVESTOR_FILTER_BACKGROUND_COLOR
+       } from '../../design/constants';
+import EStyleSheet from 'react-native-extended-stylesheet';
+import I18n from '../../../../locales/i18n';
+import { FlowButton } from '../../design/buttons';
+import { FlowContainer } from '../../design/container';
+import { FlowListItem } from '../../design/list-items';
+import { StepTitle } from '../../design/step-title';
+import { SubheaderWithSwitch } from '../../design/subheader';
+import * as filterActions from '../../../filters/actions';
+import { FlatList } from 'react-native';
+import { NavigationHeader } from '../../components/header/header';
+import WhiteLogo from '../../../assets/logos/logo-white.png'
 
 class FilterPage extends Component {
   constructor (props) {
@@ -85,18 +94,25 @@ class FilterPage extends Component {
     })
   }
 
-  render () {
-    const filterSetting = this.props.navigation.getParam('filterSetting', {})
-
-    const key = filterSetting.key
-    const { checkeds } = this.state
-    const isAllSelected = checkeds.find(item => item === false)
+  render() {
+    const filterSetting = this.props.navigation.getParam('filterSetting', {});
+    const filterField =  this.props.navigation.getParam('filterField', {});
+    const color = filterField === 'investor' ? INVESTOR_FILTER_BACKGROUND_COLOR : PROJECT_FILTER_BACKGROUND_COLOR;
+    const key = filterSetting.key;
+    const { checkeds } = this.state;
+    const isAllSelected = checkeds.find(item => item === false);
+    
 
     return (
-      <Container style={ styles.container }>
-        <ScrollView style={ { flex: 1 } }>
-          <View style={ styles.headerContainer }>
-            <Text style={ styles.headerText }>
+      <Container style={[styles.container, {backgroundColor: color}]}>
+        <ScrollView style={{ flex: 1 }}>
+          <NavigationHeader
+            onBack={ () => this.props.navigation.goBack() }
+            title={ I18n.t(`search_page.investor_filter.${key}.header`) }
+            titleStyle={ { color: '#fff', marginTop: 12 } }
+            rightIconSource={ WhiteLogo }/>
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>
               { I18n.t(`search_page.investor_filter.${key}.title`) }
             </Text>
           </View>
@@ -134,7 +150,6 @@ const styles = EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BLUE_BACKGROUND_COLOR,
-    padding: 5
   },
   headerText: {
     fontSize: 20,

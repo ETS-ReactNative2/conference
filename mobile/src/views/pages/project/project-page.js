@@ -44,7 +44,7 @@ class ProjectPage extends Component {
     return defaults ? this.props.defaultProjects : this.props.projects
   }
 
-  _renderItem = ({ item: project, index }) => <ProjectCard key={ index } project={ project }/>
+  _renderItem = ({ item: project, index }) => <ProjectCard key={ index } project={ project } navigation={ this.props.navigation }/>
 
   render () {
     const { itemWidth, sliderWidth } = getDimensions()

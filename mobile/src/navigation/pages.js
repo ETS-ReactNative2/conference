@@ -32,6 +32,9 @@ import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WebviewPage from '../views/pages/webview/webview-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
+import ProjectDescriptionPage from '../views/pages/project/project-description-page'
+import JobsPage from '../views/pages/job/jobs-page'
+import JobDescriptionPage from '../views/pages/job/job-description-page'
 import PrivacyPolicyPage from '../views/pages/privacy-policy/privacy-policy'
 import TermsOfServicePage from '../views/pages/terms-of-service/terms-of-service'
 
@@ -47,6 +50,9 @@ const PAGES_NAMES = {
   INVESTOR_PAGE: 'INVESTOR_PAGE',
   PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
   PROJECT_PAGE: 'PROJECT_PAGE',
+  PROJECT_DESCRIPTION_PAGE: 'PROJECT_DESCRIPTION_PAGE',
+  JOBS_PAGE: 'JOBS_PAGE',
+  JOB_DESCRIPTION_PAGE: 'JOB_DESCRIPTION_PAGE',
   PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
   PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
   LOCATION_PAGE: 'LOCATION_PAGE',
@@ -232,6 +238,27 @@ const AppStackNavigator = createStackNavigator({
       header: null
     })
   },
+  PROJECT_DESCRIPTION_PAGE: {
+    screen: ProjectDescriptionPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null
+    })
+  },
+  JOBS_PAGE: {
+    screen: JobsPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null
+    })
+  },
+  JOB_DESCRIPTION_PAGE: {
+    screen: JobDescriptionPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null
+    })
+  },
   WEBVIEW_PAGE: {
     screen: WebviewPage,
     navigationOptions: () => ({
@@ -242,14 +269,23 @@ const AppStackNavigator = createStackNavigator({
     screen: FilterPage,
     navigationOptions: () => ({
       title: 'Filter',
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
+      header: null
     })
   },
   INVESTOR_MAIN_FILTER_PAGE: {
     screen: InvestorMainFilterPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null
+    })
   },
   PROJECT_MAIN_FILTER_PAGE: {
     screen: ProjectMainFilterPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null
+    })
   },
   JOB_MAIN_FILTER_PAGE: {
     screen: JobMainFilterPage,

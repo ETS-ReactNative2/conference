@@ -12,6 +12,8 @@ import {
 } from '../../../enums';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { BLUE_BACKGROUND_COLOR } from '../../design/constants';
+import { NavigationHeader } from '../../components/header/header';
+import WhiteLogo from '../../../assets/logos/logo-white.png'
 
 class InvestorMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {
@@ -36,6 +38,11 @@ class InvestorMainFilter extends React.Component {
     return (
       <Container style={styles.container}>
         <ScrollView style={{ flex: 1 }}>
+          <NavigationHeader
+            onBack={ () => this.props.navigation.goBack() }
+            title={ I18n.t('search_page.investor_filter.main_title') }
+            titleStyle={ { color: '#fff', marginTop: 12 } }
+            rightIconSource={ WhiteLogo }/>
           <View style={styles.header}>
             <Text style={styles.headerText}>{ I18n.t('search_page.investor_filter.header') }</Text>
           </View>

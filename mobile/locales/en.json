@@ -529,14 +529,28 @@
   "professional_page": {
     "title": "Professional details"
   },
+  "job_page": {
+    "job_description_page_title": "Job Description"
+  },
   "project_page": {
-    "title": "Projects"
+    "title": "Projects",
+    "description_title": "Project Description",
+    "jobs_title": "JOBS AT ",
+    "description": "Description",
+    "hiring": "hiring",
+    "white_paper": "WhitePaper",
+    "website": "WebSite",
+    "in_the_press": "In the press",
+    "telegram": "Telegram",
+    "github": "Github",
+    "linkedin": "Linkedin"
   },
   "search_page": {
     "no_profile": "No profiles found. Try to change filters",
     "title": "Search",
     "update_filter": "UPDATE SEARCH FILTERS",
     "investor_filter": {
+      "main_title": "Investor Filter",
       "header": "These are the filters for searching for investors",
       "token_types": {
         "title": "Search investors looking for:",
@@ -575,6 +589,7 @@
       "header": "Tell us more about job offers you are looking for"
     },
     "project_filter": {
+      "main_title": "Project Filter",
       "header": "Tell us more about the projects you are searching for",
       "token_types": {
         "title": "Search projects having:",
