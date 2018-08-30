@@ -73,7 +73,38 @@ class InvestorSerializer(serializers.ModelSerializer):
         return instance
 
 
+class ProjectForJobListingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Project
+        fields = (
+            'id',
+            'image_url',
+            'name',
+        )
+
+
 class JobListingSerializer(serializers.ModelSerializer):
+    project = ProjectForJobListingSerializer()
+
+    class Meta:
+        model = models.JobListing
+        fields = (
+            'id',
+            'role',
+            'role_other_text',
+            'skills_text',
+            'link',
+            'description',
+            'part_time',
+            'payments',
+            'local_remote_options',
+            'country',
+            'city',
+            'project',
+        )
+
+
+class JobListingForProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.JobListing
         fields = (
@@ -115,7 +146,7 @@ class ProfessionalSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    job_listings = JobListingSerializer(many=True, read_only=True)
+    job_listings = JobListingForProjectSerializer(many=True, read_only=True)
 
     class Meta:
         model = models.Project

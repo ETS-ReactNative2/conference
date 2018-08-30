@@ -11,14 +11,14 @@ from . import serializers
 
 
 class Jobs(generics.ListAPIView):
-    serializer_class = serializers.ProfessionalSerializer
+    serializer_class = serializers.JobListingSerializer
 
     def get_queryset(self):
         filters = {}
         roles = self.request.GET.getlist('role')
         if roles:
             filters['role__in'] = roles
-        return models.Professional.objects.filter(**filters).distinct()
+        return models.JobListing.objects.filter(**filters).distinct()
 
 
 class ListProject(generics.ListAPIView):
