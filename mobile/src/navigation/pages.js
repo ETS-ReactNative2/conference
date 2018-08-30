@@ -155,7 +155,8 @@ const AppStackNavigator = createStackNavigator({
   WELCOME_PAGE: {
     screen: WelcomePage,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      gesturesEnabled: false
     }),
   },
   HOME_PAGE: {
@@ -168,19 +169,22 @@ const AppStackNavigator = createStackNavigator({
   PROFILE_ONBOARDING_PAGE: {
     screen: CommonProfileOnboarding,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   PROFILE_TYPE_PAGE: {
     screen: CommonProfileType,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   EDIT_BASIC_PROFILE: {
     screen: EditBasicInfo,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   FLOW_PAGE: {
@@ -196,7 +200,8 @@ const AppStackNavigator = createStackNavigator({
     screen: SearchPage,
     navigationOptions: () => ({
       title: I18n.t('search_page.title'),
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
+      gesturesEnabled: false
     })
   },
   LOGIN_PAGE: {
@@ -204,14 +209,16 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: I18n.t('login_page.title'),
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     }),
   },
   SIGNUP_PAGE: {
     screen: SignupPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     }),
   },
   INVESTOR_PAGE: {
@@ -219,7 +226,8 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: I18n.t('investor_page.title'),
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   PROFESSIONAL_PAGE: {
@@ -227,7 +235,8 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: I18n.t('professional_page.title'),
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   PROJECT_PAGE: {
@@ -235,34 +244,39 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: I18n.t('project_page.title'),
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   PROJECT_DESCRIPTION_PAGE: {
     screen: ProjectDescriptionPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   JOBS_PAGE: {
     screen: JobsPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   JOB_DESCRIPTION_PAGE: {
     screen: JobDescriptionPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   WEBVIEW_PAGE: {
     screen: WebviewPage,
     navigationOptions: () => ({
-      // header: null
+      // header: null,
+      gesturesEnabled: false
     })
   },
   FILTER_PAGE: {
@@ -270,25 +284,33 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: 'Filter',
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   INVESTOR_MAIN_FILTER_PAGE: {
     screen: InvestorMainFilterPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   PROJECT_MAIN_FILTER_PAGE: {
     screen: ProjectMainFilterPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   JOB_MAIN_FILTER_PAGE: {
     screen: JobMainFilterPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
   },
   PRIVACY_POLICY_PAGE: {
     screen: PrivacyPolicyPage,
