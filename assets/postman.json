@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f42c904a-8c6a-40b6-960e-0d718edc5090",
+		"_postman_id": "a607c18b-4f05-47d8-be99-c3395851876a",
 		"name": "Conference",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -333,7 +333,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"Foo\",\n    \"last_name\": \"Bar\",\n    \"title\": \"Title\",\n    \"company\": \"Company\",\n    \"twitter\": \"Twitter\",\n    \"facebook\": \"Facebook\",\n    \"telegram\": \"Telegram\",\n    \"linkedin\": \"Linkedin\"\n}"
+					"raw": "{\n\t\"image_url\": \"https://example.com/image\",\n    \"first_name\": \"Foo\",\n    \"last_name\": \"Bar\",\n    \"title\": \"Title\",\n    \"company\": \"Company\",\n    \"twitter\": \"Twitter\",\n    \"facebook\": \"Facebook\",\n    \"telegram\": \"Telegram\",\n    \"linkedin\": \"Linkedin\"\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_person/",

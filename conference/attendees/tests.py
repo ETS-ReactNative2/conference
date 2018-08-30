@@ -62,6 +62,7 @@ class MyPersonTest(AuthMixin):
         response = self.client.put(
             reverse(self.view()),
             json.dumps({
+                'image_url': 'https://example.com/image',
                 'first_name': 'foo',
                 'last_name': 'bar',
                 'title': 'aaaaaaaa',
@@ -76,6 +77,7 @@ class MyPersonTest(AuthMixin):
         )
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.get('user'), self.user.id)
+        self.assertEqual(response.data.get('image_url'), 'https://example.com/image')
         self.assertEqual(response.data.get('first_name'), 'foo')
         self.assertEqual(response.data.get('last_name'), 'bar')
         self.assertEqual(response.data.get('title'), 'aaaaaaaa')
@@ -90,6 +92,7 @@ class MyPersonTest(AuthMixin):
 
         user = models.ConferenceUser.objects.get(pk=self.user.id)
         self.assertEqual(user.user, self.user)
+        self.assertEqual(user.image_url, 'https://example.com/image')
         self.assertEqual(user.first_name, 'foo')
         self.assertEqual(user.last_name, 'bar')
         self.assertEqual(user.title, 'aaaaaaaa')
@@ -103,6 +106,7 @@ class MyPersonTest(AuthMixin):
         response = self.client.put(reverse(self.view()), **self.header)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.get('user'), self.user.id)
+        self.assertEqual(response.data.get('image_url'), '')
         self.assertEqual(response.data.get('first_name'), '')
         self.assertEqual(response.data.get('last_name'), '')
         self.assertEqual(response.data.get('title'), '')
@@ -117,6 +121,7 @@ class MyPersonTest(AuthMixin):
 
         user = models.ConferenceUser.objects.get(pk=self.user.id)
         self.assertEqual(user.user, self.user)
+        self.assertEqual(user.image_url, '')
         self.assertEqual(user.user.first_name, '')
         self.assertEqual(user.user.last_name, '')
         self.assertEqual(user.title, '')
@@ -131,6 +136,7 @@ class MyPersonTest(AuthMixin):
         response = self.client.put(
             reverse(self.view()),
             json.dumps({
+                'image_url': 'https://example.com/image',
                 'first_name': 'foo',
                 'last_name': 'bar',
                 'title': 'aaaaaaaa',
@@ -148,6 +154,7 @@ class MyPersonTest(AuthMixin):
         # Have that work and result in just one person.
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.get('user'), self.user.id)
+        self.assertEqual(response.data.get('image_url'), '')
         self.assertEqual(response.data.get('first_name'), '')
         self.assertEqual(response.data.get('last_name'), '')
         self.assertEqual(response.data.get('title'), '')
@@ -162,6 +169,7 @@ class MyPersonTest(AuthMixin):
 
         user = models.ConferenceUser.objects.get(pk=self.user.id)
         self.assertEqual(user.user, self.user)
+        self.assertEqual(user.image_url, '')
         self.assertEqual(user.user.first_name, '')
         self.assertEqual(user.user.last_name, '')
         self.assertEqual(user.title, '')

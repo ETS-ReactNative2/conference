@@ -36,6 +36,9 @@ class MyPerson(APIView):
             conference_user = models.ConferenceUser()
             conference_user.user = request.user
 
+        image_url = json_body.get('image_url')
+        clean_image_url = image_url[:models.URL_MAX_LENGTH] if image_url else ''
+
         first_name = json_body.get('first_name')
         clean_first_name = first_name[:models.FIRST_NAME_MAX_LENGTH] if first_name else ''
 
@@ -60,6 +63,7 @@ class MyPerson(APIView):
         linkedin = json_body.get('linkedin')
         clean_linkedin = linkedin[:models.ConferenceUser.LINKEDIN_MAX_LENGTH] if linkedin else ''
 
+        conference_user.image_url = clean_image_url
         conference_user.first_name = clean_first_name
         conference_user.last_name = clean_last_name
         conference_user.title = clean_title

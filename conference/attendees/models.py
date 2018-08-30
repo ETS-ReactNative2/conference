@@ -360,6 +360,8 @@ class ConferenceUser(models.Model):
 
     phone = models.CharField(max_length=PHONE_MAX_LENGTH, blank=True, default='')
 
+    image_url = models.URLField(blank=True, default='')
+
     first_name = models.CharField(max_length=FIRST_NAME_MAX_LENGTH, blank=True, default='')
 
     last_name = models.CharField(max_length=LAST_NAME_MAX_LENGTH, blank=True, default='')
