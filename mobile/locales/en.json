@@ -18,6 +18,10 @@
   "agenda_page": {
     "title": "Schedule"
   },
+  "job_item": {
+    "part_time": "Part-time possible",
+    "full_time": "Full-time only"
+  },
   "message_page": {
     "type_message": "Send message to investor",
     "message": "Message",
@@ -538,6 +542,10 @@
         "title": "Search investors looking for:",
         "header": "Token Type"
       },
+      "roles": {
+        "title": "Search job with roles",
+        "header": "Role"
+      },
       "funding_stages": {
         "title": "Search investors looking for:",
         "header": "Funding Stages"
@@ -562,6 +570,9 @@
         "title": "Search investors offering:",
         "header": "Ticket Size"
       }
+    },
+    "job_filter":{
+      "header": "Tell us more about job offers you are looking for"
     },
     "project_filter": {
       "header": "Tell us more about the projects you are searching for",
@@ -588,7 +599,8 @@
     },
     "tab_label_investor": "Investors",
     "tab_label_professional": "Professionals",
-    "tab_label_projects": "Projects"
+    "tab_label_projects": "Projects",
+    "tab_label_job": "Jobs"
   },
   "signup_page": {
     "account_type_employee": "Employee",

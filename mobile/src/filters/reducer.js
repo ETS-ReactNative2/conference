@@ -1,4 +1,4 @@
-import { CLEAR, SET_INVESTOR_FILTERS } from './action-types'
+import { CLEAR, SET_INVESTOR_FILTERS, SET_JOB_FILTERS } from './action-types'
 import { SET_PROJECT_FILTERS } from './action-types'
 
 const initialState = {
@@ -17,6 +17,9 @@ const initialState = {
     productStage: [],
     tokenType: [],
     region: [],
+  },
+  job: {
+    role: []
   }
 }
 
@@ -38,6 +41,14 @@ export function filterReducer (state = initialState, action) {
           [action.data.filterType]: action.data.values,
         }
       };
+    case SET_JOB_FILTERS:
+      return {
+        ...state,
+        job: {
+          ...state.job,
+          [action.data.filterType]: action.data.values
+        }
+      }
     case CLEAR: {
       return initialState
     }

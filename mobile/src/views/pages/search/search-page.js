@@ -1,4 +1,4 @@
-import { Tab, Tabs } from 'native-base'
+import { ScrollableTab, Tab, Tabs } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
@@ -13,6 +13,7 @@ import Header from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
 import InvestorsList from './components/investors-list'
+import JobList from './components/job-list'
 import ProfessionalsList from './components/professionals-list'
 import ProjectsList from './components/projects-list'
 
@@ -47,6 +48,11 @@ class SearchPage extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.PROJECT_PAGE, {
       project
     })
+  }
+
+  handleJobClick = job => {
+    // this.props.navigation.navigate(PAGES_NAMES.JOB_PAGE)
+    console.log({ job })
   }
 
   onTabChange = ({ from, i }) => {
@@ -90,9 +96,9 @@ class SearchPage extends React.Component {
                         rightIconSource={ WhiteLogo }/>
               </View>
               <Tabs
-                tabContainerStyle={ { borderBottomWidth: 0, backgroundColor: 'transparent' } }
-                style={ { borderColor: '#e8e8e8' } }
-                tabBarUnderlineStyle={ { backgroundColor: 'black', height: 1 } }
+                renderTabBar={ () => <ScrollableTab
+                  style={ { backgroundColor: 'transparent', borderBottomWidth: 0 } }/> }
+                tabBarUnderlineStyle={ { height: 0 } }
                 onChangeTab={ this.onTabChange }>
                 <Tab
                   style={ { backgroundColor: 'transparent' } }
@@ -110,7 +116,8 @@ class SearchPage extends React.Component {
                   activeTabStyle={ { backgroundColor: '#fff' } }
                   tabStyle={ { backgroundColor: 'transparent' } }
                   heading={ I18n.t('search_page.tab_label_professional') }>
-                  <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick } navigation={ this.props.navigation }/>
+                  <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick }
+                                     navigation={ this.props.navigation }/>
                 </Tab>
                 <Tab
                   style={ { backgroundColor: 'transparent' } }
@@ -119,7 +126,19 @@ class SearchPage extends React.Component {
                   activeTabStyle={ { backgroundColor: '#fff' } }
                   tabStyle={ { backgroundColor: 'transparent' } }
                   heading={ I18n.t('search_page.tab_label_projects') }>
-                  <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick } navigation={ this.props.navigation }/>
+                  <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick }
+                                navigation={ this.props.navigation }/>
+                </Tab>
+                <Tab
+                  style={ { backgroundColor: 'transparent' } }
+                  textStyle={ { color: 'white' } }
+                  activeTextStyle={ { color: 'black' } }
+                  activeTabStyle={ { backgroundColor: '#fff' } }
+                  tabStyle={ { backgroundColor: 'transparent' } }
+                  heading={ I18n.t('search_page.tab_label_job') }>
+                  <JobList style={ { marginTop: 8 } }
+                           onClick={ this.handleJobClick }
+                           navigation={ this.props.navigation }/>
                 </Tab>
               </Tabs>
             </ScrollView>

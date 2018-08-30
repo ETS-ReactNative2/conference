@@ -19,6 +19,17 @@ export async function fetchProfessionals (filters) {
   })
 }
 
+export async function fetchJobs (filters) {
+  const token = await storageService.getItem(TOKEN_NAME);
+  return axios.get('/api/jobs/', {
+    params: filters,
+    paramsSerializer: params => transformRequestOptions(params),
+    headers: {
+      'X-Authorization': `Bearer ${token}`
+    }
+  })
+}
+
 export async function sendMessage ({investorId, message}) {
   const token = await storageService.getItem(TOKEN_NAME);
   return axios.post(`/api/investors/${investorId}/messages/`, decamelizeKeys({message}) ,{
