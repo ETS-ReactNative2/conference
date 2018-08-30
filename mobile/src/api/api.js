@@ -166,24 +166,11 @@ export async function leaveProject () {
   })
 }
 
-export async function createJob ({
-  role, skillsText, city, country, link, description, partTime, localRemoteOptions, payments, project
-}) {
+export async function createJob ({ jobs}) {
   const token = await storageService.getItem(TOKEN_NAME)
-  return axios.post(
+  return axios.put(
     '/api/my_project/jobs/',
-    decamelizeKeys({
-      role,
-      skillsText,
-      city,
-      country,
-      link,
-      description,
-      partTime,
-      localRemoteOptions,
-      payments,
-      project
-    }),
+    decamelizeKeys({ jobs }),
     {
       headers: {
         'X-Authorization': `Bearer ${token}`

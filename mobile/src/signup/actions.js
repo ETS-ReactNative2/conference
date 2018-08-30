@@ -120,10 +120,9 @@ export function uploadProfile () {
           })
           if (investee.hiring) {
             const { roles, ...jobs } = employer
-
-            const promises = Object.keys(jobs).map(async key => {
+            const jobsArray = Object.keys(jobs).map(key => {
               const job = employer[ key ]
-              return api.createJob({
+              return {
                 role: ROLES.find(role => role.slug === key).index,
                 skillsText: job.keywords,
                 link: job.link,
@@ -133,9 +132,12 @@ export function uploadProfile () {
                 localRemoteOptions: job.location,
                 country: job.country ? job.country.cca2 : '',
                 city: job.city
-              })
+              }
             })
-            return Promise.all(promises)
+
+            console.log({jobsArray})
+
+            return api.createJob({ jobs: jobsArray })
           }
           return
         case 'investor':

@@ -551,7 +551,7 @@
 		{
 			"name": "/api/my_project/jobs/",
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -560,7 +560,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills_text\": \"skills\",\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
+					"raw": "{\n\t\"jobs\": [\n\t\t{\n\t\t    \"role\": 1,\n\t\t    \"skills_text\": \"skills1\",\n\t\t    \"link\": \"http://www.example.com/1\",\n\t\t    \"description\": \"description1\",\n\t\t    \"part_time\": true,\n\t\t    \"payments\": [1, 2, 3],\n\t\t    \"local_remote_options\": [1, 2],\n\t\t    \"country\": \"US\",\n\t\t    \"city\": \"Berkeley1\"\n\t\t},\n\t\t{\n\t\t    \"role\": 12,\n\t\t    \"role_other\": \"Massage Therapist\",\n\t\t    \"skills_text\": \"skills2\",\n\t\t    \"link\": \"http://www.example.com/2\",\n\t\t    \"description\": \"description2\",\n\t\t    \"part_time\": true,\n\t\t    \"payments\": [1, 2, 3],\n\t\t    \"local_remote_options\": [1, 2],\n\t\t    \"country\": \"US\",\n\t\t    \"city\": \"Berkeley2\"\n\t\t}\n\t]\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_project/jobs/",

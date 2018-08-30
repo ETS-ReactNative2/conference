@@ -308,81 +308,88 @@ class MyProjectJobs(APIView):
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
         result = models.JobListing.objects.filter(project=project)
-        return JsonResponse(result, status=status.HTTP_200_OK)
+        return JsonResponse({"jobs": [serializers.JobListingSerializer(job_listing).data for job_listing in result]},
+                            status=status.HTTP_200_OK)
 
     @transaction.atomic
-    def post(self, request, format=None):
-        json_body = request.data
-
-        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
-            models.ConferenceUser.objects.create(user=self.request.user)
+    def put(self, request, format=None):
+        body_data = request.data
+        body_list = body_data.get('jobs')
 
         # Check if the current user even has a project
         project = request.user.conference_user.project
         if not project:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
-        role = json_body.get('role')
-        clean_role = models.JobRole.objects.get(pk=role) if (
-            role and 1 <= role <= 12
-        ) else models.JobRole.objects.get(pk=models.JobRole.OTHER)
+        models.JobListing.objects.filter(project=project).delete()
 
-        # Check if there already is a job listing for that role
-        if models.JobListing.objects.filter(role=clean_role, project=project).exists():
-            return JsonResponse({'code': 'role_exists'}, status=status.HTTP_409_CONFLICT)
+        result = []
 
-        role_other_text = json_body.get('role_other_text')
-        clean_role_other_text = role_other_text[:models.JobRole.ROLE_OTHER_TEXT_MAX_LENGTH] if (
-            role_other_text and clean_role.pk == models.JobRole.OTHER
-        ) else ''
+        for json_body in body_list:
+            role = json_body.get('role')
+            clean_role = models.JobRole.objects.get(pk=role) if (
+                role and 1 <= role <= 12
+            ) else models.JobRole.objects.get(pk=models.JobRole.OTHER)
 
-        skills = json_body.get('skills_text')
-        clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
+            # Check if there already is a job listing for that role
+            if models.JobListing.objects.filter(role=clean_role, project=project).exists():
+                return JsonResponse({'code': 'role_exists'}, status=status.HTTP_409_CONFLICT)
 
-        link = json_body.get('link')
-        clean_link = link[:models.URL_MAX_LENGTH] if link else ''
+            role_other_text = json_body.get('role_other_text')
+            clean_role_other_text = role_other_text[:models.JobRole.ROLE_OTHER_TEXT_MAX_LENGTH] if (
+                role_other_text and clean_role.pk == models.JobRole.OTHER
+            ) else ''
 
-        description = json_body.get('description')
-        clean_description = description[:models.JobListing.DESCRIPTION_MAX_LENGTH] if description else ''
+            skills = json_body.get('skills_text')
+            clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
 
-        part_time = json_body.get('part_time')
-        clean_part_time = part_time if part_time else False
+            link = json_body.get('link')
+            clean_link = link[:models.URL_MAX_LENGTH] if link else ''
 
-        payments = json_body.get('payments')
-        clean_payments = [models.Payment.objects.get(pk=pk) for pk in payments] if payments else []
+            description = json_body.get('description')
+            clean_description = description[:models.JobListing.DESCRIPTION_MAX_LENGTH] if description else ''
 
-        local_remote_options = json_body.get('local_remote_options')
-        clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
-            local_remote_options
-        ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
+            part_time = json_body.get('part_time')
+            clean_part_time = part_time if part_time else False
 
-        country = json_body.get('country')
-        clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
-                country and
-                models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
-        ) else ''
+            payments = json_body.get('payments')
+            clean_payments = [models.Payment.objects.get(pk=pk) for pk in payments] if payments else []
 
-        city = json_body.get('city')
-        clean_city = city[:models.CITY_MAX_LENGTH] if (
-                city and
-                models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
-        ) else ''
+            local_remote_options = json_body.get('local_remote_options')
+            clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
+                local_remote_options
+            ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
 
-        job_listing = models.JobListing.objects.create(
-            role=clean_role,
-            role_other_text=clean_role_other_text,
-            skills_text=clean_skills,
-            link=clean_link,
-            description=clean_description,
-            part_time=clean_part_time,
-            country=clean_country,
-            city=clean_city,
-            project=project,
-        )
-        job_listing.payments = clean_payments
-        job_listing.local_remote_options = clean_local_remote_options
-        job_listing.save()
-        return JsonResponse(serializers.JobListingSerializer(job_listing).data, status=status.HTTP_201_CREATED)
+            country = json_body.get('country')
+            clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
+                    country and
+                    models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
+            ) else ''
+
+            city = json_body.get('city')
+            clean_city = city[:models.CITY_MAX_LENGTH] if (
+                    city and
+                    models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
+            ) else ''
+
+            job_listing = models.JobListing.objects.create(
+                role=clean_role,
+                role_other_text=clean_role_other_text,
+                skills_text=clean_skills,
+                link=clean_link,
+                description=clean_description,
+                part_time=clean_part_time,
+                country=clean_country,
+                city=clean_city,
+                project=project,
+            )
+            job_listing.payments = clean_payments
+            job_listing.local_remote_options = clean_local_remote_options
+            job_listing.save()
+            result.append(job_listing)
+
+        return JsonResponse({"jobs": [serializers.JobListingSerializer(job_listing).data for job_listing in result]},
+                            status=status.HTTP_201_CREATED)
 
 
 class MyProjectJobsId(APIView):

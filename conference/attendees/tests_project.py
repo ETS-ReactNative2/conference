@@ -476,11 +476,19 @@ class MyProjectJobsTest(AuthMixin):
         response = self.client.post(reverse(self.view()))
         self.assertEqual(response.status_code, 401)
 
-    def test_post_404(self):
+    def test_post_405(self):
         response = self.client.post(reverse(self.view()), **self.header)
+        self.assertEqual(response.status_code, 405)
+
+    def test_put_401(self):
+        response = self.client.put(reverse(self.view()))
+        self.assertEqual(response.status_code, 401)
+
+    def test_put_404(self):
+        response = self.client.put(reverse(self.view()), **self.header)
         self.assertEqual(response.status_code, 404)
 
-    # todo regular post test
+    # todo regular put test
 
 
 class MyProjectJobsIdTest(AuthMixin):
