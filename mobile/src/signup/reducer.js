@@ -271,10 +271,12 @@ export function signUpReducer (state = initialState, action) {
           ...state.profile,
           type: action.data.role
         },
-        [ action.data.role ]: {
-          ...state[ action.data.role ],
-          ...(action.data.prefill ? fillData(action.data.role, action.data.info) : {})
-        }
+        [ action.data.role ]:
+          action.data.prefill ? {
+              ...state[ action.data.role ],
+              ...fillData(action.data.role, action.data.info)
+            }
+            : initialState.investee
       }
     case CLEAR:
       return initialState
@@ -336,7 +338,7 @@ function fillData (role, info) {
         country: fromCca2ToCountryObject(info.country || 'KR'),
         city: info.city,
         age: info.age ? String(info.age) : '',
-        experience: info.age ? String(info.experience): ''
+        experience: info.age ? String(info.experience) : ''
       }
   }
 }

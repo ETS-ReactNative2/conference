@@ -103,13 +103,13 @@ class InvesteeMoneySource extends React.Component {
   }
 
   validateAmount = (amount) => {
-    return validator.isEmpty(amount) ? true : validator.isNumeric(amount) && Number(amount) > 0 && Number(amount) < 2147483647
+    return validator.isEmpty(amount) ? false : validator.isNumeric(amount) && Number(amount) > 0 && Number(amount) < 2147483647
   }
 
   isFormValid = () => {
     const { amount, nationality, regionOtherText } = this.state
     const isAmountValid = this.validateAmount(amount)
-    let isRegionValid = true;
+    let isRegionValid = nationality !== 0;
     if (nationality.slug === "other") {
       isRegionValid = regionOtherText.length <= 40
     }

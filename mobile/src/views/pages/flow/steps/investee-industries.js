@@ -39,7 +39,7 @@ class InvesteeIndustries extends React.Component {
 
   flatListItem = ({ item }) => (
     <FlowListItem
-      multiple={false}
+      multiple={ false }
       text={ I18n.t(`common.industries.${item.slug}`) }
       selected={ this.isCheckboxSelected(item.index) }
       onSelect={ () => this.handleCheckboxClick(item.index) }
@@ -65,6 +65,7 @@ class InvesteeIndustries extends React.Component {
         </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
+            disabled={ this.state.industry === -1 }
             text={ I18n.t('common.next') }
             onPress={ this.handleSubmit }
           />
