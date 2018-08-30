@@ -34,4 +34,4 @@ jinja2==2.8
 Fabric==1.11.1
 uwsgi==2.0.15
 gevent==1.2.2
-
+django-anymail[sendgrid]==3.0

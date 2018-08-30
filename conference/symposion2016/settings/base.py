@@ -147,6 +147,7 @@ INSTALLED_APPS = [
 
     # external
     "account",
+    "anymail",
     "easy_thumbnails",
     "eventlog",
     "markitup",
@@ -242,8 +243,8 @@ FIXTURE_DIRS = [
     os.path.join(PROJECT_ROOT, "fixtures"),
 ]
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-DEFAULT_FROM_EMAIL = 'PyCon Canada CFP <cfp@pycon.ca>'
+EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+DEFAULT_FROM_EMAIL = 'Block Seoul Team <noreply@meetluna.com>'
 
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_EMAIL_UNIQUE = True
@@ -279,4 +280,8 @@ SYMPOSION_PAGE_REGEX = r"(([\w-]{1,})(/[\w-]{1,})*)/"
 PROPOSAL_FORMS = {
     "tutorial": "symposion2016.pycon_proposals.forms.TutorialProposalForm",
     "talk": "symposion2016.pycon_proposals.forms.TalkProposalForm",
+}
+
+ANYMAIL = {
+    "SENDGRID_API_KEY": os.environ.get('SENDGRID_API_SEND_KEY'),
 }
