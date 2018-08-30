@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from rest_framework import generics
 from django.contrib.auth.hashers import make_password
+from django.core.files.storage import default_storage
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -12,6 +13,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models
 from . import serializers
+import random
+import string
 
 
 class MyPerson(APIView):
@@ -35,9 +38,6 @@ class MyPerson(APIView):
         else:
             conference_user = models.ConferenceUser()
             conference_user.user = request.user
-
-        image_url = json_body.get('image_url')
-        clean_image_url = image_url[:models.URL_MAX_LENGTH] if image_url else ''
 
         first_name = json_body.get('first_name')
         clean_first_name = first_name[:models.FIRST_NAME_MAX_LENGTH] if first_name else ''
@@ -63,7 +63,6 @@ class MyPerson(APIView):
         linkedin = json_body.get('linkedin')
         clean_linkedin = linkedin[:models.ConferenceUser.LINKEDIN_MAX_LENGTH] if linkedin else ''
 
-        conference_user.image_url = clean_image_url
         conference_user.first_name = clean_first_name
         conference_user.last_name = clean_last_name
         conference_user.title = clean_title
@@ -75,6 +74,24 @@ class MyPerson(APIView):
 
         conference_user.save()
         return Response(serializers.ConferenceUserSerializer(conference_user).data, status=status.HTTP_201_CREATED)
+
+
+class MyPersonImages(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        file = request.FILES['image']
+        conference_user = request.user.conference_user
+        if conference_user.guid:
+            guid = conference_user.guid
+        else:
+            guid = ''.join([random.choice(string.ascii_letters + string.digits)
+                            for _ in range(models.ConferenceUser.GUID_MAX_LENGTH)])
+            conference_user.guid = guid
+            conference_user.save()
+        default_storage.save(guid, file)
+        # https://blockseoul-test.s3.amazonaws.com/<guid>
+        return Response(status=status.HTTP_200_OK)
 
 
 class MyProfessional(APIView):
@@ -234,7 +251,6 @@ class ProfessionalsDefaults(APIView):
             'role': []
         }
         return JsonResponse(result)
-
 
 
 class ProfessionalsId(generics.RetrieveAPIView):

@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^my_investor/deactivate/$', MyInvestorDeactivate.as_view(), name='my_investor_deactivate'),
     url(r'^my_investor/reactivate/$', MyInvestorReactivate.as_view(), name='my_investor_reactivate'),
     url(r'^my_person/$', MyPerson.as_view(), name='my_person'),
+    url(r'^my_person/images/$', MyPersonImages.as_view(), name='my_person_images'),
     url(r'^my_professional/$', MyProfessional.as_view(), name='my_professional'),
     url(r'^my_professional/deactivate/$', MyProfessionalDeactivate.as_view(), name='my_professional_deactivate'),
     url(r'^my_professional/reactivate/$', MyProfessionalReactivate.as_view(), name='my_professional_reactivate'),

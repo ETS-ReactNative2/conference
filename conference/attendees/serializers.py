@@ -8,7 +8,6 @@ class ConferenceUserSerializer(serializers.ModelSerializer):
         model = models.ConferenceUser
         fields = (
             'user',
-            'image_url',
             'first_name',
             'last_name',
             'title',
