@@ -15,10 +15,29 @@ class Jobs(generics.ListAPIView):
 
     def get_queryset(self):
         filters = {}
-        roles = self.request.GET.getlist('role')
-        if roles:
-            filters['role__in'] = roles
+        if self.request.GET.get('defaults') == 'true':
+            professional = self.request.user.conference_user.professional
+            if professional:
+                if professional.role:
+                    filters['role'] = professional.role.pk
+        else:
+            roles = self.request.GET.getlist('role')
+            if roles:
+                filters['role__in'] = roles
         return models.JobListing.objects.filter(**filters).distinct()
+
+
+class JobsDefaults(APIView):
+
+    def get(self, request, format=None):
+        result = {}
+        professional = request.user.conference_user.professional
+        if not professional:
+            result['role'] = []
+        else:
+            if professional.role:
+                result['role'] = [professional.role.pk]
+        return JsonResponse(result)
 
 
 class ListProject(generics.ListAPIView):

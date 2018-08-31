@@ -180,6 +180,35 @@
 			"response": []
 		},
 		{
+			"name": "/api/jobs/defaults/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/jobs/defaults/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"jobs",
+						"defaults",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/my_investor/",
 			"request": {
 				"method": "GET",
