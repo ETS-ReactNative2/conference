@@ -1,13 +1,17 @@
+from django.conf import settings
 from django.db import transaction
 from rest_framework import serializers
 from . import models
 
 
 class ConferenceUserSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = models.ConferenceUser
         fields = (
             'user',
+            'image_url',
             'first_name',
             'last_name',
             'title',
@@ -17,6 +21,9 @@ class ConferenceUserSerializer(serializers.ModelSerializer):
             'telegram',
             'linkedin',
         )
+
+    def get_image_url(self, obj):
+        return settings.IMAGE_URL_BASE + obj.guid if obj.guid else ''
 
 
 class InvestorSerializer(serializers.ModelSerializer):

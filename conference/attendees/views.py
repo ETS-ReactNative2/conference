@@ -79,6 +79,12 @@ class MyPerson(APIView):
 class MyPersonImages(APIView):
 
     @transaction.atomic
+    def delete(self, request, format=None):
+        request.user.conference_user.guid = ''
+        request.user.conference_user.save()
+        return Response(status=status.HTTP_200_OK)
+
+    @transaction.atomic
     def post(self, request, format=None):
         file = request.FILES['image']
         conference_user = request.user.conference_user

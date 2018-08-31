@@ -352,6 +352,27 @@
 		{
 			"name": "/api/my_person/images/",
 			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{HOST}}/api/my_person/images/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_person",
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_person/images/",
+			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
