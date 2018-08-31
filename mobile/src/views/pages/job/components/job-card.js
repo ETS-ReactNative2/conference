@@ -36,18 +36,6 @@ export class JobCard extends React.Component {
             {skillsText}
           </Text>
         </View>
-        <View style = {{flexDirection: 'row'}}>
-          {description ? (
-            <Button style={styles.linkButton} onPress={() => this.handleOnDescription(description)}>
-              <Text style={styles.smallText}> Full Description </Text>
-            </Button>) : null
-          }
-          {link ? (
-            <Button style={styles.linkButton} onPress={() => this.handleLink(link)}>
-              <Text style={styles.smallText}> Link </Text>
-            </Button>
-          ) : null}
-        </View>
         <View style = {styles.localOrRemote}>
           {
             localRemoteOptions.map(indexItem => {
@@ -77,6 +65,18 @@ export class JobCard extends React.Component {
             })
           }
         </View>
+          <View style = {{flexDirection: 'row'}}>
+              {description ? (
+                  <Button style={styles.linkButton} onPress={() => this.handleOnDescription(description)}>
+                      <Text style={ [styles.smallActionText, styles.underline] }> Full Description </Text>
+                  </Button>) : null
+              }
+              {link ? (
+                  <Button style={styles.linkButton} onPress={() => this.handleLink(link)}>
+                      <Text style={ [styles.smallActionText, styles.underline] }> Link </Text>
+                  </Button>
+              ) : null}
+          </View>
       </View>
     )
   }
@@ -134,5 +134,12 @@ const styles = EStyleSheet.create({
     flexDirection: 'row',
     width: 100,
     justifyContent: 'space-around'
-  }
+  },
+    smallActionText: {
+        fontSize: 12,
+        color: '#888'
+    },
+    underline: {
+        textDecorationLine: 'underline'
+    }
 })

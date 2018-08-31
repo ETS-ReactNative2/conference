@@ -53,27 +53,27 @@ export class ProjectCard extends React.Component {
       } }>
         <View style = {{flexDirection: 'row'}}>
           <View style={{alignItems: 'center', minWidth: 100, justifyContent: 'center', paddingTop: 10, paddingBottom: 30 }}>
-            {whitepaper && (
+            {whitepaper ? (
               <Icon style={styles.linkButton} type='Ionicons' name='ios-paper' onPress={()=>this.goToUrl(whitepaper)} />
-            )}
-            {website && (
+            ) : null}
+            {website ? (
               <Icon style={styles.linkButton} type='MaterialCommunityIcons' name='web' onPress={()=>this.goToUrl(website)} />
-            )}
-            {news && (
+            ) : null}
+            {news ? (
               <Icon style={styles.linkButton} type='Entypo' name='new' onPress={()=>this.goToUrl(news)} />
-            )}
+            ) : null}
           </View>
           <Image style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
           <View style={{alignItems: 'center', minWidth: 100, justifyContent: 'center', paddingTop: 10, paddingBottom: 30 }}>
-            {telegram && (
+            {telegram ? (
               <Icon style={styles.linkButton} type='MaterialCommunityIcons' name='telegram' onPress={()=>this.goToUrl(telegram)} />
-            )}
-            {github && (
+            ) : null}
+            {github ? (
               <Icon style={styles.linkButton} name='logo-github' onPress={()=>this.goToUrl(github)} />
-            )}
-            {linkein && (
+            ) : null}
+            {linkein ? (
               <Icon style={styles.linkButton} type='Entypo' name='linkedin' onPress={()=>this.goToUrl(linkein)} />
-            )}
+            ) : null}
           </View>
         </View>
         <View style={ {
@@ -108,7 +108,7 @@ export class ProjectCard extends React.Component {
             width: (itemWidth - 2 * 16)
           } }>
             <View style={ { alignContent: 'space-between' } }>
-              <Text style={styles.smallText}>{ `Risng $${raising}` }</Text>
+              <Text style={styles.smallText}>{ raising ? `Raising $${raising}` : null }</Text>
               <Text style={styles.smallText}>{ giveAwayLabel }</Text>
               <Text style={styles.smallText}>{ fundingStageLabel }</Text>
             </View>
@@ -134,14 +134,14 @@ export class ProjectCard extends React.Component {
             alignContent: 'space-between'
           } }>
             <View>
-              {description && (
+              {description ? (
                 <Text onPress={ this.handleDescription } style={ [styles.smallActionText, styles.underline] }>{ I18n.t('project_page.description') }</Text>
-              )}
+              ) : null}
             </View>
             <View>
-              { jobListings && jobListings.length > 0 && (
+              { (jobListings && jobListings.length > 0) ? (
                 <Text onPress={ this.handleHiring } style={ [styles.smallActionText, styles.underline] }>{ I18n.t('project_page.hiring') }</Text>
-              )}
+              ) : null}
             </View>
           </View>
         </View>
@@ -268,8 +268,5 @@ const styles = EStyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  underline: {
-    textDecorationLine: 'underline'
   }
 })
