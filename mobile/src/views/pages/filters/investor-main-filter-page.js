@@ -49,7 +49,7 @@ class InvestorMainFilter extends React.Component {
           <List style={styles.filterList}>
             {
               fields.map((filterSetting, index) => (
-                <ListItem thumbnail key={new Date().getUTCMilliseconds() + index} style={styles.investorFilterItem} onPress={() => this.handleFilterItemClick(filterSetting)}>
+                <ListItem thumbnail key={index} style={styles.investorFilterItem} onPress={() => this.handleFilterItemClick(filterSetting)}>
                   <Left>
                     <Text style={styles.Text}>{ filterSetting.label }</Text>
                   </Left>

@@ -46,7 +46,6 @@ class ProfessionalsList extends React.Component {
               )
             }
           </List>
-          <View style = {{ height: 190, width: '100%'}} />
         </ScrollView>
       </Container>
     )

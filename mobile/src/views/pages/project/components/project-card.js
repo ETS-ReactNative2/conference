@@ -32,7 +32,7 @@ export class ProjectCard extends React.Component {
     const { project } = this.props;
     const { 
       fundraisingAmount, giveaway, fundingStage, productStage, industry, size, 
-      notable, description, jobListings, github, telegram, twitter, linkein, website, whitepaper
+      notable, description, jobListings, github, telegram, twitter, linkein, website, whitepaper, news
     } = project;
     const portraitPlaceholderUri = getUrl();
     const raising = fundraisingAmount ? fundraisingAmount : 0;
@@ -52,39 +52,28 @@ export class ProjectCard extends React.Component {
         alignItems: 'center'
       } }>
         <View style = {{flexDirection: 'row'}}>
-          <View style={{minWidth: 100, justifyContent: 'space-between', paddingTop: 30, paddingBottom: 30, paddingLeft: 5, paddingRight: 0}}>
-            { whitepaper ? (
-              <Button style={styles.linkButton} onPress={()=>this.goToUrl(whitepaper)}>
-                <Text style={styles.smallText}>{I18n.t('project_page.white_paper')}</Text>
-              </Button>
-            ) : null}
-            { website ? (
-              <Button style={styles.linkButton} onPress={()=>this.goToUrl(website)}>
-                <Text style={styles.smallText}>{I18n.t('project_page.website')}</Text>
-              </Button>
-
-            ) : null}
-            <Button style={styles.linkButton} onPress={()=>this.goToUrl()}>
-              <Text style={styles.smallText}>{I18n.t('project_page.in_the_press')}</Text>
-            </Button>
+          <View style={{alignItems: 'center', minWidth: 100, justifyContent: 'center', paddingTop: 10, paddingBottom: 30 }}>
+            {whitepaper && (
+              <Icon style={styles.linkButton} type='Ionicons' name='ios-paper' onPress={()=>this.goToUrl(whitepaper)} />
+            )}
+            {website && (
+              <Icon style={styles.linkButton} type='MaterialCommunityIcons' name='web' onPress={()=>this.goToUrl(website)} />
+            )}
+            {news && (
+              <Icon style={styles.linkButton} type='Entypo' name='new' onPress={()=>this.goToUrl(news)} />
+            )}
           </View>
           <Image style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
-          <View style={{minWidth: 100, justifyContent: 'space-between', paddingTop: 30, paddingBottom: 30, paddingLeft: 10}}>
-            {telegram ? (
-              <Button style={styles.linkButton} onPress={()=>this.goToUrl(telegram)}>
-                <Text style={styles.smallText}>{I18n.t('project_page.telegram')}</Text>
-              </Button>
-            ) : null}
-            {github ? (
-              <Button style={styles.linkButton} onPress={()=>this.goToUrl(github)}>
-                <Text style={styles.smallText}>{I18n.t('project_page.github')}</Text>
-              </Button>
-            ) : null}
-            {linkein ? (
-              <Button style={styles.linkButton} onPress={()=>this.goToUrl(linkein)}>
-                <Text style={styles.smallText}>{I18n.t('project_page.linkedin')}</Text>
-              </Button>
-            ) : null}
+          <View style={{alignItems: 'center', minWidth: 100, justifyContent: 'center', paddingTop: 10, paddingBottom: 30 }}>
+            {telegram && (
+              <Icon style={styles.linkButton} type='MaterialCommunityIcons' name='telegram' onPress={()=>this.goToUrl(telegram)} />
+            )}
+            {github && (
+              <Icon style={styles.linkButton} name='logo-github' onPress={()=>this.goToUrl(github)} />
+            )}
+            {linkein && (
+              <Icon style={styles.linkButton} type='Entypo' name='linkedin' onPress={()=>this.goToUrl(linkein)} />
+            )}
           </View>
         </View>
         <View style={ {
@@ -145,14 +134,14 @@ export class ProjectCard extends React.Component {
             alignContent: 'space-between'
           } }>
             <View>
-              {description ? (
+              {description && (
                 <Text onPress={ this.handleDescription } style={ [styles.smallActionText, styles.underline] }>{ I18n.t('project_page.description') }</Text>
-              ) : null}
+              )}
             </View>
             <View>
-              { (jobListings && jobListings.length > 0) ? (
+              { jobListings && jobListings.length > 0 && (
                 <Text onPress={ this.handleHiring } style={ [styles.smallActionText, styles.underline] }>{ I18n.t('project_page.hiring') }</Text>
-              ) : null}
+              )}
             </View>
           </View>
         </View>
@@ -169,9 +158,10 @@ const styles = EStyleSheet.create({
     marginLeft: 16
   },
   linkButton: {
-    width: 70,
+    width: 30,
     height: 30,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    alignContent: 'space-between'
   },
   content: {
     flex: 1,
@@ -278,5 +268,8 @@ const styles = EStyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  underline: {
+    textDecorationLine: 'underline'
   }
 })
