@@ -557,7 +557,7 @@
         "header": "Token Type"
       },
       "roles": {
-        "title": "Search job with roles",
+        "title": "Search with roles",
         "header": "Role"
       },
       "funding_stages": {
@@ -587,6 +587,9 @@
     },
     "job_filter":{
       "header": "Tell us more about job offers you are looking for"
+    },
+    "professional_filter":{
+      "header": "Tell us more about professionals you are looking for"
     },
     "project_filter": {
       "main_title": "Project Filter",

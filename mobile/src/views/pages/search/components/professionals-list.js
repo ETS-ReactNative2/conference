@@ -10,6 +10,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import Flag from 'react-native-flags';
 import { getUrl } from '../../../../common/fake-randomizer';
 import { ROLES, JOB_LOCATION } from '../../../../enums.js';
+import { PAGES_NAMES } from '../../../../navigation'
 import I18n from '../../../../../locales/i18n';
 
 class ProfessionalsList extends React.Component {
@@ -21,8 +22,16 @@ class ProfessionalsList extends React.Component {
     }
   }
 
-  handleClickFilter = () => {
+  componentWillReceiveProps (nextProps) {
+    const { filters, updateProfessionals } = this.props
 
+    if (filters !== nextProps.filters) {
+      updateProfessionals(nextProps.filters)
+    }
+  }
+
+  handleClickFilter = () => {
+    this.props.navigation.navigate(PAGES_NAMES.PROFESSIONAL_MAIN_FILTER_PAGE);
   }
 
   render () {
@@ -82,10 +91,10 @@ ProfessionalItem = ({ professional, onClick }) => {
           <View style={{flex: 0.3}}>
             {relocate && <Text style={styles.normalText}>Relocate</Text>}
             {
-              localRemoteOptions.map(item => {
+              localRemoteOptions.map((item, index) => {
                 const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`);
                 return (
-                  <Text style={styles.normalText}>{option}</Text>
+                  <Text key={index} style={styles.normalText}>{option}</Text>
                 )
               })
             }
@@ -188,7 +197,8 @@ ProfessionalsList.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    profiles: state.search.professionals
+    profiles: state.search.professionals,
+    filters: state.filter.professional
   }
 }
 

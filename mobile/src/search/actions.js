@@ -104,7 +104,7 @@ export function updateProfessionals (filters) {
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {
-          projects: data
+          professionals: data
         }
       })
     } catch (err) {

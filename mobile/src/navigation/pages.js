@@ -18,6 +18,7 @@ import AgendaPage from '../views/pages/agenda/agenda-page'
 import FilterPage from '../views/pages/filters/filter-page'
 import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page'
 import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-page'
+import ProfessionalMainFilterPage from '../views/pages/filters/professional-main-filter-page'
 import JobMainFilterPage from '../views/pages/filters/job-main-filter-page'
 import FlowPage from '../views/pages/flow/flow-page'
 import { CommonProfileType } from '../views/pages/flow/steps'
@@ -60,6 +61,7 @@ const PAGES_NAMES = {
   INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE',
   PROJECT_MAIN_FILTER_PAGE: 'PROJECT_MAIN_FILTER_PAGE',
   JOB_MAIN_FILTER_PAGE: 'JOB_MAIN_FILTER_PAGE',
+  PROFESSIONAL_MAIN_FILTER_PAGE: 'PROFESSIONAL_MAIN_FILTER_PAGE',
   WEBVIEW_PAGE: 'WEBVIEW_PAGE',
   PROFILE_PAGE: 'PROFILE_PAGE',
   EDIT_BASIC_PROFILE: 'EDIT_BASIC_PROFILE',
@@ -319,6 +321,14 @@ const AppStackNavigator = createStackNavigator({
   },
   PROJECT_MAIN_FILTER_PAGE: {
     screen: ProjectMainFilterPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  PROFESSIONAL_MAIN_FILTER_PAGE: {
+    screen: ProfessionalMainFilterPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
       header: null,

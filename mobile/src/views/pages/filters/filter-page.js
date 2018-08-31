@@ -23,7 +23,7 @@ class FilterPage extends Component {
   constructor (props) {
     super(props)
 
-    const { investorFilters, projectFilters, jobFilters } = props
+    const { investorFilters, projectFilters, jobFilters, professionalFilters } = props
 
     const filterSetting = this.props.navigation.getParam('filterSetting', {})
     const filterField = this.props.navigation.getParam('filterField', {})
@@ -40,6 +40,9 @@ class FilterPage extends Component {
       case 'job':
         filters = jobFilters
         break
+      case 'professional':
+        filters = professionalFilters
+        break
     }
 
     this.state = {
@@ -48,7 +51,7 @@ class FilterPage extends Component {
   }
 
   handleSubmit = (event, values) => {
-    const { navigation: { goBack }, setInvestorFilter, setProjectFilter, setJobFilter } = this.props
+    const { navigation: { goBack }, setInvestorFilter, setProjectFilter, setJobFilter, setProfessionalFilter } = this.props
     const filterSetting = this.props.navigation.getParam('filterSetting', {})
     const filterField = this.props.navigation.getParam('filterField', {})
     const { checkeds } = this.state
@@ -63,6 +66,9 @@ class FilterPage extends Component {
         break
       case 'job':
         setFilter = setJobFilter
+        break
+      case 'professional':
+        setFilter = setProfessionalFilter
         break
     }
 
@@ -173,7 +179,8 @@ const mapStateToProps = state => {
   return {
     investorFilters: state.filter.investor,
     projectFilters: state.filter.project,
-    jobFilters: state.filter.job
+    jobFilters: state.filter.job,
+    professionalFilters: state.filter.professional
   }
 }
 
@@ -181,7 +188,8 @@ const mapDispatchToProps = dispatch => {
   return {
     setInvestorFilter: filters => dispatch(filterActions.setInvestorFilter(filters)),
     setProjectFilter: filters => dispatch(filterActions.setProjectFilter(filters)),
-    setJobFilter: filters => dispatch(filterActions.setJobFilter(filters))
+    setJobFilter: filters => dispatch(filterActions.setJobFilter(filters)),
+    setProfessionalFilter: filters => dispatch(filterActions.setProfessionalFilter(filters))
   }
 }
 

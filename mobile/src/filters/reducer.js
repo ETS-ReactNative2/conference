@@ -5,7 +5,8 @@ import {
   SET_JOB_FILTERS,
   LOAD_MATCH_FILTERS,
   LOAD_MATCH_FILTERS_SUCCESS,
-  LOAD_MATCH_FILTERS_ERROR
+  LOAD_MATCH_FILTERS_ERROR,
+  SET_PROFESSIONAL_FILTERS
 } from './action-types'
 import { SET_PROJECT_FILTERS } from './action-types'
 
@@ -66,7 +67,16 @@ export function filterReducer (state = initialState, action) {
           [action.data.filterType]: action.data.values
         }
       }
-      case LOAD_MATCH_FILTERS:
+    case SET_PROFESSIONAL_FILTERS:
+      return {
+        ...state,
+        updated: true,
+        professional: {
+          ...state.professional,
+          [action.data.filterType]: action.data.values,
+        }
+      }
+    case LOAD_MATCH_FILTERS:
       return {
         ...state,
         isLoading: true,

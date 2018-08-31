@@ -2,6 +2,7 @@ import {
   SET_INVESTOR_FILTERS,
   SET_PROJECT_FILTERS,
   SET_JOB_FILTERS,
+  SET_PROFESSIONAL_FILTERS,
   LOAD_MATCH_FILTERS,
   LOAD_MATCH_FILTERS_SUCCESS,
   LOAD_MATCH_FILTERS_ERROR
@@ -40,6 +41,19 @@ export function setProjectFilter (filters) {
     try {
       dispatch({
         type: SET_PROJECT_FILTERS,
+        data: filters
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export function setProfessionalFilter (filters) {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: SET_PROFESSIONAL_FILTERS,
         data: filters
       })
     } catch (err) {
