@@ -1,4 +1,12 @@
-import { SET_INVESTOR_FILTERS, SET_PROJECT_FILTERS, SET_JOB_FILTERS } from './action-types'
+import {
+  SET_INVESTOR_FILTERS,
+  SET_PROJECT_FILTERS,
+  SET_JOB_FILTERS,
+  LOAD_MATCH_FILTERS,
+  LOAD_MATCH_FILTERS_SUCCESS,
+  LOAD_MATCH_FILTERS_ERROR
+} from './action-types'
+import * as api from '../api/api'
 
 export function setInvestorFilter (filters) {
   return async (dispatch, getState) => {
@@ -40,3 +48,28 @@ export function setProjectFilter (filters) {
   }
 }
 
+export function fetchFilters () {
+  return async dispatch => {
+    try {
+      dispatch({ type: LOAD_MATCH_FILTERS })
+      const [ investorResponse, projectResponse, professionalResponse, jobResponse ] = await Promise.all([
+        api.fetchInvestorFilter(),
+        api.fetchProjectFilter(),
+        api.fetchProfessionalFilter(),
+        api.fetchJobsFilter(),
+      ])
+      dispatch({
+        type: LOAD_MATCH_FILTERS_SUCCESS,
+        data: {
+          project: projectResponse.data,
+          investor: investorResponse.data,
+          professional: professionalResponse.data,
+          jobResponse: jobResponse.data
+        }
+      })
+    } catch (err) {
+      console.log({ err })
+      dispatch({ type: LOAD_MATCH_FILTERS_ERROR })
+    }
+  }
+}

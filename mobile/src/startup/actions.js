@@ -2,6 +2,7 @@ import { PAGES_NAMES } from '../navigation'
 import { fetchProfiles } from '../profile/actions'
 import { fetchConferenceSchedule } from '../schedule/actions'
 import { fetchDefaults } from '../search/actions'
+import { fetchFilters } from '../filters/actions'
 import { navigationService, storageService } from '../services'
 import { APP_LOADED } from './action-types'
 
@@ -20,6 +21,7 @@ export const loadApp = () => async dispatch => {
       await Promise.all([
         dispatch(fetchDefaults()),
         dispatch(fetchProfiles()),
+        dispatch(fetchFilters()),
         dispatch(fetchConferenceSchedule())
       ])
     } else {

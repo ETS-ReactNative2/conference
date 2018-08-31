@@ -415,3 +415,44 @@ export async function login (username, password) {
     }
   })
 }
+
+// Fetch default filter Options
+export async function fetchInvestorFilter () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.get('/api/investors/defaults/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`,
+      Accept: 'application/json'
+    }
+  })
+}
+
+export async function fetchProjectFilter () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.get('/api/projects/defaults/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`,
+      Accept: 'application/json'
+    }
+  })
+}
+
+export async function fetchProfessionalFilter () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.get('/api/professionals/defaults/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`,
+      Accept: 'application/json'
+    }
+  })
+}
+
+export async function fetchJobsFilter () {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.get('/api/jobs/defaults/', {
+    headers: {
+      'X-Authorization': `Bearer ${token}`,
+      Accept: 'application/json'
+    }
+  })
+}
