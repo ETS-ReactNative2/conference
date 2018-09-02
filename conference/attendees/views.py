@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from rest_framework import generics
+from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.core.files.storage import default_storage
 from django.db import transaction
@@ -80,24 +81,30 @@ class MyPersonImages(APIView):
 
     @transaction.atomic
     def delete(self, request, format=None):
-        request.user.conference_user.guid = ''
-        request.user.conference_user.save()
+        conference_user = request.user.conference_user
+        if conference_user.guid:
+            default_storage.delete(conference_user.guid)
+            conference_user.guid = ''
+            conference_user.save()
         return Response(status=status.HTTP_200_OK)
 
     @transaction.atomic
     def post(self, request, format=None):
-        file = request.FILES['image']
+        image_file = request.FILES['image']
         conference_user = request.user.conference_user
-        if conference_user.guid:
-            guid = conference_user.guid
-        else:
-            guid = ''.join([random.choice(string.ascii_letters + string.digits)
-                            for _ in range(models.ConferenceUser.GUID_MAX_LENGTH)])
-            conference_user.guid = guid
-            conference_user.save()
-        default_storage.save(guid, file)
-        # https://blockseoul-test.s3.amazonaws.com/<guid>
-        return Response(status=status.HTTP_200_OK)
+        old_guid = conference_user.guid if conference_user.guid else None
+        guid = ''.join([random.choice(string.ascii_letters + string.digits)
+                        for _ in range(models.ConferenceUser.GUID_MAX_LENGTH)])
+        default_storage.save(guid, image_file)
+        image_file.close()
+        conference_user.guid = guid
+        conference_user.save()
+        if old_guid:
+            default_storage.delete(old_guid)
+        result = {
+            'image_url': settings.IMAGE_URL_BASE + guid
+        }
+        return JsonResponse(result, status=status.HTTP_201_CREATED)
 
 
 class MyProfessional(APIView):
