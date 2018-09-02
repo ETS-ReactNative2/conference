@@ -10,7 +10,11 @@ import {
   LOAD_PROFILES_ERROR,
   LOAD_PROFILES_SUCCESS,
   UPDATE_BASIC,
-  PREFILL_EDIT
+  PREFILL_EDIT,
+  LOAD_PROJECT_MEMBERS,
+  LOAD_PROJECT_MEMBERS_SUCCESS,
+  LOAD_PROJECT_MEMBERS_ERROR,
+  ADD_PROJECT_MEMBER
 } from './action-types'
 
 export function fetchProfiles () {
@@ -135,6 +139,54 @@ export function deactivateProfile () {
       })
     } catch (err) {
       console.log({ err })
+    }
+  }
+}
+
+export function loadProjectMemebers () {
+  return async dispatch => {
+    try {
+      dispatch({
+        type: LOAD_PROJECT_MEMBERS
+      })
+      const membersResponse = await api.getMyProjectMembers()
+      dispatch({
+        type: LOAD_PROJECT_MEMBERS_SUCCESS,
+        data: membersResponse.data
+      })
+    } catch (err) {
+      console.log({ err })
+      dispatch({
+        type: LOAD_PROJECT_MEMBERS_ERROR
+      })
+    }
+  }
+}
+
+export function addProjetMember (email) {
+  return async dispatch => {
+    try {
+      await api.postMyProjectMembers({ email })
+      dispatch(loadProjectMemebers())
+    } catch (err) {
+      console.log({ err })
+      dispatch({
+        type: LOAD_PROJECT_MEMBERS_ERROR
+      })
+    }
+  }
+}
+
+export function removeProjectMember (memberId) {
+  return async dispatch => {
+    try {
+      await api.deleteMyProjectMembersId({ id: memberId })
+      dispatch(loadProjectMemebers())
+    } catch (err) {
+      console.log({ err })
+      dispatch({
+        type: LOAD_PROJECT_MEMBERS_ERROR
+      })
     }
   }
 }

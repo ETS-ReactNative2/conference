@@ -29,6 +29,7 @@ import LoginPage from '../views/pages/login/login-page'
 import ProfessionalPage from '../views/pages/professional/professional-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import ProjectPage from '../views/pages/project/project-page'
+import ProjectMembersPage from '../views/pages/project/project-members-page'
 import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WebviewPage from '../views/pages/webview/webview-page'
@@ -52,6 +53,7 @@ const PAGES_NAMES = {
   PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
   PROJECT_PAGE: 'PROJECT_PAGE',
   PROJECT_DESCRIPTION_PAGE: 'PROJECT_DESCRIPTION_PAGE',
+  PROJECT_MEMBERS_PAGE: 'PROJECT_MEMBERS_PAGE',
   JOBS_PAGE: 'JOBS_PAGE',
   JOB_DESCRIPTION_PAGE: 'JOB_DESCRIPTION_PAGE',
   PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
@@ -252,6 +254,14 @@ const AppStackNavigator = createStackNavigator({
   },
   PROJECT_DESCRIPTION_PAGE: {
     screen: ProjectDescriptionPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  PROJECT_MEMBERS_PAGE: {
+    screen: ProjectMembersPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
       header: null,

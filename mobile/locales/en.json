@@ -60,10 +60,17 @@
     "send": "Send",
     "deactivate": "Deactivate",
     "create": "Create",
+    "manage": "Manage",
     "reactivate": "Reactivate",
     "leave": "Leave",
     "logout": "Logout",
     "cancel": "Cancel",
+    "remove": "remove",
+    "approve": "approve",
+    "reject": "reject",
+    "add": "add",
+    "email": "email",
+    "email_placeholder": "Enter email",
     "spinner": {
       "logout": "You're being logout!",
       "clear": "Clearing app state!"
@@ -544,6 +551,10 @@
     "telegram": "Telegram",
     "github": "Github",
     "linkedin": "Linkedin"
+  },
+  "project_members_page": {
+    "title": "Project Members",
+    "emailError": "Could not add this user"
   },
   "search_page": {
     "no_profile": "No profiles found. Try to change filters",

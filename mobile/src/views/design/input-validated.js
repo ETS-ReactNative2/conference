@@ -10,6 +10,7 @@ class InputValidated extends Component {
         <React.Fragment>
           <Input keyboardType={this.props.keyboardType}
                  isSecure={this.props.isSecure}
+                 style={this.props.style}
                  placeholder={this.props.placeholder}
                  value={this.props.value}
                  labelText={this.props.labelText}
@@ -26,7 +27,7 @@ class InputValidated extends Component {
 
 const styles = EStyleSheet.create({
   inputContainer: {
-      flex: 1
+    flex: 1
   },
   errorText: {
     alignSelf: 'flex-start',
