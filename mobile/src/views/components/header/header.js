@@ -69,7 +69,7 @@ const styles = EStyleSheet.create({
     marginRight: 10
   },
   title: {
-    flex: 2,
+    flex: 3,
     textAlign: 'center',
     justifyContent: 'center',
     color: '#4A4A4A',

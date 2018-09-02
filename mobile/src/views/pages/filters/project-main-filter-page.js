@@ -76,7 +76,8 @@ class ProjectMainFilter extends React.Component {
 const styles = EStyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#0E224D'
+    backgroundColor: '#0E224D',
+    paddingTop: 20
   },
   filterList: {
     width: '100%',

@@ -78,7 +78,8 @@ class InvestorMainFilter extends React.Component {
 const styles = EStyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#1F5BE4'
+    backgroundColor: '#0E224D',
+    paddingTop: 20
   },
   filterList: {
     width: '100%',
@@ -91,7 +92,7 @@ const styles = EStyleSheet.create({
     height: 90,
     borderBottomColor: '#fff',
     borderBottomWidth: 1,
-    backgroundColor: '#1F5BE4',
+    backgroundColor: '#0E224D',
     marginLeft: 0,
     paddingLeft: 15,
   },

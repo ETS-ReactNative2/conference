@@ -156,6 +156,7 @@ const styles = EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BLUE_BACKGROUND_COLOR,
+    paddingTop: 20
   },
   headerText: {
     fontSize: 20,

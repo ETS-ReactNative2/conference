@@ -2,9 +2,11 @@ import { Body, Button, Container, Icon, Left, List, ListItem, Right, Text, View 
 import React from 'react'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { NavigationHeader } from '../../components/header/header';
 import I18n from '../../../../locales/i18n'
 import { ROLES } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
+import WhiteLogo from '../../../assets/logos/logo-white.png'
 
 class JobMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {
@@ -24,6 +26,11 @@ class JobMainFilter extends React.Component {
     return (
       <Container style={ styles.container }>
         <ScrollView style={ { flex: 1 } }>
+          <NavigationHeader
+            onBack={ () => this.props.navigation.goBack() }
+            title={ I18n.t('search_page.job_filter.main_title') }
+            titleStyle={ { color: '#fff', marginTop: 12 } }
+            rightIconSource={ WhiteLogo }/>
           <View style={ styles.header }>
             <Text style={ styles.headerText }>{ I18n.t('search_page.job_filter.header') }</Text>
           </View>
@@ -60,7 +67,8 @@ class JobMainFilter extends React.Component {
 const styles = EStyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#0E224D'
+    backgroundColor: '#0E224D',
+    paddingTop: 20
   },
   filterList: {
     width: '100%',
