@@ -618,13 +618,16 @@ class MyProjectMembers(APIView):
         user.conference_user.project = project
         user.conference_user.save()
 
-        result = [
-            {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name, 'request': False}
-            for member in request.user.conference_user.project.members].extend(
-            [
-                {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name, 'request': True}
-                for member in request.user.conference_user.project.member_requests
-            ])
+        result = {
+            'members': [
+                {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name}
+                for member in request.user.conference_user.project.members.all()
+            ],
+            'member_requests': [
+                {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name}
+                for member in request.user.conference_user.project.member_requests.all()
+            ]
+        }
         return JsonResponse(result, status=status.HTTP_200_OK)
 
 
