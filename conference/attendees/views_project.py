@@ -569,13 +569,16 @@ class MyProjectMembers(APIView):
         if not request.user.conference_user.project:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
-        result = [
-            {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name, 'request': False}
-            for member in request.user.conference_user.project.members].extend(
-            [
-                {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name, 'request': True}
-                for member in request.user.conference_user.project.member_requests
-            ])
+        result = {
+            'members': [
+                {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name}
+                for member in request.user.conference_user.project.members.all()
+            ],
+            'member_requests': [
+                {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name}
+                for member in request.user.conference_user.project.member_requests.all()
+            ]
+        }
         return JsonResponse(result, status=status.HTTP_200_OK)
 
     @transaction.atomic
