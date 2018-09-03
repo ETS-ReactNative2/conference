@@ -16,8 +16,13 @@ class InvestorsList extends React.Component {
     defaults: {}
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { filters, updateInvestors } = this.props
+  componentWillMount() {
+    const { filters, updateInvestors } = this.props;
+    updateInvestors(filters);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { filters, updateInvestors } = this.props;
 
     if (filters !== nextProps.filters) {
       updateInvestors(nextProps.filters)

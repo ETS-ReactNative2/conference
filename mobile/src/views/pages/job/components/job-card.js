@@ -38,9 +38,9 @@ export class JobCard extends React.Component {
         </View>
         <View style = {styles.localOrRemote}>
           {
-            localRemoteOptions.map(indexItem => {
+            localRemoteOptions.map((indexItem, index) => {
               return(
-                <Text style={styles.smallText}>{I18n.t(`common.job_location.${JOB_LOCATION.find(location => location.index===indexItem).slug}`)}</Text>
+                <Text key={index} style={styles.smallText}>{I18n.t(`common.job_location.${JOB_LOCATION.find(location => location.index===indexItem).slug}`)}</Text>
               )
             })
           }
@@ -58,9 +58,9 @@ export class JobCard extends React.Component {
         ) : null}
         <View style = {styles.payments}>
           {
-            payments.map(indexItem => {
+            payments.map((indexItem, index) => {
               return(
-                <Text style={styles.smallText}>{I18n.t(`common.payment.${PAYMENTS.find(location => location.index===indexItem).slug}`)}</Text>
+                <Text key={index} style={styles.smallText}>{I18n.t(`common.payment.${PAYMENTS.find(location => location.index===indexItem).slug}`)}</Text>
               )
             })
           }

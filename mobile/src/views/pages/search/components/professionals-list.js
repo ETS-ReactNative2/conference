@@ -20,6 +20,11 @@ class ProfessionalsList extends React.Component {
     }
   }
 
+  componentWillMount() {
+    const { filters, updateProfessionals } = this.props;
+    updateProfessionals(filters);
+  }
+
   componentWillReceiveProps (nextProps) {
     const { filters, updateProfessionals } = this.props
 

@@ -15,6 +15,11 @@ class JobList extends React.Component {
     defaults: {}
   }
 
+  componentWillMount() {
+    const { filters, updateJobs } = this.props;
+    updateJobs(filters);
+  }
+
   componentWillReceiveProps (nextProps) {
     const { filters, updateJobs } = this.props
 
@@ -28,6 +33,7 @@ class JobList extends React.Component {
   }
 
   render () {
+    const { jobs } = this.props
     return (
       <Container style={ { flex: 1 } }>
         <ScrollView style={ styles.scrollView }>
@@ -44,12 +50,12 @@ class JobList extends React.Component {
           </View>
           <List>
             {
-              this.props.jobs.length > 0 &&
-              this.props.jobs.map(job =>
+              jobs.length > 0 &&
+              jobs.map(job =>
                 <JobItem key={ job.id } job={ job }
                          onLink={ () => this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri: job.link }) }
                          onMark={ () => {} }
-                         onClick={ () => this.props.onClick(job) }/>
+                         onClick={ () => this.props.navigation.navigate(PAGES_NAMES.JOBS_PAGE, { project: { jobListings: jobs }, job }) }/>
               )
             }
           </List>

@@ -103,8 +103,8 @@ class SearchPage extends React.Component {
                 style={ { backgroundColor: 'transparent' } }
                 textStyle={ { color: 'white' } }
                 activeTextStyle={ { color: 'black' } }
-                activeTabStyle={ { backgroundColor: '#fff' } }
-                tabStyle={ { backgroundColor: 'transparent' } }
+                activeTabStyle={styles.activeTabStyle}
+                tabStyle={styles.tabStyle}
                 heading={ I18n.t('search_page.tab_label_investor') }>
                 <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
               </Tab>
@@ -112,8 +112,8 @@ class SearchPage extends React.Component {
                 style={ { backgroundColor: 'transparent' } }
                 textStyle={ { color: 'white' } }
                 activeTextStyle={ { color: 'black' } }
-                activeTabStyle={ { backgroundColor: '#fff' } }
-                tabStyle={ { backgroundColor: 'transparent' } }
+                activeTabStyle={styles.activeTabStyle}
+                tabStyle={styles.tabStyle}
                 heading={ I18n.t('search_page.tab_label_professional') }>
                 <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick }
                                     navigation={ this.props.navigation }/>
@@ -122,8 +122,8 @@ class SearchPage extends React.Component {
                 style={ { backgroundColor: 'transparent' } }
                 textStyle={ { color: 'white' } }
                 activeTextStyle={ { color: 'black' } }
-                activeTabStyle={ { backgroundColor: '#fff' } }
-                tabStyle={ { backgroundColor: 'transparent' } }
+                activeTabStyle={styles.activeTabStyle}
+                tabStyle={styles.tabStyle}
                 heading={ I18n.t('search_page.tab_label_projects') }>
                 <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick }
                               navigation={ this.props.navigation }/>
@@ -132,8 +132,8 @@ class SearchPage extends React.Component {
                 style={ { backgroundColor: 'transparent' } }
                 textStyle={ { color: 'white' } }
                 activeTextStyle={ { color: 'black' } }
-                activeTabStyle={ { backgroundColor: '#fff' } }
-                tabStyle={ { backgroundColor: 'transparent' } }
+                activeTabStyle={styles.activeTabStyle}
+                tabStyle={styles.tabStyle}
                 heading={ I18n.t('search_page.tab_label_job') }>
                 <JobList style={ { marginTop: 8 } }
                           onClick={ this.handleJobClick }
@@ -148,6 +148,16 @@ class SearchPage extends React.Component {
 }
 
 const styles = EStyleSheet.create({
+  activeTabStyle: {
+    backgroundColor: '#fff',
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+  tabStyle: {
+    backgroundColor: 'transparent',
+    paddingLeft: 0,
+    paddingRight: 0
+  },
   subheader: {
     fontSize: 16,
     fontWeight: 'bold',

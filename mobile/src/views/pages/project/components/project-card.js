@@ -139,7 +139,7 @@ export class ProjectCard extends React.Component {
             </View>
             <View style={ { alignContent: 'space-between' } }>
               {
-                notables.map((item, index) => <Text key={`notable-item-${index}`} style={ styles.smallText }>{ item }</Text>)
+                notables.map((item, index) => <Text key={index} style={styles.smallText}>{ item }</Text>)
               }
             </View>
           </View>

@@ -15,9 +15,14 @@ class ProjectsList extends React.Component {
     defaults: {}
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { filters, updateProjects } = this.props
+  componentWillMount() {
+    const { filters, updateProjects } = this.props;
+    updateProjects(filters);
+  }
 
+  componentWillReceiveProps(nextProps) {
+    const { filters, updateProjects } = this.props;
+    
     if (filters !== nextProps.filters) {
       updateProjects(nextProps.filters)
     }
