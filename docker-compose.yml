@@ -11,6 +11,7 @@ services:
       - CONFERENCE_DB_HOST=postgres
       - CONFERENCE_DB_PORT=5432
       - CONFERENCE_SECRET_KEY=123testtest
+      - PYTHONUNBUFFERED=0
     ports:
       - 8001:8001
     volumes:

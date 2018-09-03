@@ -31,6 +31,7 @@
     "title": "My profile",
     "personal": "Personal data",
     "job_profile": "Job profile",
+    "upload_loader_text": "Your profile is updating!",
     "project": "Project",
     "investor": "Investor",
     "deactivate_warning": "Deactivated – your profile will not show up for others. Click 'Reactivate' to be included again.",
@@ -80,6 +81,7 @@
     "attendees": "Professionals attending",
     "errors": {
       "email_exists": "Error creating new user.",
+      "incorrect_image_url": "Logo URL is not valid",
       "incorrect_amount": "Please enter number greater than 0 and less than 2147483647",
       "incorrect_email": "Please enter correct email address",
       "incorrect_investor_custom_location": "Location can be maximum 40 characters long",
@@ -457,7 +459,8 @@
       "project_description": "Project description",
       "project_name": "Project name",
       "project_tagline": "Project tagline",
-      "title": "Tell us more about your project"
+      "title": "Tell us more about your project",
+      "image_url": "Logo URL"
     },
     "title": "Signup flow DEV",
     "token_type": {

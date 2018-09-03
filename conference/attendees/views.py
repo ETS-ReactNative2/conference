@@ -17,6 +17,8 @@ from . import serializers
 import random
 import string
 
+from pprint import pprint
+
 
 class MyPerson(APIView):
 

@@ -1,12 +1,12 @@
-import { Icon, Text, Button, Item } from 'native-base'
+import { Icon, Text } from 'native-base'
 import React from 'react'
 import { Image, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
 import { itemWidth } from '../../../../common/dimension-utils'
-import { FUNDING_STAGES, INVESTOR_INDUSTRIES, REGIONS, TOKEN_TYPES, GIVEAWAY_TYPES, GIVEAWAY_TYPES_PROJECT,PRODUCT_STAGES } from '../../../../enums'
-import { getUrl } from '../../../../common/fake-randomizer'
+import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
+import { FUNDING_STAGES, GIVEAWAY_TYPES_PROJECT, INVESTOR_INDUSTRIES, PRODUCT_STAGES } from '../../../../enums'
 import { PAGES_NAMES } from '../../../../navigation/pages'
 
 export class ProjectCard extends React.Component {
@@ -16,32 +16,36 @@ export class ProjectCard extends React.Component {
   }
 
   handleDescription = () => {
-    const { project } = this.props;
-    this.props.navigation.navigate(PAGES_NAMES.PROJECT_DESCRIPTION_PAGE, { project });
+    const { project } = this.props
+    this.props.navigation.navigate(PAGES_NAMES.PROJECT_DESCRIPTION_PAGE, { project })
   }
 
   handleHiring = () => {
-    const { project } = this.props;
-    this.props.navigation.navigate(PAGES_NAMES.JOBS_PAGE, { project });
+    const { project } = this.props
+    this.props.navigation.navigate(PAGES_NAMES.JOBS_PAGE, { project })
   }
 
   goToUrl = uri => {
-    this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri });
+    this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri })
   }
+
   render () {
-    const { project } = this.props;
-    const { 
-      fundraisingAmount, giveaway, fundingStage, productStage, industry, size, 
+    const { project } = this.props
+
+    const {
+      fundraisingAmount, giveaway, fundingStage, productStage, industry, size, imageUrl,
       notable, description, jobListings, github, telegram, twitter, linkein, website, whitepaper, news
-    } = project;
-    const portraitPlaceholderUri = getUrl();
-    const raising = fundraisingAmount ? fundraisingAmount : 0;
-    const giveAwayLabel = giveaway ? I18n.t(`common.giveaway.${GIVEAWAY_TYPES_PROJECT.find(item => item.index === giveaway).slug}`) : '';
-    const fundingStageLabel = fundingStage ? I18n.t(`common.funding_stages.${FUNDING_STAGES.find(item => item.index === fundingStage).slug}`) : '';
-    const productStageLabel = productStage ? I18n.t(`common.product_stages.${PRODUCT_STAGES.find(item => item.index === productStage).slug}`) : '';
-    const industryLabel = industry ? I18n.t(`common.industries.${INVESTOR_INDUSTRIES.find(item => item.index === industry).slug}`) : '';
-    const notables = notable.split(' ');
-    
+    } = project
+    const avatar = imageUrl
+      ? {uri: `${imageUrl}?w=200&h=200`}
+      : ColorLogo
+    const raising = fundraisingAmount ? fundraisingAmount : 0
+    const giveAwayLabel = giveaway ? I18n.t(`common.giveaway.${GIVEAWAY_TYPES_PROJECT.find(item => item.index === giveaway).slug}`) : ''
+    const fundingStageLabel = fundingStage ? I18n.t(`common.funding_stages.${FUNDING_STAGES.find(item => item.index === fundingStage).slug}`) : ''
+    const productStageLabel = productStage ? I18n.t(`common.product_stages.${PRODUCT_STAGES.find(item => item.index === productStage).slug}`) : ''
+    const industryLabel = industry ? I18n.t(`common.industries.${INVESTOR_INDUSTRIES.find(item => item.index === industry).slug}`) : ''
+    const notables = notable.split(' ')
+
     return (
       <View style={ {
         borderRadius: 8,
@@ -51,29 +55,45 @@ export class ProjectCard extends React.Component {
         flex: 1,
         alignItems: 'center'
       } }>
-        <View style = {{flexDirection: 'row'}}>
-          <View style={{alignItems: 'center', minWidth: 100, justifyContent: 'center', paddingTop: 10, paddingBottom: 30 }}>
-            {whitepaper ? (
-              <Icon style={styles.linkButton} type='Ionicons' name='ios-paper' onPress={()=>this.goToUrl(whitepaper)} />
-            ) : null}
-            {website ? (
-              <Icon style={styles.linkButton} type='MaterialCommunityIcons' name='web' onPress={()=>this.goToUrl(website)} />
-            ) : null}
-            {news ? (
-              <Icon style={styles.linkButton} type='Entypo' name='new' onPress={()=>this.goToUrl(news)} />
-            ) : null}
+        <View style={ { flexDirection: 'row' } }>
+          <View style={ {
+            alignItems: 'center',
+            minWidth: 100,
+            justifyContent: 'center',
+            paddingTop: 10,
+            paddingBottom: 30
+          } }>
+            { whitepaper ? (
+              <Icon style={ styles.linkButton } type='Ionicons' name='ios-paper'
+                    onPress={ () => this.goToUrl(whitepaper) }/>
+            ) : null }
+            { website ? (
+              <Icon style={ styles.linkButton } type='MaterialCommunityIcons' name='web'
+                    onPress={ () => this.goToUrl(website) }/>
+            ) : null }
+            { news ? (
+              <Icon style={ styles.linkButton } type='Entypo' name='new' onPress={ () => this.goToUrl(news) }/>
+            ) : null }
           </View>
-          <Image style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
-          <View style={{alignItems: 'center', minWidth: 100, justifyContent: 'center', paddingTop: 10, paddingBottom: 30 }}>
-            {telegram ? (
-              <Icon style={styles.linkButton} type='MaterialCommunityIcons' name='telegram' onPress={()=>this.goToUrl(telegram)} />
-            ) : null}
-            {github ? (
-              <Icon style={styles.linkButton} name='logo-github' onPress={()=>this.goToUrl(github)} />
-            ) : null}
-            {linkein ? (
-              <Icon style={styles.linkButton} type='Entypo' name='linkedin' onPress={()=>this.goToUrl(linkein)} />
-            ) : null}
+          <Image style={ styles.portrait } source={ avatar }/>
+          <View style={ {
+            alignItems: 'center',
+            minWidth: 100,
+            justifyContent: 'center',
+            paddingTop: 10,
+            paddingBottom: 30
+          } }>
+
+            { telegram ? (
+              <Icon style={ styles.linkButton } type='MaterialCommunityIcons' name='telegram'
+                    onPress={ () => this.goToUrl(telegram) }/>
+            ) : null }
+            { github ? (
+              <Icon style={ styles.linkButton } name='logo-github' onPress={ () => this.goToUrl(github) }/>
+            ) : null }
+            { linkein ? (
+              <Icon style={ styles.linkButton } type='Entypo' name='linkedin' onPress={ () => this.goToUrl(linkein) }/>
+            ) : null }
           </View>
         </View>
         <View style={ {
@@ -108,18 +128,18 @@ export class ProjectCard extends React.Component {
             width: (itemWidth - 2 * 16)
           } }>
             <View style={ { alignContent: 'space-between' } }>
-              <Text style={styles.smallText}>{ raising ? `Raising $${raising}` : null }</Text>
-              <Text style={styles.smallText}>{ giveAwayLabel }</Text>
-              <Text style={styles.smallText}>{ fundingStageLabel }</Text>
+              <Text style={ styles.smallText }>{ raising ? `Raising $${raising}` : null }</Text>
+              <Text style={ styles.smallText }>{ giveAwayLabel }</Text>
+              <Text style={ styles.smallText }>{ fundingStageLabel }</Text>
             </View>
             <View style={ { alignContent: 'space-between' } }>
-              <Text style={styles.smallText}>{ productStageLabel }</Text>
-              <Text style={styles.smallText}>{ industryLabel }</Text>
-              <Text style={styles.smallText}>{ size ? `Team: ${size}` : '' }</Text>
+              <Text style={ styles.smallText }>{ productStageLabel }</Text>
+              <Text style={ styles.smallText }>{ industryLabel }</Text>
+              <Text style={ styles.smallText }>{ size ? `Team: ${size}` : '' }</Text>
             </View>
             <View style={ { alignContent: 'space-between' } }>
               {
-                notables.map(item => <Text style={styles.smallText}>{ item }</Text>)
+                notables.map((item, index) => <Text key={`notable-item-${index}`} style={ styles.smallText }>{ item }</Text>)
               }
             </View>
           </View>
@@ -134,14 +154,16 @@ export class ProjectCard extends React.Component {
             alignContent: 'space-between'
           } }>
             <View>
-              {description ? (
-                <Text onPress={ this.handleDescription } style={ [styles.smallActionText, styles.underline] }>{ I18n.t('project_page.description') }</Text>
-              ) : null}
+              { description ? (
+                <Text onPress={ this.handleDescription } style={ [ styles.smallActionText,
+                  styles.underline ] }>{ I18n.t('project_page.description') }</Text>
+              ) : null }
             </View>
             <View>
               { (jobListings && jobListings.length > 0) ? (
-                <Text onPress={ this.handleHiring } style={ [styles.smallActionText, styles.underline] }>{ I18n.t('project_page.hiring') }</Text>
-              ) : null}
+                <Text onPress={ this.handleHiring } style={ [ styles.smallActionText, styles.underline ] }>{ I18n.t(
+                  'project_page.hiring') }</Text>
+              ) : null }
             </View>
           </View>
         </View>

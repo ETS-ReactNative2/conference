@@ -1,12 +1,12 @@
-import { Icon, Text, Button } from 'native-base'
+import { Button, Text } from 'native-base'
 import React from 'react'
 import { Image, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
+import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
 import { itemWidth } from '../../../../common/dimension-utils'
-import { ROLES, JOB_LOCATION } from '../../../../enums'
-import { getUrl } from '../../../../common/fake-randomizer'
+import { JOB_LOCATION, ROLES } from '../../../../enums'
 import { PAGES_NAMES } from '../../../../navigation'
 
 export class ProfessionalCard extends React.Component {
@@ -16,14 +16,14 @@ export class ProfessionalCard extends React.Component {
   }
 
   handleToUrl = url => {
-    this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri: url });
+    this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri: url })
   }
 
   render () {
     const { professional } = this.props
     const { role, user, country, city, skillsText, traitsText, knowMost, age, experience, relocate, localRemoteOptions } = professional
-    const { firstName, lastName, linkedinUrl, telegramUrl } = user
-    const portraitPlaceholderUri = getUrl()
+    const { firstName, lastName, linkedinUrl, telegramUrl, imageUrl } = user
+    const avatar = imageUrl ? { uri: `${imageUrl}?w=240&h=240` } : ColorLogo
 
     return (
       <View style={ {
@@ -34,15 +34,15 @@ export class ProfessionalCard extends React.Component {
         flex: 1,
         alignItems: 'center'
       } }>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex: 0.3 }} />
-          <Image style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
-          <View style={styles.linksContainer}>
-            <Button style={styles.linkButton} onPress={() => this.handleToUrl(linkedinUrl)}>
-              <Text style={styles.smallText}>Linkedin</Text>
+        <View style={ { flexDirection: 'row' } }>
+          <View style={ { flex: 0.3 } }/>
+          <Image style={ styles.portrait } source={ avatar }/>
+          <View style={ styles.linksContainer }>
+            <Button style={ styles.linkButton } onPress={ () => this.handleToUrl(linkedinUrl) }>
+              <Text style={ styles.smallText }>Linkedin</Text>
             </Button>
-            <Button style={styles.linkButton} onPress={() => this.handleToUrl(telegramUrl)}>
-              <Text style={styles.smallText}>Telegram</Text>
+            <Button style={ styles.linkButton } onPress={ () => this.handleToUrl(telegramUrl) }>
+              <Text style={ styles.smallText }>Telegram</Text>
             </Button>
           </View>
         </View>
@@ -55,7 +55,8 @@ export class ProfessionalCard extends React.Component {
           alignItems: 'center'
         } }>
           <Text style={ styles.largeText }>{ `${firstName} ${lastName}` }</Text>
-          <Text style={ [styles.normalText, styles.roleText] }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+          <Text style={ [ styles.normalText,
+            styles.roleText ] }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
           <View style={ styles.rowFlag }>
             {
               country ? (<Flag style={ styles.countryFlag } code={ country }/>) : null
@@ -63,12 +64,12 @@ export class ProfessionalCard extends React.Component {
             <Text style={ styles.smallText }>{ city }</Text>
           </View>
           <View style={ styles.rowRemote }>
-            {relocate && <Text style={styles.smallText}>Relocate</Text>}
+            { relocate && <Text style={ styles.smallText }>Relocate</Text> }
             {
               localRemoteOptions.map(item => {
-                const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`);
+                const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`)
                 return (
-                  <Text style={styles.smallText}>{option}</Text>
+                  <Text style={ styles.smallText }>{ option }</Text>
                 )
               })
             }
@@ -78,12 +79,13 @@ export class ProfessionalCard extends React.Component {
           <Text style={ styles.smallText }>{ knowMost }</Text>
           <View style={ styles.rowYears }>
             <View style={ styles.row }>
-              <Text style={ [styles.smallText, styles.boldText] }>{ age && `Age: ` }</Text>
-              <Text style={ styles.smallText }>{ age && (age > 1 ? `${age} years`: `${age} year`) }</Text>
+              <Text style={ [ styles.smallText, styles.boldText ] }>{ age && `Age: ` }</Text>
+              <Text style={ styles.smallText }>{ age && (age > 1 ? `${age} years` : `${age} year`) }</Text>
             </View>
             <View style={ styles.row }>
-              <Text style={ [styles.smallText, styles.boldText] }>{ experience && `Experience: ` }</Text>
-              <Text style={ styles.smallText }>{ experience && (experience > 1 ? `${experience} years` : `${experience} year`) }</Text>
+              <Text style={ [ styles.smallText, styles.boldText ] }>{ experience && `Experience: ` }</Text>
+              <Text
+                style={ styles.smallText }>{ experience && (experience > 1 ? `${experience} years` : `${experience} year`) }</Text>
             </View>
           </View>
           <View style={ {

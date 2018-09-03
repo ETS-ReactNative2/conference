@@ -1,51 +1,53 @@
-import { 
-  Body, Button, Container, Left, List, ListItem, Thumbnail, Text, View
-} from 'native-base';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { ScrollView } from 'react-native';
-import { connect } from 'react-redux';
-import * as searchActions from '../../../../search/actions';
-import EStyleSheet from 'react-native-extended-stylesheet';
-import { PAGES_NAMES } from '../../../../navigation';
-import { FUNDING_STAGES, TOKEN_TYPES, PRODUCT_STAGES } from '../../../../enums.js';
-import I18n from '../../../../../locales/i18n';
+import { Button, Container, Left, List, ListItem, Text, Thumbnail, View } from 'native-base'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { ScrollView } from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import { connect } from 'react-redux'
+import I18n from '../../../../../locales/i18n'
+import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
+import { FUNDING_STAGES, PRODUCT_STAGES, TOKEN_TYPES } from '../../../../enums.js'
+import { PAGES_NAMES } from '../../../../navigation'
+import * as searchActions from '../../../../search/actions'
 
 class ProjectsList extends React.Component {
   state = {
     defaults: {}
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { filters, updateProjects } = this.props;
-    
+  componentWillReceiveProps (nextProps) {
+    const { filters, updateProjects } = this.props
+
     if (filters !== nextProps.filters) {
-      updateProjects(nextProps.filters);
+      updateProjects(nextProps.filters)
     }
   }
 
   handleClickFilter = () => {
-    this.props.navigation.navigate(PAGES_NAMES.PROJECT_MAIN_FILTER_PAGE);
+    this.props.navigation.navigate(PAGES_NAMES.PROJECT_MAIN_FILTER_PAGE)
   }
 
   render () {
     return (
       <Container style={ { flex: 1 } }>
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.headerContainer}>
-              { this.props.profiles.length === 0 && <Text style={styles.comment}>{ I18n.t('search_page.no_profile') }</Text> }
+        <ScrollView style={ styles.scrollView }>
+          <View style={ styles.headerContainer }>
+            { this.props.profiles.length === 0 &&
+            <Text style={ styles.comment }>{ I18n.t('search_page.no_profile') }</Text> }
             <Button
               transparent
-              style={styles.fullWidth}
-              onPress={this.handleClickFilter}>
-              <Text style={[styles.underline, styles.centerText, styles.largeText, styles.fullWidth]}>{I18n.t('search_page.update_filter')}</Text>
+              style={ styles.fullWidth }
+              onPress={ this.handleClickFilter }>
+              <Text style={ [ styles.underline, styles.centerText, styles.largeText, styles.fullWidth ] }>{ I18n.t(
+                'search_page.update_filter') }</Text>
             </Button>
           </View>
           <List>
             {
               this.props.profiles.length > 0 &&
               this.props.profiles.map(profile =>
-                <ProjectItem key={ profile.id } project={ profile } onMark={ () => {}} onClick={() => this.props.onClick(profile)}/>
+                <ProjectItem key={ profile.id } project={ profile } onMark={ () => {} }
+                             onClick={ () => this.props.onClick(profile) }/>
               )
             }
           </List>
@@ -56,40 +58,42 @@ class ProjectsList extends React.Component {
 }
 
 ProjectItem = ({ project, onClick }) => {
-  const projectPlaceholderUri = 'https://cdn2.iconfinder.com/data/icons/ikooni-outline-seo-web/128/seo3-100-512.png';
-  const projectName = project.name ? project.name : 'Undefined Name';
-  const tokenType = TOKEN_TYPES.find(item => item.index === project.tokenType);
-  const fundingStage = FUNDING_STAGES.find(item => item.index === project.fundingStage);
-  const productStage = PRODUCT_STAGES.find(item => item.index === project.productStage);
-  
+  const avatar = project.imageUrl
+    ? { uri: `${project.imageUrl}?w=200&h=200` }
+    : ColorLogo
+  const projectName = project.name ? project.name : 'Undefined Name'
+  const tokenType = TOKEN_TYPES.find(item => item.index === project.tokenType)
+  const fundingStage = FUNDING_STAGES.find(item => item.index === project.fundingStage)
+  const productStage = PRODUCT_STAGES.find(item => item.index === project.productStage)
+
   return (
-    <ListItem thumbnail onPress={ onClick } style={styles.listItem} >
+    <ListItem thumbnail onPress={ onClick } style={ styles.listItem }>
       <Left>
-        <Thumbnail square large style={styles.portrait} source={{uri: projectPlaceholderUri}} />
+        <Thumbnail square large style={ styles.portrait } source={ avatar }/>
       </Left>
-      <View style={{flex: 1}}>
-        <View style={styles.rowHeader}>
+      <View style={ { flex: 1 } }>
+        <View style={ styles.rowHeader }>
           <Left>
-            <Text style={styles.largeText}>{projectName}</Text>
+            <Text style={ styles.largeText }>{ projectName }</Text>
           </Left>
         </View>
-        <View style={styles.rowDetail}>
-          <View style={{flex: 1}}>
-            <Text style={styles.normalText}>
+        <View style={ styles.rowDetail }>
+          <View style={ { flex: 1 } }>
+            <Text style={ styles.normalText }>
               {
                 tokenType ? I18n.t(`common.token_types.${tokenType.slug}`) : ''
               }
             </Text>
           </View>
-          <View style={{flex: 0.8}}>
-            <Text style={styles.normalText}>
+          <View style={ { flex: 0.8 } }>
+            <Text style={ styles.normalText }>
               {
                 fundingStage ? I18n.t(`common.funding_stages.${fundingStage.slug}`) : ''
               }
             </Text>
           </View>
-          <View style={{flex: 1}}>
-            <Text style={styles.normalText}>
+          <View style={ { flex: 1 } }>
+            <Text style={ styles.normalText }>
               {
                 productStage ? I18n.t(`common.product_stages.${productStage.slug}`) : ''
               }
@@ -173,7 +177,7 @@ const styles = EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   }
-});
+})
 
 ProjectsList.propTypes = {
   profiles: PropTypes.array.isRequired,

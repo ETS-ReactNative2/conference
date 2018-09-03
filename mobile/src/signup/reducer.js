@@ -43,12 +43,13 @@ const initialState = {
     facebook: '',
     telegram: '',
     linkedin: '',
+    imageUrl: '',
     type: ''
   },
   investor: {
     productStages: [],
     giveaways: [],
-    nationality: '',
+    nationality: fromCca2ToCountryObject('KR'),
     investments: [],
     ticketSizes: [],
     stages: [],
@@ -76,10 +77,11 @@ const initialState = {
     tokenType: -1,
     investorNationality: 0,
     regionOtherText: '',
-    legal: '',
-    main: '',
+    legal: fromCca2ToCountryObject('KR'),
+    main: fromCca2ToCountryObject('KR'),
     giveaway: -1,
     industry: -1,
+    imageUrl: ''
   },
   employer: {
     roles: []
@@ -276,7 +278,7 @@ export function signUpReducer (state = initialState, action) {
               ...state[ action.data.role ],
               ...fillData(action.data.role, action.data.info)
             }
-            : initialState.investee
+            : initialState[action.data.role]
       }
     case CLEAR:
       return initialState
@@ -313,6 +315,7 @@ function fillData (role, info) {
         main: fromCca2ToCountryObject(info.mainCountry || 'KR'),
         giveaway: info.giveaway,
         industry: info.industry,
+        imageUrl: info.imageUrl
       }
     case 'investor':
       return {

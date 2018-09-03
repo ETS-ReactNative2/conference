@@ -1,17 +1,15 @@
-import { 
-  Body, Button, Container, Left, List, ListItem, Thumbnail, Right, Text, View
-} from 'native-base';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { ScrollView } from 'react-native';
-import {connect} from 'react-redux';
-import * as searchActions from '../../../../search/actions';
-import EStyleSheet from 'react-native-extended-stylesheet';
-import Flag from 'react-native-flags';
-import { getUrl } from '../../../../common/fake-randomizer';
-import { ROLES, JOB_LOCATION } from '../../../../enums.js';
+import { Button, Container, Left, List, ListItem, Right, Text, Thumbnail, View } from 'native-base'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { ScrollView } from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import Flag from 'react-native-flags'
+import { connect } from 'react-redux'
+import I18n from '../../../../../locales/i18n'
+import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
+import { JOB_LOCATION, ROLES } from '../../../../enums.js'
 import { PAGES_NAMES } from '../../../../navigation'
-import I18n from '../../../../../locales/i18n';
+import * as searchActions from '../../../../search/actions'
 
 class ProfessionalsList extends React.Component {
   constructor (props) {
@@ -31,27 +29,30 @@ class ProfessionalsList extends React.Component {
   }
 
   handleClickFilter = () => {
-    this.props.navigation.navigate(PAGES_NAMES.PROFESSIONAL_MAIN_FILTER_PAGE);
+    this.props.navigation.navigate(PAGES_NAMES.PROFESSIONAL_MAIN_FILTER_PAGE)
   }
 
   render () {
     return (
       <Container style={ { flex: 1 } }>
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.headerContainer}>
-              { this.props.profiles.length === 0 && <Text style={styles.comment}>{ I18n.t('search_page.no_profile') }</Text> }
+        <ScrollView style={ styles.scrollView }>
+          <View style={ styles.headerContainer }>
+            { this.props.profiles.length === 0 &&
+            <Text style={ styles.comment }>{ I18n.t('search_page.no_profile') }</Text> }
             <Button
               transparent
-              style={styles.fullWidth}
-              onPress={this.handleClickFilter}>
-              <Text style={[styles.underline, styles.centerText, styles.largeText, styles.fullWidth]}>{I18n.t('search_page.update_filter')}</Text>
+              style={ styles.fullWidth }
+              onPress={ this.handleClickFilter }>
+              <Text style={ [ styles.underline, styles.centerText, styles.largeText, styles.fullWidth ] }>{ I18n.t(
+                'search_page.update_filter') }</Text>
             </Button>
           </View>
           <List>
             {
               this.props.profiles.length > 0 &&
               this.props.profiles.map(profile =>
-                <ProfessionalItem key={ profile.id } professional={ profile } onMark={ () => {}} onClick={() => this.props.onClick(profile)}/>
+                <ProfessionalItem key={ profile.id } professional={ profile } onMark={ () => {} }
+                                  onClick={ () => this.props.onClick(profile) }/>
               )
             }
           </List>
@@ -62,39 +63,41 @@ class ProfessionalsList extends React.Component {
 }
 
 ProfessionalItem = ({ professional, onClick }) => {
-  const portraitPlaceholderUri = getUrl()
-  const { firstName, lastName } = professional.user;
-  const role = professional.role === 12 
-              ? professional.roleOtherText
-              : I18n.t(`common.roles.${ROLES.find(item => item.index === professional.role).slug}`);
-  const { skillsText, localRemoteOptions, relocate } = professional;
+  const avatar = professional.user && professional.user.imageUrl
+    ? { uri: `${professional.user.imageUrl}?w=200&h=200` }
+    : ColorLogo
+  const { firstName, lastName } = professional.user
+  const role = professional.role === 12
+    ? professional.roleOtherText
+    : I18n.t(`common.roles.${ROLES.find(item => item.index === professional.role).slug}`)
+  const { skillsText, localRemoteOptions, relocate } = professional
 
   return (
-    <ListItem thumbnail onPress={ onClick } style={styles.listItem} >
+    <ListItem thumbnail onPress={ onClick } style={ styles.listItem }>
       <Left>
-        <Thumbnail square large style={styles.portrait} source={{uri: portraitPlaceholderUri}} />
-        <Flag style={styles.countryFlag} code={professional.country} />
+        <Thumbnail square large style={ styles.portrait } source={ avatar }/>
+        <Flag style={ styles.countryFlag } code={ professional.country }/>
       </Left>
-      <View style={{flex: 1}}>
-        <View style={styles.rowHeader}>
+      <View style={ { flex: 1 } }>
+        <View style={ styles.rowHeader }>
           <Left>
-            <Text style={styles.largeText}>{`${firstName} ${lastName}`}</Text>
+            <Text style={ styles.largeText }>{ `${firstName} ${lastName}` }</Text>
           </Left>
           <Right>
           </Right>
         </View>
-        <View style={styles.rowDetail}>
-          <View style={{flex: 1}}>
-            <Text style={styles.normalText}>{role}</Text>
-            <Text style={styles.normalText}>{skillsText}</Text>
+        <View style={ styles.rowDetail }>
+          <View style={ { flex: 1 } }>
+            <Text style={ styles.normalText }>{ role }</Text>
+            <Text style={ styles.normalText }>{ skillsText }</Text>
           </View>
-          <View style={{flex: 0.3}}>
-            {relocate && <Text style={styles.normalText}>Relocate</Text>}
+          <View style={ { flex: 0.3 } }>
+            { relocate && <Text style={ styles.normalText }>Relocate</Text> }
             {
               localRemoteOptions.map((item, index) => {
-                const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`);
+                const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`)
                 return (
-                  <Text key={index} style={styles.normalText}>{option}</Text>
+                  <Text key={ index } style={ styles.normalText }>{ option }</Text>
                 )
               })
             }
@@ -187,7 +190,7 @@ const styles = EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-});
+})
 
 ProfessionalsList.propTypes = {
   profiles: PropTypes.array.isRequired,

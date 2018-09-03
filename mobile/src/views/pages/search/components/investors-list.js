@@ -1,47 +1,46 @@
-import {
-  Button, Container, Left, List, ListItem, Thumbnail, Right, Text, View,
-} from 'native-base';
-import { ScrollView } from 'react-native';
-import Flag from 'react-native-flags';
-import React from 'react';
-import { connect } from 'react-redux';
-import EStyleSheet from 'react-native-extended-stylesheet';
-import PropTypes from 'prop-types';
-import { getUrl } from '../../../../common/fake-randomizer'
-import * as searchActions from '../../../../search/actions';
-import { PAGES_NAMES } from '../../../../navigation';
-import { FUNDING_STAGES, TOKEN_TYPES, REGIONS, TICKET_SIZES } from '../../../../enums.js';
+import { Button, Container, Left, List, ListItem, Right, Text, Thumbnail, View, } from 'native-base'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { ScrollView } from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import Flag from 'react-native-flags'
+import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-
+import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
+import { FUNDING_STAGES, REGIONS, TICKET_SIZES, TOKEN_TYPES } from '../../../../enums.js'
+import { PAGES_NAMES } from '../../../../navigation'
+import * as searchActions from '../../../../search/actions'
 
 class InvestorsList extends React.Component {
   state = {
     defaults: {}
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { filters, updateInvestors } = this.props;
+  componentWillReceiveProps (nextProps) {
+    const { filters, updateInvestors } = this.props
 
     if (filters !== nextProps.filters) {
-      updateInvestors(nextProps.filters);
+      updateInvestors(nextProps.filters)
     }
   }
 
   handleClickFilter = () => {
-    this.props.navigation.navigate(PAGES_NAMES.INVESTOR_MAIN_FILTER_PAGE);
+    this.props.navigation.navigate(PAGES_NAMES.INVESTOR_MAIN_FILTER_PAGE)
   }
 
   render () {
     return (
-      <Container style={{ flex: 1, backgroundColor: 'transparent' }}>
-        <ScrollView contentContainerStyle={{ paddingTop: 8 }} style={styles.scrollView}>
-          <View style={styles.headerContainer}>
-            { this.props.profiles.length === 0 && <Text style={styles.comment}>{ I18n.t('search_page.no_profile') }</Text> }
+      <Container style={ { flex: 1, backgroundColor: 'transparent' } }>
+        <ScrollView contentContainerStyle={ { paddingTop: 8 } } style={ styles.scrollView }>
+          <View style={ styles.headerContainer }>
+            { this.props.profiles.length === 0 &&
+            <Text style={ styles.comment }>{ I18n.t('search_page.no_profile') }</Text> }
             <Button
               transparent
-              style={styles.fullWidth}
-              onPress={this.handleClickFilter}>
-              <Text style={[styles.underline, styles.centerText, styles.largeText, styles.fullWidth]}>{I18n.t('search_page.update_filter')}</Text>
+              style={ styles.fullWidth }
+              onPress={ this.handleClickFilter }>
+              <Text style={ [ styles.underline, styles.centerText, styles.largeText, styles.fullWidth ] }>{ I18n.t(
+                'search_page.update_filter') }</Text>
             </Button>
           </View>
           <List>
@@ -49,7 +48,8 @@ class InvestorsList extends React.Component {
               this.props.profiles.length > 0 &&
               this.props.profiles.map(profile => {
                 return (
-                  <InvestorItem key={ profile.id } investor={ profile } onMark={ () => {}} onClick={() => this.props.onClick(profile)} />
+                  <InvestorItem key={ profile.id } investor={ profile } onMark={ () => {} }
+                                onClick={ () => this.props.onClick(profile) }/>
                 )
               })
             }
@@ -61,39 +61,41 @@ class InvestorsList extends React.Component {
 }
 
 InvestorItem = ({ investor, onClick }) => {
-  const portraitPlaceholderUri = getUrl()
-  const firstName = investor.user.firstName;
-  const lastName = investor.user.lastName;
-  const ticketCount = investor.ticketSizes.length;
-  const minTicketSize = ticketCount > 0 ? TICKET_SIZES[investor.ticketSizes[0] - 1].minlabel : '';
-  const maxTicketSize = ticketCount > 0 ? TICKET_SIZES[investor.ticketSizes[ticketCount - 1] - 1].maxlabel : '';
+  const avatar = investor.user && investor.user.imageUrl
+    ? { uri: `${investor.user.imageUrl}?w=200&h=200` }
+    : ColorLogo
+  const firstName = investor.user.firstName
+  const lastName = investor.user.lastName
+  const ticketCount = investor.ticketSizes.length
+  const minTicketSize = ticketCount > 0 ? TICKET_SIZES[ investor.ticketSizes[ 0 ] - 1 ].minlabel : ''
+  const maxTicketSize = ticketCount > 0 ? TICKET_SIZES[ investor.ticketSizes[ ticketCount - 1 ] - 1 ].maxlabel : ''
 
-  const moneyRange = minTicketSize + ' ~ ' + maxTicketSize;
+  const moneyRange = minTicketSize + ' ~ ' + maxTicketSize
 
   return (
-    <ListItem thumbnail onPress={ onClick } style={styles.listItem} >
+    <ListItem thumbnail onPress={ onClick } style={ styles.listItem }>
       <Left>
-        <Thumbnail square large style={styles.portrait} source={{uri: portraitPlaceholderUri}} />
-        <Flag style={styles.countryFlag} code={investor.nationality} />
+        <Thumbnail square large style={ styles.portrait } source={ avatar }/>
+        <Flag style={ styles.countryFlag } code={ investor.nationality }/>
       </Left>
-      <View style={{flex: 1}}>
-        <View style={styles.rowHeader}>
+      <View style={ { flex: 1 } }>
+        <View style={ styles.rowHeader }>
           <Left>
-            <Text style={styles.largeText}>{`${firstName} ${lastName}`}</Text>
+            <Text style={ styles.largeText }>{ `${firstName} ${lastName}` }</Text>
           </Left>
           <Right>
-            <Text style={styles.normalText}>{moneyRange}</Text>
+            <Text style={ styles.normalText }>{ moneyRange }</Text>
           </Right>
         </View>
-        <View style={styles.rowDetail}>
-          <View style={{flex: 1}}>
+        <View style={ styles.rowDetail }>
+          <View style={ { flex: 1 } }>
             {
               investor.tokenTypes.map(index => {
-                const stage = TOKEN_TYPES.find(item => item.index === index);
+                const stage = TOKEN_TYPES.find(item => item.index === index)
 
-                if(stage) {
+                if (stage) {
                   return (
-                    <Text key={index} style={styles.normalText}>
+                    <Text key={ index } style={ styles.normalText }>
                       {
                         I18n.t(`common.token_types.${stage.slug}`)
                       }
@@ -103,14 +105,14 @@ InvestorItem = ({ investor, onClick }) => {
               })
             }
           </View>
-          <View style={{flex: 0.8}}>
+          <View style={ { flex: 0.8 } }>
             {
               investor.fundingStages.map(index => {
-                const stage = FUNDING_STAGES.find(item => item.index === index);
+                const stage = FUNDING_STAGES.find(item => item.index === index)
 
-                if(stage) {
+                if (stage) {
                   return (
-                    <Text key={index} style={styles.normalText}>
+                    <Text key={ index } style={ styles.normalText }>
                       {
                         I18n.t(`common.funding_stages.${stage.slug}`)
                       }
@@ -120,12 +122,12 @@ InvestorItem = ({ investor, onClick }) => {
               })
             }
           </View>
-          <View style={{flex: 0.5}}>
+          <View style={ { flex: 0.5 } }>
             {
               investor.region === 4 ? (
-                <Text style={styles.normalText}>{investor.regionOtherText}</Text>
+                <Text style={ styles.normalText }>{ investor.regionOtherText }</Text>
               ) : (
-                <Text style={styles.normalText}>
+                <Text style={ styles.normalText }>
                   {
                     investor.region ? I18n.t(`common.regions.${REGIONS.find(item => item.index === investor.region).slug}`) : ''
                   }
@@ -218,7 +220,7 @@ const styles = EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-});
+})
 
 InvestorsList.propTypes = {
   profiles: PropTypes.array.isRequired,

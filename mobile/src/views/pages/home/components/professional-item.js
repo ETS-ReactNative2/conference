@@ -1,30 +1,32 @@
-import { ListItem, Text, Thumbnail, View } from 'native-base'
+import { Text, Thumbnail, View } from 'native-base'
 import React from 'react'
 import { TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
-import { ROLES, TICKET_SIZES } from '../../../../enums'
 import I18n from '../../../../../locales/i18n'
-import { getUrl } from '../../../../common/fake-randomizer'
+import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
+import { ROLES } from '../../../../enums'
 
 export const ProfessionalItem = ({ professional, onMark, onClick }) => {
-  const portraitPlaceholderUri = getUrl()
+  const avatar = professional.user && professional.user.imageUrl
+    ? { uri: `${professional.user.imageUrl}?w=400&h=350` }
+    : ColorLogo
   const firstName = professional.user.firstName
   const lastName = professional.user.lastName
   const role = professional.role
 
   return (
     <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
-    <View style={ styles.listItem }>
-      <View style={ { flex: 1, borderTopLeftRadius: 8, borderTopRightRadius: 8, overflow: 'hidden'}}>
-        <Thumbnail square large style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
-        <Flag style={ styles.countryFlag } code={ professional.country }/>
+      <View style={ styles.listItem }>
+        <View style={ { flex: 1, borderTopLeftRadius: 8, borderTopRightRadius: 8, overflow: 'hidden' } }>
+          <Thumbnail square large style={ styles.portrait } source={ avatar }/>
+          <Flag style={ styles.countryFlag } code={ professional.country }/>
+        </View>
+        <View style={ { margin: 16 } }>
+          <Text numberOfLines={ 1 } style={ styles.largeText }>{ `${firstName} ${lastName}` }</Text>
+          <Text style={ styles.normalText }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+        </View>
       </View>
-      <View style={ { margin: 16 } }>
-        <Text numberOfLines={1} style={ styles.largeText }>{ `${firstName} ${lastName}` }</Text>
-        <Text style={ styles.normalText }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
-      </View>
-    </View>
     </TouchableHighlight>
   )
 }

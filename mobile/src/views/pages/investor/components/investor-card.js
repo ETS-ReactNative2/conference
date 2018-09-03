@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
 import { itemWidth } from '../../../../common/dimension-utils'
-import { getUrl } from '../../../../common/fake-randomizer'
+import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
 import { FUNDING_STAGES, PRODUCT_STAGES, REGIONS, TICKET_SIZES, TOKEN_TYPES } from '../../../../enums'
 
 export class InvestorCard extends React.Component {
@@ -28,7 +28,9 @@ export class InvestorCard extends React.Component {
   render () {
     const { investor, onMessageClick, showMessage } = this.props
 
-    const portraitPlaceholderUri = getUrl()
+    const avatar = investor.user && investor.user.imageUrl
+      ? {uri: `${investor.user.imageUrl}?w=300&h=300`}
+      :  ColorLogo
 
     const firstName = investor.user ? investor.user.firstName : ''
     const lastName = investor.user ? investor.user.lastName : ''
@@ -50,7 +52,7 @@ export class InvestorCard extends React.Component {
           <Icon onPress={ this.handleLinkedinClick } style={ styles.linkedin } fontSize={ 32 } type={ 'FontAwesome' }
                 name={ 'linkedin' }/>
         ) }
-        <Image style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
+        <Image style={ styles.portrait } source={ avatar }/>
         <View style={ {
           marginTop: 16,
           marginLeft: 16,

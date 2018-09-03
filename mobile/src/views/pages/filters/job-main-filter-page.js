@@ -2,11 +2,11 @@ import { Body, Button, Container, Icon, Left, List, ListItem, Right, Text, View 
 import React from 'react'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { NavigationHeader } from '../../components/header/header';
 import I18n from '../../../../locales/i18n'
+import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { ROLES } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import { NavigationHeader } from '../../components/header/header'
 
 class JobMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {

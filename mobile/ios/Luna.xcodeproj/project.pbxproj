@@ -44,6 +44,7 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6DE49D33F565433DB7F46C45 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E0E762E788641F99091F0FA /* FontAwesome.ttf */; };
 		6ED0257A66E54243BAB47014 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92DCA358F24F4DFF891A10F2 /* Roboto.ttf */; };
+		6FDE70095AA84345BB058B61 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F065013B5EE54001AD162AC9 /* libRNImagePicker.a */; };
 		76294E361298432C9462B61F /* libRNSensitiveInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA0C8C157EC4B9CA96443FF /* libRNSensitiveInfo.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		83C410B7C12A4864992211B8 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CFB3008A60394116B0FADC57 /* EvilIcons.ttf */; };
@@ -377,6 +378,13 @@
 			remoteGlobalIDString = E72EC1401F7ABB5A0001BC90;
 			remoteInfo = "RNDeviceInfo-tvOS";
 		};
+		84CD800121393F9E00802427 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17958DB1A5FD4AB28A3492C7 /* RNImagePicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
+			remoteInfo = RNImagePicker;
+		};
 		84C521E6213D3E890078C43D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0DD380B15E074D63A4D6F582 /* SplashScreen.xcodeproj */;
@@ -466,6 +474,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Luna/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1776FD79420B49C7B11E3357 /* libRNI18n.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNI18n.a; sourceTree = "<group>"; };
+		17958DB1A5FD4AB28A3492C7 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		1B5B6555C9864593B3E30717 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		1FF4064D3B884C23A0E8C555 /* RNLanguages.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNLanguages.xcodeproj; path = "../node_modules/react-native-languages/ios/RNLanguages.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Luna-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Luna-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -505,6 +514,7 @@
 		DE6936E49FFB456090445E3C /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		E7CE2B5430524A9D9C980BC4 /* libReactNativeConfig.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeConfig.a; sourceTree = "<group>"; };
 		EFAD419F527643C7BCF88EC3 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; };
+		F065013B5EE54001AD162AC9 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		F670EEE7A89A4EB392B882BC /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -543,6 +553,7 @@
 				970CF8617D8A4016B8ACD2BB /* libRNDeviceInfo.a in Frameworks */,
 				76294E361298432C9462B61F /* libRNSensitiveInfo.a in Frameworks */,
 				BB8B69F7308B4A6991DAFF6E /* libBVLinearGradient.a in Frameworks */,
+				6FDE70095AA84345BB058B61 /* libRNImagePicker.a in Frameworks */,
 				038CDB8A630841378A50C5F5 /* libSplashScreen.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -786,6 +797,7 @@
 				C2F49DEDAC684DB28F364D07 /* RNDeviceInfo.xcodeproj */,
 				355A0DB5529040CDAC24A4BF /* RNSensitiveInfo.xcodeproj */,
 				87F72C40DC214BD19E370EDA /* BVLinearGradient.xcodeproj */,
+				17958DB1A5FD4AB28A3492C7 /* RNImagePicker.xcodeproj */,
 				0DD380B15E074D63A4D6F582 /* SplashScreen.xcodeproj */,
 			);
 			name = Libraries;
@@ -838,6 +850,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		84CD7FFE21393F9E00802427 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84CD800221393F9E00802427 /* libRNImagePicker.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		84C521E3213D3E890078C43D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -867,6 +887,7 @@
 				EFAD419F527643C7BCF88EC3 /* libRNDeviceInfo-tvOS.a */,
 				BCA0C8C157EC4B9CA96443FF /* libRNSensitiveInfo.a */,
 				54705F3AFF82457DABCD3A4C /* libBVLinearGradient.a */,
+				F065013B5EE54001AD162AC9 /* libRNImagePicker.a */,
 				DE6936E49FFB456090445E3C /* libSplashScreen.a */,
 			);
 			name = "Recovered References";
@@ -1087,6 +1108,10 @@
 				{
 					ProductGroup = A3CABAF620E118A600E8BA6B /* Products */;
 					ProjectRef = 58A8BD83826442B58001B7B2 /* RNI18n.xcodeproj */;
+				},
+				{
+					ProductGroup = 84CD7FFE21393F9E00802427 /* Products */;
+					ProjectRef = 17958DB1A5FD4AB28A3492C7 /* RNImagePicker.xcodeproj */;
 				},
 				{
 					ProductGroup = A3CABB3520E1232800E8BA6B /* Products */;
@@ -1403,6 +1428,13 @@
 			remoteRef = 84536F3C2108E7A600E56488 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		84CD800221393F9E00802427 /* libRNImagePicker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNImagePicker.a;
+			remoteRef = 84CD800121393F9E00802427 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		84C521E7213D3E890078C43D /* libSplashScreen.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1648,6 +1680,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = LunaTests/Info.plist;
@@ -1694,6 +1727,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = LunaTests/Info.plist;
@@ -1743,6 +1777,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = Luna/Info.plist;
@@ -1781,6 +1816,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = Luna/Info.plist;
@@ -1823,6 +1859,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = "Luna-tvOS/Info.plist";
@@ -1877,6 +1914,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = "Luna-tvOS/Info.plist";
@@ -1930,6 +1968,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = "Luna-tvOSTests/Info.plist";
@@ -1983,6 +2022,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = "Luna-tvOSTests/Info.plist";

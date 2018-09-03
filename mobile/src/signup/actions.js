@@ -116,7 +116,8 @@ export function uploadProfile () {
             mainCountry: investee.main.cca2,
             industry: investee.industry,
             region: investee.investorNationality,
-            regionOtherText: investee.regionOtherText
+            regionOtherText: investee.regionOtherText,
+            imageUrl: investee.imageUrl
           })
           if (investee.hiring) {
             const { roles, ...jobs } = employer
@@ -134,8 +135,6 @@ export function uploadProfile () {
                 city: job.city
               }
             })
-
-            console.log({jobsArray})
 
             return api.createJob({ jobs: jobsArray })
           }
@@ -272,7 +271,12 @@ export const saveProfileOnboardingInfo = (profileInfo, redirectPage) => async di
   try {
     dispatch(batchActions([ clearSaveProfileError(),
       globalActions.setGlobalLoading(I18n.t('flow_page.common.profile_onboarding.spinner_text')) ]))
+    console.log({profileInfo})
+    if (profileInfo.avatarSource) {
+      await api.uploadImage(profileInfo.avatarSource)
+    }
     await api.createOrUpdateConferenceUser(profileInfo)
+    await dispatch(fetchProfiles())
     navigationService.navigate(redirectPage)
   } catch (err) {
     const errorData = getErrorData(err)

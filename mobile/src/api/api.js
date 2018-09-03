@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { decamelizeKeys } from 'humps'
 import { storageService } from '../services'
+import Config from 'react-native-config'
 
 const TOKEN_NAME = 'AUTH-TOKEN'
 
@@ -9,7 +10,7 @@ export async function signup ({ email, password, phone }) {
 }
 
 export async function fetchProfessionals (filters) {
-  const token = await storageService.getItem(TOKEN_NAME);
+  const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/professionals/', {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
@@ -20,7 +21,7 @@ export async function fetchProfessionals (filters) {
 }
 
 export async function fetchJobs (filters) {
-  const token = await storageService.getItem(TOKEN_NAME);
+  const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/jobs/', {
     params: filters,
     paramsSerializer: params => transformRequestOptions(params),
@@ -30,9 +31,9 @@ export async function fetchJobs (filters) {
   })
 }
 
-export async function sendMessage ({investorId, message}) {
-  const token = await storageService.getItem(TOKEN_NAME);
-  return axios.post(`/api/investors/${investorId}/messages/`, decamelizeKeys({message}) ,{
+export async function sendMessage ({ investorId, message }) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post(`/api/investors/${investorId}/messages/`, decamelizeKeys({ message }), {
     headers: {
       'X-Authorization': `Bearer ${token}`
     }
@@ -166,7 +167,7 @@ export async function leaveProject () {
   })
 }
 
-export async function createJob ({ jobs}) {
+export async function createJob ({ jobs }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put(
     '/api/my_project/jobs/',
@@ -211,7 +212,8 @@ export async function createInvestee ({
   website,
   whitepaper,
   region,
-  regionOtherText
+  regionOtherText,
+  imageUrl
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put('/api/my_project/', decamelizeKeys({
@@ -235,7 +237,8 @@ export async function createInvestee ({
     website,
     whitepaper,
     region,
-    regionOtherText
+    regionOtherText,
+    imageUrl
   }), {
     headers: {
       'X-Authorization': `Bearer ${token}`
@@ -416,12 +419,34 @@ export async function login (username, password) {
   })
 }
 
+export async function uploadImage (file) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  const bodyFormData = new FormData()
+  bodyFormData.append('image', {
+      uri: file.uri,
+      type: 'image/jpeg',
+      name: 'testPhotoName.jpg'
+    }
+  )
+
+  return fetch(Config.APP_AXIOS_BASE_URL + '/api/my_person/images/', {
+      method: 'post',
+      body: bodyFormData,
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+        'X-Authorization': `Bearer ${ token }`
+
+      }
+    }
+  )
+}
+
 // Fetch default filter Options
 export async function fetchInvestorFilter () {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/investors/defaults/', {
     headers: {
-      'X-Authorization': `Bearer ${token}`,
+      'X-Authorization': `Bearer ${ token }`,
       Accept: 'application/json'
     }
   })
@@ -431,7 +456,7 @@ export async function fetchProjectFilter () {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/projects/defaults/', {
     headers: {
-      'X-Authorization': `Bearer ${token}`,
+      'X-Authorization': `Bearer ${ token }`,
       Accept: 'application/json'
     }
   })
@@ -441,7 +466,7 @@ export async function fetchProfessionalFilter () {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/professionals/defaults/', {
     headers: {
-      'X-Authorization': `Bearer ${token}`,
+      'X-Authorization': `Bearer ${ token }`,
       Accept: 'application/json'
     }
   })
@@ -451,7 +476,7 @@ export async function fetchJobsFilter () {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/jobs/defaults/', {
     headers: {
-      'X-Authorization': `Bearer ${token}`,
+      'X-Authorization': `Bearer ${ token }`,
       Accept: 'application/json'
     }
   })

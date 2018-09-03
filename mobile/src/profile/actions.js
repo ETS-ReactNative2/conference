@@ -1,16 +1,19 @@
-import { decamelizeKeys } from 'humps'
+import I18n from '../../locales/i18n'
 import * as api from '../api/api'
+import { setGlobalLoading, unsetGlobalLoading } from '../global/actions'
+import { fetchConferenceSchedule } from '../schedule/actions'
+import { fetchDefaults, fetchMatches } from '../search/actions'
 import {
   DEACTIVATE_INVESTOR,
   DEACTIVATE_PROFILE,
-  REACTIVATE_INVESTOR,
-  REACTIVATE_PROFILE,
   LEAVE_PROJECT,
   LOAD_PROFILES,
   LOAD_PROFILES_ERROR,
   LOAD_PROFILES_SUCCESS,
-  UPDATE_BASIC,
   PREFILL_EDIT,
+  REACTIVATE_INVESTOR,
+  REACTIVATE_PROFILE,
+  UPDATE_BASIC,
   LOAD_PROJECT_MEMBERS,
   LOAD_PROJECT_MEMBERS_SUCCESS,
   LOAD_PROJECT_MEMBERS_ERROR,
@@ -45,7 +48,7 @@ export function fetchProfiles () {
 
 export function openEdit (type, prefill = true) {
   let role
-  switch(type) {
+  switch (type) {
     case 'professional':
       role = 'employee'
       break
@@ -61,20 +64,38 @@ export function openEdit (type, prefill = true) {
       type: PREFILL_EDIT,
       data: {
         role,
-        info: getState().profile[type],
+        info: getState().profile[ type ],
         prefill
       }
     })
   }
 }
 
-export function updateBasic (basic) {
+export function updateBasic (basicChanges) {
   return async (dispatch, getState) => {
+    const basicInfo = getState().profile.basic
+    const shouldUpdatePhoto = basicInfo.avatarSource !== basicChanges.avatarSource
     dispatch({
       type: UPDATE_BASIC,
-      data: basic
+      data: basicChanges
     })
-    await api.createOrUpdateConferenceUser(getState().profile.basic)
+    try {
+      dispatch(setGlobalLoading(I18n.t('profile_page.upload_loader_text')))
+      if (shouldUpdatePhoto) {
+        await api.uploadImage(basicChanges.avatarSource)
+      }
+      await api.createOrUpdateConferenceUser(getState().profile.basic)
+      await Promise.all([
+        dispatch(fetchDefaults()),
+        dispatch(fetchProfiles()),
+        dispatch(fetchConferenceSchedule()),
+        dispatch(fetchMatches())
+      ])
+    } catch (er) {
+      console.error(er)
+    } finally {
+      dispatch(unsetGlobalLoading())
+    }
   }
 }
 
