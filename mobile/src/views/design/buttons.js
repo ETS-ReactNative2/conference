@@ -214,7 +214,8 @@ const profileWhiteButton = EStyleSheet.create({
     maxWidth: null,
     width: null,
     height: null,
-    marginRight: 8
+    marginRight: 8,
+    marginBottom: 4
   },
   disabledButton: {
     backgroundColor: 'transparent',

@@ -295,6 +295,7 @@ const styles = EStyleSheet.create({
     marginBottom: 16
   },
   actions: {
+    flexWrap: 'wrap',
     flexDirection: 'row',
   }
 })
