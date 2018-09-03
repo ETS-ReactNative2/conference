@@ -8,10 +8,12 @@ import Flag from 'react-native-flags';
 import I18n from '../../../../locales/i18n';
 import { PAGES_NAMES } from '../../../navigation';
 import { 
-  FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TICKET_SIZES, REGION, REGIONS, TOKEN_TYPES, INVESTOR_INDUSTRIES
+  FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TICKET_SIZES, REGIONS_FILTER, TOKEN_TYPES
 } from '../../../enums';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { BLUE_BACKGROUND_COLOR } from '../../design/constants';
+import { NavigationHeader } from '../../components/header/header';
+import WhiteLogo from '../../../assets/logos/logo-white.png'
 
 class InvestorMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {
@@ -30,20 +32,24 @@ class InvestorMainFilter extends React.Component {
       { label: 'FUNDING STAGE', items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
       { label: 'INVESTOR BUYS', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
       { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
-      { label: 'REGION', items: REGIONS, key: 'regions', stateKey: 'region' },
-      { label: 'INDUSTRIES', items: INVESTOR_INDUSTRIES, key: 'industries', stateKey: 'industry' }
+      { label: 'REGION', items: REGIONS_FILTER, key: 'regions', stateKey: 'region' }
     ];
 
     return (
       <Container style={styles.container}>
         <ScrollView style={{ flex: 1 }}>
+          <NavigationHeader
+            onBack={ () => this.props.navigation.goBack() }
+            title={ I18n.t('search_page.investor_filter.main_title') }
+            titleStyle={ { color: '#fff', marginTop: 12 } }
+            rightIconSource={ WhiteLogo }/>
           <View style={styles.header}>
             <Text style={styles.headerText}>{ I18n.t('search_page.investor_filter.header') }</Text>
           </View>
           <List style={styles.filterList}>
             {
               fields.map((filterSetting, index) => (
-                <ListItem thumbnail key={new Date().getUTCMilliseconds() + index} style={styles.investorFilterItem} onPress={() => this.handleFilterItemClick(filterSetting)}>
+                <ListItem thumbnail key={index} style={styles.investorFilterItem} onPress={() => this.handleFilterItemClick(filterSetting)}>
                   <Left>
                     <Text style={styles.Text}>{ filterSetting.label }</Text>
                   </Left>
@@ -72,7 +78,8 @@ class InvestorMainFilter extends React.Component {
 const styles = EStyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#1F5BE4'
+    backgroundColor: '#0E224D',
+    paddingTop: 20
   },
   filterList: {
     width: '100%',
@@ -85,7 +92,7 @@ const styles = EStyleSheet.create({
     height: 90,
     borderBottomColor: '#fff',
     borderBottomWidth: 1,
-    backgroundColor: '#1F5BE4',
+    backgroundColor: '#0E224D',
     marginLeft: 0,
     paddingLeft: 15,
   },

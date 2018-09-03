@@ -1,15 +1,22 @@
 import React from 'react'
 import { Image, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import SplashScreen from 'react-native-splash-screen'
 import I18n from '../../../../locales/i18n'
-import ColorLogo from '../../../assets/logos/conference_logo_welcome_medium.png'
-import PoweredLuna from '../../../assets/logos/powered_luna.png'
+import ColorLogo from '../../../assets/logos/welcome_logo.png'
+import PoweredLuna from '../../../assets/logos/powered_logo.png'
 import { PAGES_NAMES } from '../../../navigation'
 import Header from '../../components/header/header'
 import { OutlineWhiteButton, PrimaryButton } from '../../design/buttons'
 import { ImagePageContainer } from '../../design/image-page-container'
 
 class WelcomePage extends React.Component {
+
+  componentDidMount() {
+    if(SplashScreen) {
+      SplashScreen.hide()
+    }
+  }
 
   render () {
     const { navigate } = this.props.navigation
@@ -22,7 +29,7 @@ class WelcomePage extends React.Component {
               <Image style={ { width: 125, height: 160 } } source={ ColorLogo }/>
             </View>
             <View style={ styles.lunaContainer }>
-              <Image source={ PoweredLuna }/>
+              <Image style={{ width: 123, height: 52}} source={ PoweredLuna }/>
             </View>
             <View style={ styles.buttonsContainer }>
               <View style={ styles.buttonContainer }>

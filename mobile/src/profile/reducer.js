@@ -9,6 +9,9 @@ import {
   REACTIVATE_INVESTOR,
   REACTIVATE_PROFILE,
   UPDATE_BASIC,
+  LOAD_PROJECT_MEMBERS,
+  LOAD_PROJECT_MEMBERS_SUCCESS,
+  LOAD_PROJECT_MEMBERS_ERROR
 } from './action-types'
 
 const initialState = {
@@ -17,7 +20,13 @@ const initialState = {
   professional: null,
   project: null,
   investor: null,
-  basic: null
+  basic: null,
+  projectMembers: {
+    members: [],
+    memberRequests: [],
+    loading: false,
+    error: false
+  }
 }
 
 export function profileReducer (state = initialState, action) {
@@ -109,6 +118,36 @@ export function profileReducer (state = initialState, action) {
             ...action.data
           }
         } : null
+      }
+    case LOAD_PROJECT_MEMBERS:
+      return {
+        ...state,
+        projectMembers: {
+          members: state.projectMembers.members,
+          memberRequests: state.projectMembers.memberRequests,
+          loading: true,
+          error: false
+        }
+      }
+    case LOAD_PROJECT_MEMBERS_SUCCESS:
+      return {
+        ...state,
+        projectMembers: {
+          members: action.data.members,
+          memberRequests: action.data.memberRequests,
+          loading: false,
+          error: false
+        }
+      }
+    case LOAD_PROJECT_MEMBERS_ERROR:
+      return {
+        ...state,
+        projectMembers: {
+          members: state.projectMembers.members,
+          memberRequests: state.projectMembers.memberRequests,
+          loading: false,
+          error: true
+        }
       }
     case CLEAR:
       return initialState

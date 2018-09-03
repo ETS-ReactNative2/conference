@@ -21,6 +21,7 @@ const styles = EStyleSheet.create({
     color: 'white',
     fontSize: 24,
     marginLeft: 16,
+    marginRight: 16,
     fontWeight: 'normal',
     paddingBottom: 16,
     paddingTop: 16

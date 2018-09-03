@@ -3,33 +3,42 @@ import { Image, View } from 'react-native'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../locales/i18n'
-import GlassBlack from '../assets/icons/Glass-Black.png'
-import GlassRed from '../assets/icons/Glass-Red.png'
-import PolygonBlack from '../assets/icons/Polygon-Black.png'
-import PolygonRed from '../assets/icons/Polygon-Red.png'
-import RectangleBlack from '../assets/icons/Rectangle-Black.png'
-import RectangleRed from '../assets/icons/Rectangle-Red.png'
-import TriangleBlack from '../assets/icons/Triangle-Black.png'
-import TriangleRed from '../assets/icons/Triangle-Red.png'
+import GlassBlack from '../assets/icons/zoom_white.png'
+import GlassRed from '../assets/icons/zoom_red.png'
+import PolygonBlack from '../assets/icons/polygon_white.png'
+import PolygonRed from '../assets/icons/polygon_red.png'
+import RectangleBlack from '../assets/icons/square_white.png'
+import RectangleRed from '../assets/icons/square_red.png'
+import TriangleBlack from '../assets/icons/triangle_white.png'
+import TriangleRed from '../assets/icons/triangle_red.png'
 import { navigationService } from '../services'
+import LoadingPage from '../views/components/loading-page/loading-page'
+import MessagePage from '../views/components/message-page/message-page'
 import AgendaPage from '../views/pages/agenda/agenda-page'
 import FilterPage from '../views/pages/filters/filter-page'
 import InvestorMainFilterPage from '../views/pages/filters/investor-main-filter-page'
-import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-page';
+import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-page'
+import ProfessionalMainFilterPage from '../views/pages/filters/professional-main-filter-page'
+import JobMainFilterPage from '../views/pages/filters/job-main-filter-page'
 import FlowPage from '../views/pages/flow/flow-page'
 import { CommonProfileType } from '../views/pages/flow/steps'
 import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/flow/steps/common-profile-onboarding'
-import LoadingPage from '../views/components/loading-page/loading-page'
 import HomePage from '../views/pages/home/home-page'
 import InvestorPage from '../views/pages/investor/investor-page'
 import LoginPage from '../views/pages/login/login-page'
 import ProfessionalPage from '../views/pages/professional/professional-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import ProjectPage from '../views/pages/project/project-page'
+import ProjectMembersPage from '../views/pages/project/project-members-page'
 import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WebviewPage from '../views/pages/webview/webview-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
+import ProjectDescriptionPage from '../views/pages/project/project-description-page'
+import JobsPage from '../views/pages/job/jobs-page'
+import JobDescriptionPage from '../views/pages/job/job-description-page'
+import PrivacyPolicyPage from '../views/pages/privacy-policy/privacy-policy'
+import TermsOfServicePage from '../views/pages/terms-of-service/terms-of-service'
 
 const PAGES_NAMES = {
   WELCOME_PAGE: 'WELCOME_PAGE',
@@ -43,15 +52,23 @@ const PAGES_NAMES = {
   INVESTOR_PAGE: 'INVESTOR_PAGE',
   PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
   PROJECT_PAGE: 'PROJECT_PAGE',
+  PROJECT_DESCRIPTION_PAGE: 'PROJECT_DESCRIPTION_PAGE',
+  PROJECT_MEMBERS_PAGE: 'PROJECT_MEMBERS_PAGE',
+  JOBS_PAGE: 'JOBS_PAGE',
+  JOB_DESCRIPTION_PAGE: 'JOB_DESCRIPTION_PAGE',
   PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
   PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
   LOCATION_PAGE: 'LOCATION_PAGE',
   FILTER_PAGE: 'FILTER_PAGE',
   INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE',
   PROJECT_MAIN_FILTER_PAGE: 'PROJECT_MAIN_FILTER_PAGE',
+  JOB_MAIN_FILTER_PAGE: 'JOB_MAIN_FILTER_PAGE',
+  PROFESSIONAL_MAIN_FILTER_PAGE: 'PROFESSIONAL_MAIN_FILTER_PAGE',
   WEBVIEW_PAGE: 'WEBVIEW_PAGE',
   PROFILE_PAGE: 'PROFILE_PAGE',
-  EDIT_BASIC_PROFILE: 'EDIT_BASIC_PROFILE'
+  EDIT_BASIC_PROFILE: 'EDIT_BASIC_PROFILE',
+  PRIVACY_POLICY_PAGE: 'PRIVACY_POLICY_PAGE',
+  TERMS_OF_SERVICE_PAGE: 'TERMS_OF_SERVICE_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -142,31 +159,36 @@ const AppStackNavigator = createStackNavigator({
   WELCOME_PAGE: {
     screen: WelcomePage,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      gesturesEnabled: false
     }),
   },
   HOME_PAGE: {
     screen: DrawerNavigation,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   PROFILE_ONBOARDING_PAGE: {
     screen: CommonProfileOnboarding,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   PROFILE_TYPE_PAGE: {
     screen: CommonProfileType,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   EDIT_BASIC_PROFILE: {
     screen: EditBasicInfo,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   FLOW_PAGE: {
@@ -182,7 +204,8 @@ const AppStackNavigator = createStackNavigator({
     screen: SearchPage,
     navigationOptions: () => ({
       title: I18n.t('search_page.title'),
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
+      gesturesEnabled: false
     })
   },
   LOGIN_PAGE: {
@@ -190,14 +213,16 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: I18n.t('login_page.title'),
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     }),
   },
   SIGNUP_PAGE: {
     screen: SignupPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     }),
   },
   INVESTOR_PAGE: {
@@ -205,7 +230,8 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: I18n.t('investor_page.title'),
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   PROFESSIONAL_PAGE: {
@@ -213,7 +239,8 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: I18n.t('professional_page.title'),
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
     })
   },
   PROJECT_PAGE: {
@@ -221,37 +248,114 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: I18n.t('project_page.title'),
       ...commonNavBarStyle,
-      header: null
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  PROJECT_DESCRIPTION_PAGE: {
+    screen: ProjectDescriptionPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  PROJECT_MEMBERS_PAGE: {
+    screen: ProjectMembersPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  JOBS_PAGE: {
+    screen: JobsPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  JOB_DESCRIPTION_PAGE: {
+    screen: JobDescriptionPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
     })
   },
   WEBVIEW_PAGE: {
     screen: WebviewPage,
     navigationOptions: () => ({
-      // header: null
+      // header: null,
+      gesturesEnabled: false
     })
   },
   FILTER_PAGE: {
     screen: FilterPage,
     navigationOptions: () => ({
       title: 'Filter',
-      ...commonNavBarStyle
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
     })
   },
   INVESTOR_MAIN_FILTER_PAGE: {
-      screen: InvestorMainFilterPage,
+    screen: InvestorMainFilterPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
   },
   PROJECT_MAIN_FILTER_PAGE: {
     screen: ProjectMainFilterPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  PROFESSIONAL_MAIN_FILTER_PAGE: {
+    screen: ProfessionalMainFilterPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  JOB_MAIN_FILTER_PAGE: {
+    screen: JobMainFilterPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  PRIVACY_POLICY_PAGE: {
+    screen: PrivacyPolicyPage,
+    navigationOptions: () => ({
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  TERMS_OF_SERVICE_PAGE: {
+    screen: TermsOfServicePage,
+    navigationOptions: () => ({
+      header: null,
+      gesturesEnabled: false
+    })
   }
 })
 
-const AppStackNavigatorWithSpinner = ({ isLoading, message }) => {
+const AppStackNavigatorWithSpinner = ({ isLoading, message, showMessage }) => {
   return (
     <View style={ { flex: 1 } } forceInset={ { top: 'always' } }>
       <AppStackNavigator ref={ navigatorRef => {
         navigationService.setTopLevelNavigator(navigatorRef)
       } } styles={ { position: 'absolute' } }/>
-        <LoadingPage isLoading={isLoading} message={message} />
+      <LoadingPage isLoading={ isLoading } message={ message }/>
+      <MessagePage showMessage={ showMessage }/>
     </View>
   )
 }
@@ -259,7 +363,8 @@ const AppStackNavigatorWithSpinner = ({ isLoading, message }) => {
 const mapStateToProps = state => {
   return {
     isLoading: state.global.isLoading,
-    message: state.global.loadingMessage
+    message: state.global.loadingMessage,
+    showMessage: state.global.showMessage
   }
 }
 

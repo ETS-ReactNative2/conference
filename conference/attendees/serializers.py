@@ -1,13 +1,17 @@
+from django.conf import settings
 from django.db import transaction
 from rest_framework import serializers
 from . import models
 
 
 class ConferenceUserSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = models.ConferenceUser
         fields = (
             'user',
+            'image_url',
             'first_name',
             'last_name',
             'title',
@@ -17,6 +21,9 @@ class ConferenceUserSerializer(serializers.ModelSerializer):
             'telegram',
             'linkedin',
         )
+
+    def get_image_url(self, obj):
+        return settings.IMAGE_URL_BASE + obj.guid if obj.guid else ''
 
 
 class InvestorSerializer(serializers.ModelSerializer):
@@ -72,7 +79,38 @@ class InvestorSerializer(serializers.ModelSerializer):
         return instance
 
 
+class ProjectForJobListingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Project
+        fields = (
+            'id',
+            'image_url',
+            'name',
+        )
+
+
 class JobListingSerializer(serializers.ModelSerializer):
+    project = ProjectForJobListingSerializer()
+
+    class Meta:
+        model = models.JobListing
+        fields = (
+            'id',
+            'role',
+            'role_other_text',
+            'skills_text',
+            'link',
+            'description',
+            'part_time',
+            'payments',
+            'local_remote_options',
+            'country',
+            'city',
+            'project',
+        )
+
+
+class JobListingForProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.JobListing
         fields = (
@@ -114,7 +152,7 @@ class ProfessionalSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    job_listings = JobListingSerializer(many=True, read_only=True)
+    job_listings = JobListingForProjectSerializer(many=True, read_only=True)
 
     class Meta:
         model = models.Project

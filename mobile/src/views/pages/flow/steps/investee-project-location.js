@@ -56,6 +56,7 @@ class InvesteeProjectLocation extends React.Component {
         </View>
         <View style={ { margin: 8 } }>
           <FlowButton
+            disabled={ this.state.legal === '' || this.state.main === ''}
             text={ I18n.t('common.next') }
             onPress={ this.handleSubmit }
           />

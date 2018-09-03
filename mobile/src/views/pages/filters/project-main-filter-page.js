@@ -1,15 +1,17 @@
-import { 
-  Body, Button, Container, Icon, Left, List, ListItem, Right, Switch, Text, View 
+import {
+  Body, Button, Container, Icon, Left, List, ListItem, Right, Switch, Text, View
 } from 'native-base';
 import { ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import React from 'react';
 import I18n from '../../../../locales/i18n';
 import { PAGES_NAMES } from '../../../navigation';
-import { 
-  FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGION, REGIONS, TOKEN_TYPES
+import {
+  FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGIONS_FILTER, TOKEN_TYPES
 } from '../../../enums';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { NavigationHeader } from '../../components/header/header';
+import WhiteLogo from '../../../assets/logos/logo-white.png'
 
 class ProjectMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {
@@ -27,19 +29,25 @@ class ProjectMainFilter extends React.Component {
       { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
       { label: 'FUNDING STAGE', items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
       { label: 'INVESTOR BUYS', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
-      { label: 'REGION', items: REGIONS, key: 'regions', stateKey: 'region' },
+      { label: 'REGION', items: REGIONS_FILTER, key: 'regions', stateKey: 'region' },
     ];
 
     return (
       <Container style={styles.container}>
         <ScrollView style={{ flex: 1 }}>
+          <NavigationHeader
+            onBack={ () => this.props.navigation.goBack() }
+            iconStyle={ { color: 'white'}}
+            title={ I18n.t('search_page.project_filter.main_title') }
+            titleStyle={ { color: '#fff', marginTop: 12 } }
+            rightIconSource={ WhiteLogo }/>
           <View style={styles.header}>
             <Text style={styles.headerText}>{ I18n.t('search_page.project_filter.header') }</Text>
           </View>
           <List style={styles.filterList}>
             {
               fields.map((filterSetting, index) => (
-                <ListItem thumbnail key={new Date().getUTCMilliseconds() + index} style={styles.investorFilterItem} onPress={() => this.handleFilterItemClick(filterSetting)}>
+                <ListItem thumbnail key={index} style={styles.investorFilterItem} onPress={() => this.handleFilterItemClick(filterSetting)}>
                   <Left>
                     <Text style={styles.Text}>{ filterSetting.label }</Text>
                   </Left>
@@ -53,9 +61,9 @@ class ProjectMainFilter extends React.Component {
             }
           </List>
           <View style={styles.saveButtonContainer}>
-            <Button 
+            <Button
               style={styles.saveButton}
-              onPress={this.handleSubmit}> 
+              onPress={this.handleSubmit}>
               <Text style={styles.buttonCaption}>SAVE</Text>
             </Button>
           </View>
@@ -68,7 +76,8 @@ class ProjectMainFilter extends React.Component {
 const styles = EStyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#0E224D'
+    backgroundColor: '#0E224D',
+    paddingTop: 20
   },
   filterList: {
     width: '100%',

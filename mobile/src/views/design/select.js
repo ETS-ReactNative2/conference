@@ -14,10 +14,10 @@ export function CountrySelect ({ onChange, value, placeholder }) {
       flagType={ 'flat' }>
       <View style={ styles.container }>
         <View style={ styles.select }>
-          {value.cca2 && (<View style={ [ styles.touchFlag ] }>
+          {value.cca2 ? (<View style={ [ styles.touchFlag ] }>
             { CountryPicker.renderFlag(value.cca2 ? value.cca2 : '') }
-          </View>)}
-          <Text style={ styles.text }>{ value.countryName ? value.countryName .toUpperCase() : placeholder }</Text>
+          </View>) : null }
+          <Text style={ styles.text }>{ value.countryName ? value.countryName.toUpperCase() : placeholder }</Text>
           <Icon style={ styles.icon } type={ 'FontAwesome' } color={ 'white' }
                 name={ 'chevron-down' }/>
         </View>

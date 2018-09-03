@@ -46,14 +46,46 @@ class ListInvestor(generics.ListAPIView):
             if product_stages:
                 filters['product_stages__in'] = product_stages
             region = self.request.GET.get('region')
-            if region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
+            clean_region = int(region) if region else None
+            if clean_region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
                 excludes['nationality'] = models.Region.COUNTRY_UNITED_STATES
-            elif region == models.Region.SOUTH_KOREA_ONLY:
+            elif clean_region == models.Region.SOUTH_KOREA_ONLY:
                 filters['nationality'] = models.Region.COUNTRY_SOUTH_KOREA
+            ticket_sizes = self.request.GET.getlist('ticket_size')
+            if ticket_sizes:
+                filters['ticket_sizes__in'] = ticket_sizes
             token_types = self.request.GET.getlist('token_type')
             if token_types:
                 filters['token_types__in'] = token_types
         return models.Investor.objects.filter(**filters).exclude(**excludes).distinct()
+
+
+class InvestorsDefaults(APIView):
+
+    def get(self, request, format=None):
+        result = {}
+        project = request.user.conference_user.project
+        if not project:
+            result['funding_stage'] = []
+            result['giveaway'] = []
+            result['product_stage'] = []
+            result['region'] = models.Region.ANYWHERE
+            result['token_type'] = []
+            result['industry'] = []
+        else:
+            result['funding_stage'] = [project.funding_stage.pk] if project.funding_stage else []
+            if project.giveaway:
+                if project.giveaway.pk == models.Giveaway.BOTH:
+                    result['giveaway'] = [1, 2]
+                else:
+                    result['giveaway'] = [project.giveaway.pk]
+            else:
+                result['giveaway'] = []
+            result['product_stage'] = [project.product_stage.pk] if project.product_stage else []
+            result['region'] = models.Region.ANYWHERE
+            result['token_type'] = [project.token_type.pk] if project.token_type else []
+            result['industry'] = [project.industry.pk] if project.industry else []
+        return JsonResponse(result)
 
 
 class RetrieveInvestor(generics.RetrieveAPIView):
@@ -75,7 +107,13 @@ class InvestorsIdMessages(APIView):
             return JsonResponse({'code': 'no_such_investor'}, status=status.HTTP_404_NOT_FOUND)
 
         investor = queryset.get()
-        investor_user = investor.conference_user.user
+        investor_conference_user = investor.conference_user
+        if investor_conference_user.user:
+            investor_email = investor_conference_user.user.email
+        elif investor.email:
+            investor_email = investor.email
+        else:
+            return JsonResponse({'code': 'no_investor_email'}, status=status.HTTP_400_BAD_REQUEST)
 
         json_body = request.data
         message = json_body.get('message')
@@ -96,13 +134,19 @@ Project: {}
 
 Message:
 
-{}""".format(investor_user.first_name, request.user.first_name, request.user.last_name, project.name, clean_message)
+{}""".format(
+            investor_conference_user.first_name,
+            request.user.conference_user.first_name,
+            request.user.conference_user.last_name,
+            project.name,
+            clean_message
+        )
 
         email = EmailMessage(
             'Block Seoul project message',
             body,
             'noreply@meetluna.com',
-            [investor_user.email],
+            [investor_email],
             reply_to=[request.user.email],
         )
         email.send()
@@ -150,7 +194,7 @@ class MyInvestor(APIView):
         ) else models.Industry.objects.all()
 
         nationality = json_body.get('nationality')
-        clean_nationality = nationality[:models.COUNTRY_MAX_LENGTH] if nationality else ''
+        clean_nationality = nationality[:models.COUNTRY_MAX_LENGTH].upper() if nationality else ''
 
         product_stages = json_body.get('product_stages')
         clean_product_stages = [models.ProductStage.objects.get(pk=pk) for pk in product_stages] if (

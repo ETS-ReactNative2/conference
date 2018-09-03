@@ -1,7 +1,7 @@
 import { Container } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { AppState, ScrollView, View } from 'react-native'
+import { AppState, ScrollView, Text, View } from 'react-native'
 import Config from 'react-native-config'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
@@ -14,7 +14,7 @@ import Header from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { OutlineWhiteButton, ProfileWhiteButton } from '../../design/buttons'
 import { ImagePageContainer } from '../../design/image-page-container'
-import { Subheader } from '../../design/subheader'
+import { SmallSubheader } from '../../design/subheader'
 
 class ProfilePage extends React.Component {
 
@@ -23,7 +23,6 @@ class ProfilePage extends React.Component {
   }
 
   componentDidMount () {
-    this.props.fetchProfiles()
     AppState.addEventListener('change', this._handleAppStateChange)
   }
 
@@ -39,14 +38,6 @@ class ProfilePage extends React.Component {
   }
 
   openLink (url) {
-    // Linking.canOpenURL(url)
-    //   .then(supported => {
-    //     if (supported) {
-    //       Linking.openURL(url)
-    //     } else {
-    //       console.log('Don\'t know how to open URI: ' + url)
-    //     }
-    //   })
     this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri: url })
   }
 
@@ -65,8 +56,11 @@ class ProfilePage extends React.Component {
     }
   }
 
+  handleProjectManage = () => {
+    this.props.navigation.navigate(PAGES_NAMES.PROJECT_MEMBERS_PAGE)
+  }
+
   handleInvestorCreate = (devMode = false) => {
-    console.log({devMode})
     if (devMode) {
       this.props.openEdit('investor', false)
       this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
@@ -138,90 +132,121 @@ class ProfilePage extends React.Component {
                         titleStyle={ { color: 'white', marginTop: 8 } }
                         rightIconSource={ WhiteLogo }/>
               </View>
-              <Subheader text={ I18n.t('profile_page.personal') }/>
-              <View style={ { flexDirection: 'row', margin: 8 } }>
-                <ProfileWhiteButton onPress={ () => this.props.navigation.navigate(PAGES_NAMES.EDIT_BASIC_PROFILE) }
-                                    text={ I18n.t('common.edit') }/>
+              <SmallSubheader text={ I18n.t('profile_page.personal') }/>
+              <View style={ styles.actionsContainer }>
+                <View style={ styles.actions }>
+                  <ProfileWhiteButton onPress={ () => this.props.navigation.navigate(PAGES_NAMES.EDIT_BASIC_PROFILE) }
+                                      text={ I18n.t('common.edit') }/>
+                </View>
               </View>
-              <Subheader text={ I18n.t('profile_page.job_profile') }/>
-              <View style={ { flexDirection: 'row', margin: 8 } }>
-                { this.props.professional && (
-                  <React.Fragment>
-                    <ProfileWhiteButton onPress={ this.handleOpenProfessionalDetails } text={ I18n.t('common.view') }/>
-                    <ProfileWhiteButton onPress={ this.handleEditProfessional }
-                                        text={ I18n.t('common.edit') }/>
-                    {
-                      this.props.professional.isActive && (
-                        <ProfileWhiteButton onPress={ this.props.deactivateProfile }
-                                            text={ I18n.t('common.deactivate') }/>
-                      )
-                    }
-                    {
-                      !this.props.professional.isActive && (
-                        <ProfileWhiteButton onPress={ this.props.reactivateProfile }
-                                            text={ I18n.t('common.reactivate') }/>
-                      )
-                    }
-                  </React.Fragment>
-                ) }
-                { !this.props.professional && (
-                  <ProfileWhiteButton onPress={ this.handleProfessionalCreate } text={ I18n.t('common.create') }/>
+              <SmallSubheader text={ I18n.t('profile_page.job_profile') }/>
+              <View style={ styles.actionsContainer }>
+                <View style={ styles.actions }>
+                  { this.props.professional && (
+                    <React.Fragment>
+                      <ProfileWhiteButton onPress={ this.handleOpenProfessionalDetails }
+                                          text={ I18n.t('common.view') }/>
+                      <ProfileWhiteButton onPress={ this.handleEditProfessional }
+                                          text={ I18n.t('common.edit') }/>
+                      {
+                        this.props.professional.isActive && (
+                          <ProfileWhiteButton onPress={ this.props.deactivateProfile }
+                                              text={ I18n.t('common.deactivate') }/>
+                        )
+                      }
+                      {
+                        !this.props.professional.isActive && (
+                          <ProfileWhiteButton onPress={ this.props.reactivateProfile }
+                                              text={ I18n.t('common.reactivate') }/>
+                        )
+                      }
+                    </React.Fragment>
+                  ) }
+                  { !this.props.professional && (
+                    <ProfileWhiteButton onPress={ this.handleProfessionalCreate } text={ I18n.t('common.create') }/>
 
-                ) }
+                  ) }
+                </View>
+                {
+                  this.props.professional && (
+                    <Text style={ styles.warningText }>
+                      { this.props.professional.isActive
+                        ? I18n.t('profile_page.reactivate_warning')
+                        : I18n.t('profile_page.deactivate_warning') }
+                    </Text>
+                  )
+                }
               </View>
-              <Subheader text={ I18n.t('profile_page.project') }/>
-              <View style={ { flexDirection: 'row', margin: 8 } }>
-                { this.props.project && (
-                  <React.Fragment>
-                    <ProfileWhiteButton onPress={ this.handleOpenProjectDetails } text={ I18n.t('common.view') }/>
-                    <ProfileWhiteButton onPress={ this.handleEditProject } text={ I18n.t('common.edit') }/>
-                    <ProfileWhiteButton onPress={ this.props.leaveProject } text={ I18n.t('common.leave') }/>
-                  </React.Fragment>
-                ) }
-                { !this.props.project && (
-                  <React.Fragment>
-                    <ProfileWhiteButton onPress={ () => this.handleProjectCreate(false) } text={ I18n.t('common.create') }/>
-                    { Config.APP_DEV_FLOW && (
-                      <ProfileWhiteButton onPress={ () => this.handleProjectCreate(true) } text={ 'DEV_CREATE' }/>
-                    ) }
-                  </React.Fragment>
-                ) }
+              <SmallSubheader text={ I18n.t('profile_page.project') }/>
+              <View style={ styles.actionsContainer }>
+                <View style={ styles.actions }>
+                  { this.props.project && (
+                    <React.Fragment>
+                      <ProfileWhiteButton onPress={ this.handleOpenProjectDetails } text={ I18n.t('common.view') }/>
+                      <ProfileWhiteButton onPress={ this.handleEditProject } text={ I18n.t('common.edit') }/>
+                      <ProfileWhiteButton onPress={ this.handleProjectManage } text={ I18n.t('common.manage') }/>
+                      <ProfileWhiteButton onPress={ this.props.leaveProject } text={ I18n.t('common.leave') }/>
+                    </React.Fragment>
+                  ) }
+                  { !this.props.project && (
+                    <React.Fragment>
+                      <ProfileWhiteButton onPress={ () => this.handleProjectCreate(false) }
+                                          text={ I18n.t('common.create') }/>
+                      { Config.APP_DEV_FLOW && (
+                        <ProfileWhiteButton onPress={ () => this.handleProjectCreate(true) } text={ 'DEV_CREATE' }/>
+                      ) }
+                    </React.Fragment>
+                  ) }
+                </View>
               </View>
-              <Subheader text={ I18n.t('profile_page.investor') }/>
-              <View style={ { flexDirection: 'row', margin: 8 } }>
-                { this.props.investor && (
-                  <React.Fragment>
-                    <ProfileWhiteButton onPress={ this.handleOpenInvestorDetails } text={ I18n.t('common.view') }/>
-                    <ProfileWhiteButton onPress={ this.handleEditInvestor } text={ I18n.t('common.edit') }/>
-                    {
-                      this.props.investor.isActive && (
-                        <ProfileWhiteButton onPress={ this.props.deactivateInvestor }
-                                            text={ I18n.t('common.deactivate') }/>
-                      )
-                    }
-                    {
-                      !this.props.investor.isActive && (
-                        <ProfileWhiteButton onPress={ this.props.reactivateInvestor }
-                                            text={ I18n.t('common.reactivate') }/>
-                      )
-                    }
-                  </React.Fragment>
-                ) }
-                { !this.props.investor && (
-                  <React.Fragment>
-                    <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(false) } text={ I18n.t('common.create') }/>
-                    { Config.APP_DEV_FLOW && (
-                      <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(true) } text={ 'DEV_CREATE' }/>
-                    ) }
-                  </React.Fragment>
-                ) }
+              <SmallSubheader text={ I18n.t('profile_page.investor') }/>
+              <View style={ styles.actionsContainer }>
+                <View style={ styles.actions }>
+                  { this.props.investor && (
+                    <React.Fragment>
+                      <ProfileWhiteButton onPress={ this.handleOpenInvestorDetails } text={ I18n.t('common.view') }/>
+                      <ProfileWhiteButton onPress={ this.handleEditInvestor } text={ I18n.t('common.edit') }/>
+                      {
+                        this.props.investor.isActive && (
+                          <ProfileWhiteButton onPress={ this.props.deactivateInvestor }
+                                              text={ I18n.t('common.deactivate') }/>
+                        )
+                      }
+                      {
+                        !this.props.investor.isActive && (
+                          <ProfileWhiteButton onPress={ this.props.reactivateInvestor }
+                                              text={ I18n.t('common.reactivate') }/>
+                        )
+                      }
+                    </React.Fragment>
+                  ) }
+                  { !this.props.investor && (
+                    <React.Fragment>
+                      <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(false) }
+                                          text={ I18n.t('common.create') }/>
+                      { Config.APP_DEV_FLOW && (
+                        <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(true) } text={ 'DEV_CREATE' }/>
+                      ) }
+                    </React.Fragment>
+                  ) }
+                </View>
+                {
+                  this.props.investor && (
+                    <Text style={ styles.warningText }>
+                      { this.props.investor.isActive
+                        ? I18n.t('profile_page.reactivate_warning')
+                        : I18n.t('profile_page.deactivate_warning') }
+                    </Text>
+                  )
+                }
               </View>
-              <Subheader text={ I18n.t('common.logout') }/>
-              <OutlineWhiteButton
-                text={ I18n.t('common.logout') }
-                onPress={ () => this.props.logout() }
-              />
-
+              <SmallSubheader text={ I18n.t('common.logout') }/>
+              <View style={ { margin: 8 } }>
+                <OutlineWhiteButton
+                  text={ I18n.t('common.logout') }
+                  onPress={ () => this.props.logout() }
+                />
+              </View>
             </ScrollView>
           </View>
         </Container>
@@ -259,6 +284,20 @@ const styles = EStyleSheet.create({
     color: '#FFFFFF',
     fontSize: 14,
     fontFamily: 'Montserrat-SemiBold'
+  },
+  warningText: {
+    color: 'rgba(255, 255, 255, .5)',
+    marginTop: 8
+  },
+  actionsContainer: {
+    marginLeft: 8,
+    marginRight: 8,
+    marginTop: 16,
+    marginBottom: 16
+  },
+  actions: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   }
 })
 

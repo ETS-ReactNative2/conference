@@ -1,14 +1,15 @@
-import { ListItem, Text, Thumbnail, View } from 'native-base'
+import { Text, View } from 'native-base'
 import React from 'react'
-import { Image } from 'react-native'
-import { TouchableHighlight } from 'react-native'
+import { Image, TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
+import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
 import { TICKET_SIZES } from '../../../../enums'
-import { getUrl } from '../../../../common/fake-randomizer'
 
 export const InvestorItem = ({ investor, onMark, onClick }) => {
-  const portraitPlaceholderUri = getUrl()
+  const avatar = investor.user && investor.user.imageUrl
+    ? { uri: `${investor.user.imageUrl}?w=400&h=300` }
+    : ColorLogo
   const firstName = investor.user ? investor.user.firstName : ''
   const lastName = investor.user ? investor.user.lastName : ''
   const ticketCount = investor.ticketSizes.length
@@ -18,16 +19,16 @@ export const InvestorItem = ({ investor, onMark, onClick }) => {
 
   return (
     <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
-    <View style={ styles.listItem }>
-      <View style={ { flex: 1, borderTopLeftRadius: 8, borderTopRightRadius: 8, overflow: 'hidden'}}>
-        <Image style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
-        <Flag style={ styles.countryFlag } code={ investor.nationality }/>
+      <View style={ styles.listItem }>
+        <View style={ { flex: 1, borderTopLeftRadius: 8, borderTopRightRadius: 8, overflow: 'hidden' } }>
+          <Image style={ styles.portrait } source={ avatar }/>
+          <Flag style={ styles.countryFlag } code={ investor.nationality }/>
+        </View>
+        <View style={ { marginTop: 16, marginBottom: 16, marginLeft: 16 } }>
+          <Text style={ styles.largeText }>{ `${firstName} ${lastName}` }</Text>
+          <Text style={ styles.normalText }>{ moneyRange }</Text>
+        </View>
       </View>
-      <View style={ { marginTop: 16, marginBottom: 16, marginLeft: 16 } }>
-        <Text style={ styles.largeText }>{ `${firstName} ${lastName}` }</Text>
-        <Text style={ styles.normalText }>{ moneyRange }</Text>
-      </View>
-    </View>
     </TouchableHighlight>
   )
 }

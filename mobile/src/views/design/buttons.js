@@ -42,7 +42,7 @@ export function OutlineWhiteButton ({ text = 'Example text', onPress, disabled, 
   const styles = outlineWhiteButtonStyles
   return (
     <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
-      { icon && <Icon active style={{color: '#FFFFFF'}} name={icon}></Icon> }
+      { icon ? <Icon active style={{color: '#FFFFFF'}} name={icon}></Icon> : null }
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
   )
@@ -52,7 +52,7 @@ export function ProfileWhiteButton ({ text = 'Example text', onPress, disabled, 
   const styles = profileWhiteButton
   return (
     <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
-      { icon && <Icon active style={{color: '#FFFFFF'}} name={icon}></Icon> }
+      { icon ? <Icon active style={{color: '#FFFFFF'}} name={icon}></Icon> : null }
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
   )
@@ -80,7 +80,7 @@ export function BlueButton ({ text, onPress, disabled, icon}){
   const styles = blueButtonStyles
   return (
     <BaseButton disabled={ disabled } style={ disabled ? styles.disabledButton : styles.button } onPress={ ev => onPress(ev) }>
-      { icon && <Icon active style={{color: '#FFFFFF'}} name={icon}></Icon> }
+      { icon ? <Icon active style={{color: '#FFFFFF'}} name={icon}></Icon> : null }
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
   )
@@ -214,7 +214,8 @@ const profileWhiteButton = EStyleSheet.create({
     maxWidth: null,
     width: null,
     height: null,
-    marginRight: 8
+    marginRight: 8,
+    marginBottom: 4
   },
   disabledButton: {
     backgroundColor: 'transparent',

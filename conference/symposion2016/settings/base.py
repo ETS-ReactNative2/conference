@@ -147,6 +147,7 @@ INSTALLED_APPS = [
 
     # external
     "account",
+    "anymail",
     "easy_thumbnails",
     "eventlog",
     "markitup",
@@ -242,8 +243,8 @@ FIXTURE_DIRS = [
     os.path.join(PROJECT_ROOT, "fixtures"),
 ]
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-DEFAULT_FROM_EMAIL = 'PyCon Canada CFP <cfp@pycon.ca>'
+EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+DEFAULT_FROM_EMAIL = 'Block Seoul Team <noreply@meetluna.com>'
 
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_EMAIL_UNIQUE = True
@@ -280,3 +281,18 @@ PROPOSAL_FORMS = {
     "tutorial": "symposion2016.pycon_proposals.forms.TutorialProposalForm",
     "talk": "symposion2016.pycon_proposals.forms.TalkProposalForm",
 }
+
+ANYMAIL = {
+    "SENDGRID_API_KEY": os.environ.get('SENDGRID_API_SEND_KEY'),
+}
+
+# Image upload
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = os.environ.get('CONFERENCE_AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('CONFERENCE_AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('CONFERENCE_AWS_STORAGE_BUCKET_NAME')
+AWS_DEFAULT_ACL = 'private'
+AWS_S3_ENCRYPTION = True
+AWS_QUERYSTRING_EXPIRE = 60*60*24*30
+
+IMAGE_URL_BASE = os.environ.get('CONFERENCE_IMAGE_URL_BASE', 'https://blockseoul-test.imgix.net/')

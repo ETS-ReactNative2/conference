@@ -1,7 +1,8 @@
-import { Form } from 'native-base'
+import { Form, Text, Thumbnail } from 'native-base'
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, TouchableHighlight, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import ImagePicker from 'react-native-image-picker'
 import { connect } from 'react-redux'
 import { batchActions } from 'redux-batch-enhancer'
 import validator from 'validator'
@@ -13,21 +14,20 @@ import { signUpActions } from '../../../../signup'
 import Alert from '../../../components/alert/alert'
 import { NavigationHeader } from '../../../components/header/header'
 import HeaderSkip from '../../../components/header/header-skip'
-import { PrimaryButton } from '../../../design/buttons'
+import { BlueButton, PrimaryButton } from '../../../design/buttons'
 import FlowInputValidated from '../../../design/flow-input-validated'
 import FlowInput from '../../../design/flow-inputs'
 import { ImagePageContainer } from '../../../design/image-page-container'
 import { StepTitle } from '../../../design/step-title'
+import { Subheader } from '../../../design/subheader'
 
-// const errorStyleOverride = {
-//   border: {
-//     borderColor: '#000000',
-//     borderBottomColor: '#000000'
-//   },
-//   text: {
-//     color: '#000000'
-//   }
-// }
+const options = {
+  title: 'Select Avatar',
+  storageOptions: {
+    skipBackup: true,
+    path: 'images'
+  }
+}
 
 class CommonProfileOnboarding extends React.Component {
 
@@ -41,7 +41,8 @@ class CommonProfileOnboarding extends React.Component {
       twitter: this.props.twitter,
       facebook: this.props.facebook,
       telegram: this.props.telegram,
-      linkedin: this.props.linkedin
+      linkedin: this.props.linkedin,
+      avatarSource: this.props.imageUrl
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -74,7 +75,8 @@ class CommonProfileOnboarding extends React.Component {
       twitter: this.state.twitter,
       facebook: this.state.facebook,
       telegram: this.state.telegram,
-      linkedin: this.state.linkedin
+      linkedin: this.state.linkedin,
+      avatarSource: this.state.avatarSource
     }, PAGES_NAMES.HOME_PAGE)
     if (this.props.edit) {
       this.props.navigation.goBack()
@@ -88,6 +90,25 @@ class CommonProfileOnboarding extends React.Component {
     this.setState({
       [ name ]: newValue
     }, this.validateForm)
+  }
+
+  handleGetImage = () => {
+    ImagePicker.showImagePicker(options, (response) => {
+
+      if (response.didCancel || response.error || response.customButton) {
+        return
+      }
+      else {
+        let source = { uri: response.uri, data: response.data }
+
+        // You can also display the image using data:
+        // source = { uri: 'data:image/jpeg;base64,' + response.data }
+
+        this.setState({
+          avatarSource: source
+        })
+      }
+    })
   }
 
   render () {
@@ -117,10 +138,28 @@ class CommonProfileOnboarding extends React.Component {
                          textStyle={ styles.pageTitle }/>
             </View>
             { this.props.isError && (
-              <Alert color="error" message={ this.props.errorMessage } errorStyleOverride={ errorStyleOverride }/>
+              <Alert color="error" message={ this.props.errorMessage }/>
             ) }
             <View style={ { flex: 1 } }>
               <Form>
+                <Subheader text={ 'Avatar' }/>
+                <View style={ { margin: 8 } }>
+                  {
+                    !this.state.avatarSource.uri ? (
+                      <BlueButton text={ 'Choose avatar' } onPress={ this.handleGetImage }/>) : null
+                  }
+                  { this.state.avatarSource.uri ? (
+                    <View style={ { width: '100%', justifyContent: 'center', alignContent: 'center', marginTop: 8 } }>
+                      <TouchableHighlight onPress={ this.handleGetImage } underlayColor='transparent'>
+                        <Thumbnail large={ true } square={ true } style={ { width: undefined, height: 300 } }
+                                   source={ this.state.avatarSource }/>
+                      </TouchableHighlight>
+                      <Text style={ { color: 'white', textAlign: 'center', marginTop: 8 } }>Tap image above to
+                        change</Text>
+                    </View>
+                  ) : null }
+                </View>
+                <Subheader text={ 'Basic info' }/>
                 <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                   <FlowInputValidated
                     floatingLabel={ true }
@@ -251,6 +290,7 @@ const mapStateToProps = state => {
     facebook: state.signUp.profile.facebook,
     telegram: state.signUp.profile.telegram,
     linkedin: state.signUp.profile.linkedin,
+    imageUrl: { uri: '' },
     isError: state.signUp.auth.profile.isError,
     errorMessage: state.signUp.auth.profile.errorMessage,
     edit: false
@@ -276,6 +316,7 @@ export const EditBasicInfo = connect(
     facebook: state.profile.basic.facebook,
     telegram: state.profile.basic.telegram,
     linkedin: state.profile.basic.linkedin,
+    imageUrl: { uri: state.profile.basic.imageUrl },
     edit: true
   }),
   dispatch => ({

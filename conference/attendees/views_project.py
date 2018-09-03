@@ -10,6 +10,36 @@ from . import models
 from . import serializers
 
 
+class Jobs(generics.ListAPIView):
+    serializer_class = serializers.JobListingSerializer
+
+    def get_queryset(self):
+        filters = {}
+        if self.request.GET.get('defaults') == 'true':
+            professional = self.request.user.conference_user.professional
+            if professional:
+                if professional.role:
+                    filters['role'] = professional.role.pk
+        else:
+            roles = self.request.GET.getlist('role')
+            if roles:
+                filters['role__in'] = roles
+        return models.JobListing.objects.filter(**filters).distinct()
+
+
+class JobsDefaults(APIView):
+
+    def get(self, request, format=None):
+        result = {}
+        professional = request.user.conference_user.professional
+        if not professional:
+            result['role'] = []
+        else:
+            if professional.role:
+                result['role'] = [professional.role.pk]
+        return JsonResponse(result)
+
+
 class ListProject(generics.ListAPIView):
     serializer_class = serializers.ProjectSerializer
 
@@ -46,13 +76,36 @@ class ListProject(generics.ListAPIView):
             if product_stages:
                 filters['product_stage__in'] = product_stages
             region = self.request.GET.get('region')
-            if region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
+            clean_region = int(region) if region else None
+            if clean_region == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
                 excludes['legal_country'] = models.Region.COUNTRY_UNITED_STATES
                 excludes['main_country'] = models.Region.COUNTRY_UNITED_STATES
             token_types = self.request.GET.getlist('token_type')
             if token_types:
                 filters['token_type__in'] = token_types
         return models.Project.objects.filter(**filters).exclude(**excludes).distinct()
+
+
+class ProjectsDefaults(APIView):
+
+    def get(self, request, format=None):
+        result = {}
+        investor = request.user.conference_user.investor
+        if not investor:
+            result['funding_stage'] = []
+            result['giveaway'] = []
+            result['product_stage'] = []
+            result['region'] = models.Region.ANYWHERE
+            result['token_type'] = []
+            result['industry'] = []
+        else:
+            result['funding_stage'] = [funding_stage.pk for funding_stage in investor.funding_stages.all()]
+            result['giveaway'] = [giveaway.pk for giveaway in investor.giveaways.all()]
+            result['product_stage'] = [product_stage.pk for product_stage in investor.product_stages.all()]
+            result['region'] = models.Region.ANYWHERE
+            result['token_type'] = [token_type.pk for token_type in investor.token_types.all()]
+            result['industry'] = [industry.pk for industry in investor.industries.all()]
+        return JsonResponse(result)
 
 
 class RetrieveProject(generics.RetrieveAPIView):
@@ -142,10 +195,10 @@ class MyProject(APIView):
         clean_is_sponsor = is_sponsor if isinstance(is_sponsor, bool) else False
 
         legal_country = json_body.get('legal_country')
-        clean_legal_country = legal_country[:models.COUNTRY_MAX_LENGTH] if legal_country else ''
+        clean_legal_country = legal_country[:models.COUNTRY_MAX_LENGTH].upper() if legal_country else ''
 
         main_country = json_body.get('main_country')
-        clean_main_country = main_country[:models.COUNTRY_MAX_LENGTH] if main_country else ''
+        clean_main_country = main_country[:models.COUNTRY_MAX_LENGTH].upper() if main_country else ''
 
         name = json_body.get('name')
         clean_name = name[:models.Project.NAME_MAX_LENGTH] if name else '-'
@@ -274,81 +327,88 @@ class MyProjectJobs(APIView):
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
         result = models.JobListing.objects.filter(project=project)
-        return JsonResponse(result, status=status.HTTP_200_OK)
+        return JsonResponse({"jobs": [serializers.JobListingSerializer(job_listing).data for job_listing in result]},
+                            status=status.HTTP_200_OK)
 
     @transaction.atomic
-    def post(self, request, format=None):
-        json_body = request.data
-
-        if not models.ConferenceUser.objects.filter(user=self.request.user).exists():
-            models.ConferenceUser.objects.create(user=self.request.user)
+    def put(self, request, format=None):
+        body_data = request.data
+        body_list = body_data.get('jobs')
 
         # Check if the current user even has a project
         project = request.user.conference_user.project
         if not project:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
-        role = json_body.get('role')
-        clean_role = models.JobRole.objects.get(pk=role) if (
-            role and 1 <= role <= 12
-        ) else models.JobRole.objects.get(pk=models.JobRole.OTHER)
+        models.JobListing.objects.filter(project=project).delete()
 
-        # Check if there already is a job listing for that role
-        if models.JobListing.objects.filter(role=clean_role, project=project).exists():
-            return JsonResponse({'code': 'role_exists'}, status=status.HTTP_409_CONFLICT)
+        result = []
 
-        role_other_text = json_body.get('role_other_text')
-        clean_role_other_text = role_other_text[:models.JobRole.ROLE_OTHER_TEXT_MAX_LENGTH] if (
-            role_other_text and clean_role.pk == models.JobRole.OTHER
-        ) else ''
+        for json_body in body_list:
+            role = json_body.get('role')
+            clean_role = models.JobRole.objects.get(pk=role) if (
+                role and 1 <= role <= 12
+            ) else models.JobRole.objects.get(pk=models.JobRole.OTHER)
 
-        skills = json_body.get('skills_text')
-        clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
+            # Check if there already is a job listing for that role
+            if models.JobListing.objects.filter(role=clean_role, project=project).exists():
+                return JsonResponse({'code': 'role_exists'}, status=status.HTTP_409_CONFLICT)
 
-        link = json_body.get('link')
-        clean_link = link[:models.URL_MAX_LENGTH] if link else ''
+            role_other_text = json_body.get('role_other_text')
+            clean_role_other_text = role_other_text[:models.JobRole.ROLE_OTHER_TEXT_MAX_LENGTH] if (
+                role_other_text and clean_role.pk == models.JobRole.OTHER
+            ) else ''
 
-        description = json_body.get('description')
-        clean_description = description[:models.JobListing.DESCRIPTION_MAX_LENGTH] if description else ''
+            skills = json_body.get('skills_text')
+            clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
 
-        part_time = json_body.get('part_time')
-        clean_part_time = part_time if part_time else False
+            link = json_body.get('link')
+            clean_link = link[:models.URL_MAX_LENGTH] if link else ''
 
-        payments = json_body.get('payments')
-        clean_payments = [models.Payment.objects.get(pk=pk) for pk in payments] if payments else []
+            description = json_body.get('description')
+            clean_description = description[:models.JobListing.DESCRIPTION_MAX_LENGTH] if description else ''
 
-        local_remote_options = json_body.get('local_remote_options')
-        clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
-            local_remote_options
-        ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
+            part_time = json_body.get('part_time')
+            clean_part_time = part_time if part_time else False
 
-        country = json_body.get('country')
-        clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
-                country and
-                models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
-        ) else ''
+            payments = json_body.get('payments')
+            clean_payments = [models.Payment.objects.get(pk=pk) for pk in payments] if payments else []
 
-        city = json_body.get('city')
-        clean_city = city[:models.CITY_MAX_LENGTH] if (
-                city and
-                models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
-        ) else ''
+            local_remote_options = json_body.get('local_remote_options')
+            clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
+                local_remote_options
+            ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
 
-        job_listing = models.JobListing.objects.create(
-            role=clean_role,
-            role_other_text=clean_role_other_text,
-            skills_text=clean_skills,
-            link=clean_link,
-            description=clean_description,
-            part_time=clean_part_time,
-            country=clean_country,
-            city=clean_city,
-            project=project,
-        )
-        job_listing.payments = clean_payments
-        job_listing.local_remote_options = clean_local_remote_options
-        job_listing.save()
-        return JsonResponse(serializers.JobListingSerializer(job_listing).data, status=status.HTTP_201_CREATED)
+            country = json_body.get('country')
+            clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
+                    country and
+                    models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
+            ) else ''
+
+            city = json_body.get('city')
+            clean_city = city[:models.CITY_MAX_LENGTH] if (
+                    city and
+                    models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
+            ) else ''
+
+            job_listing = models.JobListing.objects.create(
+                role=clean_role,
+                role_other_text=clean_role_other_text,
+                skills_text=clean_skills,
+                link=clean_link,
+                description=clean_description,
+                part_time=clean_part_time,
+                country=clean_country,
+                city=clean_city,
+                project=project,
+            )
+            job_listing.payments = clean_payments
+            job_listing.local_remote_options = clean_local_remote_options
+            job_listing.save()
+            result.append(job_listing)
+
+        return JsonResponse({"jobs": [serializers.JobListingSerializer(job_listing).data for job_listing in result]},
+                            status=status.HTTP_201_CREATED)
 
 
 class MyProjectJobsId(APIView):
@@ -509,13 +569,16 @@ class MyProjectMembers(APIView):
         if not request.user.conference_user.project:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
-        result = [
-            {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'request': False}
-            for user in request.user.conference_user.project.members].extend(
-            [
-                {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'request': True}
-                for user in request.user.conference_user.project.member_requests
-            ])
+        result = {
+            'members': [
+                {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name}
+                for member in request.user.conference_user.project.members.all()
+            ],
+            'member_requests': [
+                {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name}
+                for member in request.user.conference_user.project.member_requests.all()
+            ]
+        }
         return JsonResponse(result, status=status.HTTP_200_OK)
 
     @transaction.atomic
@@ -555,13 +618,16 @@ class MyProjectMembers(APIView):
         user.conference_user.project = project
         user.conference_user.save()
 
-        result = [
-            {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'request': False}
-            for user in request.user.conference_user.project.members].extend(
-            [
-                {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'request': True}
-                for user in request.user.conference_user.project.member_requests
-            ])
+        result = {
+            'members': [
+                {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name}
+                for member in request.user.conference_user.project.members.all()
+            ],
+            'member_requests': [
+                {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name}
+                for member in request.user.conference_user.project.member_requests.all()
+            ]
+        }
         return JsonResponse(result, status=status.HTTP_200_OK)
 
 

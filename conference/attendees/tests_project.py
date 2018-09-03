@@ -180,8 +180,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(response_dict.get('image_url'), 'http://www.example.com')
         self.assertEqual(response_dict.get('industry'), 1)
         self.assertEqual(response_dict.get('is_sponsor'), True)
-        self.assertEqual(response_dict.get('legal_country'), 'us')
-        self.assertEqual(response_dict.get('main_country'), 'us')
+        self.assertEqual(response_dict.get('legal_country'), 'US')
+        self.assertEqual(response_dict.get('main_country'), 'US')
         self.assertEqual(response_dict.get('name'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('news'), 'http://www.example.com')
         self.assertEqual(response_dict.get('notable'), 'aaaaaaaa')
@@ -209,8 +209,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(project.image_url, 'http://www.example.com')
         self.assertEqual(project.industry, models.Industry.objects.get(pk=1))
         self.assertEqual(project.is_sponsor, True)
-        self.assertEqual(project.legal_country, 'us')
-        self.assertEqual(project.main_country, 'us')
+        self.assertEqual(project.legal_country, 'US')
+        self.assertEqual(project.main_country, 'US')
         self.assertEqual(project.name, 'aaaaaaaa')
         self.assertEqual(project.news, 'http://www.example.com')
         self.assertEqual(project.notable, 'aaaaaaaa')
@@ -241,8 +241,8 @@ class MyProjectTest(AuthMixin):
                 'image_url': '',
                 'industry': 1,
                 'is_sponsor': False,
-                'legal_country': 'us',
-                'main_country': 'us',
+                'legal_country': 'US',
+                'main_country': 'US',
                 'name': 'aaa',
                 'news': '',
                 'notable': '',
@@ -275,8 +275,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(response_dict.get('image_url'), '')
         self.assertEqual(response_dict.get('industry'), 1)
         self.assertEqual(response_dict.get('is_sponsor'), False)
-        self.assertEqual(response_dict.get('legal_country'), 'us')
-        self.assertEqual(response_dict.get('main_country'), 'us')
+        self.assertEqual(response_dict.get('legal_country'), 'US')
+        self.assertEqual(response_dict.get('main_country'), 'US')
         self.assertEqual(response_dict.get('name'), 'aaa')
         self.assertEqual(response_dict.get('news'), '')
         self.assertEqual(response_dict.get('notable'), '')
@@ -304,8 +304,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(project.image_url, '')
         self.assertEqual(project.industry, models.Industry.objects.get(pk=1))
         self.assertEqual(project.is_sponsor, False)
-        self.assertEqual(project.legal_country, 'us')
-        self.assertEqual(project.main_country, 'us')
+        self.assertEqual(project.legal_country, 'US')
+        self.assertEqual(project.main_country, 'US')
         self.assertEqual(project.name, 'aaa')
         self.assertEqual(project.news, '')
         self.assertEqual(project.notable, '')
@@ -337,8 +337,8 @@ class MyProjectTest(AuthMixin):
                 'image_url': 'http://www.example.com',
                 'industry': 1,
                 'is_sponsor': True,
-                'legal_country': 'us',
-                'main_country': 'us',
+                'legal_country': 'US',
+                'main_country': 'US',
                 'name': 'aaaaaaaa',
                 'news': 'http://www.example.com',
                 'notable': 'aaaaaaaa',
@@ -407,8 +407,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(response_dict.get('image_url'), '')
         self.assertEqual(response_dict.get('industry'), 1)
         self.assertEqual(response_dict.get('is_sponsor'), False)
-        self.assertEqual(response_dict.get('legal_country'), 'us')
-        self.assertEqual(response_dict.get('main_country'), 'us')
+        self.assertEqual(response_dict.get('legal_country'), 'US')
+        self.assertEqual(response_dict.get('main_country'), 'US')
         self.assertEqual(response_dict.get('name'), 'aaa')
         self.assertEqual(response_dict.get('news'), '')
         self.assertEqual(response_dict.get('notable'), '')
@@ -436,8 +436,8 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(project.image_url, '')
         self.assertEqual(project.industry, models.Industry.objects.get(pk=1))
         self.assertEqual(project.is_sponsor, False)
-        self.assertEqual(project.legal_country, 'us')
-        self.assertEqual(project.main_country, 'us')
+        self.assertEqual(project.legal_country, 'US')
+        self.assertEqual(project.main_country, 'US')
         self.assertEqual(project.name, 'aaa')
         self.assertEqual(project.news, '')
         self.assertEqual(project.notable, '')
@@ -476,11 +476,19 @@ class MyProjectJobsTest(AuthMixin):
         response = self.client.post(reverse(self.view()))
         self.assertEqual(response.status_code, 401)
 
-    def test_post_404(self):
+    def test_post_405(self):
         response = self.client.post(reverse(self.view()), **self.header)
+        self.assertEqual(response.status_code, 405)
+
+    def test_put_401(self):
+        response = self.client.put(reverse(self.view()))
+        self.assertEqual(response.status_code, 401)
+
+    def test_put_404(self):
+        response = self.client.put(reverse(self.view()), **self.header)
         self.assertEqual(response.status_code, 404)
 
-    # todo regular post test
+    # todo regular put test
 
 
 class MyProjectJobsIdTest(AuthMixin):

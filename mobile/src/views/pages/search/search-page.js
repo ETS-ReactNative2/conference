@@ -1,4 +1,4 @@
-import { Tab, Tabs } from 'native-base'
+import { ScrollableTab, Tab, Tabs } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
@@ -13,6 +13,7 @@ import Header from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
 import InvestorsList from './components/investors-list'
+import JobList from './components/job-list'
 import ProfessionalsList from './components/professionals-list'
 import ProjectsList from './components/projects-list'
 
@@ -49,6 +50,11 @@ class SearchPage extends React.Component {
     })
   }
 
+  handleJobClick = job => {
+    // this.props.navigation.navigate(PAGES_NAMES.JOB_PAGE)
+    console.log({ job })
+  }
+
   onTabChange = ({ from, i }) => {
     this.setState({
       currentTab: i
@@ -57,7 +63,7 @@ class SearchPage extends React.Component {
 
   render () {
     const {
-      projects, professionals, investors, isLoading, error, fetchMatches, updateInvestors, updateProfessionals, updateProjects
+      isLoading, error, fetchMatches
     } = this.props
 
     if (isLoading) {
@@ -83,46 +89,57 @@ class SearchPage extends React.Component {
       <ImagePageContainer>
         <View style={ { flex: 1 } }>
           <View style={ styles.content }>
-            <ScrollView>
-              <View style={ { backgroundColor: 'transparent' } }>
-                <Header title={ I18n.t('search_page.title') }
-                        titleStyle={ { color: '#fff', marginTop: 8 } }
-                        rightIconSource={ WhiteLogo }/>
-              </View>
-              <Tabs
-                tabContainerStyle={ { borderBottomWidth: 0, backgroundColor: 'transparent' } }
-                style={ { borderColor: '#e8e8e8' } }
-                tabBarUnderlineStyle={ { backgroundColor: 'black', height: 1 } }
-                onChangeTab={ this.onTabChange }>
-                <Tab
-                  style={ { backgroundColor: 'transparent' } }
-                  textStyle={ { color: 'white' } }
-                  activeTextStyle={ { color: 'black' } }
-                  activeTabStyle={ { backgroundColor: '#fff' } }
-                  tabStyle={ { backgroundColor: 'transparent' } }
-                  heading={ I18n.t('search_page.tab_label_investor') }>
-                  <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
-                </Tab>
-                <Tab
-                  style={ { backgroundColor: 'transparent' } }
-                  textStyle={ { color: 'white' } }
-                  activeTextStyle={ { color: 'black' } }
-                  activeTabStyle={ { backgroundColor: '#fff' } }
-                  tabStyle={ { backgroundColor: 'transparent' } }
-                  heading={ I18n.t('search_page.tab_label_professional') }>
-                  <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick } navigation={ this.props.navigation }/>
-                </Tab>
-                <Tab
-                  style={ { backgroundColor: 'transparent' } }
-                  textStyle={ { color: 'white' } }
-                  activeTextStyle={ { color: 'black' } }
-                  activeTabStyle={ { backgroundColor: '#fff' } }
-                  tabStyle={ { backgroundColor: 'transparent' } }
-                  heading={ I18n.t('search_page.tab_label_projects') }>
-                  <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick } navigation={ this.props.navigation }/>
-                </Tab>
-              </Tabs>
-            </ScrollView>
+            <View style={ { backgroundColor: 'transparent' } }>
+              <Header title={ I18n.t('search_page.title') }
+                      titleStyle={ { color: '#fff', marginTop: 8 } }
+                      rightIconSource={ WhiteLogo }/>
+            </View>
+            <Tabs
+              renderTabBar={ () => <ScrollableTab
+                style={ { backgroundColor: 'transparent', borderBottomWidth: 0 } }/> }
+              tabBarUnderlineStyle={ { height: 0 } }
+              onChangeTab={ this.onTabChange }>
+              <Tab
+                style={ { backgroundColor: 'transparent' } }
+                textStyle={ { color: 'white' } }
+                activeTextStyle={ { color: 'black' } }
+                activeTabStyle={styles.activeTabStyle}
+                tabStyle={styles.tabStyle}
+                heading={ I18n.t('search_page.tab_label_investor') }>
+                <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
+              </Tab>
+              <Tab
+                style={ { backgroundColor: 'transparent' } }
+                textStyle={ { color: 'white' } }
+                activeTextStyle={ { color: 'black' } }
+                activeTabStyle={styles.activeTabStyle}
+                tabStyle={styles.tabStyle}
+                heading={ I18n.t('search_page.tab_label_professional') }>
+                <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick }
+                                    navigation={ this.props.navigation }/>
+              </Tab>
+              <Tab
+                style={ { backgroundColor: 'transparent' } }
+                textStyle={ { color: 'white' } }
+                activeTextStyle={ { color: 'black' } }
+                activeTabStyle={styles.activeTabStyle}
+                tabStyle={styles.tabStyle}
+                heading={ I18n.t('search_page.tab_label_projects') }>
+                <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick }
+                              navigation={ this.props.navigation }/>
+              </Tab>
+              <Tab
+                style={ { backgroundColor: 'transparent' } }
+                textStyle={ { color: 'white' } }
+                activeTextStyle={ { color: 'black' } }
+                activeTabStyle={styles.activeTabStyle}
+                tabStyle={styles.tabStyle}
+                heading={ I18n.t('search_page.tab_label_job') }>
+                <JobList style={ { marginTop: 8 } }
+                          onClick={ this.handleJobClick }
+                          navigation={ this.props.navigation }/>
+              </Tab>
+            </Tabs>
           </View>
         </View>
       </ImagePageContainer>
@@ -131,6 +148,16 @@ class SearchPage extends React.Component {
 }
 
 const styles = EStyleSheet.create({
+  activeTabStyle: {
+    backgroundColor: '#fff',
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+  tabStyle: {
+    backgroundColor: 'transparent',
+    paddingLeft: 0,
+    paddingRight: 0
+  },
   subheader: {
     fontSize: 16,
     fontWeight: 'bold',

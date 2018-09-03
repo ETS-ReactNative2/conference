@@ -1,4 +1,4 @@
-import { Form, View } from 'native-base'
+import { Form, Thumbnail, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
@@ -22,7 +22,7 @@ class InvesteeProjectSetup extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      ...{ projectName, projectTagline, projectDescription } = this.props.investee
+      ...{ projectName, projectTagline, projectDescription, imageUrl } = this.props.investee
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -51,6 +51,21 @@ class InvesteeProjectSetup extends React.Component {
                   isError={ !this.validateProjectName(this.state.projectName) }
                   errorMessage={ I18n.t('common.errors.incorrect_project_name') }
                   onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectName') }/>
+              </View>
+              <View style={ styles.inputContainer }>
+                <FlowInputValidated
+                  floatingLabel
+                  value={ this.state.imageUrl }
+                  placeholder={ I18n.t('flow_page.project_setup.image_url') }
+                  labelText={ I18n.t('flow_page.project_setup.image_url') }
+                  isError={ !this.validateImageUrl(this.state.imageUrl) }
+                  errorMessage={ I18n.t('common.errors.incorrect_image_url') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'imageUrl') }/>
+                { this.state.imageUrl ? (
+                  <View style={ { width: '100%', justifyContent: 'center', alignContent: 'center', marginTop: 8 } }>
+                    <Thumbnail large={true} square={ true } style={ {width: undefined, height: 300} } source={ { uri: this.state.imageUrl } }/>
+                  </View>
+                ) : null }
               </View>
               <View style={ styles.inputContainer }>
                 <FlowInput
@@ -92,6 +107,10 @@ class InvesteeProjectSetup extends React.Component {
     return validator.isLength(projectName, { min: 3 })
   }
 
+  validateImageUrl = (imageUrl) => {
+    return validator.isURL(imageUrl)
+  }
+
   isFormValid = () => {
     const { projectName } = this.state
     const nameLength = this.validateProjectName(projectName)
@@ -108,7 +127,8 @@ class InvesteeProjectSetup extends React.Component {
     this.props.save({
       projectName: this.state.projectName,
       projectTagline: this.state.projectTagline,
-      projectDescription: this.state.projectDescription
+      projectDescription: this.state.projectDescription,
+      imageUrl: this.state.imageUrl
     })
     this.props.onFill({
       nextStep: InvesteeIndustry

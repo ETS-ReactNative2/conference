@@ -13,6 +13,7 @@ pip install -r ./requirements.txt -q -v
 cd conference
 echo ===== RUN DATABASE MIGRATION =====
 python manage.py migrate auth
+python manage.py migrate sites
 python manage.py migrate
 echo ===== RUN PYTHON SERVER =====
-python manage.py runserver 0.0.0.0:8001
+python -u manage.py runserver 0.0.0.0:8001

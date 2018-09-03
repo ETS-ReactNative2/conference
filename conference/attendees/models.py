@@ -346,6 +346,8 @@ class ConferenceUser(models.Model):
 
     PHONE_MAX_LENGTH = 20
 
+    GUID_MAX_LENGTH = 16
+
     TITLE_MAX_LENGTH = 40
 
     TWITTER_MAX_LENGTH = 15
@@ -359,6 +361,8 @@ class ConferenceUser(models.Model):
     user = models.OneToOneField(User, null=True, related_name='conference_user', on_delete=models.CASCADE)
 
     phone = models.CharField(max_length=PHONE_MAX_LENGTH, blank=True, default='')
+
+    guid = models.CharField(max_length=GUID_MAX_LENGTH, blank=True)
 
     first_name = models.CharField(max_length=FIRST_NAME_MAX_LENGTH, blank=True, default='')
 

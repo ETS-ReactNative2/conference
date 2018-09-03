@@ -226,7 +226,7 @@ class MyProfessionalTest(AuthMixin):
         self.assertEqual(response_dict.get('traits_text'), 'traits')
         self.assertEqual(response_dict.get('know_most'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('local_remote_options'), [1, 2])
-        self.assertEqual(response_dict.get('country'), 'us')
+        self.assertEqual(response_dict.get('country'), 'US')
         self.assertEqual(response_dict.get('city'), 'aaaaaaaa')
         self.assertEqual(response_dict.get('relocate'), True)
         self.assertEqual(response_dict.get('age'), 42)

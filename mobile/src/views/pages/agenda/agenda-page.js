@@ -1,32 +1,100 @@
+import { Button, Icon, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { ScrollView, View, Text } from 'react-native'
+import { Modal, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import Gallery from 'react-native-image-gallery'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
+import FirstFloor from '../../../assets/images/maps/first-floor.jpg'
+import SecondFloor from '../../../assets/images/maps/second-floor.png'
+import Rooftop from '../../../assets/images/maps/rooftop.jpg'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
-
-import { scheduleActions } from '../../../schedule'
-import ConferenceAgenda from '../../components/conference-agenda/conference-agenda'
 import ErrorMessage from '../../components/error-message/error-message'
-import Header from '../../components/header/header'
+import { MapHeader } from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
 import { ConferenceEvent } from './components/conference-event'
 import { DateTab } from './components/date-tab'
 
-class AgendaPage extends Component {
+const secondImagesConfig = [
+  {
+    caption: I18n.t('agenda_page.maps.first_floor'),
+    source: FirstFloor,
+    dimensions: { width: 842, height: 595 }
+  },
+  {
+    caption: I18n.t('agenda_page.maps.second_floor'),
+    source: SecondFloor,
+    dimensions: { width: 1045, height: 596 }
+  },
+  {
+    caption: I18n.t('agenda_page.maps.rooftop'),
+    source: Rooftop,
+    dimensions: { width: 960, height: 720 }
+  }
+]
 
-  state = {
-    selected: 0
+class AgendaPage extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      showingImages: false,
+      currentImageIndex: 0,
+      selected: 0
+    }
   }
 
-  componentDidMount () {
-    this.props.fetchConferenceAgenda()
+  hideModal = () => {
+    this.setState({ showingImages: false })
+  }
+
+  onShowImagesCallback = () => {
+    this.setState({ showingImages: true })
+  }
+
+  onChangeImage = (index) => {
+    this.setState({ currentImageIndex: index })
+  }
+
+  imageCaption = () => {
+    const { currentImageIndex } = this.state
+    return (
+      <View style={ {
+        bottom: 0,
+        height: 65,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        width: '100%',
+        position: 'absolute',
+        justifyContent: 'center'
+      } }>
+        <Text style={ {
+          textAlign: 'center',
+          color: 'white',
+          fontSize: 24
+        } }>{ (secondImagesConfig[ currentImageIndex ] && secondImagesConfig[ currentImageIndex ].caption) || '' } </Text>
+      </View>
+    )
+  }
+
+  imageHeader = () => {
+    const { currentImageIndex } = this.state
+    return (
+      <View style={ styles.imageHeaderContainer }>
+        <Button
+          transparent
+          onPress={ this.hideModal }
+          style={ styles.imageCloseButton }>
+          <Icon type="Entypo" style={ styles.imageCloseIcon } name='cross'/>
+        </Button>
+        <Text style={ styles.imageHeaderCounter }>{ currentImageIndex + 1 } / { secondImagesConfig.length }</Text>
+      </View>
+    )
   }
 
   render () {
     const { isLoading, error, agenda, fetchAgenda } = this.props
+    const { showingImages } = this.state
 
     if (isLoading || agenda.length === 0) {
       return (
@@ -52,22 +120,36 @@ class AgendaPage extends Component {
 
     return (
       <ImagePageContainer>
+        <Modal visible={ showingImages } transparent onRequestClose={ this.hideModal }>
+          <View style={ { flex: 1 } }>
+            <Gallery
+              style={ { flex: 1, backgroundColor: 'black' } }
+              images={ secondImagesConfig }
+              initialPage={ 0 }
+              onPageSelected={ this.onChangeImage }/>
+            { this.imageHeader() }
+            { this.imageCaption() }
+          </View>
+        </Modal>
         <View style={ { flex: 1 } }>
           <View style={ styles.content }>
+            <View style={ { backgroundColor: 'transparent' } }>
+              <MapHeader
+                onMapClick={ this.onShowImagesCallback }
+                title={ I18n.t('agenda_page.title') }
+                titleStyle={ { color: 'white', marginTop: 8 } }
+                rightIconSource={ WhiteLogo }/>
+            </View>
+            <View style={ styles.tabContainer }>
+              { days.map((day, index) => (
+                <DateTab selected={ index === this.state.selected } date={ day.date }
+                         onClick={ () => this.setState({ selected: index }) } key={ index }/>
+              )) }
+            </View>
             <ScrollView>
-              <View style={ { backgroundColor: 'transparent' } }>
-                <Header title={ I18n.t('agenda_page.title') }
-                        titleStyle={ { color: 'white', marginTop: 8 } }
-                        rightIconSource={ WhiteLogo }/>
-              </View>
-              <View style={styles.tabContainer}>
-              {days.map((day, index) => (
-                <DateTab selected={index === this.state.selected} date={day.date} onClick={() => this.setState({selected: index})} key={index}/>
-              ))}
-              </View>
               {
-                days[this.state.selected].events.map((event,  index) => (
-                  <ConferenceEvent key={index} event={event}/>
+                days[ this.state.selected ].events.map((event, index) => (
+                  <ConferenceEvent key={ index } event={ event }/>
                 ))
               }
             </ScrollView>
@@ -81,11 +163,38 @@ class AgendaPage extends Component {
 const styles = EStyleSheet.create({
   content: {
     flex: 1,
-  paddingBottom: 49
+    paddingBottom: 49
   },
   tabContainer: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingBottom: 8
+  },
+  imageHeaderContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    width: '100%',
+    marginTop: 16,
+    top: 0,
+    height: 65,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    position: 'absolute',
+    alignItems: 'center'
+  },
+  imageCloseButton: {
+    alignSelf: 'center',
+    marginTop: 10
+  },
+  imageHeaderCounter: {
+    marginLeft: 'auto',
+    marginRight: 12,
+    marginTop: 12,
+    color: 'white',
+    fontSize: 24
+  },
+  imageCloseIcon: {
+    fontSize: 24,
+    color: 'white'
   }
 })
 

@@ -2,11 +2,12 @@ import { Text, Thumbnail, View } from 'native-base'
 import React from 'react'
 import { TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-
-import { getUrl } from '../../../../common/fake-randomizer'
+import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
 
 export const ProjectItem = ({ project, onMark, onClick }) => {
-  const portraitPlaceholderUri = getUrl()
+  const avatar = project.imageUrl
+    ? { uri: `${project.imageUrl}?w=200&h=200` }
+    : ColorLogo
   const firstName = project.name
   const moneyRange = project.fundraisingAmount
 
@@ -14,8 +15,7 @@ export const ProjectItem = ({ project, onMark, onClick }) => {
     <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
       <View style={ styles.listItem }>
         <View style={ { flex: 1, justifyContent: 'center', alignContent: 'center' } }>
-          <Thumbnail square large style={ styles.portrait } source={ { uri: portraitPlaceholderUri } }/>
-          { /*<Flag style={ styles.countryFlag } code={ project.nationality }/>*/ }
+          <Thumbnail square large style={ styles.portrait } source={ avatar }/>
         </View>
         <View style={ { flex: 2, justifyContent: 'center' } }>
           <Text style={ styles.largeText }>{ `${firstName}` }</Text>

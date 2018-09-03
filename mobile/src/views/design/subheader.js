@@ -27,11 +27,11 @@ export function SubheaderWithSwitch ({ text = '', selected = true, onToggle, swi
       <View style={ styles.leftBar }/>
       <Text style={ styles.text }>{ text.toUpperCase() }</Text>
       {
-        switchText && (
+        switchText ? (
           <Text style={ [styles.switchTextStyle, { color: switchTextColor }] }>{ switchText.toUpperCase() }</Text>
-        )
+        ) : null
       }
-      <Switch onValueChange={selected => onToggle(selected)} onTintColor={ SECONDARY_COLOR } style={ styles.switch } value={ selected }/>
+      <Switch onValueChange={selected => onToggle(selected)} onTintColor={ BAR_COLOR } style={ styles.switch } value={ selected }/>
     </View>
   )
 }

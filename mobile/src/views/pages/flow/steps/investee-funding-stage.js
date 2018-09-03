@@ -1,11 +1,11 @@
-import { Button, Card, Content, Left, ListItem, Radio, Right, Text, View } from 'native-base'
+import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { FUNDING_STAGES, PRODUCT_STAGES } from '../../../../enums'
+import { FUNDING_STAGES } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
 import { FlowContainer } from '../../../design/container'
@@ -56,29 +56,29 @@ class InvesteeFundingStage extends React.Component {
                 text={ I18n.t(`flow_page.members.header`) }
               />
             </View>
-            <View style={styles.inputContainer}>
+            <View style={ styles.inputContainer }>
               <FlowInput
                 floatingLabel
-                value={this.state.members}
-                labelText={I18n.t('flow_page.members.title')}
-                onChangeText={ text => this.handleTextChange('members', text)}
-                status={this.state.members.length > 0 ? 'ok': 'regular'}/>
+                value={ this.state.members }
+                labelText={ I18n.t('flow_page.members.title') }
+                onChangeText={ text => this.handleTextChange('members', text) }
+                status={ this.state.members.length > 0 ? 'ok' : 'regular' }/>
             </View>
-            <View style={styles.inputContainer}>
+            <View style={ styles.inputContainer }>
               <FlowInput
                 floatingLabel
-                value={this.state.size}
-                keyboardType={'numeric'}
-                labelText={I18n.t('flow_page.members.size')}
-                onChangeText={ text => this.handleTextChange('size', text)}
-                status={this.state.size.length > 0 ? 'ok': 'regular'}/>
+                value={ this.state.size }
+                keyboardType={ 'numeric' }
+                labelText={ I18n.t('flow_page.members.size') }
+                onChangeText={ text => this.handleTextChange('size', text) }
+                status={ this.state.size.length > 0 ? 'ok' : 'regular' }/>
             </View>
           </ScrollView>
         </View>
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={!this.state.isFormValid}
+            disabled={ !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />
         </View>
@@ -92,7 +92,7 @@ class InvesteeFundingStage extends React.Component {
 
   handleTextChange = (field, text) => {
     this.setState({
-      [field]: text
+      [ field ]: text
     })
   }
   validateForm = () => {

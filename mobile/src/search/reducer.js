@@ -13,6 +13,7 @@ const initialState = {
   professionals: [],
   projects: [],
   investors: [],
+  jobs: [],
   defaults: {
     professionals: [],
     projects: [],
@@ -36,7 +37,8 @@ export function searchReducer (state = initialState, action) {
         error: false,
         professionals: action.data.professionals ? action.data.professionals : state.professionals,
         projects: action.data.projects ? action.data.projects : state.projects,
-        investors: action.data.investors ? action.data.investors : state.investors
+        investors: action.data.investors ? action.data.investors : state.investors,
+        jobs: action.data.jobs ? action.data.jobs : state.jobs
       }
     case LOAD_PROFILES_ERROR:
       return {

@@ -14,7 +14,7 @@ class FlowInputValidated extends Component {
           value={ this.props.value }
           labelText={ this.props.labelText }
           onChangeText={ this.props.onChangeText }
-          status={ this.props.isError ? 'error' : 'ok' }
+          status={ this.props.isError ? 'error' : this.props.status || 'ok' }
           errorStyleOverride={this.props.errorStyleOverride}
           keyboardType={this.props.keyboardType}
         />

@@ -12,6 +12,8 @@ import { deactivateProfile } from '../profile/actions'
 
 import { CLEAR as SEARCH_CLEAR } from '../search/action-types'
 import { fetchDefaults } from '../search/actions'
+import { fetchProfiles } from '../profile/actions'
+import { fetchConferenceSchedule} from '../schedule/actions'
 import { navigationService, storageService } from '../services'
 import {
   CLEAR as SIGNUP_CLEAR,
@@ -114,14 +116,14 @@ export function uploadProfile () {
             mainCountry: investee.main.cca2,
             industry: investee.industry,
             region: investee.investorNationality,
-            regionOtherText: investee.regionOtherText
+            regionOtherText: investee.regionOtherText,
+            imageUrl: investee.imageUrl
           })
           if (investee.hiring) {
             const { roles, ...jobs } = employer
-
-            const promises = Object.keys(jobs).map(async key => {
+            const jobsArray = Object.keys(jobs).map(key => {
               const job = employer[ key ]
-              return api.createJob({
+              return {
                 role: ROLES.find(role => role.slug === key).index,
                 skillsText: job.keywords,
                 link: job.link,
@@ -131,9 +133,10 @@ export function uploadProfile () {
                 localRemoteOptions: job.location,
                 country: job.country ? job.country.cca2 : '',
                 city: job.city
-              })
+              }
             })
-            return Promise.all(promises)
+
+            return api.createJob({ jobs: jobsArray })
           }
           return
         case 'investor':
@@ -235,6 +238,8 @@ export const login = (username, password, redirectPage) => async dispatch => {
     await storageService.setItem(TOKEN_NAME, token)
     dispatch(loginInSuccess())
     dispatch(fetchDefaults())
+    dispatch(fetchProfiles())
+    dispatch(fetchConferenceSchedule())
     navigationService.navigate(redirectPage)
   } catch (err) {
     let errorData = {}
@@ -266,7 +271,12 @@ export const saveProfileOnboardingInfo = (profileInfo, redirectPage) => async di
   try {
     dispatch(batchActions([ clearSaveProfileError(),
       globalActions.setGlobalLoading(I18n.t('flow_page.common.profile_onboarding.spinner_text')) ]))
+    console.log({profileInfo})
+    if (profileInfo.avatarSource) {
+      await api.uploadImage(profileInfo.avatarSource)
+    }
     await api.createOrUpdateConferenceUser(profileInfo)
+    await dispatch(fetchProfiles())
     navigationService.navigate(redirectPage)
   } catch (err) {
     const errorData = getErrorData(err)

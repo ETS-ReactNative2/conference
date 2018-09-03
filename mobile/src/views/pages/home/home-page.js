@@ -13,14 +13,15 @@ import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
 import { Subheader } from '../../design/subheader'
 import { InvestorItem } from './components/investor-item'
+import { SearchButton } from '../../design/buttons'
 import { ProfessionalItem } from './components/professional-item'
 import { ProjectItem } from './components/project-item'
 
 class HomePage extends React.Component {
 
-  componentDidMount () {
-    this.props.fetchDefaults()
-  }
+  // componentDidMount () {
+  //   this.props.fetchDefaults()
+  // }
 
   handleInvestorClick = investor => {
     this.props.navigation.navigate(PAGES_NAMES.INVESTOR_PAGE, {

@@ -1,40 +1,89 @@
 import moment from 'moment'
+import { Button, Icon } from 'native-base'
 import React from 'react'
 import { Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { BAR_COLOR } from '../../../design/constants'
+import { BAR_COLOR, BLUE_BACKGROUND_COLOR } from '../../../design/constants'
 
-export function ConferenceClass ({ clazz, startDate }) {
-  const { endDate, rooms, speakers, title } = clazz
+export class ConferenceClass extends React.Component {
 
-  return (
-    <React.Fragment>
-      <View style={ styles.classContainer }>
-        <View style={ styles.firstLine }>
-          <Text style={ styles.dateText }>{ `${formatTime(startDate)} - ${formatTime(endDate)}` }</Text>
-          <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 }
-                style={ styles.roomText }>{ rooms.length !== 0 ? rooms[ 0 ] : 'None' }</Text>
+  state = {
+    expanded: false
+  }
+
+  render () {
+    const { clazz, startDate } = this.props
+    const { endDate, rooms, speakers, title, label, description } = clazz
+
+    return (
+      <React.Fragment>
+        <View style={ styles.classContainer }>
+          <View style={ this.state.expanded ? styles.generalInfoExpanded: styles.generalInfo }>
+            <View style={ styles.leftInfo }>
+              <View style={ styles.firstLine }>
+                <Text style={ styles.dateText }>{ `${formatTime(startDate)} - ${formatTime(endDate)}` }</Text>
+                <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 }
+                      style={ styles.roomText }>{ rooms.length !== 0 ? rooms[ 0 ] : 'None' }</Text>
+              </View>
+              <Text style={ styles.title }>{ title }</Text>
+              { label !== title &&
+                <Text style={ styles.labelText }>{ label }</Text>
+              }
+            </View>
+            { description && (
+              <Button transparent={true} onPress={ () => this.setState({ expanded: !this.state.expanded }) }>
+                <Icon style={{ color: 'white'}} name={this.state.expanded ? 'arrow-up' : 'arrow-down'}/>
+              </Button>
+            ) }
+          </View>
+          { description && this.state.expanded && (
+            <View style={ styles.descriptionContainer }>
+              <Text style={ { color: 'white' } }>{ description }</Text>
+            </View>
+          ) }
         </View>
-        <Text style={ styles.title }>{ title }</Text>
-      </View>
-    </React.Fragment>
-  )
+      </React.Fragment>
+    )
+  }
 }
 
-function formatTime(date) {
+function formatTime (date) {
   return moment(date, 'HH:mm:ss').format('h:mm A')
 }
 
 const styles = EStyleSheet.create({
   classContainer: {
+    marginLeft: 8,
+    marginRight: 8,
+  },
+  generalInfo: {
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 16,
     paddingBottom: 16,
-    marginLeft: 8,
-    marginRight: 8,
+    flexDirection: 'row',
     borderBottomColor: 'rgba(255,255,255,.5)',
     borderBottomWidth: 1
+  },
+  generalInfoExpanded: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    backgroundColor: BLUE_BACKGROUND_COLOR,
+    flexDirection: 'row',
+    borderBottomColor: 'rgba(255,255,255,.5)',
+    borderBottomWidth: 1
+  },
+  leftInfo: {
+    flex: 1
+  },
+  descriptionContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    backgroundColor: BLUE_BACKGROUND_COLOR
   },
   firstLine: {
     flexDirection: 'row'
@@ -48,6 +97,11 @@ const styles = EStyleSheet.create({
     flex: 1,
     fontSize: 14,
     marginLeft: 8,
+    color: 'rgba(255,255,255,.5)'
+  },
+  labelText: {
+    marginTop: 4,
+    fontSize: 14,
     color: 'rgba(255,255,255,.5)'
   },
   title: {

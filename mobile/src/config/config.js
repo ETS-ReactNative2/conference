@@ -16,7 +16,7 @@ export default () => {
     const networkError = error.response === undefined && error.message === 'Network Error'
     const url = error.response === undefined ? '' : error.response.config.url
     if (!networkError && error.response.status === 401 && !url.includes('api-token-auth')) {
-      navigationService.navigate(PAGES_NAMES.LOGIN_PAGE)
+      navigationService.navigate(PAGES_NAMES.HOME_PAGE)
       return
     }
     return Promise.reject(error)

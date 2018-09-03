@@ -24,7 +24,7 @@ class FlowPage extends React.Component {
         </Button>
       ),
       headerRight: (
-        <Image style={ { marginRight: 20 } } source={ WhiteLogo }/>
+        <Image style={ { marginRight: 20, width: 24, height: 30 } } source={ WhiteLogo }/>
       )
 
     })

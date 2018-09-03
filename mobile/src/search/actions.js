@@ -1,22 +1,37 @@
 import { decamelizeKeys } from 'humps'
 import * as api from '../api/api'
-import { LOAD_PROFILES, LOAD_PROFILES_ERROR, LOAD_PROFILES_SUCCESS, LOAD_DEFAULT_PROFILES, LOAD_DEFAULT_PROFILES_SUCCESS, LOAD_DEFAULT_PROFILES_ERROR} from './action-types'
-
+import {
+  LOAD_DEFAULT_PROFILES,
+  LOAD_DEFAULT_PROFILES_ERROR,
+  LOAD_DEFAULT_PROFILES_SUCCESS,
+  LOAD_PROFILES,
+  LOAD_PROFILES_ERROR,
+  LOAD_PROFILES_SUCCESS
+} from './action-types'
 
 export function fetchMatches () {
   return async dispatch => {
     try {
       dispatch({ type: LOAD_PROFILES })
-      const projectResponse = await api.fetchProjects({})
-      const investorResponse = await api.fetchInvestors({})
-      const professionalResponse = await api.fetchProfessionals({})
-
+      const [
+        projectResponse,
+        investorResponse,
+        professionalResponse,
+        jobsResponse
+      ] = await Promise.all([
+        api.fetchProjects({}),
+        api.fetchInvestors({}),
+        api.fetchProfessionals({}),
+        // TODO: unlock when endpoint ready
+        api.fetchJobs({})
+      ])
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {
           projects: projectResponse.data,
           investors: investorResponse.data,
-          professionals: professionalResponse.data
+          professionals: professionalResponse.data,
+          jobs: jobsResponse.data
         }
       })
     } catch (err) {
@@ -50,6 +65,22 @@ export function fetchDefaults () {
   }
 }
 
+export function updateJobs (filters) {
+  return async dispatch => {
+    try {
+      const { data, request } = await api.fetchJobs(decamelizeKeys(filters))
+      dispatch({
+        type: LOAD_PROFILES_SUCCESS,
+        data: {
+          jobs: data
+        }
+      })
+    } catch (err) {
+      dispatch({ type: LOAD_PROFILES_ERROR })
+    }
+  }
+}
+
 export function updateInvestors (filters) {
   return async dispatch => {
     try {
@@ -73,7 +104,7 @@ export function updateProfessionals (filters) {
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {
-          projects: data
+          professionals: data
         }
       })
     } catch (err) {

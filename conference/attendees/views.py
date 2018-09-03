@@ -2,7 +2,9 @@
 from __future__ import unicode_literals
 
 from rest_framework import generics
+from django.conf import settings
 from django.contrib.auth.hashers import make_password
+from django.core.files.storage import default_storage
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -12,6 +14,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models
 from . import serializers
+import random
+import string
+
+from pprint import pprint
 
 
 class MyPerson(APIView):
@@ -71,6 +77,36 @@ class MyPerson(APIView):
 
         conference_user.save()
         return Response(serializers.ConferenceUserSerializer(conference_user).data, status=status.HTTP_201_CREATED)
+
+
+class MyPersonImages(APIView):
+
+    @transaction.atomic
+    def delete(self, request, format=None):
+        conference_user = request.user.conference_user
+        if conference_user.guid:
+            default_storage.delete(conference_user.guid)
+            conference_user.guid = ''
+            conference_user.save()
+        return Response(status=status.HTTP_200_OK)
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        image_file = request.FILES['image']
+        conference_user = request.user.conference_user
+        old_guid = conference_user.guid if conference_user.guid else None
+        guid = ''.join([random.choice(string.ascii_letters + string.digits)
+                        for _ in range(models.ConferenceUser.GUID_MAX_LENGTH)])
+        default_storage.save(guid, image_file)
+        image_file.close()
+        conference_user.guid = guid
+        conference_user.save()
+        if old_guid:
+            default_storage.delete(old_guid)
+        result = {
+            'image_url': settings.IMAGE_URL_BASE + guid
+        }
+        return JsonResponse(result, status=status.HTTP_201_CREATED)
 
 
 class MyProfessional(APIView):
@@ -139,7 +175,7 @@ class MyProfessional(APIView):
             clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL)]
 
         country = json_body.get('country')
-        clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
+        clean_country = country[:models.COUNTRY_MAX_LENGTH].upper() if (
             country and
             models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
         ) else ''
@@ -217,16 +253,19 @@ class Professionals(generics.ListAPIView):
         filters = {
             'is_active': True,
         }
-        roles = self.request.GET.get('roles')
+        roles = self.request.GET.getlist('role')
         if roles:
             filters['role__in'] = roles
-        local_remote_options = self.request.GET.get('local_remote_options')
-        if local_remote_options:
-            filters['local_remote_options__in'] = local_remote_options
-        country = self.request.GET.get('country')
-        if country:
-            filters['country'] = country
         return models.Professional.objects.filter(**filters).distinct()
+
+
+class ProfessionalsDefaults(APIView):
+
+    def get(self, request, format=None):
+        result = {
+            'role': []
+        }
+        return JsonResponse(result)
 
 
 class ProfessionalsId(generics.RetrieveAPIView):
@@ -291,7 +330,5 @@ def users_id(request, pk):
         return JsonResponse({
             'id': user.id,
             'email': user.email,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
         }, status=200)
     return HttpResponse(status=405)

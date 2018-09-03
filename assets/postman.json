@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "062346fd-822e-4907-8b31-b5006d59b112",
+		"_postman_id": "cc394a32-847a-444d-983a-15495f7a9c02",
 		"name": "Conference",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -64,6 +64,35 @@
 			"response": []
 		},
 		{
+			"name": "/api/investors/defaults/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/investors/defaults/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"investors",
+						"defaults",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/investors/<id>/",
 			"request": {
 				"method": "GET",
@@ -116,6 +145,63 @@
 						"investors",
 						"1",
 						"messages",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/jobs/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/jobs/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"jobs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/jobs/defaults/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/jobs/defaults/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"jobs",
+						"defaults",
 						""
 					]
 				}
@@ -286,6 +372,56 @@
 					"path": [
 						"api",
 						"my_person",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_person/images/",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{HOST}}/api/my_person/images/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_person",
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_person/images/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_person/images/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_person",
+						"images",
 						""
 					]
 				}
@@ -494,7 +630,7 @@
 		{
 			"name": "/api/my_project/jobs/",
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -503,7 +639,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"role\": 12,\n    \"role_other\": \"Massage Therapist\",\n    \"skills_text\": \"skills\",\n    \"link\": \"http://www.example.com\",\n    \"description\": \"aaaaaaaa\",\n    \"part_time\": \"True\",\n    \"local_remote_options\": [1, 2],\n    \"country\": \"us\",\n    \"city\": \"Berkeley\"\n}"
+					"raw": "{\n\t\"jobs\": [\n\t\t{\n\t\t    \"role\": 1,\n\t\t    \"skills_text\": \"skills1\",\n\t\t    \"link\": \"http://www.example.com/1\",\n\t\t    \"description\": \"description1\",\n\t\t    \"part_time\": true,\n\t\t    \"payments\": [1, 2, 3],\n\t\t    \"local_remote_options\": [1, 2],\n\t\t    \"country\": \"US\",\n\t\t    \"city\": \"Berkeley1\"\n\t\t},\n\t\t{\n\t\t    \"role\": 12,\n\t\t    \"role_other\": \"Massage Therapist\",\n\t\t    \"skills_text\": \"skills2\",\n\t\t    \"link\": \"http://www.example.com/2\",\n\t\t    \"description\": \"description2\",\n\t\t    \"part_time\": true,\n\t\t    \"payments\": [1, 2, 3],\n\t\t    \"local_remote_options\": [1, 2],\n\t\t    \"country\": \"US\",\n\t\t    \"city\": \"Berkeley2\"\n\t\t}\n\t]\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/api/my_project/jobs/",
@@ -746,6 +882,35 @@
 			"response": []
 		},
 		{
+			"name": "/api/professionals/defaults/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/professionals/defaults/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"professionals",
+						"defaults",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/projects/",
 			"request": {
 				"method": "GET",
@@ -767,6 +932,35 @@
 					"path": [
 						"api",
 						"projects",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/projects/defaults/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST}}/api/projects/defaults/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"projects",
+						"defaults",
 						""
 					]
 				}

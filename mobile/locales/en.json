@@ -18,12 +18,24 @@
   "agenda_page": {
     "title": "Schedule"
   },
+  "job_item": {
+    "part_time": "Part-time possible",
+    "full_time": "Full-time only"
+  },
+  "message_page": {
+    "type_message": "Send message to investor",
+    "message": "Message",
+    "error": "Sending message to investor failed!"
+  },
   "profile_page": {
     "title": "My profile",
     "personal": "Personal data",
     "job_profile": "Job profile",
+    "upload_loader_text": "Your profile is updating!",
     "project": "Project",
-    "investor": "Investor"
+    "investor": "Investor",
+    "deactivate_warning": "Deactivated – your profile will not show up for others. Click 'Reactivate' to be included again.",
+    "reactivate_warning": "Active – your profile is visible for others. Click 'Deactivate' to hide it."
   },
   "navigator": {
     "conference": "Conference",
@@ -34,15 +46,32 @@
   "agenda_event": {
     "until": "UNTIL"
   },
+  "agenda_page": {
+    "title": "Schedule",
+    "maps": {
+      "first_floor": "First Floor",
+      "rooftop": "Rooftop",
+      "second_floor": "Second Floor"
+    }
+  },
   "common": {
     "back": "Back",
     "view": "View",
     "edit": "Edit",
+    "send": "Send",
     "deactivate": "Deactivate",
     "create": "Create",
+    "manage": "Manage",
     "reactivate": "Reactivate",
     "leave": "Leave",
     "logout": "Logout",
+    "cancel": "Cancel",
+    "remove": "remove",
+    "approve": "approve",
+    "reject": "reject",
+    "add": "add",
+    "email": "email",
+    "email_placeholder": "Enter email",
     "spinner": {
       "logout": "You're being logout!",
       "clear": "Clearing app state!"
@@ -52,6 +81,7 @@
     "attendees": "Professionals attending",
     "errors": {
       "email_exists": "Error creating new user.",
+      "incorrect_image_url": "Logo URL is not valid",
       "incorrect_amount": "Please enter number greater than 0 and less than 2147483647",
       "incorrect_email": "Please enter correct email address",
       "incorrect_investor_custom_location": "Location can be maximum 40 characters long",
@@ -429,7 +459,8 @@
       "project_description": "Project description",
       "project_name": "Project name",
       "project_tagline": "Project tagline",
-      "title": "Tell us more about your project"
+      "title": "Tell us more about your project",
+      "image_url": "Logo URL"
     },
     "title": "Signup flow DEV",
     "token_type": {
@@ -461,21 +492,87 @@
     "button_is_unread": "Mark as read",
     "mark_all_read": "Mark all as read"
   },
+  "privacy_policy_page": {
+    "title": "Privacy Policy",
+    "description": "This Privacy Policy describes how Luna Labs GmbH, collectively referred to as \"Blockseoul Connect\" (or \"we\" or \"us\" or \"our\") collects, uses, and handles your data when you use our website, products and services (\"Services\"). Please take the time to carefully read through this policy. As you use our Services, we want to be clear how BlockSeoul Connect uses your information and how your privacy is protected. By using the Services, you consent to the data practices detailed in this policy. This Privacy Policy does not apply to services offered by other companies or other sites linked from our Services.",
+    "information_collection": {
+      "header": "What Information is Collected",
+      "text": "When you use our Services, we may collect information you send us or information we receive from your use of our Services. We may collect information in the following ways: \n\nInformation you give us. We may collect information that you provide us through a web form, such as when you create a BlockSeoul Connect Profile, or when you otherwise correspond with us regarding our Services, such as when you contact our customer support team. The information you provide us includes your email address (such that we can send you email), Name, Date, Title, Company Name, and social media links are required to create a profile and to be later discovered on the platform. The complete list of collected information is as follows: \n\nIn addition, to create an account on BlockSeoul Connect, you must provide us with your name and email address, and agree to our Terms of Use and this Privacy Policy, which governs how we treat your information. You may provide additional information when creating a BlockSeoul Connect account, such as linking to your Facebook, Google, LinkedIn, Twitter or other social accounts, to help build your BlockSeoul Connect Profile. You understand and acknowledge that by creating a BlockSeoul Connect account, we and others will be able to identify you by your BlockSeoul Connect Profile. \n\nIn order to match and be discoverable by other users on BlockSeoul Connect, we additionally allow you to submit information about your company, project, job-related information or investment-related information.\nDevice information. We may collect information about devices you use to access the Services and how you use the Services, such as your IP address and which websites you visited before accessing our Services.\n\nLogs. Our servers automatically record information created by your use of our Services to help us diagnose and fix technical issues, and to improve the the overall quality and user experience of our Services. Logs may include information such as your IP address, browser type, operating system, details of how you used our Services (such as your commands at the command line), diagnostic information related to the Services (such as crash activity reports), the referring web page, pages visited, location, your mobile carrier, device and application IDs, search terms, and cookie information.\n\nCookies. We use technologies like cookies and pixel tags to gather information about how you are interacting with the Services, which may include identifying your IP address, browser type, and referring page."
+    },
+    "information_usage": {
+      "header": "How Collected Information Is Used",
+      "description": "We collect and use information from you in order for us to provide, protect, and improve our Services, and to provide you with a personalized experience when using our Services. For example, when you provide BlockSeoul Connect with your email address, we may send you updates on new Services and security notices.\n\nMuch of the information you provide us through our Services is information that is designed to be made public, such as your BlockSeoul Connect Profile information, including your name, photo, title, company name, age, location and description",
+      "specific_examples": "Some specific examples of how Meetluna.com may use your personal data are:",
+      "examples": "1. to provide you with information about how you are using email\n2.to customize, analyze, adjust and improve the site and services to better meet your needs\n3.to facilitate communication between BlockSeoul Connect and you\n4.to facilitate communication between you and other users\n5.if you provide us with information about other software and services that you use, we may use your personal data to try to synchronize your emails with such other software and services\n6.to provide you with information that may interest you, such as our newsletters or emails about our products and services (this information contains a subscriber link allowing you to opt out)\n7.to provide you with marketing and promotional information about products and services we believe may interest you (this information contains a subscriber link allowing you to opt out)\nto administer a survey (if you consent to participate in the survey via a response email)\n9.to send you a message in your Inbox (should you choose to accept it)\n10.in a customer testimonial posted on the site\n11.to enforce BlockSeoul Connect’s agreements with you\n12.to provide you with important administrative information regarding the site and services, such as changes to this Privacy Policy, our Terms of Use and our other policies\n13.to prevent fraud and other prohibited or illegal activities."
+    },
+    "cookies": {
+      "header": "How We Use Cookies",
+      "text": "Like most online businesses, we use cookies and web beacons on our websites and marketing-related emails to gather and analyze non-personal information such as the visitor’s IP address, browser type, ISP, referring page, operating system, date / time, and basic geographic information. We use these technologies to provide, improve and protect our Services, for example to:\n",
+      "examples": "1.Customize our Services, such as remembering your username for the next time you use our Services\n2.Measure product and marketing effectiveness\n3.Collect information about your computing device to mitigate risk, help prevent fraud and promote trust and safety",
+      "footer": "You may set your browser to not accept cookies, but this may result in the Services not functioning properly for you."
+    },
+    "information_share": {
+      "header": "Information We Share",
+      "text": "We do not sell, exchange, transfer, or give your personal information to any other company or individual for any reason except as set forth below:\n",
+      "examples": "1.We will share personal information with companies or individuals when we have your consent to do so\n2.We may provide personal information to our trusted services providers to process it for us to assist us in providing Services to you, and only based on our instructions and in adherence with this Privacy Policy and applicable confidentiality and security measures\n3.If we are involved in a merger or acquisition, your information may be transferred as part of that transaction. In such event, we will require that your personal information be protected in accordance with this Privacy Policy. We will notify you of any change in applicable policy.\n4.We will share personal information with law enforcement or other third parties if we: (1) are compelled to do so to comply with any applicable law or legal process; or (2) believe in good faith that disclosure is necessary to prevent physical harm, illegal activity, or harm to the rights, property, or safety of BlockSeoul Connect or our users.",
+      "footer": "We may share non-personally identifiable information publicly and with our partners. For example, we may share anonymized analytics information that reveal general trends about our Services."
+    },
+    "information_protection": {
+      "header": "How Do We Protect Your Information",
+      "text": "Throughout this policy, we use the term \"personal information\" to describe information that can be associated with a specific person and can be used to identify that person. We do not consider personal information to include information that has been anonymized so that it does not identify a specific user.\n\nBlockSeoul Connect takes reasonable precautions, as described herein, to protect your information from loss, misuse, unauthorized access, disclosure, alteration, and destruction. We may store, process and transmit information in locations around the world -- we may process your personal information on a server located outside the country you live. Some information may also be stored locally on devices you use to interact with BlockSeoul Connect’s Services.\n\nWe protect information by maintaining physical, electronic and procedural safeguards in compliance with applicable US federal and state regulations. We use firewalls and data encryption, we enforce physical access controls to our buildings and files, and we limit access to personal information only to those employees who need to know that information in order to process it for us."
+    },
+    "data_retention": {
+      "header": "Data Retention",
+      "text": "We store information about your use of our Services for as long as we need it to provide you the Services. Note that we may retain your personal information as necessary in order to comply with our legal obligations, resolve disputes, or enforce our agreements to the extent permitted by law."
+    },
+    "changes_to_privacy_policy": {
+      "header": "Changes To This Privacy Policy",
+      "text": "We may amend this Privacy Policy at any time by posting the most current version on our website. If the changes materially reduce your rights, we will provide a more prominent notice (for example, for certain Services we will send email notification of significant changes). We recommend checking this page frequently for changes."
+    },
+    "contact_us": {
+      "header": "Contact Us",
+      "email": "If you have questions or concerns regarding this policy or would like to access, change or delete your personal information, contact us on our support page or by emailing us at ",
+      "email_address": "support@meetluna.com",
+      "acc_create": "To create an account on BlockSeoul Connect, you must provide us with your name and email address, and agree to our Terms of Use and this Privacy Policy, which governs how we treat your information. You may provide additional information when creating a meetluna.com account, such as providing title, company name, and linking to your Facebook, LinkedIn, Google, or Twitter accounts, to help build your BlockSeoul Connect Profile. You understand and acknowledge that by creating a BlockSeoul Connect account, we and others will be able to identify you by your BlockSeoul Connect Profile."
+    }
+  },
   "professional_page": {
     "title": "Professional details"
   },
+  "job_page": {
+    "job_description_page_title": "Job Description"
+  },
   "project_page": {
-    "title": "Projects"
+    "title": "Projects",
+    "description_title": "Project Description",
+    "jobs_title": "JOBS AT ",
+    "description": "Description",
+    "hiring": "Hiring",
+    "white_paper": "WhitePaper",
+    "website": "WebSite",
+    "in_the_press": "In the press",
+    "telegram": "Telegram",
+    "github": "Github",
+    "linkedin": "Linkedin"
+  },
+  "project_members_page": {
+    "title": "Project Members",
+    "emailError": "Could not add this user"
   },
   "search_page": {
     "no_profile": "No profiles found. Try to change filters",
     "title": "Search",
     "update_filter": "UPDATE SEARCH FILTERS",
     "investor_filter": {
+      "main_title": "Investor Filter",
       "header": "These are the filters for searching for investors",
       "token_types": {
         "title": "Search investors looking for:",
         "header": "Token Type"
+      },
+      "roles": {
+        "title": "Search with roles",
+        "header": "Role"
       },
       "funding_stages": {
         "title": "Search investors looking for:",
@@ -502,7 +599,16 @@
         "header": "Ticket Size"
       }
     },
+    "job_filter":{
+      "main_title": "Job Filter",
+      "header": "Tell us more about job offers you are looking for"
+    },
+    "professional_filter":{
+      "main_title": "Professional Filter",
+      "header": "Tell us more about professionals you are looking for"
+    },
     "project_filter": {
+      "main_title": "Project Filter",
       "header": "Tell us more about the projects you are searching for",
       "token_types": {
         "title": "Search projects having:",
@@ -527,7 +633,8 @@
     },
     "tab_label_investor": "Investors",
     "tab_label_professional": "Professionals",
-    "tab_label_projects": "Projects"
+    "tab_label_projects": "Projects",
+    "tab_label_job": "Jobs"
   },
   "signup_page": {
     "account_type_employee": "Employee",
@@ -551,7 +658,7 @@
   },
   "welcome_page": {
     "agenda": "Agenda - temp",
-    "app_description": "Luna Conference",
+    "app_description": "Block Seoul",
     "connect_with": "Or connect with",
     "connect_with_telegram": "CONNECT WITH TELEGRAM",
     "flow": "Flow - temp",

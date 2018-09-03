@@ -225,7 +225,7 @@ class MyInvestorTest(AuthMixin):
                 41,
             ],
         )
-        self.assertEqual(response_dict.get('nationality'), 'us')
+        self.assertEqual(response_dict.get('nationality'), 'US')
         self.assertEqual(response_dict.get('product_stages'), [1, 2, 3])
         self.assertEqual(response_dict.get('region'), 4)
         self.assertEqual(response_dict.get('region_other_text'), 'aaaaaaaa')

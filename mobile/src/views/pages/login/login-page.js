@@ -5,13 +5,13 @@ import { connect } from 'react-redux'
 import validator from 'validator'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
-import PoweredLuna from '../../../assets/logos/powered_luna_black.png'
+import PoweredLuna from '../../../assets/logos/login_logo.png'
 import { signUpActions } from '../../../signup'
 import { SafeAreaView } from 'react-navigation'
 import Header from '../../components/header/header'
 import InputValidated from '../../design/input-validated'
 import BlackLogo from '../../../assets/logos/logo-black.png'
-import { BlackButton, OutlineBlackButton } from '../../design/buttons'
+import { BlackButton } from '../../design/buttons'
 import { PAGES_NAMES } from '../../../navigation/pages'
 import Alert from '../../components/alert/alert'
 
@@ -87,7 +87,7 @@ class LoginPage extends React.Component {
                                 placeholder='********'
                                 onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password') }/>
               <View style={ styles.lunaContainer }>
-                <Image source={ PoweredLuna }/>
+                <Image style={{ width: 123, height: 52}} source={ PoweredLuna }/>
               </View>
                 <View style={styles.button}>
                   <BlackButton
@@ -100,7 +100,15 @@ class LoginPage extends React.Component {
                   <Text onPress={() => this.props.navigation.navigate(PAGES_NAMES.SIGNUP_PAGE)} style={styles.signup}>{I18n.t('login_page.signup')}</Text>
                 </View>
                 <View style={styles.policyAndConditionsWrapper}>
-                  <Text style={styles.policyAndConditions}>{ I18n.t('login_page.privacy_policy') } &amp; { I18n.t('login_page.terms_and_conditions')}</Text>
+                  <Text style={styles.policyAndConditions} onPress={() => this.props.navigation.navigate(PAGES_NAMES.PRIVACY_POLICY_PAGE)}>
+                    { I18n.t('login_page.privacy_policy')}
+                  </Text>
+                  <Text style={styles.policyAndConditions}>
+                    &amp;
+                  </Text>
+                  <Text style={styles.policyAndConditions} onPress={() => this.props.navigation.navigate(PAGES_NAMES.TERMS_OF_SERVICE_PAGE)}>
+                    { I18n.t('login_page.terms_and_conditions')}
+                  </Text>
                 </View>
             </View>
           </Content>
@@ -157,7 +165,8 @@ const styles = EStyleSheet.create({
   policyAndConditions: {
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 14,
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    marginRight: 10
   }
 });
 
