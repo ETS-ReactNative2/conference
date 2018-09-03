@@ -1,8 +1,10 @@
 import { Text, Button, Icon } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Image, View } from 'react-native'
+import { Image, View, Platform } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+
+console.log(Platform.OS)
 
 export class Header extends React.Component {
   render () {
@@ -63,7 +65,9 @@ const styles = EStyleSheet.create({
     flex: 1
   },
   logoContainer: {
-    flex: 1, alignItems: 'flex-end'
+    marginTop: Platform.OS === 'Android' ? 8 : 0,
+    flex: 1,
+    alignItems: 'flex-end'
   },
   logo: {
     marginRight: 10

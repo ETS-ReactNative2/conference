@@ -74,6 +74,7 @@
     "react-native-responsive-layout": "^1.1.0",
     "react-native-sensitive-info": "5.2.4",
     "react-native-snap-carousel": "^3.7.2",
+    "react-native-splash-screen": "^3.1.1",
     "react-navigation": "2.5.3",
     "react-redux": "5.0.7",
     "redux": "4.0.0",

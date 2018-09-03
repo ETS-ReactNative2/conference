@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import SplashScreen from 'react-native-splash-screen'
 import I18n from '../../../../locales/i18n'
 import ColorLogo from '../../../assets/logos/conference_logo_welcome_medium.png'
 import PoweredLuna from '../../../assets/logos/powered_luna.png'
@@ -10,6 +11,12 @@ import { OutlineWhiteButton, PrimaryButton } from '../../design/buttons'
 import { ImagePageContainer } from '../../design/image-page-container'
 
 class WelcomePage extends React.Component {
+
+  componentDidMount() {
+    if(SplashScreen) {
+      SplashScreen.hide()
+    }
+  }
 
   render () {
     const { navigate } = this.props.navigation

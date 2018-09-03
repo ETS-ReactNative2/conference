@@ -284,27 +284,6 @@ const AppStackNavigator = createStackNavigator({
       gesturesEnabled: false
     })
   },
-  PROJECT_DESCRIPTION_PAGE: {
-    screen: ProjectDescriptionPage,
-    navigationOptions: () => ({
-      ...commonNavBarStyle,
-      header: null
-    })
-  },
-  JOBS_PAGE: {
-    screen: JobsPage,
-    navigationOptions: () => ({
-      ...commonNavBarStyle,
-      header: null
-    })
-  },
-  JOB_DESCRIPTION_PAGE: {
-    screen: JobDescriptionPage,
-    navigationOptions: () => ({
-      ...commonNavBarStyle,
-      header: null
-    })
-  },
   WEBVIEW_PAGE: {
     screen: WebviewPage,
     navigationOptions: () => ({
