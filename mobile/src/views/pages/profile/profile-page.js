@@ -241,11 +241,12 @@ class ProfilePage extends React.Component {
                 }
               </View>
               <SmallSubheader text={ I18n.t('common.logout') }/>
-              <OutlineWhiteButton
-                text={ I18n.t('common.logout') }
-                onPress={ () => this.props.logout() }
-              />
-
+              <View style={ { margin: 8 } }>
+                <OutlineWhiteButton
+                  text={ I18n.t('common.logout') }
+                  onPress={ () => this.props.logout() }
+                />
+              </View>
             </ScrollView>
           </View>
         </Container>
