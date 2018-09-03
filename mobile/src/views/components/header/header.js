@@ -65,12 +65,14 @@ const styles = EStyleSheet.create({
     flex: 1
   },
   logoContainer: {
-    marginTop: Platform.OS === 'Android' ? 8 : 0,
     flex: 1,
     alignItems: 'flex-end'
   },
   logo: {
-    marginRight: 10
+    marginRight: 10,
+    marginTop:  Platform.OS === 'Android' ? 16 : 0,
+    width: 24,
+    height: 30
   },
   title: {
     flex: 3,

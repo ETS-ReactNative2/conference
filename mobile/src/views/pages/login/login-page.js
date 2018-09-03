@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import validator from 'validator'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
-import PoweredLuna from '../../../assets/logos/powered_luna_black.png'
+import PoweredLuna from '../../../assets/logos/login_logo.png'
 import { signUpActions } from '../../../signup'
 import { SafeAreaView } from 'react-navigation'
 import Header from '../../components/header/header'
@@ -87,7 +87,7 @@ class LoginPage extends React.Component {
                                 placeholder='********'
                                 onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password') }/>
               <View style={ styles.lunaContainer }>
-                <Image source={ PoweredLuna }/>
+                <Image style={{ width: 123, height: 52}} source={ PoweredLuna }/>
               </View>
                 <View style={styles.button}>
                   <BlackButton

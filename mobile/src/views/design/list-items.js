@@ -1,6 +1,11 @@
 import { Icon, Left, ListItem, Right, Switch, Text, View } from 'native-base'
 import React from 'react'
+import { Image } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import RadioEmpty from '../../assets/icons/radio-empty.png'
+import RadioFilled from '../../assets/icons/radio-filled.png'
+import CheckboxEmpty from '../../assets/icons/checkbox-empty.png'
+import CheckboxFilled from '../../assets/icons/checkbox-filled.png'
 import { SECONDARY_COLOR } from './constants'
 
 class SingleChoiceListItem extends React.Component {
@@ -19,15 +24,7 @@ class SingleChoiceListItem extends React.Component {
             <Text style={ [ styles.text, selected ? '' : styles.notSelectedText ] }>{ text.toUpperCase() }</Text>
           </Left>
           <Right>
-            <Icon
-              style={ {
-                color: selected ? SECONDARY_COLOR : '#FFF',
-                lineHeight: 40,
-                height: 40,
-                fontSize: 32
-              } }
-              name={ selected ? 'md-radio-button-on' : 'md-radio-button-off' }
-            />
+            <Image style={{width: 20, height: 20}} source={ selected ? RadioFilled : RadioEmpty }/>
           </Right>
         </ListItem>
       </View>
@@ -50,15 +47,7 @@ class MultichoiceListItem extends React.Component {
             <Text style={ [ styles.text, selected ? styles.selectedText : '' ] }>{ text.toUpperCase() }</Text>
           </Left>
           <Right>
-            <Icon
-              style={ {
-                color: selected ? SECONDARY_COLOR : '#FFF',
-                lineHeight: 40,
-                height: 40,
-                fontSize: 32
-              } }
-              name={ selected ? 'md-checkbox' : 'md-square-outline' }
-            />
+            <Image style={{width: 20, height: 20}} source={ selected ? CheckboxFilled : CheckboxEmpty }/>
           </Right>
         </ListItem>
       </View>
@@ -83,17 +72,18 @@ export class FlowListItem extends React.Component {
 export class FlowListSwitch extends React.Component {
 
   render () {
-    const {selected = false, onToggle, text = '', switchText = '' } = this.props
+    const { selected = false, onToggle, text = '', switchText = '' } = this.props
     return (
       <View style={ styles.container }>
-        <ListItem noIndent style={ [ styles.switchListItem ] } onPress={() => onToggle()}>
-          <Left style={{ flex: 1}}>
-            <Text style={ [ styles.text, { fontWeight: 'bold'} ] }>{ text.toUpperCase() }</Text>
+        <ListItem noIndent style={ [ styles.switchListItem ] } onPress={ () => onToggle() }>
+          <Left style={ { flex: 1 } }>
+            <Text style={ [ styles.text, { fontWeight: 'bold' } ] }>{ text.toUpperCase() }</Text>
           </Left>
-          <Right style={{ flex: 1, flexDirection: 'row', alignContent: 'flex-end', justifyContent: 'flex-end'}}>
+          <Right style={ { flex: 1, flexDirection: 'row', alignContent: 'flex-end', justifyContent: 'flex-end' } }>
             <Text style={ styles.switchTextStyle }>{ switchText.toUpperCase() }</Text>
             <Switch
-              onValueChange={() => onToggle()} onTintColor={ SECONDARY_COLOR } style={ styles.switch } value={ selected }/>
+              onValueChange={ () => onToggle() } onTintColor={ SECONDARY_COLOR } style={ styles.switch }
+              value={ selected }/>
           </Right>
         </ListItem>
       </View>

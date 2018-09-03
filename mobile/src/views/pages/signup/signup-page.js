@@ -11,7 +11,7 @@ import { signUpActions } from '../../../signup'
 import Header from '../../components/header/header'
 import InputValidated from '../../design/input-validated'
 import BlackLogo from '../../../assets/logos/logo-black.png'
-import PoweredLuna from '../../../assets/logos/powered_luna_black.png'
+import PoweredLuna from '../../../assets/logos/login_logo.png'
 import { BlackButton } from '../../design/buttons'
 import Alert from '../../components/alert/alert'
 
@@ -102,7 +102,7 @@ export class SignupPage extends React.Component {
                     placeholder="+48123456789"
                     onChangeText={ (newValue) => this.handleFieldChange(newValue, 'phone') }/>
               <View style={ styles.lunaContainer }>
-                <Image source={ PoweredLuna }/>
+                <Image style={{ width: 123, height: 52}} source={ PoweredLuna }/>
               </View>
               <View style={styles.button}>
                 <BlackButton
