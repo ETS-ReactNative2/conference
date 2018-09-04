@@ -6,7 +6,7 @@ import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
 import { itemWidth } from '../../../../common/dimension-utils'
 import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
-import { FUNDING_STAGES, GIVEAWAY_TYPES_PROJECT, INVESTOR_INDUSTRIES, PRODUCT_STAGES } from '../../../../enums'
+import { FUNDING_STAGES, GIVEAWAY_TYPES_PROJECT, PRODUCT_STAGES } from '../../../../enums'
 import { PAGES_NAMES } from '../../../../navigation/pages'
 
 export class ProjectCard extends React.Component {
@@ -33,7 +33,7 @@ export class ProjectCard extends React.Component {
     const { project } = this.props
 
     const {
-      fundraisingAmount, giveaway, fundingStage, productStage, industry, size, imageUrl,
+      fundraisingAmount, giveaway, fundingStage, productStage, size, imageUrl,
       notable, description, jobListings, github, telegram, twitter, linkein, website, whitepaper, news
     } = project
     const avatar = imageUrl
@@ -43,7 +43,6 @@ export class ProjectCard extends React.Component {
     const giveAwayLabel = giveaway ? I18n.t(`common.giveaway.${GIVEAWAY_TYPES_PROJECT.find(item => item.index === giveaway).slug}`) : ''
     const fundingStageLabel = fundingStage ? I18n.t(`common.funding_stages.${FUNDING_STAGES.find(item => item.index === fundingStage).slug}`) : ''
     const productStageLabel = productStage ? I18n.t(`common.product_stages.${PRODUCT_STAGES.find(item => item.index === productStage).slug}`) : ''
-    const industryLabel = industry ? I18n.t(`common.industries.${INVESTOR_INDUSTRIES.find(item => item.index === industry).slug}`) : ''
     const notables = notable.split(' ')
 
     return (
@@ -134,7 +133,6 @@ export class ProjectCard extends React.Component {
             </View>
             <View style={ { alignContent: 'space-between' } }>
               <Text style={ styles.smallText }>{ productStageLabel }</Text>
-              <Text style={ styles.smallText }>{ industryLabel }</Text>
               <Text style={ styles.smallText }>{ size ? `Team: ${size}` : '' }</Text>
             </View>
             <View style={ { alignContent: 'space-between' } }>

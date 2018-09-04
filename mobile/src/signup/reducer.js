@@ -37,10 +37,7 @@ const initialState = {
   profile: {
     firstName: '',
     lastName: '',
-    title: '',
     company: '',
-    twitter: '',
-    facebook: '',
     telegram: '',
     linkedin: '',
     imageUrl: '',
@@ -54,8 +51,7 @@ const initialState = {
     ticketSizes: [],
     stages: [],
     marketLocation: -1,
-    regionOtherText: '',
-    industries: []
+    regionOtherText: ''
   },
   investee: {
     projectName: '',
@@ -80,7 +76,6 @@ const initialState = {
     legal: fromCca2ToCountryObject('KR'),
     main: fromCca2ToCountryObject('KR'),
     giveaway: -1,
-    industry: -1,
     imageUrl: ''
   },
   employer: {
@@ -314,7 +309,6 @@ function fillData (role, info) {
         legal: fromCca2ToCountryObject(info.legalCountry || 'KR'),
         main: fromCca2ToCountryObject(info.mainCountry || 'KR'),
         giveaway: info.giveaway,
-        industry: info.industry,
         imageUrl: info.imageUrl
       }
     case 'investor':
@@ -326,8 +320,7 @@ function fillData (role, info) {
         ticketSizes: info.ticketSizes,
         stages: info.fundingStages,
         marketLocation: info.region,
-        regionOtherText: info.regionOtherText,
-        industries: info.industries
+        regionOtherText: info.regionOtherText
       }
     case 'employee':
       return {

@@ -114,7 +114,6 @@ export function uploadProfile () {
             news: investee.news,
             legalCountry: investee.legal.cca2,
             mainCountry: investee.main.cca2,
-            industry: investee.industry,
             region: investee.investorNationality,
             regionOtherText: investee.regionOtherText,
             imageUrl: investee.imageUrl
@@ -146,7 +145,6 @@ export function uploadProfile () {
             productStages: investor.productStages,
             ticketSizes: investor.ticketSizes,
             tokenTypes: investor.investments,
-            industries: investor.industries,
             region: investor.marketLocation,
             nationality: investor.nationality ? investor.nationality.cca2 : '',
             regionOtherText: investor.regionOtherText

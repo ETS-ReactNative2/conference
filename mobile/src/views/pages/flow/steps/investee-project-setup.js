@@ -13,7 +13,7 @@ import FlowInputValidated from '../../../design/flow-input-validated'
 import FlowInput from '../../../design/flow-inputs'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
-import { InvesteeIndustry } from './index'
+import { InvesteeLinks } from './index'
 
 class InvesteeProjectSetup extends React.Component {
 
@@ -131,7 +131,7 @@ class InvesteeProjectSetup extends React.Component {
       imageUrl: this.state.imageUrl
     })
     this.props.onFill({
-      nextStep: InvesteeIndustry
+      nextStep: InvesteeLinks
     })
   }
   handleFieldChange = (value, name) => {

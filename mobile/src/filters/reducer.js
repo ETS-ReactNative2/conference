@@ -17,8 +17,7 @@ const initialState = {
     productStage: [],
     tokenType: [],
     region: [],
-    ticketSize: [],
-    industry: []
+    ticketSize: []
   },
   project: {
     fundingStage: [],

@@ -36,10 +36,7 @@ class CommonProfileOnboarding extends React.Component {
     this.state = {
       firstName: this.props.firstName,
       lastName: this.props.lastName,
-      title: this.props.title,
       company: this.props.company,
-      twitter: this.props.twitter,
-      facebook: this.props.facebook,
       telegram: this.props.telegram,
       linkedin: this.props.linkedin,
       avatarSource: this.props.imageUrl
@@ -70,10 +67,7 @@ class CommonProfileOnboarding extends React.Component {
     this.props.saveProfileInfo({
       firstName: this.state.firstName,
       lastName: this.state.lastName,
-      title: this.state.title,
       company: this.state.company,
-      twitter: this.state.twitter,
-      facebook: this.state.facebook,
       telegram: this.state.telegram,
       linkedin: this.state.linkedin,
       avatarSource: this.state.avatarSource
@@ -183,39 +177,11 @@ class CommonProfileOnboarding extends React.Component {
                 <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                   <FlowInput
                     floatingLabel={ true }
-                    placeholder={ 'Job title' }
-                    labelText={ I18n.t('flow_page.common.profile_onboarding.titleField') }
-                    value={ this.state.title }
-                    status='regular'
-                    onChangeText={ text => this.handleFieldChange(text, 'title') }/>
-                </View>
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInput
-                    floatingLabel={ true }
                     placeholder={ 'Company' }
                     labelText={ I18n.t('flow_page.common.profile_onboarding.company') }
                     value={ this.state.company }
                     status='regular'
                     onChangeText={ text => this.handleFieldChange(text, 'company') }/>
-                </View>
-
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInput
-                    floatingLabel={ true }
-                    status='regular'
-                    value={ this.state.twitter }
-                    placeholder=''
-                    labelText={ I18n.t('common.personal_twitter') }
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'twitter') }/>
-                </View>
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInput
-                    floatingLabel={ true }
-                    status='regular'
-                    value={ this.state.facebook }
-                    placeholder=''
-                    labelText={ I18n.t('common.personal_facebook') }
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'facebook') }/>
                 </View>
                 <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                   <FlowInput
@@ -284,10 +250,7 @@ const mapStateToProps = state => {
   return {
     firstName: state.signUp.profile.firstName,
     lastName: state.signUp.profile.lastName,
-    title: state.signUp.profile.title,
     company: state.signUp.profile.company,
-    twitter: state.signUp.profile.twitter,
-    facebook: state.signUp.profile.facebook,
     telegram: state.signUp.profile.telegram,
     linkedin: state.signUp.profile.linkedin,
     imageUrl: { uri: '' },
@@ -310,10 +273,7 @@ export const EditBasicInfo = connect(
   state => ({
     firstName: state.profile.basic.firstName,
     lastName: state.profile.basic.lastName,
-    title: state.profile.basic.title,
     company: state.profile.basic.company,
-    twitter: state.profile.basic.twitter,
-    facebook: state.profile.basic.facebook,
     telegram: state.profile.basic.telegram,
     linkedin: state.profile.basic.linkedin,
     imageUrl: { uri: state.profile.basic.imageUrl },

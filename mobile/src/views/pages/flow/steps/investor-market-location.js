@@ -12,7 +12,6 @@ import FlowInputValidated from '../../../design/flow-input-validated'
 import { FlowListItem } from '../../../design/list-items'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
-import { InvestorIndustries } from './index'
 
 class InvestorMarketLocation extends React.Component {
 
@@ -28,7 +27,7 @@ class InvestorMarketLocation extends React.Component {
 
   handleSubmit = () => {
     this.props.saveInvestor({ marketLocation: this.state.location, regionOtherText: this.state.regionOtherText })
-    this.props.onFill({ nextStep: InvestorIndustries })
+    this.props.onFill({ done: true })
   }
 
   handleCheckboxClick = newValue => {
