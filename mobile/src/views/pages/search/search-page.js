@@ -52,7 +52,6 @@ class SearchPage extends React.Component {
 
   handleJobClick = job => {
     // this.props.navigation.navigate(PAGES_NAMES.JOB_PAGE)
-    console.log({ job })
   }
 
   onTabChange = ({ from, i }) => {

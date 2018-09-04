@@ -146,7 +146,7 @@ class CommonProfileOnboarding extends React.Component {
                     <View style={ { width: '100%', justifyContent: 'center', alignContent: 'center', marginTop: 8 } }>
                       <TouchableHighlight onPress={ this.handleGetImage } underlayColor='transparent'>
                         <Thumbnail large={ true } square={ true } style={ { width: undefined, height: 300 } }
-                                   source={ this.state.avatarSource }/>
+                                   source={ { uri: `${this.state.avatarSource.uri}?w=500&h=500` }}/>
                       </TouchableHighlight>
                       <Text style={ { color: 'white', textAlign: 'center', marginTop: 8 } }>Tap image above to
                         change</Text>

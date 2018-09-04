@@ -1,8 +1,7 @@
 import I18n from '../../locales/i18n'
 import * as api from '../api/api'
 import { setGlobalLoading, unsetGlobalLoading } from '../global/actions'
-import { fetchConferenceSchedule } from '../schedule/actions'
-import { fetchDefaults, fetchMatches } from '../search/actions'
+import { PROPAGATE_USER_DEFAULTS, PROPAGATE_USER_SEARCH } from '../search/action-types'
 import {
   DEACTIVATE_INVESTOR,
   DEACTIVATE_PROFILE,
@@ -10,14 +9,14 @@ import {
   LOAD_PROFILES,
   LOAD_PROFILES_ERROR,
   LOAD_PROFILES_SUCCESS,
+  LOAD_PROJECT_MEMBERS,
+  LOAD_PROJECT_MEMBERS_ERROR,
+  LOAD_PROJECT_MEMBERS_SUCCESS,
   PREFILL_EDIT,
+  PROPAGATE_USER_PROFILE,
   REACTIVATE_INVESTOR,
   REACTIVATE_PROFILE,
-  UPDATE_BASIC,
-  LOAD_PROJECT_MEMBERS,
-  LOAD_PROJECT_MEMBERS_SUCCESS,
-  LOAD_PROJECT_MEMBERS_ERROR,
-  ADD_PROJECT_MEMBER
+  UPDATE_BASIC
 } from './action-types'
 
 export function fetchProfiles () {
@@ -74,23 +73,30 @@ export function openEdit (type, prefill = true) {
 export function updateBasic (basicChanges) {
   return async (dispatch, getState) => {
     const basicInfo = getState().profile.basic
-    const shouldUpdatePhoto = basicInfo.avatarSource !== basicChanges.avatarSource
-    dispatch({
-      type: UPDATE_BASIC,
-      data: basicChanges
+    const shouldUpdateData = !compareUser(basicInfo, basicChanges)
+    const shouldUpdatePhoto = !basicChanges.avatarSource.uri.startsWith('https')
+      && basicChanges.avatarSource.uri !== ''
+      && basicChanges.avatarSource.uri !== basicInfo.imageUrl
+    console.log({
+      basicInfo,
+      basicChanges,
+      shouldUpdateData
     })
     try {
+      dispatch({
+        type: UPDATE_BASIC,
+        data: { ...basicChanges, imageUrl: basicChanges.avatarSource.uri }
+      })
       dispatch(setGlobalLoading(I18n.t('profile_page.upload_loader_text')))
       if (shouldUpdatePhoto) {
         await api.uploadImage(basicChanges.avatarSource)
       }
-      await api.createOrUpdateConferenceUser(getState().profile.basic)
-      await Promise.all([
-        dispatch(fetchDefaults()),
-        dispatch(fetchProfiles()),
-        dispatch(fetchConferenceSchedule()),
-        dispatch(fetchMatches())
-      ])
+      if (shouldUpdateData || shouldUpdatePhoto) {
+        const { data } = await api.createOrUpdateConferenceUser(getState().profile.basic)
+        dispatch({ type: PROPAGATE_USER_PROFILE, data: { ...data, imageUrl: basicChanges.avatarSource.uri } })
+        dispatch({ type: PROPAGATE_USER_DEFAULTS, data: { ...data, imageUrl: basicChanges.avatarSource.uri } })
+        dispatch({ type: PROPAGATE_USER_SEARCH, data: { ...data, imageUrl: basicChanges.avatarSource.uri } })
+      }
     } catch (er) {
       console.error(er)
     } finally {
@@ -210,4 +216,10 @@ export function removeProjectMember (memberId) {
       })
     }
   }
+}
+
+function compareUser (first, second) {
+  const { avatarSource: firstAvat, user: firstUser, imageUrl: firstImage, ...firstRest } = first
+  const { avatarSource: secAvat, user: secUser, imageUrl: secImage, ...secondRest } = second
+  return JSON.stringify(firstRest) === JSON.stringify(secondRest)
 }

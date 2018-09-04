@@ -4,7 +4,10 @@ import {
   LOAD_DEFAULT_PROFILES_ERROR,
   LOAD_DEFAULT_PROFILES_SUCCESS,
   LOAD_PROFILES,
-  LOAD_PROFILES_ERROR, LOAD_PROFILES_SUCCESS,
+  LOAD_PROFILES_ERROR,
+  LOAD_PROFILES_SUCCESS,
+  PROPAGATE_USER_DEFAULTS,
+  PROPAGATE_USER_SEARCH,
 } from './action-types'
 
 const initialState = {
@@ -23,6 +26,7 @@ const initialState = {
 }
 
 export function searchReducer (state = initialState, action) {
+  let id
   switch (action.type) {
     case LOAD_PROFILES:
       return {
@@ -75,6 +79,73 @@ export function searchReducer (state = initialState, action) {
           isLoading: false,
           error: true
         }
+      }
+    case PROPAGATE_USER_DEFAULTS:
+      id = action.data.user
+      return {
+        ...state,
+        defaults: {
+          ...state.defaults,
+          professionals: state.defaults.professionals.map(prof => {
+            if (prof.user && prof.user.user === id) {
+              return {
+                ...prof,
+                user: {
+                  ...prof.user,
+                  ...action.data
+                }
+
+              }
+            }
+
+            return prof
+          }),
+          investors: state.defaults.investors.map(investor => {
+            if (investor.user && investor.user.user === id) {
+              return {
+                ...investor,
+                user: {
+                  ...investor.user,
+                  ...action.data
+                }
+              }
+            }
+
+            return investor
+          })
+        }
+      }
+    case PROPAGATE_USER_SEARCH:
+      id = action.data.user
+      return {
+        ...state,
+        ...state,
+        professionals: state.professionals && state.professionals.map(prof => {
+          if (prof.user && prof.user.user === id) {
+            return {
+              ...prof,
+              user: {
+                ...prof.user,
+                ...action.data
+              }
+            }
+          }
+
+          return prof
+        }),
+        investors: state.investors && state.investors.map(investor => {
+          if (investor.user && investor.user.user === id) {
+            return {
+              ...investor,
+              user: {
+                ...investor.user,
+                ...action.data
+              }
+            }
+          }
+
+          return investor
+        })
       }
     case CLEAR:
       return initialState

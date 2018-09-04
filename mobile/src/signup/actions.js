@@ -269,8 +269,8 @@ export const saveProfileOnboardingInfo = (profileInfo, redirectPage) => async di
   try {
     dispatch(batchActions([ clearSaveProfileError(),
       globalActions.setGlobalLoading(I18n.t('flow_page.common.profile_onboarding.spinner_text')) ]))
-    console.log({profileInfo})
-    if (profileInfo.avatarSource) {
+
+    if (profileInfo.avatarSource && profileInfo.avatarSource.uri) {
       await api.uploadImage(profileInfo.avatarSource)
     }
     await api.createOrUpdateConferenceUser(profileInfo)
