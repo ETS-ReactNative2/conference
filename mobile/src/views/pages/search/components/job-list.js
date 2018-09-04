@@ -9,6 +9,7 @@ import I18n from '../../../../../locales/i18n'
 import { ROLES } from '../../../../enums'
 import { PAGES_NAMES } from '../../../../navigation'
 import * as searchActions from '../../../../search/actions'
+import Job from '../../../components/professional/job-cards'
 
 class JobList extends React.Component {
   state = {
@@ -52,9 +53,8 @@ class JobList extends React.Component {
             {
               jobs.length > 0 &&
               jobs.map(job =>
-                <JobItem key={ job.id } job={ job }
+                <Job.Medium key={ job.id } job={ job }
                          onLink={ () => this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri: job.link }) }
-                         onMark={ () => {} }
                          onClick={ () => this.props.navigation.navigate(PAGES_NAMES.JOBS_PAGE, { project: { jobListings: jobs }, job }) }/>
               )
             }
@@ -100,6 +100,8 @@ const JobItem = ({ job, onClick, onLink }) => {
     </ListItem>
   )
 }
+
+
 
 const styles = EStyleSheet.create({
   centerText: {

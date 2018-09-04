@@ -10,6 +10,7 @@ import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.p
 import { JOB_LOCATION, ROLES } from '../../../../enums.js'
 import { PAGES_NAMES } from '../../../../navigation'
 import * as searchActions from '../../../../search/actions'
+import Professional from '../../../components/professional/professional-cards'
 
 class ProfessionalsList extends React.Component {
   constructor (props) {
@@ -20,9 +21,9 @@ class ProfessionalsList extends React.Component {
     }
   }
 
-  componentWillMount() {
-    const { filters, updateProfessionals } = this.props;
-    updateProfessionals(filters);
+  componentWillMount () {
+    const { filters, updateProfessionals } = this.props
+    updateProfessionals(filters)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -56,8 +57,10 @@ class ProfessionalsList extends React.Component {
             {
               this.props.profiles.length > 0 &&
               this.props.profiles.map(profile =>
-                <ProfessionalItem key={ profile.id } professional={ profile } onMark={ () => {} }
-                                  onClick={ () => this.props.onClick(profile) }/>
+                <Professional.Medium
+                  key={ profile.id }
+                  professional={ profile }
+                  onClick={ () => this.props.onClick(profile) }/>
               )
             }
           </List>

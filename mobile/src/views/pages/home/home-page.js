@@ -9,13 +9,12 @@ import { PAGES_NAMES } from '../../../navigation'
 import * as searchActions from '../../../search/actions'
 import ErrorMessage from '../../components/error-message/error-message'
 import Header from '../../components/header/header'
+import Investor from '../../components/investor/investor-cards'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
+import Project from '../../components/project/project-cards'
 import { ImagePageContainer } from '../../design/image-page-container'
 import { Subheader } from '../../design/subheader'
-import { InvestorItem } from './components/investor-item'
-import { SearchButton } from '../../design/buttons'
-import { ProfessionalItem } from './components/professional-item'
-import { ProjectItem } from './components/project-item'
+import Professional from '../../components/professional/professional-cards'
 
 class HomePage extends React.Component {
 
@@ -87,8 +86,9 @@ class HomePage extends React.Component {
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
                   {
                     investors.map(investor => (
-                      <InvestorItem
-                        key={ investor.id } investor={ investor } onMark={ () => {} }
+                      <Investor.Small
+                        key={ investor.id }
+                        investor={ investor }
                         onClick={ () => this.handleInvestorClick(investor) }
                       />
                     ))
@@ -100,8 +100,9 @@ class HomePage extends React.Component {
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
                   {
                     projects.map(project => (
-                      <ProjectItem
-                        key={ project.id } project={ project } onMark={ () => {} }
+                      <Project.Small
+                        key={ project.id }
+                        project={ project }
                         onClick={ () => this.handleProjectClick(project) }
                       />
                     ))
@@ -113,8 +114,9 @@ class HomePage extends React.Component {
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 4, marginBottom: 4, marginTop: 8 } } horizontal>
                   {
                     professionals.map((professional, index) => (
-                      <ProfessionalItem
-                        key={ index } professional={ professional } onMark={ () => {} }
+                      <Professional.Small
+                        key={ index }
+                        professional={ professional }
                         onClick={ () => this.handleProfessionalClick(professional) }
                       />
                     ))
