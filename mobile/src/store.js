@@ -13,7 +13,7 @@ const logger = createLogger({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['filter']
+  whitelist: ['filter', 'schedule', 'search', 'profile',]
 }
 
 const middlewares = [batchMiddleware, thunk];

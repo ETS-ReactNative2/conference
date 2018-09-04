@@ -54,18 +54,6 @@ class HomePage extends React.Component {
       projects, professionals, investors, isLoading, error, fetchMatches
     } = this.props
 
-    if (isLoading) {
-      return (
-        <ImagePageContainer>
-          <View style={ { flex: 1 } }>
-            <View style={ styles.content }>
-              <LunaSpinner/>
-            </View>
-          </View>
-        </ImagePageContainer>
-      )
-    }
-
     if (error) {
       return (
         <ErrorMessage

@@ -18,7 +18,7 @@ export const loadApp = () => async dispatch => {
     const persistedToken = await storageService.getItem(TOKEN_NAME)
     if (persistedToken) {
       userLandingPage = PAGES_NAMES.HOME_PAGE
-      await Promise.all([
+      Promise.all([
         dispatch(fetchDefaults()),
         dispatch(fetchProfiles()),
         dispatch(fetchMatches()),
