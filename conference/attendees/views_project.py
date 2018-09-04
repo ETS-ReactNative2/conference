@@ -295,20 +295,6 @@ class MyProject(APIView):
         project.whitepaper = clean_whitepaper
         project.save()
 
-        services_consumed = json_body.get('services_consumed')
-        clean_services_consumed = [models.Service.objects.get(pk=pk) for pk in services_consumed] if (
-            services_consumed
-        ) else []
-
-        services_provided = json_body.get('services_provided')
-        clean_services_provided = [models.Service.objects.get(pk=pk) for pk in services_provided] if (
-            services_provided
-        ) else []
-
-        project.services_consumed = clean_services_consumed
-        project.services_provided = clean_services_provided
-        project.save()
-
         request.user.conference_user.project = project
         request.user.conference_user.save()
         return JsonResponse(serializers.ProjectSerializer(project).data, status=status.HTTP_201_CREATED)

@@ -128,8 +128,8 @@ TEMPLATE_DIRS = [
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 INSTALLED_APPS = [
+    # "django.contrib.sites",
     "django.contrib.auth",
-    "django.contrib.sites",
     "django.contrib.admin",
     "django.contrib.contenttypes",
     "django.contrib.messages",

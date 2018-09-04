@@ -296,8 +296,6 @@ export async function getMyProjectJobs () {
   })
 }
 
-// todo postMyProjectJobs
-
 export async function deleteMyProjectJobsId ({ id }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.delete('/api/my_project/jobs/' + id + '/', {
@@ -306,10 +304,6 @@ export async function deleteMyProjectJobsId ({ id }) {
     }
   })
 }
-
-// todo getMyProjectJobsId
-
-// todo putMyProjectJobsId
 
 export async function getMyProjectMembers () {
   const token = await storageService.getItem(TOKEN_NAME)

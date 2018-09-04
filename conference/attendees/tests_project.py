@@ -73,8 +73,6 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
             website='http://www.example.com',
             whitepaper='http://www.example.com',
         )
-        project.services_consumed = models.Service.objects.all()
-        project.services_provided = models.Service.objects.all()
         project.save()
         response = self.client.get(reverse(self.view(), kwargs={'pk': project.id}), **self.header)
         self.assertEquals(response.status_code, 200)
@@ -95,9 +93,7 @@ class ProjectsIdViewTest(AuthMixin, SharedDetailViewMixin):
         self.assertEqual(response_dict.get('product_stage'), 1)
         self.assertEqual(response_dict.get('region'), 4)
         self.assertEqual(response_dict.get('region_other_text'), 'region_other_text')
-        self.assertEqual(response_dict.get('services_consumed'), range(1, 19))
         self.assertEqual(response_dict.get('services_consumed_other_text'), 'services consumed other text')
-        self.assertEqual(response_dict.get('services_provided'), range(1, 19))
         self.assertEqual(response_dict.get('services_provided_other_text'), 'services provided other text')
         self.assertEqual(response_dict.get('size'), 2147483647)
         self.assertEqual(response_dict.get('tagline'), 'aaaaaaaa')
@@ -155,9 +151,7 @@ class MyProjectTest(AuthMixin):
                 'product_stage': 1,
                 'region': 4,
                 'region_other_text': 'region_other_text',
-                'services_consumed': range(1, 19),
                 'services_consumed_other_text': 'services consumed other text',
-                'services_provided': range(1, 19),
                 'services_provided_other_text': 'services provided other text',
                 'size': 2147483647,
                 'tagline': 'aaaaaaaa',
@@ -188,9 +182,7 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(response_dict.get('product_stage'), 1)
         self.assertEqual(response_dict.get('region'), 4)
         self.assertEqual(response_dict.get('region_other_text'), 'region_other_text')
-        self.assertEqual(response_dict.get('services_consumed'), range(1, 19))
         self.assertEqual(response_dict.get('services_consumed_other_text'), 'services consumed other text')
-        self.assertEqual(response_dict.get('services_provided'), range(1, 19))
         self.assertEqual(response_dict.get('services_provided_other_text'), 'services provided other text')
         self.assertEqual(response_dict.get('size'), 2147483647)
         self.assertEqual(response_dict.get('tagline'), 'aaaaaaaa')
@@ -217,9 +209,7 @@ class MyProjectTest(AuthMixin):
         self.assertEqual(project.product_stage, models.ProductStage.objects.get(pk=1))
         self.assertEqual(project.region, models.Region.objects.get(pk=models.Region.OTHER))
         self.assertEqual(project.region_other_text, 'region_other_text')
-        self.assertEqual(list(project.services_consumed.all()), list(models.Service.objects.all()))
         self.assertEqual(project.services_consumed_other_text, 'services consumed other text')
-        self.assertEqual(list(project.services_provided.all()), list(models.Service.objects.all()))
         self.assertEqual(project.services_provided_other_text, 'services provided other text')
         self.assertEqual(project.size, 2147483647)
         self.assertEqual(project.tagline, 'aaaaaaaa')
