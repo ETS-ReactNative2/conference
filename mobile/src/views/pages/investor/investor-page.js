@@ -70,6 +70,7 @@ class InvestorPage extends Component {
               <View style={ { marginTop: 32 } }>
                 { showSingle && (
                   <Carousel
+                    keyExtractor={item => String(item.id)}
                     ref={ (c) => { this._carousel = c } }
                     data={ [ this.props.navigation.getParam('investor', {}) ] }
                     renderItem={ this._renderItem }
@@ -80,9 +81,11 @@ class InvestorPage extends Component {
                 { !showSingle && (
                   <React.Fragment>
                     <Carousel
+                      keyExtractor={item => String(item.id)}
                       ref={ (c) => { this._carousel = c } }
                       data={ this.investors }
                       renderItem={ this._renderItem }
+                      initialNumToRender={30}
                       sliderWidth={ sliderWidth }
                       firstItem={ this.state.currentIndex }
                       itemWidth={ itemWidth }

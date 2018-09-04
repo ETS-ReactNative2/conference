@@ -28,7 +28,7 @@ export default class JobsPage extends Component {
   }
 
   _renderItem = ({ item: job, index }) => <JobCard key={`job_card_${index}`} job={ job } navigation={ this.props.navigation }/>
-  
+
   componentWillUnmount () {
     Dimensions.removeEventListener('change', this.handleDimensionsChange)
   }
@@ -56,8 +56,10 @@ export default class JobsPage extends Component {
               <View style={{ marginTop: 64 }}>
                   <React.Fragment>
                     <Carousel
-                      ref={(c) => { this._carousel = c }} 
+                      ref={(c) => { this._carousel = c }}
                       data={jobs}
+                      keyExtractor={item => String(item.id)}
+                      initialNumToRender={30}
                       renderItem={this._renderItem}
                       sliderWidth={sliderWidth}
                       itemWidth={itemWidth}

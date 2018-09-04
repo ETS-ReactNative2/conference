@@ -44,10 +44,10 @@ class ProjectPage extends Component {
     return defaults ? this.props.defaultProjects : this.props.projects
   }
 
-  _renderItem = ({ item: project, index }) => 
-    <ProjectCard 
-      key={ index } 
-      project={ project } 
+  _renderItem = ({ item: project, index }) =>
+    <ProjectCard
+      key={ index }
+      project={ project }
       navigation={ this.props.navigation }/>
 
   render () {
@@ -71,6 +71,7 @@ class ProjectPage extends Component {
                     renderItem={ this._renderItem }
                     sliderWidth={ sliderWidth }
                     itemWidth={ itemWidth }
+                    keyExtractor={item => String(item.id)}
                   />
                 ) }
                 { !showSingle && (
@@ -79,9 +80,11 @@ class ProjectPage extends Component {
                       ref={ (c) => { this._carousel = c } }
                       data={ this.projects }
                       renderItem={ this._renderItem }
+                      initialNumToRender={30}
                       sliderWidth={ sliderWidth }
                       firstItem={ this.state.currentIndex }
                       itemWidth={ itemWidth }
+                      keyExtractor={item => String(item.id)}
                       onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
                     />
                     { this.projects.length < 8 &&
