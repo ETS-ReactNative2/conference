@@ -127,7 +127,7 @@ const Medium = ({ professional, onClick }) => {
             { hasAvatar ?
               <Image style={ medium.avatar } source={ avatar }/> :
               <View style={ medium.placeholderContainer }>
-                <Image style={ medium.placeholder } source={ avatar }/> :
+                <Image style={ medium.placeholder } source={ avatar }/>
               </View>
             }
           </View>
@@ -162,10 +162,10 @@ const Medium = ({ professional, onClick }) => {
               <View style={ medium.rowDetail }>
                 <Text style={ medium.header }>{ I18n.t('cards.location') }</Text>
                 <View style={ { flex: 0.8 } }>
-                  { professional.country && <Text style={ medium.subtitle }>{ professional.country }</Text> }
-                  { professional.city && <Text
+                  { professional.country ? <Text style={ medium.subtitle }>{ professional.country }</Text> : null }
+                  { professional.city ? <Text
                     ellipsizeMode={ 'tail' } numberOfLines={ 1 }
-                    style={ medium.subtitle }>{ professional.city }</Text>
+                    style={ medium.subtitle }>{ professional.city }</Text> : null
                   }
                   { professional.relocate &&
                   <Text style={ [ medium.subtitle ] }>Able to relocate</Text> }
@@ -174,10 +174,10 @@ const Medium = ({ professional, onClick }) => {
               <View style={ medium.rowDetail }>
                 <Text style={ medium.header }>{ I18n.t('cards.info') }</Text>
                 <View style={ { flex: 0.5 } }>
-                  { professional.age &&
-                  <Text style={ medium.subtitle }>{ `${I18n.t('cards.age')}: ${professional.age}` }</Text> }
-                  { professional.experience &&
-                  <Text style={ medium.subtitle }>{ `${I18n.t('cards.exp')}: ${professional.experience}` }</Text> }
+                  { professional.age ?
+                  <Text style={ medium.subtitle }>{ `${I18n.t('cards.age')}: ${professional.age}` }</Text> : null }
+                  { professional.experience ?
+                  <Text style={ medium.subtitle }>{ `${I18n.t('cards.exp')}: ${professional.experience}` }</Text> : null }
                 </View>
               </View>
             </View>

@@ -130,7 +130,7 @@ const Medium = ({ investor, onClick }) => {
             { hasAvatar ?
               <Image style={ medium.avatar } source={ avatar }/> :
               <View style={ medium.placeholderContainer }>
-                <Image style={ medium.placeholder } source={ avatar }/> :
+                <Image style={ medium.placeholder } source={ avatar }/>
               </View>
             }
           </View>
