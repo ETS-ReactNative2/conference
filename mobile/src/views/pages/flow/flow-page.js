@@ -2,11 +2,15 @@ import { Button, Icon, View } from 'native-base'
 import React from 'react'
 import { BackHandler, Image } from 'react-native'
 import { connect } from 'react-redux'
-import { PAGES_NAMES } from '../../../navigation'
+import { batchActions } from 'redux-batch-enhancer'
 import { profileActions } from '../../../profile'
 import { signUpActions } from '../../../signup'
 import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation } from './steps'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
+import { PAGES_NAMES } from '../../../navigation';
+
+import I18n from '../../../../locales/i18n'
+import { globalActions } from '../../../global'
 
 class FlowPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -100,7 +104,6 @@ class FlowPage extends React.Component {
 
   onFill = async ({ nextStep, done }) => {
     const { PreviousSteps, CurrentStep } = this.state
-    const { navigation, uploadProfile, fetchProfiles } = this.props
     const previousStepsCopy = [ ...PreviousSteps ]
     previousStepsCopy.push(CurrentStep)
     if (!done) {
@@ -117,11 +120,14 @@ class FlowPage extends React.Component {
     }
     else {
       try {
-        await uploadProfile()
-        await fetchProfiles()
-        navigation.navigate(PAGES_NAMES.PROFILE_PAGE)
+        await this.props.startLoading()
+        await this.props.uploadProfile()
+        await this.props.fetchProfiles()
+        this.props.navigation.navigate(PAGES_NAMES.PROFILE_PAGE)
       } catch (err) {
-        console.error(err)
+        this.props.showAlertMessage(err)
+      } finally {
+        this.props.finishLoading()
       }
     }
   }
@@ -151,7 +157,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     uploadProfile: () => dispatch(signUpActions.uploadProfile()),
-    fetchProfiles: () => dispatch(profileActions.fetchProfiles())
+    fetchProfiles: () => dispatch(profileActions.fetchProfiles()),
+    startLoading: () => dispatch(batchActions([ globalActions.hideAlert(), globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
+    showAlertMessage: errMessage => dispatch(globalActions.showAlertError(errMessage)),
+    finishLoading: () => dispatch(globalActions.unsetGlobalLoading())
   }
 }
 

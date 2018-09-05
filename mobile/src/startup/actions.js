@@ -29,6 +29,7 @@ export const loadApp = () => async dispatch => {
       userLandingPage = PAGES_NAMES.WELCOME_PAGE
     }
   } catch (err) {
+    userLandingPage = PAGES_NAMES.WELCOME_PAGE
     await storageService.removeItem(TOKEN_NAME)
   } finally {
     dispatch(appFinishedLoading())

@@ -1,50 +1,45 @@
-import { Text } from "native-base";
-import React from "react";
-import PropTypes from "prop-types";
-import { View } from "react-native";
-import EStyleSheet from "react-native-extended-stylesheet";
-import { ERROR_COLOR, OK_COLOR } from "../../design/constants";
+import { Button, Text } from "native-base"
+import React from "react"
+import PropTypes from "prop-types"
+import { View } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
+import I18n from '../../../../locales/i18n'
 
 export class Alert extends React.Component {
-  getBorderStyle(status) {
-    const stylesArray = [styles.container];
-    const stylesMapping = {
-      success: styles.borderSuccess,
-      error: styles.borderError
-    };
-    if (stylesMapping[status]) {
-      stylesArray.push(stylesMapping[status]);
-    }
-    if (status === "error" && this.props.errorStyleOverride) {
-      stylesArray.push(this.props.errorStyleOverride.border)
-    }
-    return stylesArray;
-  }
 
-  getTextStyling(status) {
-    const stylesArray = [styles.text];
+  getContainerStyle(type) {
     const stylesMapping = {
-      success: styles.textSuccess,
-      error: styles.textError
-    };
-    if (stylesMapping[status]) {
-      stylesArray.push(stylesMapping[status]);
+      "success": styles.success,
+      "error": styles.error
     }
-    if (status === "error" && this.props.errorStyleOverride) {
-      stylesArray.push(this.props.errorStyleOverride.text)
+    const stylesArray = [styles.container]
+    if (stylesMapping[type]) {
+      stylesArray.push(stylesMapping[type])
     }
-    return stylesArray;
+    return stylesArray
   }
 
   render() {
     return (
-      <View style={this.getBorderStyle(this.props.color)}>
-        <Text
-          style={this.getTextStyling(this.props.color)}
-          adjustsFontSizeToFit
-        >
-          {this.props.message}
-        </Text>
+      <View style={this.getContainerStyle(this.props.type)}>
+        <View style={ styles.textWrapper }>
+          {this.props.type === "error" && (
+            <Text style={ [styles.prefix, styles.errorPrefix] }>
+              { I18n.t('alert.error_prefix') }
+            </Text>
+          )}
+          {this.props.type === "success" && (
+            <Text style={ [styles.prefix, styles.text] }>
+              { I18n.t('alert.success_prefix') }
+            </Text>
+          )}
+          <Text style={styles.text}>
+            { this.props.message }
+          </Text>
+        </View>
+          <Button bordered onPress={ this.props.onButtonClick} style={ styles.button }>
+            <Text>OK</Text>
+          </Button>
       </View>
     );
   }
@@ -52,42 +47,55 @@ export class Alert extends React.Component {
 
 const styles = EStyleSheet.create({
   container: {
-    borderWidth: 2,
-    borderRadius: 10,
-    height: 50,
+    position: 'absolute',
     flex: 1,
-    justifyContent: 'center'
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 10,
+    paddingLeft: 10,
+    width: '100%',
+    height: 100
   },
-  borderSuccess: {
-    borderColor: OK_COLOR
+  success: {
+    backgroundColor: '#0D9570'
   },
-  borderError: {
-    borderColor: ERROR_COLOR
+  error: {
+    backgroundColor: '#CE2860'
   },
   text: {
-    fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Light",
     fontSize: 14,
-    textAlign: 'center'
+    textAlign: 'left',
+    color: 'white',
+    flex: 1
   },
-  textSuccess: {
-    color: OK_COLOR
+  textWrapper: {
+    flex: 1,
+    flexDirection: 'row'
   },
-  textError: {
-    color: ERROR_COLOR
+  prefix: {
+    marginRight: 5,
+    fontSize: 14
+  },
+  errorPrefix: {
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  button: {
+    marginTop: 20,
+    alignSelf: 'center',
+    borderColor: 'white',
+    height: 50
   }
 });
 
 Alert.propTypes = {
   message: PropTypes.string.isRequired,
-  color: PropTypes.oneOf(["error", "success"]).isRequired,
-  errorStyleOverride: PropTypes.shape({
-    border: PropTypes.shape({
-      borderColor: PropTypes.string
-    }),
-    text: PropTypes.shape({
-      color: PropTypes.string
-    })
-  })
+  type: PropTypes.oneOf(["error", "success"]).isRequired,
+  onButtonClick: PropTypes.func.isRequired
 };
 
 export default Alert;

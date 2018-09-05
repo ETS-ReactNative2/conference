@@ -1,4 +1,8 @@
 {
+  "alert": {
+    "success_prefix": "Success:",
+    "error_prefix": "ERROR"
+  },
   "cards": {
     "technology": "Technology",
     "stage": "Funding",
@@ -19,9 +23,6 @@
   },
   "home_page": {
     "title": "Home"
-  },
-  "agenda_page": {
-    "title": "Schedule"
   },
   "job_item": {
     "part_time": "Part-time possible",

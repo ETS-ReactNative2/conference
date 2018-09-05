@@ -20,7 +20,6 @@ export class InvestorCard extends React.Component {
         if (supported) {
           Linking.openURL(this.props.investor.linkedin)
         } else {
-          console.log('Don\'t know how to open URI: ' + this.props.url)
         }
       })
   }

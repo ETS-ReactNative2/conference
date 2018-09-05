@@ -12,7 +12,6 @@ export function readNotificationsAll () {
         }
       })
     } catch (err) {
-      console.error(err)
     }
   }
 }
@@ -29,7 +28,6 @@ export function readNotification (notification) {
         }
       })
     } catch (err) {
-      console.error(err)
     }
   }
 }
@@ -47,7 +45,6 @@ export function fetchNotifications () {
       })
     } catch (err) {
       dispatch({ type: LOAD_NOTIFICATIONS_ERROR })
-      console.log({err})
     }
   }
 }

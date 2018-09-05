@@ -1,6 +1,5 @@
-import I18n from '../../locales/i18n'
+import { getErrorDataFromNetworkException } from '../common/utils'
 import * as api from '../api/api'
-import { setGlobalLoading, unsetGlobalLoading } from '../global/actions'
 import { PROPAGATE_USER_DEFAULTS, PROPAGATE_USER_SEARCH } from '../search/action-types'
 import {
   DEACTIVATE_INVESTOR,
@@ -39,7 +38,6 @@ export function fetchProfiles () {
         }
       })
     } catch (err) {
-      console.log({ err })
       dispatch({ type: LOAD_PROFILES_ERROR })
     }
   }
@@ -70,24 +68,18 @@ export function openEdit (type, prefill = true) {
   }
 }
 
-export function updateBasic (basicChanges) {
+export function updateBasic(basicChanges) {
   return async (dispatch, getState) => {
-    const basicInfo = getState().profile.basic
-    const shouldUpdateData = !compareUser(basicInfo, basicChanges)
-    const shouldUpdatePhoto = !basicChanges.avatarSource.uri.startsWith('https')
-      && basicChanges.avatarSource.uri !== ''
-      && basicChanges.avatarSource.uri !== basicInfo.imageUrl
-    console.log({
-      basicInfo,
-      basicChanges,
-      shouldUpdateData
-    })
     try {
+      const basicInfo = getState().profile.basic
+      const shouldUpdateData = !compareUser(basicInfo, basicChanges)
+      const shouldUpdatePhoto = !basicChanges.avatarSource.uri.startsWith('https')
+        && basicChanges.avatarSource.uri !== ''
+        && basicChanges.avatarSource.uri !== basicInfo.imageUrl
       dispatch({
         type: UPDATE_BASIC,
         data: { ...basicChanges, imageUrl: basicChanges.avatarSource.uri }
       })
-      dispatch(setGlobalLoading(I18n.t('profile_page.upload_loader_text')))
       if (shouldUpdatePhoto) {
         await api.uploadImage(basicChanges.avatarSource)
       }
@@ -97,10 +89,9 @@ export function updateBasic (basicChanges) {
         dispatch({ type: PROPAGATE_USER_DEFAULTS, data: { ...data, imageUrl: basicChanges.avatarSource.uri } })
         dispatch({ type: PROPAGATE_USER_SEARCH, data: { ...data, imageUrl: basicChanges.avatarSource.uri } })
       }
-    } catch (er) {
-      console.error(er)
-    } finally {
-      dispatch(unsetGlobalLoading())
+    } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      throw errorData.errorMessage
     }
   }
 }
@@ -113,7 +104,6 @@ export function activateInvestor () {
         type: REACTIVATE_INVESTOR
       })
     } catch (err) {
-      console.log({ err })
     }
   }
 }
@@ -126,7 +116,6 @@ export function activateProfile () {
         type: REACTIVATE_PROFILE
       })
     } catch (err) {
-      console.log({ err })
     }
   }
 }
@@ -139,7 +128,6 @@ export function leaveProject () {
         type: LEAVE_PROJECT
       })
     } catch (err) {
-      console.log({ err })
     }
   }
 }
@@ -152,7 +140,6 @@ export function deactivateInvestor () {
         type: DEACTIVATE_INVESTOR
       })
     } catch (err) {
-      console.log({ err })
     }
   }
 }
@@ -165,7 +152,6 @@ export function deactivateProfile () {
         type: DEACTIVATE_PROFILE
       })
     } catch (err) {
-      console.log({ err })
     }
   }
 }
@@ -182,7 +168,6 @@ export function loadProjectMemebers () {
         data: membersResponse.data
       })
     } catch (err) {
-      console.log({ err })
       dispatch({
         type: LOAD_PROJECT_MEMBERS_ERROR
       })
@@ -196,7 +181,6 @@ export function addProjetMember (email) {
       await api.postMyProjectMembers({ email })
       dispatch(loadProjectMemebers())
     } catch (err) {
-      console.log({ err })
       dispatch({
         type: LOAD_PROJECT_MEMBERS_ERROR
       })
@@ -210,7 +194,6 @@ export function removeProjectMember (memberId) {
       await api.deleteMyProjectMembersId({ id: memberId })
       dispatch(loadProjectMemebers())
     } catch (err) {
-      console.log({ err })
       dispatch({
         type: LOAD_PROJECT_MEMBERS_ERROR
       })

@@ -21,7 +21,6 @@ class MessagePage extends React.Component {
         message: ''
       })
     } catch (err) {
-      console.log(err)
     }
   }
 

@@ -4,6 +4,7 @@ import * as api from '../api/api'
 import { ROLES } from '../enums'
 import { CLEAR as FILTER_CLEAR } from '../filters/action-types'
 
+import { isNetworkUnavailable, getErrorDataFromNetworkException } from '../common/utils'
 import { globalActions } from '../global'
 import { PAGES_NAMES } from '../navigation'
 import { CLEAR as NOTIFICATION_CLEAR } from '../notifications/action-types'
@@ -18,14 +19,12 @@ import { navigationService, storageService } from '../services'
 import {
   CLEAR as SIGNUP_CLEAR,
   CLEAR_LOGIN_USER_ERROR,
-  CLEAR_SAVE_PROFILE_ERROR,
   CLEAR_SIGN_UP_USER_ERROR,
   LOGIN_USER_ERROR,
   LOGIN_USER_SUCCESS,
   SAVE_EMPLOYEE,
   SAVE_INVESTOR,
   SAVE_PROFILE_EMPLOYER,
-  SAVE_PROFILE_ERROR,
   SAVE_PROFILE_INFO,
   SAVE_PROFILE_INVESTEE,
   SIGN_UP_USER_ERROR
@@ -33,59 +32,30 @@ import {
 
 const TOKEN_NAME = 'AUTH-TOKEN'
 
-const isNetworkUnavailable = err => {
-  return err.response === undefined && err.message === 'Network Error'
-}
-
-const getErrorData = err => {
-  let errorMessage = ''
-  let isFieldError = false
-  const noInternetAccess = isNetworkUnavailable(err)
-  if (noInternetAccess) {
-    errorMessage = I18n.t('common.errors.no_internet_connection')
-  } else {
-    const isInternalServerError = err.response.status >= 500
-    const isInvalidRequestError = err.response.status === 400
-    const errorCode = err.response.data
-    if (isInternalServerError) {
-      errorMessage = I18n.t('common.errors.server_error')
-    } else if (isInvalidRequestError) {
-      errorMessage = I18n.t('common.errors.incorrect_request')
-    } else {
-      errorMessage = I18n.t(`common.errors.${errorCode}`)
-      isFieldError = true
-    }
-  }
-  return {
-    errorMessage,
-    isFieldError
-  }
-}
-
 export const clearSignUpError = () => ({
   type: CLEAR_SIGN_UP_USER_ERROR
 })
 
-const signUpError = (isEmailFieldError, errorMsg) => ({
+const signUpError = errorMsg => ({
   type: SIGN_UP_USER_ERROR,
-  isServerError: !isEmailFieldError,
-  isEmailFieldError: isEmailFieldError,
   error: errorMsg
 })
 
-export function signup (signupData) {
-  return async dispatch => {
+export const signup = signupData => async dispatch => {
     try {
+      dispatch(batchActions([ clearSignUpError(), globalActions.hideAlert(), globalActions.setGlobalLoading(I18n.t('signup_page.spinner_text')) ]))
       await api.signup(signupData)
-      dispatch(batchActions([ clearSignUpError(), globalActions.setGlobalLoading(I18n.t('signup_page.spinner_text')) ]))
       await dispatch(login(signupData.email, signupData.password, PAGES_NAMES.PROFILE_ONBOARDING_PAGE))
     } catch (err) {
-      const errorData = getErrorData(err)
-      dispatch(signUpError(errorData.isFieldError, errorData.errorMessage))
+      const errorData = getErrorDataFromNetworkException(err)
+      if (errorData.isFieldError) {
+        dispatch(signUpError(errorData.errorMessage))
+      } else {
+        dispatch(globalActions.showAlertError(errorData.errorMessage))
+      }
     } finally {
       dispatch(globalActions.unsetGlobalLoading())
     }
-  }
 }
 
 export function uploadProfile () {
@@ -94,7 +64,7 @@ export function uploadProfile () {
       const flow = getState().signUp
       const { profile: { type, ...profileRest }, investor, investee, employer, employee } = flow
       switch (type) {
-        case 'investee':
+        case 'investee': {
           await api.createInvestee({
             description: investee.projectDescription,
             name: investee.projectName,
@@ -135,11 +105,12 @@ export function uploadProfile () {
               }
             })
 
-            return api.createJob({ jobs: jobsArray })
+            await api.createJob({ jobs: jobsArray })
           }
-          return
-        case 'investor':
-          return await api.createInvestor({
+          break
+        }
+        case 'investor': {
+          await api.createInvestor({
             giveaways: investor.giveaways,
             fundingStages: investor.stages,
             productStages: investor.productStages,
@@ -149,7 +120,9 @@ export function uploadProfile () {
             nationality: investor.nationality ? investor.nationality.cca2 : '',
             regionOtherText: investor.regionOtherText
           })
-        case 'employee':
+          break
+        }
+        case 'employee': {
           if(employee.lookingForJob) {
             return await api.putMyProfessional({
               role: employee.role,
@@ -167,12 +140,14 @@ export function uploadProfile () {
           } else {
             if(getState().profile.professional){
               await dispatch(deactivateProfile())
-              return
             }
           }
+          break
+        }
       }
     } catch (err) {
-      console.log({ err })
+      const errorData = getErrorDataFromNetworkException(err)
+      throw errorData.errorMessage
     }
   }
 }
@@ -216,10 +191,8 @@ export const clearLoginError = () => ({
   type: CLEAR_LOGIN_USER_ERROR
 })
 
-const logInError = (isCredentialsError, errorMsg) => ({
+const logInError = errorMsg => ({
   type: LOGIN_USER_ERROR,
-  isServerError: !isCredentialsError,
-  isCredentialsError: isCredentialsError,
   error: errorMsg
 })
 
@@ -229,7 +202,7 @@ const loginInSuccess = () => ({
 
 export const login = (username, password, redirectPage) => async dispatch => {
   try {
-    dispatch(batchActions([ clearLoginError(), globalActions.setGlobalLoading(I18n.t('login_page.spinner_text')) ]))
+    dispatch(batchActions([ clearLoginError(), globalActions.hideAlert(), globalActions.setGlobalLoading(I18n.t('login_page.spinner_text')) ]))
     const response = await api.login(username, password)
     const token = response.data.token
     await storageService.removeItem(TOKEN_NAME)
@@ -247,40 +220,31 @@ export const login = (username, password, redirectPage) => async dispatch => {
         errorMessage: I18n.t('common.errors.invalid_credentials')
       }
     } else {
-      errorData = getErrorData(err)
+      errorData = getErrorDataFromNetworkException(err)
     }
-    dispatch(logInError(errorData.isFieldError, errorData.errorMessage))
+    if (errorData.isFieldError) {
+      dispatch(logInError(errorData.errorMessage))
+    } else {
+      dispatch(globalActions.showAlertError(errorData.errorMessage))
+    }
   } finally {
     dispatch(globalActions.unsetGlobalLoading())
   }
 }
 
-export const clearSaveProfileError = () => ({
-  type: CLEAR_SAVE_PROFILE_ERROR
-})
-
-const saveProfileError = errorMsg => ({
-  type: SAVE_PROFILE_ERROR,
-  isError: true,
-  error: errorMsg
-})
-
-export const saveProfileOnboardingInfo = (profileInfo, redirectPage) => async dispatch => {
-  try {
-    dispatch(batchActions([ clearSaveProfileError(),
-      globalActions.setGlobalLoading(I18n.t('flow_page.common.profile_onboarding.spinner_text')) ]))
-
-    if (profileInfo.avatarSource && profileInfo.avatarSource.uri) {
-      await api.uploadImage(profileInfo.avatarSource)
+export function saveProfileOnboardingInfo(profileInfo, redirectPage) {
+  return async (dispatch) => {
+    try {
+      if (profileInfo.avatarSource && profileInfo.avatarSource.uri) {
+        await api.uploadImage(profileInfo.avatarSource)
+      }
+      await api.createOrUpdateConferenceUser(profileInfo)
+      dispatch(batchActions([fetchProfiles(), saveProfileInfo(profileInfo)]))
+      navigationService.navigate(redirectPage)
+    } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      throw errorData.errorMessage
     }
-    await api.createOrUpdateConferenceUser(profileInfo)
-    await dispatch(fetchProfiles())
-    navigationService.navigate(redirectPage)
-  } catch (err) {
-    const errorData = getErrorData(err)
-    dispatch(saveProfileError(errorData.errorMessage))
-  } finally {
-    dispatch(globalActions.unsetGlobalLoading())
   }
 }
 

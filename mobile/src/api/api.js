@@ -419,17 +419,26 @@ export async function uploadImage (file) {
       name: 'testPhotoName.jpg'
     }
   )
-
-  return fetch(Config.APP_AXIOS_BASE_URL + '/api/my_person/images/', {
+  let fetchResponse = ''
+  try {
+    fetchResponse = await fetch(Config.APP_AXIOS_BASE_URL + '/api/my_person/images/', {
       method: 'post',
       body: bodyFormData,
       headers: {
         // 'Content-Type': 'multipart/form-data',
         'X-Authorization': `Bearer ${ token }`
-
+      }
+    })
+  } catch (err) {
+    throw err;
+  }
+  if (!fetchResponse.ok) {
+    throw {
+      response: {
+        status: 500
       }
     }
-  )
+  }
 }
 
 // Fetch default filter Options

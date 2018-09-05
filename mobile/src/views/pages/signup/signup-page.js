@@ -13,7 +13,6 @@ import InputValidated from '../../design/input-validated'
 import BlackLogo from '../../../assets/logos/logo-black.png'
 import PoweredLuna from '../../../assets/logos/login_logo.png'
 import { BlackButton } from '../../design/buttons'
-import Alert from '../../components/alert/alert'
 
 export class SignupPage extends React.Component {
   constructor (props) {
@@ -41,7 +40,7 @@ export class SignupPage extends React.Component {
   }
 
   handleFieldChange = (newValue, name) => {
-    if (this.props.isEmailFieldError || this.props.isServerError) {
+    if (this.props.isError) {
       this.props.clearErrors();
     }
     this.setState({
@@ -58,17 +57,14 @@ export class SignupPage extends React.Component {
   }
 
   render () {
-    const isEmailFieldError = !this.validateEmail(this.state.email) || this.props.isEmailFieldError;
-    const emailErrorMessage = this.props.isEmailFieldError ? this.props.errorMessage : I18n.t('common.errors.incorrect_email');
+    const isEmailFieldError = !this.validateEmail(this.state.email) || this.props.isError;
+    const emailErrorMessage = this.props.isError ? this.props.errorMessage : I18n.t('common.errors.incorrect_email');
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}} forceInset={{top: 'always'}}>
         <Container>
           <Content style={styles.mainContainer}>
             <Header title={ I18n.t('signup_page.title') } rightIconSource={BlackLogo} />
             <View style={styles.contentContainer}>
-              {this.props.isServerError && (
-                <Alert color="error" message={this.props.errorMessage} />
-              )}
               <View style={styles.inputContainer}>
                 <InputValidated value={ this.state.email }
                       isError={isEmailFieldError}
@@ -173,8 +169,7 @@ const styles = EStyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    isServerError: state.signUp.auth.signup.isServerError,
-    isEmailFieldError: state.signUp.auth.signup.isEmailFieldError,
+    isError: state.signUp.auth.signup.isError,
     errorMessage: state.signUp.auth.signup.errorMessage
   }
 }

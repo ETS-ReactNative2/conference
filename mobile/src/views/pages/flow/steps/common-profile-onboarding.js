@@ -11,7 +11,7 @@ import WhiteLogo from '../../../../assets/logos/logo-white.png'
 import { PAGES_NAMES } from '../../../../navigation/index'
 import { profileActions } from '../../../../profile'
 import { signUpActions } from '../../../../signup'
-import Alert from '../../../components/alert/alert'
+import { globalActions } from '../../../../global'
 import { NavigationHeader } from '../../../components/header/header'
 import HeaderSkip from '../../../components/header/header-skip'
 import { BlueButton, PrimaryButton } from '../../../design/buttons'
@@ -63,24 +63,30 @@ class CommonProfileOnboarding extends React.Component {
     this.setState({ isFormValid })
   }
 
-  handleSubmit = () => {
-    this.props.saveProfileInfo({
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      company: this.state.company,
-      telegram: this.state.telegram,
-      linkedin: this.state.linkedin,
-      avatarSource: this.state.avatarSource
-    }, PAGES_NAMES.HOME_PAGE)
-    if (this.props.edit) {
-      this.props.navigation.goBack()
+  handleSubmit = async () => {
+    try {
+      await this.props.startLoading()
+      await this.props.saveProfileInfo({
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        company: this.state.company,
+        telegram: this.state.telegram,
+        linkedin: this.state.linkedin,
+        avatarSource: this.state.avatarSource
+      })
+      if (this.props.edit) {
+        this.props.navigation.goBack()
+      } else {
+        this.props.navigation.navigate(PAGES_NAMES.HOME_PAGE)
+      }
+    } catch (err) {
+      this.props.showAlertMessage(err)
+    } finally {
+      this.props.finishLoading()
     }
   }
 
   handleFieldChange = (newValue, name) => {
-    if (this.props.isError) {
-      this.props.clearErrors()
-    }
     this.setState({
       [ name ]: newValue
     }, this.validateForm)
@@ -94,10 +100,6 @@ class CommonProfileOnboarding extends React.Component {
       }
       else {
         let source = { uri: response.uri, data: response.data }
-
-        // You can also display the image using data:
-        // source = { uri: 'data:image/jpeg;base64,' + response.data }
-
         this.setState({
           avatarSource: source
         })
@@ -131,9 +133,6 @@ class CommonProfileOnboarding extends React.Component {
               <StepTitle text={ I18n.t('flow_page.common.profile_onboarding.title') }
                          textStyle={ styles.pageTitle }/>
             </View>
-            { this.props.isError && (
-              <Alert color="error" message={ this.props.errorMessage }/>
-            ) }
             <View style={ { flex: 1 } }>
               <Form>
                 <Subheader text={ 'Avatar' }/>
@@ -254,17 +253,16 @@ const mapStateToProps = state => {
     telegram: state.signUp.profile.telegram,
     linkedin: state.signUp.profile.linkedin,
     imageUrl: { uri: '' },
-    isError: state.signUp.auth.profile.isError,
-    errorMessage: state.signUp.auth.profile.errorMessage,
     edit: false
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveProfileInfo: (profileInfo, redirectPage) => dispatch(batchActions([ signUpActions.saveProfileInfo(profileInfo),
-      signUpActions.saveProfileOnboardingInfo(profileInfo, redirectPage) ])),
-    clearErrors: () => dispatch(signUpActions.clearSaveProfileError())
+    saveProfileInfo: profileInfo => dispatch(signUpActions.saveProfileOnboardingInfo(profileInfo)),
+    startLoading: () => dispatch(batchActions([ globalActions.hideAlert(), globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
+    showAlertMessage: errMessage => dispatch(globalActions.showAlertError(errMessage)),
+    finishLoading: () => dispatch(globalActions.unsetGlobalLoading())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CommonProfileOnboarding)
@@ -280,7 +278,9 @@ export const EditBasicInfo = connect(
     edit: true
   }),
   dispatch => ({
-    saveProfileInfo: (profile) => {dispatch(profileActions.updateBasic(profile))},
-    clearErrors: () => {}
+    saveProfileInfo: profile => dispatch(profileActions.updateBasic(profile)),
+    startLoading: () => dispatch(batchActions([ globalActions.hideAlert(), globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
+    showAlertMessage: errMessage => dispatch(globalActions.showAlertError(errMessage)),
+    finishLoading: () => dispatch(globalActions.unsetGlobalLoading())
   })
 )(CommonProfileOnboarding)
