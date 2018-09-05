@@ -114,17 +114,17 @@ class FilterPage extends Component {
         <ScrollView style={{ flex: 1 }}>
           <NavigationHeader
             onBack={ () => this.props.navigation.goBack() }
-            title={ I18n.t(`search_page.investor_filter.${key}.header`) }
+            title={ I18n.t(`search_page.${filterField}_filter.${key}.header`) }
             titleStyle={ { color: '#fff', marginTop: 12 } }
             rightIconSource={ WhiteLogo }/>
           <View style={styles.headerContainer}>
             <Text style={styles.headerText}>
-              { I18n.t(`search_page.investor_filter.${key}.title`) }
+              { I18n.t(`search_page.${filterField}_filter.${key}.title`) }
             </Text>
           </View>
           <SubheaderWithSwitch
             selected={ isAllSelected }
-            text={ I18n.t(`search_page.investor_filter.${key}.header`) }
+            text={ I18n.t(`search_page.${filterField}_filter.${key}.header`) }
             onToggle={ this.selectAll }
           />
           <View style={ { flex: 1 } }>
