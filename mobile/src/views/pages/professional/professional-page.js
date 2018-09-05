@@ -9,7 +9,9 @@ import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { getDimensions } from '../../../common/dimension-utils'
 import { NavigationHeader } from '../../components/header/header'
+import { ImagePageContainer } from '../../design/image-page-container'
 import { ProfessionalCard } from './components/professional-card'
+import Professional from '../../components/professional/professional-cards'
 
 class ProfessionalPage extends Component {
 
@@ -44,14 +46,13 @@ class ProfessionalPage extends Component {
     return defaults ? this.props.defaultProfessionals : this.props.professionals
   }
 
-  _renderItem = ({ item: professional, index }) => <ProfessionalCard key={ index } professional={ professional } navigation = { this.props.navigation }/>
+  _renderItem = ({ item: professional, index }) => <Professional.XL key={ index } professional={ professional } navigation = { this.props.navigation }/>
 
   render () {
     const { itemWidth, sliderWidth } = getDimensions()
     const showSingle = this.props.navigation.getParam('single', false)
     return (
-      <SafeAreaView style={ { flex: 1, backgroundColor: '#c72355' } } forceInset={ { top: 'always' } }>
-        <Container style={ { backgroundColor: '#c72355' } }>
+        <ImagePageContainer>
           <View style={ styles.content }>
             <ScrollView>
               <NavigationHeader
@@ -94,8 +95,7 @@ class ProfessionalPage extends Component {
               </View>
             </ScrollView>
           </View>
-        </Container>
-      </SafeAreaView>
+        </ImagePageContainer>
     )
   }
 }
@@ -108,8 +108,7 @@ const styles = EStyleSheet.create({
     marginLeft: 16
   },
   content: {
-    flex: 1,
-    backgroundColor: '#c72355'
+    flex: 1
   },
   pageTitleContainer: {
     marginTop: 20,

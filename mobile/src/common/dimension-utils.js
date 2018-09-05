@@ -15,7 +15,7 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2
 export function getDimensions () {
   const { width: viewportWidth } = Dimensions.get('screen')
 
-  const slideWidth = wp(75)
+  const slideWidth = wp(80)
   const itemHorizontalMargin = wp(2)
 
   const sliderWidth = viewportWidth

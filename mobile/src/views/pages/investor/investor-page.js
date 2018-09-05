@@ -10,7 +10,9 @@ import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { getDimensions } from '../../../common/dimension-utils'
 import { NavigationHeader } from '../../components/header/header'
+import { ImagePageContainer } from '../../design/image-page-container'
 import { InvestorCard } from './components/investor-card'
+import Investor from '../../components/investor/investor-cards'
 
 class InvestorPage extends Component {
 
@@ -51,15 +53,14 @@ class InvestorPage extends Component {
 
   _renderItem = ({ item: investor, index }) => {
     const canShowMessaging = this.props.project !== null
-    return <InvestorCard key={ index } investor={ investor } showMessage={canShowMessaging} onMessageClick={ () => this.handleMessageClick(investor) }/>
+    return <Investor.XL key={ index } investor={ investor } showMessage={canShowMessaging} onMessageClick={ () => this.handleMessageClick(investor) }/>
   }
 
   render () {
     const { itemWidth, sliderWidth } = getDimensions()
     const showSingle = this.props.navigation.getParam('single', false)
     return (
-      <SafeAreaView style={ { flex: 1, backgroundColor: '#2C65E2' } } forceInset={ { top: 'always' } }>
-        <Container style={ { backgroundColor: '#2C65E2' } }>
+      <ImagePageContainer>
           <View style={ styles.content }>
             <ScrollView>
               <NavigationHeader
@@ -102,8 +103,7 @@ class InvestorPage extends Component {
               </View>
             </ScrollView>
           </View>
-        </Container>
-      </SafeAreaView>
+      </ImagePageContainer>
     )
   }
 }
@@ -117,7 +117,7 @@ const styles = EStyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: '#2C65E2'
+    // backgroundColor: '#2C65E2'
   },
   pageTitleContainer: {
     marginTop: 20,

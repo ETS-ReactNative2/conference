@@ -7,19 +7,28 @@
     "technology": "Technology",
     "stage": "Funding",
     "product": "Product",
-    "market": "Market: ",
+    "market": "Markets",
     "message": "Message",
     "location": "Location",
+    "relocate": "Relocate",
+    "notable": "Notable members",
+    "main": "Main",
+    "legal": "Legal",
     "info": "Info",
     "age": "Age",
     "exp": "Exp",
+    "size": "Team size",
     "work": "Works",
     "save": "Save",
     "team": "Team",
+    "offer": "Offering",
+    "request": "Requesting",
+    "description": "Description",
     "industry": "Industry",
-    "skills": "3 skills",
-    "traits": "3 traits",
-    "most": "I know the most about:"
+    "skills": "Skills",
+    "traits": "Traits",
+    "most": "I know the most about:",
+    "raising": "Raising"
   },
   "home_page": {
     "title": "Home"
@@ -62,6 +71,8 @@
     }
   },
   "common": {
+    "website": "Website",
+    "whitepaper": "Whitepaper",
     "back": "Back",
     "view": "View",
     "edit": "Edit",
