@@ -29,4 +29,13 @@ const getErrorDataFromNetworkException = err => {
   }
 }
 
-export { isNetworkUnavailable, getErrorDataFromNetworkException }
+const isInternetAvailable = async () => {
+  try {
+    const response = await fetch('https://www.google.com')
+    return response.status === 200
+  } catch (err) {
+    return !isNetworkUnavailable(err)
+  }
+}
+
+export { isInternetAvailable, isNetworkUnavailable, getErrorDataFromNetworkException }
