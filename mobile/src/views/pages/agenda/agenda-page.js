@@ -96,7 +96,7 @@ class AgendaPage extends Component {
     const { isLoading, error, agenda, fetchAgenda } = this.props
     const { showingImages } = this.state
 
-    if (isLoading || agenda.length === 0) {
+    if (isLoading) {
       return (
         <ImagePageContainer>
           <View style={ { flex: 1 } }>
@@ -115,7 +115,7 @@ class AgendaPage extends Component {
       )
     }
 
-    const [ talks ] = agenda
+    const [ talks = { days: [] } ] = agenda
     const { days } = talks
 
     return (
@@ -148,9 +148,14 @@ class AgendaPage extends Component {
             </View>
             <ScrollView>
               {
-                days[ this.state.selected ].events.map((event, index) => (
+                days.length !== 0 && days[ this.state.selected ].events.map((event, index) => (
                   <ConferenceEvent key={ index } event={ event }/>
                 ))
+              }
+              {
+                days.length === 0 && (
+                  <Text style={{ color: 'white', textAlign: 'center'}}>{ I18n.t('agenda_page.no_agenda') }</Text>
+                )
               }
             </ScrollView>
           </View>

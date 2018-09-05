@@ -54,6 +54,7 @@
   },
   "agenda_page": {
     "title": "Schedule",
+    "no_agenda": "There are no events planned.",
     "maps": {
       "first_floor": "First Floor",
       "rooftop": "Rooftop",
