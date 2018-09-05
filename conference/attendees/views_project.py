@@ -15,12 +15,7 @@ class Jobs(generics.ListAPIView):
 
     def get_queryset(self):
         filters = {}
-        if self.request.GET.get('defaults') == 'true':
-            professional = self.request.user.conference_user.professional
-            if professional:
-                if professional.role:
-                    filters['role'] = professional.role.pk
-        else:
+        if not self.request.GET.get('defaults') == 'true':
             roles = self.request.GET.getlist('role')
             if roles:
                 filters['role__in'] = roles
@@ -30,13 +25,9 @@ class Jobs(generics.ListAPIView):
 class JobsDefaults(APIView):
 
     def get(self, request, format=None):
-        result = {}
-        professional = request.user.conference_user.professional
-        if not professional:
-            result['role'] = []
-        else:
-            if professional.role:
-                result['role'] = [professional.role.pk]
+        result = {
+            'role': [],
+        }
         return JsonResponse(result)
 
 
@@ -46,24 +37,7 @@ class ListProject(generics.ListAPIView):
     def get_queryset(self):
         filters = {}
         excludes = {}
-        if self.request.GET.get('defaults') == 'true':
-            investor = self.request.user.conference_user.investor
-            if investor:
-                if investor.funding_stages:
-                    filters['funding_stage__in'] = [funding_stage.pk for funding_stage in investor.funding_stages.all()]
-                if investor.giveaways:
-                    giveaways = [giveaway.pk for giveaway in investor.giveaways.all()]
-                    # Projects with giveaway BOTH are always found.
-                    giveaways.append(models.Giveaway.BOTH)
-                    filters['giveaway__in'] = giveaways
-                if investor.product_stages:
-                    filters['product_stage__in'] = [product_stage.pk for product_stage in investor.product_stages.all()]
-                if investor.region and investor.region.pk == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
-                    excludes['legal_country'] = models.Region.COUNTRY_UNITED_STATES
-                    excludes['main_country'] = models.Region.COUNTRY_UNITED_STATES
-                if investor.token_types:
-                    filters['token_type__in'] = [token_type.pk for token_type in investor.token_types.all()]
-        else:
+        if not self.request.GET.get('defaults') == 'true':
             funding_stages = self.request.GET.getlist('funding_stage')
             if funding_stages:
                 filters['funding_stage__in'] = funding_stages
@@ -89,22 +63,14 @@ class ListProject(generics.ListAPIView):
 class ProjectsDefaults(APIView):
 
     def get(self, request, format=None):
-        result = {}
-        investor = request.user.conference_user.investor
-        if not investor:
-            result['funding_stage'] = []
-            result['giveaway'] = []
-            result['product_stage'] = []
-            result['region'] = models.Region.ANYWHERE
-            result['token_type'] = []
-            result['industry'] = []
-        else:
-            result['funding_stage'] = [funding_stage.pk for funding_stage in investor.funding_stages.all()]
-            result['giveaway'] = [giveaway.pk for giveaway in investor.giveaways.all()]
-            result['product_stage'] = [product_stage.pk for product_stage in investor.product_stages.all()]
-            result['region'] = models.Region.ANYWHERE
-            result['token_type'] = [token_type.pk for token_type in investor.token_types.all()]
-            result['industry'] = [industry.pk for industry in investor.industries.all()]
+        result = {
+            'funding_stage': [],
+            'giveaway': [],
+            'product_stage': [],
+            'region': models.Region.ANYWHERE,
+            'token_type': [],
+            'industry': [],
+        }
         return JsonResponse(result)
 
 
