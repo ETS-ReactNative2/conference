@@ -1,7 +1,7 @@
 import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
+import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
@@ -93,98 +93,102 @@ class EmployeeKeywords extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
-          <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-            <StepTitle text={ I18n.t('flow_page.employee.role.about') }/>
-          </View>
-          <Subheader
-            text={ I18n.t('flow_page.employee.skills.title') }
-          />
-          <View style={ { marginLeft: 8, marginRight: 8 } }>
-            <FlowInputValidated
-              floatingLabel
-              value={ this.state.skills }
-              labelText={ I18n.t('flow_page.employee.skills.placeholder') }
-              isError={ !this.validateSkills(this.state.skills) }
-              errorMessage={ I18n.t('flow_page.employee.skills.error') }
-              errorStyleOverride={ errorStyleOverride }
-              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'skills') }/>
-            <FlowInputValidated
-              floatingLabel
-              value={ this.state.traits }
-              labelText={ I18n.t('flow_page.employee.traits.placeholder') }
-              isError={ !this.validateTraits(this.state.traits) }
-              errorMessage={ I18n.t('flow_page.employee.traits.error') }
-              errorStyleOverride={ errorStyleOverride }
-              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'traits') }/>
-            <FlowInputValidated
-              floatingLabel
-              value={ this.state.mostInfo }
-              labelText={ I18n.t('flow_page.employee.most_info.placeholder') }
-              isError={ !this.validateMostInfo(this.state.mostInfo) }
-              errorMessage={ I18n.t('flow_page.employee.most_info.error') }
-              errorStyleOverride={ errorStyleOverride }
-              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'mostInfo') }/>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={96} enabled={Platform.OS === 'ios'}>
+            <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+              <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+                <StepTitle text={ I18n.t('flow_page.employee.role.about') }/>
+              </View>
+              <Subheader
+                text={ I18n.t('flow_page.employee.skills.title') }
+              />
+              <View style={ { marginLeft: 8, marginRight: 8 } }>
+                <FlowInputValidated
+                  floatingLabel
+                  value={ this.state.skills }
+                  labelText={ I18n.t('flow_page.employee.skills.placeholder') }
+                  isError={ !this.validateSkills(this.state.skills) }
+                  errorMessage={ I18n.t('flow_page.employee.skills.error') }
+                  errorStyleOverride={ errorStyleOverride }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'skills') }/>
+                <FlowInputValidated
+                  floatingLabel
+                  value={ this.state.traits }
+                  labelText={ I18n.t('flow_page.employee.traits.placeholder') }
+                  isError={ !this.validateTraits(this.state.traits) }
+                  errorMessage={ I18n.t('flow_page.employee.traits.error') }
+                  errorStyleOverride={ errorStyleOverride }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'traits') }/>
+                <FlowInputValidated
+                  floatingLabel
+                  value={ this.state.mostInfo }
+                  labelText={ I18n.t('flow_page.employee.most_info.placeholder') }
+                  isError={ !this.validateMostInfo(this.state.mostInfo) }
+                  errorMessage={ I18n.t('flow_page.employee.most_info.error') }
+                  errorStyleOverride={ errorStyleOverride }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'mostInfo') }/>
 
-          </View>
-          <Subheader
-            text={ I18n.t('flow_page.employee.condition.title') }
-          />
-          <FlowListSwitch
-            text={ I18n.t('flow_page.employee.relocate') }
-            switchText={ 'Yes' }
-            onToggle={ () => this.handleCheck('relocate') }
-            selected={ this.state.relocate }
-          />
-          <FlowListSwitch
-            text={ I18n.t('flow_page.employee.remote') }
-            switchText={ 'Yes' }
-            onToggle={ () => this.handleCheck('remote') }
-            selected={ this.state.remote }
-          />
-          <CountrySelect
-            onChange={ value => {
-              this.setState({ country: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
-            } }
-            value={ this.state.country }
-            placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder') }
-          />
-          <View style={ { marginLeft: 8, marginRight: 8 } }>
-            <FlowInputValidated
-              floatingLabel
-              value={ this.state.city }
-              labelText={ I18n.t('flow_page.employee.job.city') }
-              isError={ !this.validateJobCity(this.state.city) }
-              errorMessage={ I18n.t('common.errors.incorrect_job_city') }
-              errorStyleOverride={ errorStyleOverride }
-              onChangeText={ (newValue) => this.handleFieldChange(newValue, 'city') }/>
-          </View>
-          <Subheader
-            text={ I18n.t('flow_page.employee.more.title') }
-          />
-          <View style={ { marginLeft: 8, marginRight: 8 } }>
-              <FlowInputValidated
+              </View>
+              <Subheader
+                text={ I18n.t('flow_page.employee.condition.title') }
+              />
+              <FlowListSwitch
+                text={ I18n.t('flow_page.employee.relocate') }
+                switchText={ 'Yes' }
+                onToggle={ () => this.handleCheck('relocate') }
+                selected={ this.state.relocate }
+              />
+              <FlowListSwitch
+                text={ I18n.t('flow_page.employee.remote') }
+                switchText={ 'Yes' }
+                onToggle={ () => this.handleCheck('remote') }
+                selected={ this.state.remote }
+              />
+              <CountrySelect
+                onChange={ value => {
+                  this.setState({ country: { cca2: value.cca2, countryName: value.name, calling: value.callingCode } })
+                } }
+                value={ this.state.country }
+                placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder') }
+              />
+              <View style={ { marginLeft: 8, marginRight: 8 } }>
+                <FlowInputValidated
                   floatingLabel
-                  keyboardType={'numeric'}
-                  value={ this.state.age }
-                  placeholder={ I18n.t('flow_page.employee.age.placeholder') }
-                  labelText={ I18n.t('flow_page.employee.age.placeholder') }
-                  isError={ !this.validateAge(this.state.age) }
-                  errorMessage={ I18n.t('flow_page.employee.age.error') }
-                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'age') } />
-          </View>
-          <View style={ { marginLeft: 8, marginRight: 8 } }>
-              <FlowInputValidated
-                  floatingLabel
-                  keyboardType={'numeric'}
-                  value={ this.state.experience }
-                  placeholder={ I18n.t('flow_page.employee.experience.placeholder') }
-                  labelText={ I18n.t('flow_page.employee.experience.placeholder') }
-                  isError={ !this.validateExperience(this.state.experience) }
-                  errorMessage={ I18n.t('flow_page.employee.experience.error') }
-                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'experience') } />
-          </View>
-        </ScrollView>
+                  value={ this.state.city }
+                  labelText={ I18n.t('flow_page.employee.job.city') }
+                  isError={ !this.validateJobCity(this.state.city) }
+                  errorMessage={ I18n.t('common.errors.incorrect_job_city') }
+                  errorStyleOverride={ errorStyleOverride }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'city') }/>
+              </View>
+              <Subheader
+                text={ I18n.t('flow_page.employee.more.title') }
+              />
+              <View style={ { marginLeft: 8, marginRight: 8 } }>
+                  <FlowInputValidated
+                      floatingLabel
+                      keyboardType={'numeric'}
+                      value={ this.state.age }
+                      placeholder={ I18n.t('flow_page.employee.age.placeholder') }
+                      labelText={ I18n.t('flow_page.employee.age.placeholder') }
+                      isError={ !this.validateAge(this.state.age) }
+                      errorMessage={ I18n.t('flow_page.employee.age.error') }
+                      onChangeText={ (newValue) => this.handleFieldChange(newValue, 'age') } />
+              </View>
+              <View style={ { marginLeft: 8, marginRight: 8 } }>
+                  <FlowInputValidated
+                      floatingLabel
+                      keyboardType={'numeric'}
+                      value={ this.state.experience }
+                      placeholder={ I18n.t('flow_page.employee.experience.placeholder') }
+                      labelText={ I18n.t('flow_page.employee.experience.placeholder') }
+                      isError={ !this.validateExperience(this.state.experience) }
+                      errorMessage={ I18n.t('flow_page.employee.experience.error') }
+                      onChangeText={ (newValue) => this.handleFieldChange(newValue, 'experience') } />
+              </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </View>
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }

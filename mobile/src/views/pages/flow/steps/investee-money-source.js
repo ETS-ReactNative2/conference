@@ -4,7 +4,7 @@ import {
 } from 'native-base'
 import React from 'react'
 import validator from 'validator'
-import { ScrollView } from 'react-native'
+import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
@@ -36,49 +36,51 @@ class InvesteeMoneySource extends React.Component {
     return (
       <FlowContainer>
         <View style={ { flex: 1, justifyContent: 'flex-start' } }>
-          <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
-            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-              <StepTitle text={ I18n.t('flow_page.money.title') }/>
-            </View>
-            <Subheader
-              text={ I18n.t(`flow_page.money.amount`) }
-            />
-            <View style={styles.inputContainer}>
-              <FlowInputValidated
-                        floatingLabel
-                        keyboardType={'numeric'}
-                        value={ this.state.amount }
-                        placeholder={ I18n.t('flow_page.money.amount') }
-                        labelText={ I18n.t('flow_page.money.amount') }
-                        isError={ !this.validateAmount(this.state.amount) }
-                        errorMessage={ I18n.t('common.errors.incorrect_amount') }
-                        onChangeText={ (newValue) => this.handleFieldChange(newValue, 'amount') } />
-            </View>
-            <Subheader
-              text={ I18n.t(`flow_page.money.nationality`) }
-            />
-            { REGIONS.map((region) => {
-              return (
-                <FlowListItem
-                  multiple={ false }
-                  key={ `region-item-${region.slug}` }
-                  text={ I18n.t(`common.regions.${region.slug}`) }
-                  onSelect={ () => this.handleChange(region.index) }
-                  selected={ this.state.nationality === region.index }
-                />
-              )
-            }) }
-            {this.state.nationality.slug === "other" && (
-              <View style={styles.inputContainer}>
-                <FlowInputValidated floatingLabel
-                  value={ this.state.regionOtherText }
-                  labelText={ I18n.t('flow_page.money.other_location_placeholder') }
-                  isError={ this.state.regionOtherText.length > 40 }
-                  errorMessage={ I18n.t('common.errors.incorrect_investor_custom_location') }
-                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'regionOtherText') }/>
+          <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={96} enabled={Platform.OS === 'ios'}>
+            <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+              <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+                <StepTitle text={ I18n.t('flow_page.money.title') }/>
               </View>
-            )}
-          </ScrollView>
+              <Subheader
+                text={ I18n.t(`flow_page.money.amount`) }
+              />
+              <View style={styles.inputContainer}>
+                <FlowInputValidated
+                          floatingLabel
+                          keyboardType={'numeric'}
+                          value={ this.state.amount }
+                          placeholder={ I18n.t('flow_page.money.amount') }
+                          labelText={ I18n.t('flow_page.money.amount') }
+                          isError={ !this.validateAmount(this.state.amount) }
+                          errorMessage={ I18n.t('common.errors.incorrect_amount') }
+                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'amount') } />
+              </View>
+              <Subheader
+                text={ I18n.t(`flow_page.money.nationality`) }
+              />
+              { REGIONS.map((region) => {
+                return (
+                  <FlowListItem
+                    multiple={ false }
+                    key={ `region-item-${region.slug}` }
+                    text={ I18n.t(`common.regions.${region.slug}`) }
+                    onSelect={ () => this.handleChange(region) }
+                    selected={ this.state.nationality.index === region.index }
+                  />
+                )
+              }) }
+              {this.state.nationality.slug === "other" && (
+                <View style={styles.inputContainer}>
+                  <FlowInputValidated floatingLabel
+                    value={ this.state.regionOtherText }
+                    labelText={ I18n.t('flow_page.money.other_location_placeholder') }
+                    isError={ this.state.regionOtherText.length > 40 }
+                    errorMessage={ I18n.t('common.errors.incorrect_investor_custom_location') }
+                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'regionOtherText') }/>
+                </View>
+              )}
+            </ScrollView>
+          </KeyboardAvoidingView>
         </View>
         <View style={ { margin: 8 } }>
           <Text style={ { color: 'white', fontWeight: 'bold', margin: 16, textAlign: 'center' } }
@@ -109,7 +111,7 @@ class InvesteeMoneySource extends React.Component {
   isFormValid = () => {
     const { amount, nationality, regionOtherText } = this.state
     const isAmountValid = this.validateAmount(amount)
-    let isRegionValid = nationality !== 0;
+    let isRegionValid = !(!nationality);
     if (nationality.slug === "other") {
       isRegionValid = regionOtherText.length <= 40
     }
@@ -122,6 +124,7 @@ class InvesteeMoneySource extends React.Component {
   }
 
   handleChange = (newValue) => {
+    console.log('new nation: ', newValue)
     this.setState({
       nationality: newValue
     }, this.validateForm)
