@@ -1,6 +1,6 @@
 {
   "name": "luna-app-conference",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
