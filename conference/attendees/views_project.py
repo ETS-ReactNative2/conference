@@ -524,11 +524,11 @@ class MyProjectMembers(APIView):
         result = {
             'members': [
                 {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name}
-                for member in request.user.conference_user.project.members.all()
+                for member in request.user.conference_user.project.members.all().exclude(user=request.user)
             ],
             'member_requests': [
                 {'id': member.user.id, 'first_name': member.first_name, 'last_name': member.last_name}
-                for member in request.user.conference_user.project.member_requests.all()
+                for member in [request.user.conference_user]
             ]
         }
         return JsonResponse(result, status=status.HTTP_200_OK)

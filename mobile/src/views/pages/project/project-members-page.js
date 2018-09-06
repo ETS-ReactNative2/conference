@@ -44,7 +44,7 @@ class ProjectMembersPage extends Component {
   }
 
   render () {
-    const { projectMembers, error } = this.props
+    const { projectMembers, memberRequests, error } = this.props
     const { email, isChanging } = this.state
 
     return (
@@ -58,6 +58,17 @@ class ProjectMembersPage extends Component {
                 titleStyle={ styles.navigationStyle }
                 rightIconSource={ WhiteLogo }/>
               <List style={ styles.membersList }>
+              {
+                memberRequests.map((member, index) => (
+                  <ListItem thumbnail key={ `project-member-${index}` } style={ styles.memberItem }>
+                    <Left>
+                      <Text style={ styles.Text }>{ member.firstName } { member.lastName }</Text>
+                    </Left>
+                    <Body style={ styles.nonBorder }>
+                    </Body>
+                  </ListItem>
+                ))
+              }
               {
                 projectMembers.map((member, index) => (
                   <ListItem thumbnail key={ `project-member-${index}` } style={ styles.memberItem }>
