@@ -78,7 +78,7 @@ class ProjectPage extends Component {
                     ref={ (c) => { this._carousel = c } }
                     data={ this.projects }
                     renderItem={ this._renderItem }
-                    initialNumToRender={ 30 }
+                    initialNumToRender={ 50 }
                     sliderWidth={ sliderWidth }
                     firstItem={ this.state.currentIndex }
                     itemWidth={ itemWidth }

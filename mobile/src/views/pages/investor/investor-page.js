@@ -86,7 +86,7 @@ class InvestorPage extends Component {
                       ref={ (c) => { this._carousel = c } }
                       data={ this.investors }
                       renderItem={ this._renderItem }
-                      initialNumToRender={30}
+                      initialNumToRender={50}
                       sliderWidth={ sliderWidth }
                       firstItem={ this.state.currentIndex }
                       itemWidth={ itemWidth }

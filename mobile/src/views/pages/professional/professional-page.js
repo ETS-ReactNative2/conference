@@ -77,7 +77,7 @@ class ProfessionalPage extends Component {
                       ref={ (c) => { this._carousel = c } }
                       data={ this.professionals }
                       keyExtractor={item => String(item.id)}
-                      initialNumToRender={30}
+                      initialNumToRender={200}
                       renderItem={ this._renderItem }
                       sliderWidth={ sliderWidth }
                       firstItem={ this.state.currentIndex }
