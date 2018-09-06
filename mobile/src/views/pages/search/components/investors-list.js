@@ -52,7 +52,9 @@ class InvestorsList extends React.Component {
           <List>
             {
               this.props.profiles.length > 0 &&
-              this.props.profiles.map(profile => {
+              this.props.profiles
+                .filter(prof => !prof.hide)
+                .map(profile => {
                 return (
                   <Investor.Medium
                     key={ profile.id }

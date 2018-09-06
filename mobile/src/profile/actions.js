@@ -1,6 +1,7 @@
 import { getErrorDataFromNetworkException } from '../common/utils'
 import * as api from '../api/api'
 import { PROPAGATE_USER_DEFAULTS, PROPAGATE_USER_SEARCH } from '../search/action-types'
+import { fetchDefaults, fetchMatches } from '../search/actions'
 import {
   DEACTIVATE_INVESTOR,
   DEACTIVATE_PROFILE,
@@ -100,6 +101,8 @@ export function activateInvestor () {
   return async dispatch => {
     try {
       await api.reactivateInvestor()
+      dispatch(fetchMatches())
+      dispatch(fetchDefaults())
       dispatch({
         type: REACTIVATE_INVESTOR
       })
@@ -112,6 +115,8 @@ export function activateProfile () {
   return async dispatch => {
     try {
       await api.reactivateProfile()
+      dispatch(fetchMatches())
+      dispatch(fetchDefaults())
       dispatch({
         type: REACTIVATE_PROFILE
       })
@@ -133,11 +138,12 @@ export function leaveProject () {
 }
 
 export function deactivateInvestor () {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       await api.deactivateInvestor()
       dispatch({
-        type: DEACTIVATE_INVESTOR
+        type: DEACTIVATE_INVESTOR,
+        data: getState().profile.investor.user.user
       })
     } catch (err) {
     }
@@ -145,11 +151,12 @@ export function deactivateInvestor () {
 }
 
 export function deactivateProfile () {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       await api.deactivateProfile()
       dispatch({
-        type: DEACTIVATE_PROFILE
+        type: DEACTIVATE_PROFILE,
+        data: getState().profile.professional.user.user
       })
     } catch (err) {
     }

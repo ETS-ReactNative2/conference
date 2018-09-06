@@ -73,7 +73,9 @@ class HomePage extends React.Component {
                 <Subheader text={ I18n.t('common.investors') }/>
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
                   {
-                    investors.map(investor => (
+                    investors
+                      .filter(investor => !investor.hide)
+                      .map(investor => (
                       <Investor.Small
                         key={ investor.id }
                         investor={ investor }
@@ -101,7 +103,9 @@ class HomePage extends React.Component {
                 <Subheader text={ I18n.t('common.attendees') }/>
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 4, marginBottom: 4, marginTop: 8 } } horizontal>
                   {
-                    professionals.map((professional, index) => (
+                    professionals
+                      .filter(prof => !prof.hide)
+                      .map((professional, index) => (
                       <Professional.Small
                         key={ index }
                         professional={ professional }

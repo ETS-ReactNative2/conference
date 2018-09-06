@@ -129,7 +129,6 @@ class FlowPage extends React.Component {
       try {
         await this.props.startLoading()
         await this.props.uploadProfile()
-        await this.props.fetchProfiles()
         this.props.navigation.navigate(PAGES_NAMES.PROFILE_PAGE)
       } catch (err) {
         this.props.showAlertMessage(err)

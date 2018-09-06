@@ -55,7 +55,9 @@ class ProfessionalsList extends React.Component {
           </View>
           <List>
             {
-              this.props.profiles.length > 0 &&
+              this.props.profiles
+                .filter(prof => !prof.hide)
+                .length > 0 &&
               this.props.profiles.map(profile =>
                 <Professional.Medium
                   key={ profile.id }

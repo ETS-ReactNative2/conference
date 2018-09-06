@@ -1,20 +1,32 @@
 import { batchActions } from 'redux-batch-enhancer'
 import I18n from '../../locales/i18n'
 import * as api from '../api/api'
+
+import { getErrorDataFromNetworkException, isNetworkUnavailable } from '../common/utils'
 import { ROLES } from '../enums'
 import { CLEAR as FILTER_CLEAR } from '../filters/action-types'
-
-import { isNetworkUnavailable, getErrorDataFromNetworkException } from '../common/utils'
 import { globalActions } from '../global'
 import { PAGES_NAMES } from '../navigation'
 import { CLEAR as NOTIFICATION_CLEAR } from '../notifications/action-types'
-import { CLEAR as PROFILE_CLEAR } from '../profile/action-types'
-import { deactivateProfile } from '../profile/actions'
+import {
+  CLEAR as PROFILE_CLEAR,
+  PROPAGATE_INVESTOR_PROFILE,
+  PROPAGATE_PROFESSIONAL_PROFILE,
+  PROPAGATE_PROJECT_PROFILE
+} from '../profile/action-types'
+import { deactivateProfile, fetchProfiles } from '../profile/actions'
+import { fetchConferenceSchedule } from '../schedule/actions'
 
-import { CLEAR as SEARCH_CLEAR } from '../search/action-types'
+import {
+  CLEAR as SEARCH_CLEAR,
+  PROPAGATE_INVESTOR_DEFAULTS,
+  PROPAGATE_INVESTOR_SEARCH,
+  PROPAGATE_PROFESSIONAL_DEFAULTS,
+  PROPAGATE_PROFESSIONAL_SEARCH,
+  PROPAGATE_PROJECT_DEFAULTS,
+  PROPAGATE_PROJECT_SEARCH
+} from '../search/action-types'
 import { fetchDefaults } from '../search/actions'
-import { fetchProfiles } from '../profile/actions'
-import { fetchConferenceSchedule} from '../schedule/actions'
 import { navigationService, storageService } from '../services'
 import {
   CLEAR as SIGNUP_CLEAR,
@@ -42,20 +54,22 @@ const signUpError = errorMsg => ({
 })
 
 export const signup = signupData => async dispatch => {
-    try {
-      dispatch(batchActions([ clearSignUpError(), globalActions.hideAlert(), globalActions.setGlobalLoading(I18n.t('signup_page.spinner_text')) ]))
-      await api.signup(signupData)
-      await dispatch(login(signupData.email, signupData.password, PAGES_NAMES.PROFILE_ONBOARDING_PAGE))
-    } catch (err) {
-      const errorData = getErrorDataFromNetworkException(err)
-      if (errorData.isFieldError) {
-        dispatch(signUpError(errorData.errorMessage))
-      } else {
-        dispatch(globalActions.showAlertError(errorData.errorMessage))
-      }
-    } finally {
-      dispatch(globalActions.unsetGlobalLoading())
+  try {
+    dispatch(batchActions([ clearSignUpError(),
+      globalActions.hideAlert(),
+      globalActions.setGlobalLoading(I18n.t('signup_page.spinner_text')) ]))
+    await api.signup(signupData)
+    await dispatch(login(signupData.email, signupData.password, PAGES_NAMES.PROFILE_ONBOARDING_PAGE))
+  } catch (err) {
+    const errorData = getErrorDataFromNetworkException(err)
+    if (errorData.isFieldError) {
+      dispatch(signUpError(errorData.errorMessage))
+    } else {
+      dispatch(globalActions.showAlertError(errorData.errorMessage))
     }
+  } finally {
+    dispatch(globalActions.unsetGlobalLoading())
+  }
 }
 
 export function uploadProfile () {
@@ -104,13 +118,16 @@ export function uploadProfile () {
                 city: job.city
               }
             })
-
             await api.createJob({ jobs: jobsArray })
           }
-          break
+          const {data} = await api.fetchMyProject()
+          dispatch({ type: PROPAGATE_PROJECT_PROFILE, data})
+          dispatch({ type: PROPAGATE_PROJECT_SEARCH, data })
+          dispatch({ type: PROPAGATE_PROJECT_DEFAULTS, data })
+          return data
         }
         case 'investor': {
-          await api.createInvestor({
+          const { data } = await api.createInvestor({
             giveaways: investor.giveaways,
             fundingStages: investor.stages,
             productStages: investor.productStages,
@@ -120,11 +137,14 @@ export function uploadProfile () {
             nationality: investor.nationality ? investor.nationality.cca2 : '',
             regionOtherText: investor.regionOtherText
           })
-          break
+          dispatch({ type: PROPAGATE_INVESTOR_PROFILE, data})
+          dispatch({ type: PROPAGATE_INVESTOR_SEARCH, data })
+          dispatch({ type: PROPAGATE_INVESTOR_DEFAULTS, data })
+          return data
         }
         case 'employee': {
-          if(employee.lookingForJob) {
-            return await api.putMyProfessional({
+          if (employee.lookingForJob) {
+            const { data } = await api.putMyProfessional({
               role: employee.role,
               roleOtherText: employee.roleOtherText,
               skillsText: employee.skills,
@@ -137,8 +157,12 @@ export function uploadProfile () {
               age: employee.age,
               experience: employee.experience
             })
+            dispatch({ type: PROPAGATE_PROFESSIONAL_PROFILE, data})
+            dispatch({ type: PROPAGATE_PROFESSIONAL_SEARCH, data })
+            dispatch({ type: PROPAGATE_PROFESSIONAL_DEFAULTS, data })
+            return data
           } else {
-            if(getState().profile.professional){
+            if (getState().profile.professional) {
               await dispatch(deactivateProfile())
             }
           }
@@ -202,7 +226,9 @@ const loginInSuccess = () => ({
 
 export const login = (username, password, redirectPage) => async dispatch => {
   try {
-    dispatch(batchActions([ clearLoginError(), globalActions.hideAlert(), globalActions.setGlobalLoading(I18n.t('login_page.spinner_text')) ]))
+    dispatch(batchActions([ clearLoginError(),
+      globalActions.hideAlert(),
+      globalActions.setGlobalLoading(I18n.t('login_page.spinner_text')) ]))
     const response = await api.login(username, password)
     const token = response.data.token
     await storageService.removeItem(TOKEN_NAME)
@@ -232,14 +258,14 @@ export const login = (username, password, redirectPage) => async dispatch => {
   }
 }
 
-export function saveProfileOnboardingInfo(profileInfo, redirectPage) {
+export function saveProfileOnboardingInfo (profileInfo, redirectPage) {
   return async (dispatch) => {
     try {
       if (profileInfo.avatarSource && profileInfo.avatarSource.uri) {
         await api.uploadImage(profileInfo.avatarSource)
       }
       await api.createOrUpdateConferenceUser(profileInfo)
-      dispatch(batchActions([fetchProfiles(), saveProfileInfo(profileInfo)]))
+      dispatch(batchActions([ fetchProfiles(), saveProfileInfo(profileInfo) ]))
       navigationService.navigate(redirectPage)
     } catch (err) {
       const errorData = getErrorDataFromNetworkException(err)

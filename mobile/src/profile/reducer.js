@@ -11,7 +11,11 @@ import {
   UPDATE_BASIC,
   LOAD_PROJECT_MEMBERS,
   LOAD_PROJECT_MEMBERS_SUCCESS,
-  LOAD_PROJECT_MEMBERS_ERROR, PROPAGATE_USER_PROFILE
+  LOAD_PROJECT_MEMBERS_ERROR,
+  PROPAGATE_USER_PROFILE,
+  PROPAGATE_INVESTOR_PROFILE,
+  PROPAGATE_PROFESSIONAL_PROFILE,
+  PROPAGATE_PROJECT_PROFILE
 } from './action-types'
 
 const initialState = {
@@ -147,6 +151,30 @@ export function profileReducer (state = initialState, action) {
           memberRequests: state.projectMembers.memberRequests,
           loading: false,
           error: true
+        }
+      }
+    case PROPAGATE_INVESTOR_PROFILE:
+      return {
+        ...state,
+        investor: {
+          ...state.investor,
+          ...action.data
+        }
+      }
+    case PROPAGATE_PROFESSIONAL_PROFILE:
+      return {
+        ...state,
+        professional: {
+          ...state.professional,
+          ...action.data
+        }
+      }
+    case PROPAGATE_PROJECT_PROFILE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          ...action.data
         }
       }
     case PROPAGATE_USER_PROFILE:
