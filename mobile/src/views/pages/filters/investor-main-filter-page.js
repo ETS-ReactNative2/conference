@@ -32,7 +32,7 @@ class InvestorMainFilter extends React.Component {
       { label: 'FUNDING STAGE', items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
       { label: 'INVESTOR BUYS', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
       { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
-      { label: 'REGION', items: REGIONS_FILTER, key: 'regions', stateKey: 'region' }
+      { label: 'NATIONALITY', items: REGIONS_FILTER, key: 'regions', stateKey: 'region' }
     ]
 
     return (

@@ -607,7 +607,7 @@
       },
       "regions": {
         "title": "Search investors with these nationalities:",
-        "header": "Regions"
+        "header": "Nationality"
       },
       "industries": {
         "title": "Search investors looking for:",
@@ -655,7 +655,7 @@
       },
       "regions": {
         "title": "Search projects with these countries:",
-        "header": "Regions"
+        "header": "Country"
       }
     },
     "tab_label_investor": "Investors",
