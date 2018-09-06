@@ -46,6 +46,13 @@ class FlowPage extends React.Component {
     )
   }
 
+  componentWillUnmount() {
+    BackHandler.removeEventListener(
+      'hardwareBackPress',
+      this.onBackButtonPressAndroid
+    )
+  }
+
   componentDidMount () {
     this.props.navigation.setParams({
       onHeaderBackButton: this.onHeaderBackButton,
