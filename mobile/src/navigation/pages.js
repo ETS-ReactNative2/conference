@@ -120,7 +120,7 @@ const DrawerStack = createBottomTabNavigator({
       navigationOptions: ({ navigation }) => ({
         title: I18n.t('navigator.search'),
         tabBarIcon: ({ focused }) => {
-          return <Image style={ { width: 24, height: 21 } } source={ focused ? GlassRed : GlassBlack }/>
+          return <Image style={ { width: 22, height: 22 } } source={ focused ? GlassRed : GlassBlack }/>
         }
       })
     },
