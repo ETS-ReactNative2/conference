@@ -265,24 +265,13 @@ class XL extends React.Component {
     return false
   }
 
-  handleLinkedinClick = () => {
-    Linking.canOpenURL(this.props.professional.linkedin)
+  handleUrlClick = (prefix, link) => {
+    Linking.canOpenURL(prefix + link)
       .then(supported => {
         if (supported) {
-          Linking.openURL(this.props.professional.linkedin)
+          Linking.openURL(prefix + link)
         } else {
-          console.log('Don\'t know how to open URI: ' + this.props.professional.user.linkedin)
-        }
-      })
-  }
-
-  handleTelegramClick = () => {
-    Linking.canOpenURL(this.props.professional.user.telegram)
-      .then(supported => {
-        if (supported) {
-          Linking.openURL(this.props.professional.user.telegram)
-        } else {
-          console.log('Don\'t know how to open URI: ' + this.props.professional.user.telegram)
+          console.log('Don\'t know how to open URI: ' + prefix + link)
         }
       })
   }
@@ -387,7 +376,9 @@ class XL extends React.Component {
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { professional.user.telegram ? (
-                <TouchableHighlight onPress={ this.handleTelegramClick } underlayColor='transparent'>
+                <TouchableHighlight
+                  onPress={ () => this.handleUrlClick('http://www.telegram.com/', professional.user.telegram) }
+                  underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' } name={ 'telegram' }/>
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.telegram') }</Text>
@@ -399,7 +390,9 @@ class XL extends React.Component {
             <View style={ [ xl.boxContainer, styles.center ] }>
               <View style={ [ xl.boxContainer, styles.center ] }>
                 { professional.user.linkedin ? (
-                  <TouchableHighlight onPress={ this.handleLinkedinClick } underlayColor='transparent'>
+                  <TouchableHighlight
+                    onPress={ () => this.handleUrlClick('https://www.linkedin.com/in/', professional.user.linkedin) }
+                    underlayColor='transparent'>
                     <View>
                       <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
                             name={ 'linkedin' }/>

@@ -66,7 +66,7 @@ const styles = EStyleSheet.create({
     backgroundColor: '#CE2860'
   },
   text: {
-    fontFamily: "Montserrat-Light",
+    fontFamily: "Montserrat-ExtraLight",
     fontSize: 14,
     textAlign: 'left',
     color: 'white',

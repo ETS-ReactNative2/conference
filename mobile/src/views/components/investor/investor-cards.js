@@ -279,17 +279,6 @@ class XL extends React.Component {
     return false
   }
 
-  handleLinkedinClick = () => {
-    Linking.canOpenURL(this.props.investor.user.linkedin)
-      .then(supported => {
-        if (supported) {
-          Linking.openURL(this.props.investor.user.linkedin)
-        } else {
-          console.log('Don\'t know how to open URI: ' + this.props.investor.user.linkedin)
-        }
-      })
-  }
-
   render () {
     const { investor, onMessageClick, showMessage } = this.props
 

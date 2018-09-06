@@ -256,13 +256,13 @@ class XL extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.JOBS_PAGE, { project })
   }
 
-  handleLink = (link) => {
-    Linking.canOpenURL(link)
+  handleLink = (prefix, link) => {
+    Linking.canOpenURL(prefix + link)
       .then(supported => {
         if (supported) {
-          Linking.openURL(link)
+          Linking.openURL(prefix + link)
         } else {
-          console.log('Don\'t know how to open URI: ' + link)
+          console.log('Don\'t know how to open URI: ' + prefix + link)
         }
       })
   }
@@ -409,7 +409,7 @@ class XL extends React.Component {
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.telegram ? (
-                <TouchableHighlight onPress={ () => this.handleLink(project.telegram) } underlayColor='transparent'>
+                <TouchableHighlight onPress={ () => this.handleLink('http://www.telegram.com', project.telegram) } underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
                           name={ 'telegram' }/>
@@ -423,7 +423,7 @@ class XL extends React.Component {
           <View style={ styles.inline }>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.github ? (
-                <TouchableHighlight onPress={ () => this.handleLink(project.github) } underlayColor='transparent'>
+                <TouchableHighlight onPress={ () => this.handleLink('https://github.com/', project.github) } underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
                           name={ 'github' }/>
@@ -434,12 +434,12 @@ class XL extends React.Component {
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
-              { project.linkedin ? (
-                <TouchableHighlight onPress={ () => this.handleLink(project.linkedin) } underlayColor='transparent'>
+              { project.twitter ? (
+                <TouchableHighlight onPress={ () => this.handleLink('https://twitter.com/', project.twitter) } underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
-                          name={ 'linkedin' }/>
-                    <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.linkedin') }</Text>
+                          name={ 'twitter' }/>
+                    <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.twitter') }</Text>
                   </View>
                 </TouchableHighlight>
               ) : null }

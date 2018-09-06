@@ -110,6 +110,10 @@
       "incorrect_job_min_salary": "Value should be greater or equal to 0",
       "incorrect_password": "Password must be at least 8 characters long",
       "incorrect_phone_number": "Please enter correct phone number",
+      "incorrect_github_user_name": "Please just enter your GitHub username",
+      "incorrect_twitter_user_name": "Please just enter your Twitter username",
+      "incorrect_telegram_user_name": "Please just enter your Telegram username",
+      "incorrect_linkedin_user_name": "Please just enter your LinkedIn username",
       "incorrect_profile_first_name": "Given name must be at least 3 characters long",
       "incorrect_profile_last_name": "Family name must be at least 3 characters long",
       "incorrect_project_description": "Plesae enter project description",
@@ -121,6 +125,7 @@
       "server_error": "We have some issues, please try again or contact us"
     },
     "facebook": "Facebook",
+    "facebook_url": "https://www.facebook.com/",
     "flow_pages": {
       "titles": {
         "industries": "Industries"
@@ -132,7 +137,8 @@
       "pre": "Pre ICO",
       "seed": "Seed"
     },
-    "github": "Github",
+    "github": "GitHub",
+    "github_url": "https://github.com/",
     "giveaway": {
       "both": "Both",
       "equity": "Equity",
@@ -200,7 +206,8 @@
       "local": "Local",
       "remote": "Remote"
     },
-    "linkedin": "Linkedin",
+    "linkedin": "LinkedIn",
+    "linkedin_url": "https://www.linkedin.com/in/",
     "months": {
       "0": "January",
       "1": "February",
@@ -274,6 +281,7 @@
       "sales": "Sales job listing"
     },
     "telegram": "Telegram",
+    "telegram_url": "http://www.telegram.com/",
     "token_types": {
       "app_tokens": "App Token",
       "header": "Token type",
@@ -281,6 +289,7 @@
       "security_tokens": "Security Token"
     },
     "twitter": "Twitter",
+    "twitter_url": "https://twitter.com/",
     "yes": "Yes"
   },
   "drawer": {

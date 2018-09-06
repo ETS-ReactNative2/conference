@@ -2,15 +2,19 @@ import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
+import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
 import { FlowContainer } from '../../../design/container'
 import FlowInput from '../../../design/flow-inputs'
+import FlowInputValidated from '../../../design/flow-input-validated'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
 import { InvesteeProjectLocation } from './index'
 import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
+
+const usernameValidator = /^[a-z0-9A-Z\._-]{3,}$/
 
 class InvesteeLinks extends React.Component {
 
@@ -49,23 +53,26 @@ class InvesteeLinks extends React.Component {
                   status={ this.state.whitepaper.length > 0 ? 'ok' : 'regular' }
                   onChangeText={ text => this.handleFieldChange(text, 'whitepaper') }
                   value={ this.state.whitepaper }/>
-                <FlowInput
+                <FlowInputValidated
                   floatingLabel
-                  labelText={I18n.t('flow_page.links.telegram')}
-                  status={ this.state.telegram.length > 0 ? 'ok' : 'regular' }
+                  labelText={I18n.t('common.telegram_url')}
                   onChangeText={ text => this.handleFieldChange(text, 'telegram') }
+                  isError={ !this.validateTelegramUserName() }
+                  errorMessage={ I18n.t('common.errors.incorrect_telegram_user_name') }
                   value={ this.state.telegram }/>
-                <FlowInput
+                <FlowInputValidated
                   floatingLabel
-                  labelText={I18n.t('common.twitter')}
-                  status={ this.state.twitter.length > 0 ? 'ok' : 'regular' }
+                  labelText={I18n.t('common.twitter_url')}
                   onChangeText={ text => this.handleFieldChange(text, 'twitter') }
+                  isError={ !this.validateTwitterUserName() }
+                  errorMessage={ I18n.t('common.errors.incorrect_twitter_user_name') }
                   value={ this.state.twitter }/>
-                <FlowInput
+                <FlowInputValidated
                   floatingLabel
-                  labelText={I18n.t('common.github')}
-                  status={ this.state.github.length > 0 ? 'ok' : 'regular' }
+                  labelText={I18n.t('common.github_url')}
                   onChangeText={ text => this.handleFieldChange(text, 'github') }
+                  isError={ !this.validateGithubUserName() }
+                  errorMessage={ I18n.t('common.errors.incorrect_github_user_name') }
                   value={ this.state.github }/>
                 <FlowInput
                   floatingLabel
@@ -89,7 +96,30 @@ class InvesteeLinks extends React.Component {
   }
 
   isFormValid = () => {
-    return true
+    return this.validateGithubUserName()
+           && this.validateTelegramUserName()
+           && this.validateTwitterUserName()
+  }
+
+  validateTwitterUserName = () => {
+    const { twitter } = this.state
+    return !twitter
+      || !twitter.length
+      || usernameValidator.test(twitter)
+  }
+
+  validateTelegramUserName = () => {
+    const { telegram } = this.state
+    return !telegram
+      || !telegram.length
+      || usernameValidator.test(telegram)
+  }
+
+  validateGithubUserName = () => {
+    const { github } = this.state
+    return !github
+      || !github.length
+      || usernameValidator.test(github)
   }
 
   validateForm = () => {
