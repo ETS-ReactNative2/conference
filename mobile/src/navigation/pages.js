@@ -12,6 +12,8 @@ import RectangleRed from '../assets/icons/square_red.png'
 import TriangleBlack from '../assets/icons/triangle_white.png'
 import TriangleRed from '../assets/icons/triangle_red.png'
 import { navigationService } from '../services'
+import { globalActions } from '../global'
+import Alert from '../views/components/alert/alert'
 import LoadingPage from '../views/components/loading-page/loading-page'
 import MessagePage from '../views/components/message-page/message-page'
 import AgendaPage from '../views/pages/agenda/agenda-page'
@@ -118,7 +120,7 @@ const DrawerStack = createBottomTabNavigator({
       navigationOptions: ({ navigation }) => ({
         title: I18n.t('navigator.search'),
         tabBarIcon: ({ focused }) => {
-          return <Image style={ { width: 24, height: 21 } } source={ focused ? GlassRed : GlassBlack }/>
+          return <Image style={ { width: 22, height: 22 } } source={ focused ? GlassRed : GlassBlack }/>
         }
       })
     },
@@ -348,12 +350,15 @@ const AppStackNavigator = createStackNavigator({
   }
 })
 
-const AppStackNavigatorWithSpinner = ({ isLoading, message, showMessage }) => {
+const AppStackNavigatorWithSpinner = ({ isLoading, message, showMessage, showAlert, alertType, alertMessage, hideAlert }) => {
   return (
     <View style={ { flex: 1 } } forceInset={ { top: 'always' } }>
       <AppStackNavigator ref={ navigatorRef => {
         navigationService.setTopLevelNavigator(navigatorRef)
       } } styles={ { position: 'absolute' } }/>
+      {showAlert === true && (
+        <Alert message={alertMessage} type={alertType} onButtonClick={hideAlert} />
+      )}
       <LoadingPage isLoading={ isLoading } message={ message }/>
       <MessagePage showMessage={ showMessage }/>
     </View>
@@ -364,11 +369,20 @@ const mapStateToProps = state => {
   return {
     isLoading: state.global.isLoading,
     message: state.global.loadingMessage,
-    showMessage: state.global.showMessage
+    showMessage: state.global.showMessage,
+    showAlert: state.global.showAlert,
+    alertType: state.global.alertType,
+    alertMessage: state.global.alertMessage
   }
 }
 
-const ConnectedAppStackNavigator = connect(mapStateToProps, null)(AppStackNavigatorWithSpinner)
+const mapDispatchToProps = dispatch => {
+  return {
+    hideAlert: () => dispatch(globalActions.hideAlert())
+  }
+}
+
+const ConnectedAppStackNavigator = connect(mapStateToProps, mapDispatchToProps)(AppStackNavigatorWithSpinner)
 
 export { PAGES_NAMES, ConnectedAppStackNavigator }
 

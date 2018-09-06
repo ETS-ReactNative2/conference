@@ -13,7 +13,6 @@ import InputValidated from '../../design/input-validated'
 import BlackLogo from '../../../assets/logos/logo-black.png'
 import { BlackButton } from '../../design/buttons'
 import { PAGES_NAMES } from '../../../navigation/pages'
-import Alert from '../../components/alert/alert'
 
 class LoginPage extends React.Component {
   constructor (props) {
@@ -47,7 +46,7 @@ class LoginPage extends React.Component {
   };
 
   handleFieldChange = (newValue, name) => {
-    if (this.props.isCredentialsError || this.props.isServerError) {
+    if (this.props.isError) {
       this.props.clearErrors();
     }
     this.setState({
@@ -56,20 +55,17 @@ class LoginPage extends React.Component {
   };
 
   render() {
-    const isEmailFieldError = !this.validateEmail(this.state.email) || this.props.isCredentialsError
-    const isPasswordFieldError = !this.validatePassword(this.state.password) || this.props.isCredentialsError
+    const isEmailFieldError = !this.validateEmail(this.state.email) || this.props.isError
+    const isPasswordFieldError = !this.validatePassword(this.state.password) || this.props.isError
     const invalidCredentialsErrorMessage = I18n.t('common.errors.invalid_credentials')
-    const emailFieldErrorMessage = this.props.isCredentialsError ? invalidCredentialsErrorMessage : I18n.t('common.errors.incorrect_email')
-    const passwordFieldErrorMessage = this.props.isCredentialsError ? invalidCredentialsErrorMessage : I18n.t('common.errors.incorrect_password')
+    const emailFieldErrorMessage = this.props.isError ? invalidCredentialsErrorMessage : I18n.t('common.errors.incorrect_email')
+    const passwordFieldErrorMessage = this.props.isError ? invalidCredentialsErrorMessage : I18n.t('common.errors.incorrect_password')
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}} forceInset={{top: 'always'}}>
         <Container>
           <Content style={styles.mainContainer}>
             <Header title={ I18n.t('login_page.title') } rightIconSource={BlackLogo} />
             <View style={styles.contentContainer}>
-              {this.props.isServerError && (
-                <Alert color="error" message={this.props.errorMessage} />
-              )}
               <View style={styles.inputContainer}>
                 <InputValidated value={ this.state.email }
                         isError={isEmailFieldError}
@@ -173,8 +169,7 @@ const styles = EStyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    isServerError: state.signUp.auth.login.isServerError,
-    isCredentialsError: state.signUp.auth.login.isCredentialsError,
+    isError: state.signUp.auth.login.isError,
     errorMessage: state.signUp.auth.login.errorMessage
   }
 }

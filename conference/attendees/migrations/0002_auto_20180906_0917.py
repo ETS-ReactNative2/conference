@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('attendees', '0010_skill_trait'),
+        ('attendees', '0001_squashed'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='project',
-            name='telegram',
-            field=models.CharField(default='', max_length=32, blank=True),
+            model_name='conferenceuser',
+            name='linkedin',
+            field=models.CharField(default='', max_length=100, blank=True),
         ),
     ]

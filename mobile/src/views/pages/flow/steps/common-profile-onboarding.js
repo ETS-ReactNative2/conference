@@ -1,6 +1,6 @@
 import { Form, Text, Thumbnail } from 'native-base'
 import React from 'react'
-import { ScrollView, TouchableHighlight, View } from 'react-native'
+import { ScrollView, TouchableHighlight, View, KeyboardAvoidingView, Platform } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import ImagePicker from 'react-native-image-picker'
 import { connect } from 'react-redux'
@@ -11,7 +11,7 @@ import WhiteLogo from '../../../../assets/logos/logo-white.png'
 import { PAGES_NAMES } from '../../../../navigation/index'
 import { profileActions } from '../../../../profile'
 import { signUpActions } from '../../../../signup'
-import Alert from '../../../components/alert/alert'
+import { globalActions } from '../../../../global'
 import { NavigationHeader } from '../../../components/header/header'
 import HeaderSkip from '../../../components/header/header-skip'
 import { BlueButton, PrimaryButton } from '../../../design/buttons'
@@ -29,6 +29,9 @@ const options = {
   }
 }
 
+const linkedInUsernameValidator = /^[a-zA-Z0-9-]{3,100}$/
+const telegramUsernameValidator = /^[a-zA-Z0-9_]{5,32}$/
+
 class CommonProfileOnboarding extends React.Component {
 
   constructor (props) {
@@ -36,10 +39,7 @@ class CommonProfileOnboarding extends React.Component {
     this.state = {
       firstName: this.props.firstName,
       lastName: this.props.lastName,
-      title: this.props.title,
       company: this.props.company,
-      twitter: this.props.twitter,
-      facebook: this.props.facebook,
       telegram: this.props.telegram,
       linkedin: this.props.linkedin,
       avatarSource: this.props.imageUrl
@@ -55,8 +55,25 @@ class CommonProfileOnboarding extends React.Component {
     return validator.isLength(this.state.lastName, { min: 3, max: undefined })
   }
 
+  validateLinkedInUserName = () => {
+    const { linkedin } = this.state
+    return !linkedin
+      || !linkedin.length
+      || linkedInUsernameValidator.test(this.state.linkedin)
+  }
+
+  validateTelegramUserName = () => {
+    const { telegram } = this.state
+    return !telegram
+      || !telegram.length
+      || telegramUsernameValidator.test(this.state.telegram)
+  }
+
   isFormValid = () => {
-    const isNameCorrect = this.validateProfileFirstName() && this.validateProfileLastName()
+    const isNameCorrect = this.validateProfileFirstName()
+                          && this.validateProfileLastName()
+                          && this.validateLinkedInUserName()
+                          && this.validateTelegramUserName()
     const isFormValid = isNameCorrect
     return isFormValid
   }
@@ -66,27 +83,30 @@ class CommonProfileOnboarding extends React.Component {
     this.setState({ isFormValid })
   }
 
-  handleSubmit = () => {
-    this.props.saveProfileInfo({
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      title: this.state.title,
-      company: this.state.company,
-      twitter: this.state.twitter,
-      facebook: this.state.facebook,
-      telegram: this.state.telegram,
-      linkedin: this.state.linkedin,
-      avatarSource: this.state.avatarSource
-    }, PAGES_NAMES.HOME_PAGE)
-    if (this.props.edit) {
-      this.props.navigation.goBack()
+  handleSubmit = async () => {
+    try {
+      await this.props.startLoading()
+      await this.props.saveProfileInfo({
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        company: this.state.company,
+        telegram: this.state.telegram,
+        linkedin: this.state.linkedin,
+        avatarSource: this.state.avatarSource
+      })
+      if (this.props.edit) {
+        this.props.navigation.goBack()
+      } else {
+        this.props.navigation.navigate(PAGES_NAMES.HOME_PAGE)
+      }
+    } catch (err) {
+      this.props.showAlertMessage(err)
+    } finally {
+      this.props.finishLoading()
     }
   }
 
   handleFieldChange = (newValue, name) => {
-    if (this.props.isError) {
-      this.props.clearErrors()
-    }
     this.setState({
       [ name ]: newValue
     }, this.validateForm)
@@ -100,10 +120,6 @@ class CommonProfileOnboarding extends React.Component {
       }
       else {
         let source = { uri: response.uri, data: response.data }
-
-        // You can also display the image using data:
-        // source = { uri: 'data:image/jpeg;base64,' + response.data }
-
         this.setState({
           avatarSource: source
         })
@@ -116,135 +132,118 @@ class CommonProfileOnboarding extends React.Component {
     return (
       <ImagePageContainer>
         <View style={ styles.content }>
-          <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
-            {
-              edit && (
-                <NavigationHeader title={ I18n.t('flow_page.common.profile_onboarding.edit_header') }
-                                  rightIconSource={ WhiteLogo }
-                                  titleStyle={ [ styles.headerTitle, { marginTop: 12 } ] }
-                                  onBack={ () => { navigation.goBack() } }/>
-
-              )
-            }
-            { !edit && (
-              <HeaderSkip title={ I18n.t(edit ? 'common.back' : 'flow_page.common.profile_onboarding.header') }
-                          rightIconSource={ WhiteLogo }
-                          titleStyle={ styles.headerTitle }
-                          onSkipClick={ () => { navigation.navigate(PAGES_NAMES.HOME_PAGE) } }/>
-            )
-            }
-            <View style={ styles.pageTitleContainer }>
-              <StepTitle text={ I18n.t('flow_page.common.profile_onboarding.title') }
-                         textStyle={ styles.pageTitle }/>
-            </View>
-            { this.props.isError && (
-              <Alert color="error" message={ this.props.errorMessage }/>
-            ) }
-            <View style={ { flex: 1 } }>
-              <Form>
-                <Subheader text={ 'Avatar' }/>
-                <View style={ { margin: 8 } }>
-                  {
-                    !this.state.avatarSource.uri ? (
-                      <BlueButton text={ 'Choose avatar' } onPress={ this.handleGetImage }/>) : null
-                  }
-                  { this.state.avatarSource.uri ? (
-                    <View style={ { width: '100%', justifyContent: 'center', alignContent: 'center', marginTop: 8 } }>
-                      <TouchableHighlight onPress={ this.handleGetImage } underlayColor='transparent'>
-                        <Thumbnail large={ true } square={ true } style={ { width: undefined, height: 300 } }
-                                   source={ this.state.avatarSource }/>
-                      </TouchableHighlight>
-                      <Text style={ { color: 'white', textAlign: 'center', marginTop: 8 } }>Tap image above to
-                        change</Text>
-                    </View>
-                  ) : null }
-                </View>
-                <Subheader text={ 'Basic info' }/>
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInputValidated
-                    floatingLabel={ true }
-                    value={ this.state.firstName }
-                    placeholder={ I18n.t('flow_page.common.profile_onboarding.first_name') }
-                    labelText={ I18n.t('flow_page.common.profile_onboarding.first_name') }
-                    isError={ !this.validateProfileFirstName(this.state.firstName) }
-                    errorMessage={ I18n.t('common.errors.incorrect_profile_first_name') }
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'firstName') }/>
-                </View>
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInputValidated
-                    floatingLabel={ true }
-                    value={ this.state.lastName }
-                    placeholder={ I18n.t('flow_page.common.profile_onboarding.last_name') }
-                    labelText={ I18n.t('flow_page.common.profile_onboarding.last_name') }
-                    isError={ !this.validateProfileLastName(this.state.lastName) }
-                    errorMessage={ I18n.t('common.errors.incorrect_profile_last_name') }
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'lastName') }/>
-                </View>
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInput
-                    floatingLabel={ true }
-                    placeholder={ 'Job title' }
-                    labelText={ I18n.t('flow_page.common.profile_onboarding.titleField') }
-                    value={ this.state.title }
-                    status='regular'
-                    onChangeText={ text => this.handleFieldChange(text, 'title') }/>
-                </View>
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInput
-                    floatingLabel={ true }
-                    placeholder={ 'Company' }
-                    labelText={ I18n.t('flow_page.common.profile_onboarding.company') }
-                    value={ this.state.company }
-                    status='regular'
-                    onChangeText={ text => this.handleFieldChange(text, 'company') }/>
-                </View>
-
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInput
-                    floatingLabel={ true }
-                    status='regular'
-                    value={ this.state.twitter }
-                    placeholder=''
-                    labelText={ I18n.t('common.personal_twitter') }
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'twitter') }/>
-                </View>
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInput
-                    floatingLabel={ true }
-                    status='regular'
-                    value={ this.state.facebook }
-                    placeholder=''
-                    labelText={ I18n.t('common.personal_facebook') }
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'facebook') }/>
-                </View>
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInput
-                    floatingLabel={ true }
-                    status='regular'
-                    value={ this.state.telegram }
-                    placeholder=''
-                    labelText={ I18n.t('common.personal_telegram') }
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'telegram') }/>
-                </View>
-                <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
-                  <FlowInput
-                    floatingLabel={ true }
-                    status='regular'
-                    value={ this.state.linkedin }
-                    placeholder=''
-                    labelText={ I18n.t('common.personal_linkedin') }
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'linkedin') }/>
-                </View>
-              </Form>
-            </View>
-          </ScrollView>
-          <View style={ { margin: 8 } }>
-            <PrimaryButton
-              text={ I18n.t('common.next') }
-              disabled={ !this.state.isFormValid }
-              onPress={ this.handleSubmit }
-            />
-          </View>
+          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={64} enabled={Platform.OS === "ios"}>
+            <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+              {
+                edit && (
+                  <NavigationHeader
+                    title={ I18n.t('flow_page.common.profile_onboarding.edit_header') }
+                    rightIconSource={ WhiteLogo }
+                    titleStyle={ [ styles.headerTitle, { marginTop: 12 } ] }
+                    onBack={ () => { navigation.goBack() } }
+                  />
+                )
+              }
+              { !edit && (
+                  <HeaderSkip
+                    title={ I18n.t(edit ? 'common.back' : 'flow_page.common.profile_onboarding.header') }
+                    rightIconSource={ WhiteLogo }
+                    titleStyle={ styles.headerTitle }
+                    onSkipClick={ () => { navigation.navigate(PAGES_NAMES.HOME_PAGE) } }
+                  />
+                )
+              }
+              <View style={ styles.pageTitleContainer }>
+                <StepTitle
+                  text={ I18n.t('flow_page.common.profile_onboarding.title') }
+                  textStyle={ styles.pageTitle }
+                />
+              </View>
+              { this.props.isError && (
+                <Alert color="error" message={ this.props.errorMessage }/>
+              ) }
+              <View style={ { flex: 1 } }>
+                <Form>
+                  <Subheader text={ 'Avatar' }/>
+                  <View style={ { margin: 8 } }>
+                    {
+                      !this.state.avatarSource.uri ? (
+                        <BlueButton text={ 'Choose avatar' } onPress={ this.handleGetImage }/>) : null
+                    }
+                    { this.state.avatarSource.uri ? (
+                      <View style={ { width: '100%', justifyContent: 'center', alignContent: 'center', marginTop: 8 } }>
+                        <TouchableHighlight onPress={ this.handleGetImage } underlayColor='transparent'>
+                          <Thumbnail large={ true } square={ true } style={ { width: undefined, height: 300 } }
+                                    source={ { uri: `${this.state.avatarSource.uri}?w=500&h=500` }}/>
+                        </TouchableHighlight>
+                        <Text style={ { color: 'white', textAlign: 'center', marginTop: 8 } }>Tap image above to change</Text>
+                      </View>
+                    ) : null }
+                  </View>
+                  <Subheader text={ 'Basic info' }/>
+                  <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                    <FlowInputValidated
+                      floatingLabel={ true }
+                      value={ this.state.firstName }
+                      placeholder={ I18n.t('flow_page.common.profile_onboarding.first_name') }
+                      labelText={ I18n.t('flow_page.common.profile_onboarding.first_name') }
+                      isError={ !this.validateProfileFirstName(this.state.firstName) }
+                      errorMessage={ I18n.t('common.errors.incorrect_profile_first_name') }
+                      onChangeText={ (newValue) => this.handleFieldChange(newValue, 'firstName') }
+                    />
+                  </View>
+                  <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                    <FlowInputValidated
+                      floatingLabel={ true }
+                      value={ this.state.lastName }
+                      placeholder={ I18n.t('flow_page.common.profile_onboarding.last_name') }
+                      labelText={ I18n.t('flow_page.common.profile_onboarding.last_name') }
+                      isError={ !this.validateProfileLastName(this.state.lastName) }
+                      errorMessage={ I18n.t('common.errors.incorrect_profile_last_name') }
+                      onChangeText={ (newValue) => this.handleFieldChange(newValue, 'lastName') }/>
+                  </View>
+                  <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                    <FlowInput
+                      floatingLabel={ true }
+                      placeholder={ 'Company' }
+                      labelText={ I18n.t('flow_page.common.profile_onboarding.company') }
+                      value={ this.state.company }
+                      status='regular'
+                      onChangeText={ text => this.handleFieldChange(text, 'company') }/>
+                  </View>
+                  <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                    <FlowInputValidated
+                      floatingLabel={ true }
+                      status='regular'
+                      value={ this.state.telegram }
+                      placeholder=''
+                      labelText={ I18n.t('common.telegram_url') }
+                      isError={!this.validateTelegramUserName(this.state.telegram)}
+                      errorMessage={I18n.t('common.errors.incorrect_telegram_user_name')}
+                      onChangeText={ (newValue) => this.handleFieldChange(newValue, 'telegram') }/>
+                  </View>
+                  <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
+                    <FlowInputValidated
+                      floatingLabel={ true }
+                      status='regular'
+                      value={ this.state.linkedin }
+                      placeholder=''
+                      labelText={ I18n.t('common.linkedin_url') }
+                      isError={!this.validateLinkedInUserName(this.state.linkedin)}
+                      errorMessage={I18n.t('common.errors.incorrect_linkedin_user_name')}
+                      onChangeText={ (newValue) => this.handleFieldChange(newValue, 'linkedin') }/>
+                  </View>
+                </Form>
+              </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </View>
+        <View style={ { margin: 8 } }>
+          <PrimaryButton
+            text={ I18n.t('common.next') }
+            disabled={ !this.state.isFormValid }
+            onPress={ this.handleSubmit }
+          />
         </View>
       </ImagePageContainer>
     )
@@ -284,24 +283,20 @@ const mapStateToProps = state => {
   return {
     firstName: state.signUp.profile.firstName,
     lastName: state.signUp.profile.lastName,
-    title: state.signUp.profile.title,
     company: state.signUp.profile.company,
-    twitter: state.signUp.profile.twitter,
-    facebook: state.signUp.profile.facebook,
     telegram: state.signUp.profile.telegram,
     linkedin: state.signUp.profile.linkedin,
     imageUrl: { uri: '' },
-    isError: state.signUp.auth.profile.isError,
-    errorMessage: state.signUp.auth.profile.errorMessage,
     edit: false
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveProfileInfo: (profileInfo, redirectPage) => dispatch(batchActions([ signUpActions.saveProfileInfo(profileInfo),
-      signUpActions.saveProfileOnboardingInfo(profileInfo, redirectPage) ])),
-    clearErrors: () => dispatch(signUpActions.clearSaveProfileError())
+    saveProfileInfo: profileInfo => dispatch(signUpActions.saveProfileOnboardingInfo(profileInfo)),
+    startLoading: () => dispatch(batchActions([ globalActions.hideAlert(), globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
+    showAlertMessage: errMessage => dispatch(globalActions.showAlertError(errMessage)),
+    finishLoading: () => dispatch(globalActions.unsetGlobalLoading())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CommonProfileOnboarding)
@@ -310,17 +305,16 @@ export const EditBasicInfo = connect(
   state => ({
     firstName: state.profile.basic.firstName,
     lastName: state.profile.basic.lastName,
-    title: state.profile.basic.title,
     company: state.profile.basic.company,
-    twitter: state.profile.basic.twitter,
-    facebook: state.profile.basic.facebook,
     telegram: state.profile.basic.telegram,
     linkedin: state.profile.basic.linkedin,
     imageUrl: { uri: state.profile.basic.imageUrl },
     edit: true
   }),
   dispatch => ({
-    saveProfileInfo: (profile) => {dispatch(profileActions.updateBasic(profile))},
-    clearErrors: () => {}
+    saveProfileInfo: profile => dispatch(profileActions.updateBasic(profile)),
+    startLoading: () => dispatch(batchActions([ globalActions.hideAlert(), globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
+    showAlertMessage: errMessage => dispatch(globalActions.showAlertError(errMessage)),
+    finishLoading: () => dispatch(globalActions.unsetGlobalLoading())
   })
 )(CommonProfileOnboarding)

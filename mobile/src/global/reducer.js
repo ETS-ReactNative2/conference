@@ -1,11 +1,14 @@
-import { HIDE_MESSAGE, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING, SEND_MESSAGE_ERROR } from './action-types'
+import { HIDE_MESSAGE, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING, SEND_MESSAGE_ERROR, SHOW_ALERT, HIDE_ALERT } from './action-types'
 
 const initialState = {
   isLoading: false,
   loadingMessage: 'Loading...',
   showMessage: false,
   investor: null,
-  sendMessageError: false
+  sendMessageError: false,
+  showAlert: false,
+  alertType: 'success',
+  alertMessage: ''
 }
 
 export function globalReducer (state = initialState, action) {
@@ -40,6 +43,20 @@ export function globalReducer (state = initialState, action) {
       return {
         ...state,
         showMessageError: action.data.status
+      }
+    case SHOW_ALERT:
+      return {
+        ...state,
+        showAlert: true,
+        alertType: action.alertType,
+        alertMessage: action.message
+      }
+    case HIDE_ALERT:
+      return {
+        ...state,
+        showAlert: false,
+        alertType: 'success',
+        alertMessage: ''
       }
     default:
       return state

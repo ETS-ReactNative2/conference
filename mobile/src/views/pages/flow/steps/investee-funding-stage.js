@@ -1,7 +1,7 @@
 import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
@@ -33,47 +33,49 @@ class InvesteeFundingStage extends React.Component {
     return (
       <FlowContainer>
         <View style={ { flex: 1, justifyContent: 'flex-start' } }>
-          <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
-            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-              <StepTitle text={ I18n.t('flow_page.funding_stage.title') }/>
-            </View>
-            <Subheader
-              text={ I18n.t(`flow_page.funding_stage.header`) }
-            />
-            { FUNDING_STAGES.map((size) => {
-              return (
-                <FlowListItem
-                  multiple={ false }
-                  key={ `funding-stage-item-${size.index}` }
-                  text={ I18n.t(`common.funding_stages.${size.slug}`) }
-                  onSelect={ () => this.handleChange(size.index) }
-                  selected={ this.state.selected === size.index }
-                />
-              )
-            }) }
-            <View style={ { paddingTop: 10 } }>
+          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={96} enabled={Platform.OS === 'ios'}>
+            <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+              <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+                <StepTitle text={ I18n.t('flow_page.funding_stage.title') }/>
+              </View>
               <Subheader
-                text={ I18n.t(`flow_page.members.header`) }
+                text={ I18n.t(`flow_page.funding_stage.header`) }
               />
-            </View>
-            <View style={ styles.inputContainer }>
-              <FlowInput
-                floatingLabel
-                value={ this.state.members }
-                labelText={ I18n.t('flow_page.members.title') }
-                onChangeText={ text => this.handleTextChange('members', text) }
-                status={ this.state.members.length > 0 ? 'ok' : 'regular' }/>
-            </View>
-            <View style={ styles.inputContainer }>
-              <FlowInput
-                floatingLabel
-                value={ this.state.size }
-                keyboardType={ 'numeric' }
-                labelText={ I18n.t('flow_page.members.size') }
-                onChangeText={ text => this.handleTextChange('size', text) }
-                status={ this.state.size.length > 0 ? 'ok' : 'regular' }/>
-            </View>
-          </ScrollView>
+              { FUNDING_STAGES.map((size) => {
+                return (
+                  <FlowListItem
+                    multiple={ false }
+                    key={ `funding-stage-item-${size.index}` }
+                    text={ I18n.t(`common.funding_stages.${size.slug}`) }
+                    onSelect={ () => this.handleChange(size.index) }
+                    selected={ this.state.selected === size.index }
+                  />
+                )
+              }) }
+              <View style={ { paddingTop: 10 } }>
+                <Subheader
+                  text={ I18n.t(`flow_page.members.header`) }
+                />
+              </View>
+              <View style={ styles.inputContainer }>
+                <FlowInput
+                  floatingLabel
+                  value={ this.state.members }
+                  labelText={ I18n.t('flow_page.members.title') }
+                  onChangeText={ text => this.handleTextChange('members', text) }
+                  status={ this.state.members.length > 0 ? 'ok' : 'regular' }/>
+              </View>
+              <View style={ styles.inputContainer }>
+                <FlowInput
+                  floatingLabel
+                  value={ this.state.size }
+                  keyboardType={ 'numeric' }
+                  labelText={ I18n.t('flow_page.members.size') }
+                  onChangeText={ text => this.handleTextChange('size', text) }
+                  status={ this.state.size.length > 0 ? 'ok' : 'regular' }/>
+              </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
         </View>
         <View style={ { margin: 8 } }>
           <FlowButton
@@ -122,8 +124,7 @@ const styles = EStyleSheet.create({
   inputContainer: {
     flex: 1,
     paddingLeft: 8,
-    paddingRight: 8,
-    paddingBottom: 16
+    paddingRight: 8
   }
 })
 

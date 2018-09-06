@@ -9,20 +9,21 @@ import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.p
 import { FUNDING_STAGES, PRODUCT_STAGES, TOKEN_TYPES } from '../../../../enums.js'
 import { PAGES_NAMES } from '../../../../navigation'
 import * as searchActions from '../../../../search/actions'
+import Project from '../../../components/project/project-cards'
 
 class ProjectsList extends React.Component {
   state = {
     defaults: {}
   }
 
-  componentWillMount() {
-    const { filters, updateProjects } = this.props;
-    updateProjects(filters);
+  componentWillMount () {
+    const { filters, updateProjects } = this.props
+    updateProjects(filters)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { filters, updateProjects } = this.props;
-    
+  componentWillReceiveProps (nextProps) {
+    const { filters, updateProjects } = this.props
+
     if (filters !== nextProps.filters) {
       updateProjects(nextProps.filters)
     }
@@ -51,8 +52,10 @@ class ProjectsList extends React.Component {
             {
               this.props.profiles.length > 0 &&
               this.props.profiles.map(profile =>
-                <ProjectItem key={ profile.id } project={ profile } onMark={ () => {} }
-                             onClick={ () => this.props.onClick(profile) }/>
+                <Project.Medium
+                  key={ profile.id }
+                  project={ profile }
+                  onClick={ () => this.props.onClick(profile) }/>
               )
             }
           </List>

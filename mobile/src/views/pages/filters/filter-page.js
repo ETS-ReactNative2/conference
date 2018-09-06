@@ -48,11 +48,12 @@ class FilterPage extends Component {
     this.state = {
       checkeds: filterSetting.items.map((item, index) => filters[ filterSetting.stateKey ].includes(index + 1)),
     }
+
+    this.filterSetting = filterSetting
   }
 
   handleSubmit = (event, values) => {
     const { navigation: { goBack }, setInvestorFilter, setProjectFilter, setJobFilter, setProfessionalFilter } = this.props
-    const filterSetting = this.props.navigation.getParam('filterSetting', {})
     const filterField = this.props.navigation.getParam('filterField', {})
     const { checkeds } = this.state
     // const setFilter = filterField === 'investor' ? setInvestorFilter : setProjectFilter
@@ -73,7 +74,7 @@ class FilterPage extends Component {
     }
 
     setFilter({
-      filterType: filterSetting.stateKey,
+      filterType: this.filterSetting.stateKey,
       values: checkeds.map((item, index) => ({ item, index }))
         .filter(({ item, index }) => item === true)
         .map(({ item, index }) => index + 1),
@@ -82,10 +83,12 @@ class FilterPage extends Component {
     goBack()
   }
 
-  handleItemClick = (index) => {
+  handleItemClick = index => {
     const { checkeds } = this.state
     this.setState({
-      checkeds: checkeds.map((item, ind) => index === ind ? !checkeds[ ind ] : checkeds[ ind ]),
+      checkeds: this.filterSetting.stateKey === 'region'
+        ? checkeds.map((item, ind) => index === ind ? true : false)
+        : checkeds.map((item, ind) => index === ind ? !checkeds[ ind ] : checkeds[ ind ]),
     })
   }
 
@@ -101,39 +104,37 @@ class FilterPage extends Component {
   }
 
   render() {
-    const filterSetting = this.props.navigation.getParam('filterSetting', {});
     const filterField =  this.props.navigation.getParam('filterField', {});
     const color = filterField === 'investor' ? INVESTOR_FILTER_BACKGROUND_COLOR : PROJECT_FILTER_BACKGROUND_COLOR;
-    const key = filterSetting.key;
+    const key = this.filterSetting.key;
     const { checkeds } = this.state;
     const isAllSelected = checkeds.find(item => item === false);
-    
 
     return (
       <Container style={[styles.container, {backgroundColor: color}]}>
         <ScrollView style={{ flex: 1 }}>
           <NavigationHeader
             onBack={ () => this.props.navigation.goBack() }
-            title={ I18n.t(`search_page.investor_filter.${key}.header`) }
+            title={ I18n.t(`search_page.${filterField}_filter.${key}.header`) }
             titleStyle={ { color: '#fff', marginTop: 12 } }
             rightIconSource={ WhiteLogo }/>
           <View style={styles.headerContainer}>
             <Text style={styles.headerText}>
-              { I18n.t(`search_page.investor_filter.${key}.title`) }
+              { I18n.t(`search_page.${filterField}_filter.${key}.title`) }
             </Text>
           </View>
-          <SubheaderWithSwitch
+          {this.filterSetting.stateKey !== 'region' ? <SubheaderWithSwitch
             selected={ isAllSelected }
-            text={ I18n.t(`search_page.investor_filter.${key}.header`) }
+            text={ I18n.t(`search_page.${filterField}_filter.${key}.header`) }
             onToggle={ this.selectAll }
-          />
+          /> : null}
           <View style={ { flex: 1 } }>
             {
-              filterSetting.items.map((item, index) => (
+              this.filterSetting.items.map((item, index) => (
                 <FlowListItem
                   key={ index }
                   text={ I18n.t(`common.${key}.${item.slug}`) }
-                  multiple={ true }
+                  multiple={ this.filterSetting.stateKey !== 'region' }
                   selected={ checkeds[ index ] }
                   onSelect={ () => this.handleItemClick(index) }
                 />

@@ -1,15 +1,14 @@
-import { Container } from 'native-base'
 import React, { Component } from 'react'
 import { Dimensions, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
-import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { getDimensions } from '../../../common/dimension-utils'
 import { NavigationHeader } from '../../components/header/header'
-import { ProjectCard } from './components/project-card'
+import Project from '../../components/project/project-cards'
+import { ImagePageContainer } from '../../design/image-page-container'
 
 class ProjectPage extends Component {
 
@@ -44,59 +43,60 @@ class ProjectPage extends Component {
     return defaults ? this.props.defaultProjects : this.props.projects
   }
 
-  _renderItem = ({ item: project, index }) => 
-    <ProjectCard 
-      key={ index } 
-      project={ project } 
+  _renderItem = ({ item: project, index }) =>
+    <Project.XL
+      key={ index }
+      project={ project }
       navigation={ this.props.navigation }/>
 
   render () {
     const { itemWidth, sliderWidth } = getDimensions()
     const showSingle = this.props.navigation.getParam('single', false)
     return (
-      <SafeAreaView style={ { flex: 1, backgroundColor: '#172D5C' } } forceInset={ { top: 'always' } }>
-        <Container style={ { backgroundColor: '#172D5C' } }>
-          <View style={ styles.content }>
-            <ScrollView>
-              <NavigationHeader
-                onBack={ () => this.props.navigation.goBack() }
-                title={ I18n.t('project_page.title') }
-                titleStyle={ { color: '#fff', marginTop: 12 } }
-                rightIconSource={ WhiteLogo }/>
-              <View style={ { marginTop: 32 } }>
-                { showSingle && (
+      <ImagePageContainer>
+        <View style={ styles.content }>
+          <ScrollView>
+            <NavigationHeader
+              onBack={ () => this.props.navigation.goBack() }
+              title={ I18n.t('project_page.title') }
+              titleStyle={ { color: '#fff', marginTop: 12 } }
+              rightIconSource={ WhiteLogo }/>
+            <View style={ { marginTop: 32 } }>
+              { showSingle && (
+                <Carousel
+                  ref={ (c) => { this._carousel = c } }
+                  data={ [ this.props.navigation.getParam('project', {}) ] }
+                  renderItem={ this._renderItem }
+                  sliderWidth={ sliderWidth }
+                  itemWidth={ itemWidth }
+                  keyExtractor={ item => String(item.id) }
+                />
+              ) }
+              { !showSingle && (
+                <React.Fragment>
                   <Carousel
                     ref={ (c) => { this._carousel = c } }
-                    data={ [this.props.navigation.getParam('project', {})] }
+                    data={ this.projects }
                     renderItem={ this._renderItem }
+                    initialNumToRender={ 50 }
                     sliderWidth={ sliderWidth }
+                    firstItem={ this.state.currentIndex }
                     itemWidth={ itemWidth }
+                    keyExtractor={ item => String(item.id) }
+                    onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
                   />
-                ) }
-                { !showSingle && (
-                  <React.Fragment>
-                    <Carousel
-                      ref={ (c) => { this._carousel = c } }
-                      data={ this.projects }
-                      renderItem={ this._renderItem }
-                      sliderWidth={ sliderWidth }
-                      firstItem={ this.state.currentIndex }
-                      itemWidth={ itemWidth }
-                      onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
-                    />
-                    { this.projects.length < 8 &&
-                    <Pagination
-                      dotColor={ 'rgba(255, 255, 255, 0.95)' }
-                      inactiveDotColor={ 'rgba(255,255,255,0.75)' }
-                      activeDotIndex={ this.state.currentIndex } dotsLength={ this.projects.length }/>
-                    }
-                  </React.Fragment>
-                ) }
-              </View>
-            </ScrollView>
-          </View>
-        </Container>
-      </SafeAreaView>
+                  { this.projects.length < 8 &&
+                  <Pagination
+                    dotColor={ 'rgba(255, 255, 255, 0.95)' }
+                    inactiveDotColor={ 'rgba(255,255,255,0.75)' }
+                    activeDotIndex={ this.state.currentIndex } dotsLength={ this.projects.length }/>
+                  }
+                </React.Fragment>
+              ) }
+            </View>
+          </ScrollView>
+        </View>
+      </ImagePageContainer>
     )
   }
 }
@@ -109,8 +109,7 @@ const styles = EStyleSheet.create({
     marginLeft: 16
   },
   content: {
-    flex: 1,
-    backgroundColor: '#172D5C'
+    flex: 1
   },
   pageTitleContainer: {
     marginTop: 20,

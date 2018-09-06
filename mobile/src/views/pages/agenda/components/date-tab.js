@@ -1,18 +1,18 @@
 import moment from 'moment'
 import React from 'react'
-import { Text, TouchableHighlight, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 
 export function DateTab ({ onClick, selected, date }) {
   return (
-    <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
+    <TouchableOpacity onPress={ onClick } underlayColor='transparent'>
       <View style={ styles.tab }>
         <Text style={ [ styles.day ] }>{ moment(date).format('ddd').toUpperCase() }</Text>
         <View style={ selected ? styles.dateContainerSelected : styles.dateContainer }>
           <Text style={ selected ? styles.selected : styles.text }>{ moment(date).format('Do').toUpperCase() }</Text>
         </View>
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   )
 }
 

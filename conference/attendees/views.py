@@ -263,7 +263,7 @@ class ProfessionalsDefaults(APIView):
 
     def get(self, request, format=None):
         result = {
-            'role': []
+            'role': [],
         }
         return JsonResponse(result)
 

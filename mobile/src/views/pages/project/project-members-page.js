@@ -1,9 +1,8 @@
-import { Container, Text, List, ListItem, Right, Left, Body, Form } from 'native-base'
+import { Container, Text, List, ListItem, Right, Left, Body } from 'native-base'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { SafeAreaView } from 'react-navigation'
 import FlowInputValidated from '../../design/flow-input-validated'
 import I18n from '../../../../locales/i18n'
@@ -45,20 +44,31 @@ class ProjectMembersPage extends Component {
   }
 
   render () {
-    const { projectMembers, memberRequests, addProjectMember, error } = this.props
+    const { projectMembers, memberRequests, error } = this.props
     const { email, isChanging } = this.state
 
     return (
       <SafeAreaView style={ styles.container } forceInset={ { top: 'always' } }>
         <Container style={ styles.container }>
-          <View style={{ flex: 1 }}>
-            <ScrollView>
+          <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+            <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
               <NavigationHeader
                 onBack={ () => this.props.navigation.goBack() }
                 title={ I18n.t('project_members_page.title') }
                 titleStyle={ styles.navigationStyle }
                 rightIconSource={ WhiteLogo }/>
               <List style={ styles.membersList }>
+              {
+                memberRequests.map((member, index) => (
+                  <ListItem thumbnail key={ `project-member-${index}` } style={ styles.memberItem }>
+                    <Left>
+                      <Text style={ styles.Text }>{ member.firstName } { member.lastName }</Text>
+                    </Left>
+                    <Body style={ styles.nonBorder }>
+                    </Body>
+                  </ListItem>
+                ))
+              }
               {
                 projectMembers.map((member, index) => (
                   <ListItem thumbnail key={ `project-member-${index}` } style={ styles.memberItem }>
@@ -76,23 +86,25 @@ class ProjectMembersPage extends Component {
               </List>
             </ScrollView>
           </View>
-          <View style={styles.addView}>
-            <View style={styles.inputView}>
-              <FlowInputValidated
-                floatingLabel={ true }
-                placeholder={ I18n.t('common.email_placeholder') }
-                labelText={ I18n.t('common.email') }
-                value={ email }
-                status='regular'
-                isError={error && !isChanging}
-                errorMessage={ I18n.t('project_members_page.emailError') }
-                errorStyleOverride={ errorStyleOverride }
-                onChangeText={ text => this.setState({ email: text, isChanging: true })} />
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={64} enabled={Platform.OS === 'ios'}>
+            <View style={styles.addView}>
+              <View style={styles.inputView}>
+                <FlowInputValidated
+                  floatingLabel={ true }
+                  placeholder={ I18n.t('common.email_placeholder') }
+                  labelText={ I18n.t('common.email') }
+                  value={ email }
+                  status='regular'
+                  isError={error && !isChanging}
+                  errorMessage={ I18n.t('project_members_page.emailError') }
+                  errorStyleOverride={ errorStyleOverride }
+                  onChangeText={ text => this.setState({ email: text, isChanging: true })} />
+              </View>
+              <View>
+                <ProfileWhiteButton onPress={ () => this.handleAddMemeber(email) } text={ I18n.t('common.add') } />
+              </View>
             </View>
-            <View>
-              <ProfileWhiteButton onPress={ () => this.handleAddMemeber(email) } text={ I18n.t('common.add') } />
-            </View>
-          </View>
+          </KeyboardAvoidingView>
         </Container>
       </SafeAreaView>
     )
@@ -115,7 +127,7 @@ const styles = EStyleSheet.create({
   },
   membersList: {
     width: '100%',
-    flex: 1,
+    flex: 3,
     paddingLeft: 5,
     paddingRight: 5,
   },
@@ -137,10 +149,8 @@ const styles = EStyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'nowrap',
     alignItems: 'center',
-    maxHeight: 80,
-    flex: 1,
     backgroundColor: '#172D5C',
-    marginBottom: 8
+    margin: 8
   },
   inputView: {
     flex: 1,

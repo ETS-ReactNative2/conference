@@ -94,7 +94,7 @@ class EmployeeRole extends React.Component {
 }
 
 EmployeeRole.propTypes = {
-  onFill: PropTypes.func.isRequired
+  onFill: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => {

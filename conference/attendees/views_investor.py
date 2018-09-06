@@ -20,22 +20,7 @@ class ListInvestor(generics.ListAPIView):
             'is_active': True,
         }
         excludes = {}
-        if self.request.GET.get('defaults') == 'true':
-            project = self.request.user.conference_user.project
-            if project:
-                if project.funding_stage:
-                    filters['funding_stages__in'] = [project.funding_stage.pk]
-                if project.giveaway and project.giveaway.pk != models.Giveaway.BOTH:
-                    filters['giveaways__in'] = [project.giveaway.pk]
-                if project.product_stage:
-                    filters['product_stages__in'] = [project.product_stage.pk]
-                if project.region and project.region.pk == models.Region.ANYWHERE_EXCEPT_UNITED_STATES:
-                    excludes['nationality'] = models.Region.COUNTRY_UNITED_STATES
-                elif project.region and project.region.pk == models.Region.SOUTH_KOREA_ONLY:
-                    filters['nationality'] = models.Region.COUNTRY_SOUTH_KOREA
-                if project.token_type:
-                    filters['token_types__in'] = [project.token_type.pk]
-        else:
+        if not self.request.GET.get('defaults') == 'true':
             funding_stages = self.request.GET.getlist('funding_stage')
             if funding_stages:
                 filters['funding_stages__in'] = funding_stages
@@ -63,28 +48,14 @@ class ListInvestor(generics.ListAPIView):
 class InvestorsDefaults(APIView):
 
     def get(self, request, format=None):
-        result = {}
-        project = request.user.conference_user.project
-        if not project:
-            result['funding_stage'] = []
-            result['giveaway'] = []
-            result['product_stage'] = []
-            result['region'] = models.Region.ANYWHERE
-            result['token_type'] = []
-            result['industry'] = []
-        else:
-            result['funding_stage'] = [project.funding_stage.pk] if project.funding_stage else []
-            if project.giveaway:
-                if project.giveaway.pk == models.Giveaway.BOTH:
-                    result['giveaway'] = [1, 2]
-                else:
-                    result['giveaway'] = [project.giveaway.pk]
-            else:
-                result['giveaway'] = []
-            result['product_stage'] = [project.product_stage.pk] if project.product_stage else []
-            result['region'] = models.Region.ANYWHERE
-            result['token_type'] = [project.token_type.pk] if project.token_type else []
-            result['industry'] = [project.industry.pk] if project.industry else []
+        result = {
+            'funding_stage': [],
+            'giveaway': [],
+            'product_stage': [],
+            'region': models.Region.ANYWHERE,
+            'token_type': [],
+            'industry': [],
+        }
         return JsonResponse(result)
 
 

@@ -39,7 +39,7 @@ describe('SignUpPage Component', () => {
     const wrapper = shallow(<SignupPage navigation={ navigation } store={store}/>)
     expect(wrapper).not.toBe(null)
   })
-  
+
   it('renders signup button as disabled by default', () => {
     const navigation = { navigate: jest.fn() }
     const wrapper = shallow(<SignupPage navigation={ navigation } store={store}/>)
@@ -47,7 +47,7 @@ describe('SignUpPage Component', () => {
     const signUpButtonProps = signUpButton.props()
     expect(signUpButtonProps.disabled).toBeTruthy()
   })
-  
+
   it('signup button should not change navigation when button is disabled', () => {
     const navigation = { navigate: jest.fn() }
     const wrapper = shallow(<SignupPage navigation={ navigation } store={store}/>)
@@ -56,22 +56,7 @@ describe('SignUpPage Component', () => {
     signUpButtonProps.onPress()
     expect(navigation.navigate.mock.calls.length).toBe(0)
   })
-  
-  it('renders signup button as disabled when email and password is correct but phone number is not', () => {
-    const navigation = { navigate: jest.fn() }
-    const wrapper = shallow(<SignupPage navigation={ navigation } store={store}/>)
-    // Set Email address
-    wrapper.find(InputValidated).first().props().onChangeText('test@test.com')
-    // Set Password
-    wrapper.find(InputValidated).at(1).props().onChangeText('12345678')
-    // Set Phone Number
-    wrapper.find(InputValidated).at(2).props().onChangeText('123')
-    wrapper.update()
-    const signUpButton = wrapper.find(BlackButton).first()
-    const signUpButtonProps = signUpButton.props()
-    expect(signUpButtonProps.disabled).toBeTruthy()
-  })
-  
+
   it('renders signup button as disabled when email and phone number is correct but password is not', () => {
     const navigation = { navigate: jest.fn() }
     const wrapper = shallow(<SignupPage navigation={ navigation } store={store}/>)
@@ -79,14 +64,12 @@ describe('SignUpPage Component', () => {
     wrapper.find(InputValidated).first().props().onChangeText('test@test.com')
     // Set Password
     wrapper.find(InputValidated).at(1).props().onChangeText('123')
-    // Set Phone Number
-    wrapper.find(InputValidated).at(2).props().onChangeText('123456789')
     wrapper.update()
     const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
     expect(signUpButtonProps.disabled).toBeTruthy()
   })
-  
+
   it('renders signup button as disabled when phone number and password is correct but email is not', () => {
     const navigation = { navigate: jest.fn() }
     const wrapper = shallow(<SignupPage navigation={ navigation } store={store}/>)
@@ -94,14 +77,12 @@ describe('SignUpPage Component', () => {
     wrapper.find(InputValidated).first().props().onChangeText('test@.com')
     // Set Password
     wrapper.find(InputValidated).at(1).props().onChangeText('12345678')
-    // Set Phone Number
-    wrapper.find(InputValidated).at(2).props().onChangeText('123456789')
     wrapper.update()
     const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
     expect(signUpButtonProps.disabled).toBeTruthy()
   })
-  
+
   it('renders signup button as enabled when validation passes', () => {
     const navigation = { navigate: jest.fn() }
     const wrapper = shallow(<SignupPage navigation={ navigation } store={store}/>)
@@ -109,14 +90,12 @@ describe('SignUpPage Component', () => {
     wrapper.find(InputValidated).first().props().onChangeText('test@test.com')
     // Set Password
     wrapper.find(InputValidated).at(1).props().onChangeText('12345678')
-    // Set Phone Number
-    wrapper.find(InputValidated).at(2).props().onChangeText('123456789')
     wrapper.update()
     const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
     expect(signUpButtonProps.disabled).toBeFalsy()
   })
-  
+
   it('signup button should change navigation to FLOW_PAGE when button is enabled and pressed', () => {
     const navigation = { navigate: jest.fn() }
     const singupMock = jest.fn()
@@ -125,8 +104,6 @@ describe('SignUpPage Component', () => {
     wrapper.find(InputValidated).first().props().onChangeText('test@test.com')
     // Set Password
     wrapper.find(InputValidated).at(1).props().onChangeText('12345678')
-    // Set Phone Number
-    wrapper.find(InputValidated).at(2).props().onChangeText('123456789')
     wrapper.update()
     const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()

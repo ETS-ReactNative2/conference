@@ -1,5 +1,5 @@
 import * as api from '../api/api'
-import { HIDE_MESSAGE, SEND_MESSAGE_ERROR, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING } from './action-types'
+import { HIDE_MESSAGE, SEND_MESSAGE_ERROR, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING, SHOW_ALERT, HIDE_ALERT } from './action-types'
 
 export function setGlobalLoading (message) {
   return {
@@ -45,5 +45,19 @@ export function showMessage (investor) {
 export function hideMessage () {
   return {
     type: HIDE_MESSAGE
+  }
+}
+
+export function showAlertError (message) {
+  return {
+    type: SHOW_ALERT,
+    message,
+    alertType: 'error'
+  }
+}
+
+export function hideAlert () {
+  return {
+    type: HIDE_ALERT
   }
 }

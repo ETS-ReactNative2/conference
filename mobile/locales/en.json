@@ -1,22 +1,37 @@
 {
+  "alert": {
+    "success_prefix": "Success:",
+    "error_prefix": "ERROR"
+  },
   "cards": {
     "technology": "Technology",
     "stage": "Funding",
     "product": "Product",
-    "market": "Market: ",
+    "market": "Markets",
     "message": "Message",
+    "location": "Location",
+    "relocate": "Relocate",
+    "notable": "Notable members",
+    "main": "Main",
+    "legal": "Legal",
+    "info": "Info",
+    "age": "Age",
+    "exp": "Exp",
+    "size": "Team size",
+    "work": "Works",
     "save": "Save",
     "team": "Team",
+    "offer": "Offering",
+    "request": "Requesting",
+    "description": "Description",
     "industry": "Industry",
-    "skills": "3 skills",
-    "traits": "3 traits",
-    "most": "I know the most about:"
+    "skills": "Skills",
+    "traits": "Traits",
+    "most": "I know the most about:",
+    "raising": "Raising"
   },
   "home_page": {
     "title": "Home"
-  },
-  "agenda_page": {
-    "title": "Schedule"
   },
   "job_item": {
     "part_time": "Part-time possible",
@@ -48,6 +63,7 @@
   },
   "agenda_page": {
     "title": "Schedule",
+    "no_agenda": "There are no events planned.",
     "maps": {
       "first_floor": "First Floor",
       "rooftop": "Rooftop",
@@ -55,6 +71,8 @@
     }
   },
   "common": {
+    "website": "Website",
+    "whitepaper": "Whitepaper",
     "back": "Back",
     "view": "View",
     "edit": "Edit",
@@ -92,6 +110,10 @@
       "incorrect_job_min_salary": "Value should be greater or equal to 0",
       "incorrect_password": "Password must be at least 8 characters long",
       "incorrect_phone_number": "Please enter correct phone number",
+      "incorrect_github_user_name": "Please enter a valid GitHub handle",
+      "incorrect_twitter_user_name": "Please enter a valid Twitter username",
+      "incorrect_telegram_user_name": "Please enter a valid Telegram username",
+      "incorrect_linkedin_user_name": "Please enter a valid LinkedIn username",
       "incorrect_profile_first_name": "Given name must be at least 3 characters long",
       "incorrect_profile_last_name": "Family name must be at least 3 characters long",
       "incorrect_project_description": "Plesae enter project description",
@@ -103,6 +125,7 @@
       "server_error": "We have some issues, please try again or contact us"
     },
     "facebook": "Facebook",
+    "facebook_url": "Facebook – https://www.facebook.com/…",
     "flow_pages": {
       "titles": {
         "industries": "Industries"
@@ -114,7 +137,8 @@
       "pre": "Pre ICO",
       "seed": "Seed"
     },
-    "github": "Github",
+    "github": "GitHub",
+    "github_url": "GitHub – https://github.com/…",
     "giveaway": {
       "both": "Both",
       "equity": "Equity",
@@ -182,7 +206,8 @@
       "local": "Local",
       "remote": "Remote"
     },
-    "linkedin": "Linkedin",
+    "linkedin": "LinkedIn",
+    "linkedin_url": "LinkedIn – https://linkedin.com/in/…",
     "months": {
       "0": "January",
       "1": "February",
@@ -210,10 +235,6 @@
       "fiat": "Fiat money",
       "tokens": "Tokens"
     },
-    "personal_facebook": "PERSONAL FACEBOOK",
-    "personal_linkedin": "PERSONAL LINKEDIN",
-    "personal_telegram": "PERSONAL TELEGRAM",
-    "personal_twitter": "PERSONAL TWITTER",
     "product_stages": {
       "header": "Product stage",
       "live": "Live product",
@@ -256,6 +277,7 @@
       "sales": "Sales job listing"
     },
     "telegram": "Telegram",
+    "telegram_url": "Telegram – https://t.me/…",
     "token_types": {
       "app_tokens": "App Token",
       "header": "Token type",
@@ -263,6 +285,7 @@
       "security_tokens": "Security Token"
     },
     "twitter": "Twitter",
+    "twitter_url": "Twitter – https://twitter.com/…",
     "yes": "Yes"
   },
   "drawer": {
@@ -274,14 +297,14 @@
   "flow_page": {
     "common": {
       "profile_onboarding": {
-        "company": "COMPANY",
-        "first_name": "GIVEN NAME",
+        "company": "Company",
+        "first_name": "Given Name",
         "header": "WELCOME",
         "edit_header": "Edit basic info",
-        "last_name": "FAMILY NAME",
+        "last_name": "Family Name",
         "spinner_text": "Saving your profile... Please wait",
         "title": "We would like to know more about you",
-        "titleField": "JOB TITLE"
+        "titleField": "Job Title"
       },
       "profile_type": {
         "meeting": "Find a new job",
@@ -494,7 +517,7 @@
   },
   "privacy_policy_page": {
     "title": "Privacy Policy",
-    "description": "This Privacy Policy describes how Luna Labs GmbH, collectively referred to as \"Blockseoul Connect\" (or \"we\" or \"us\" or \"our\") collects, uses, and handles your data when you use our website, products and services (\"Services\"). Please take the time to carefully read through this policy. As you use our Services, we want to be clear how BlockSeoul Connect uses your information and how your privacy is protected. By using the Services, you consent to the data practices detailed in this policy. This Privacy Policy does not apply to services offered by other companies or other sites linked from our Services.",
+    "description": "This Privacy Policy describes how Gravity Analytics Limited, collectively referred to as \"Blockseoul Connect\" (or \"we\" or \"us\" or \"our\") collects, uses, and handles your data when you use our website, products and services (\"Services\"). Please take the time to carefully read through this policy. As you use our Services, we want to be clear how BlockSeoul Connect uses your information and how your privacy is protected. By using the Services, you consent to the data practices detailed in this policy. This Privacy Policy does not apply to services offered by other companies or other sites linked from our Services.",
     "information_collection": {
       "header": "What Information is Collected",
       "text": "When you use our Services, we may collect information you send us or information we receive from your use of our Services. We may collect information in the following ways: \n\nInformation you give us. We may collect information that you provide us through a web form, such as when you create a BlockSeoul Connect Profile, or when you otherwise correspond with us regarding our Services, such as when you contact our customer support team. The information you provide us includes your email address (such that we can send you email), Name, Date, Title, Company Name, and social media links are required to create a profile and to be later discovered on the platform. The complete list of collected information is as follows: \n\nIn addition, to create an account on BlockSeoul Connect, you must provide us with your name and email address, and agree to our Terms of Use and this Privacy Policy, which governs how we treat your information. You may provide additional information when creating a BlockSeoul Connect account, such as linking to your Facebook, Google, LinkedIn, Twitter or other social accounts, to help build your BlockSeoul Connect Profile. You understand and acknowledge that by creating a BlockSeoul Connect account, we and others will be able to identify you by your BlockSeoul Connect Profile. \n\nIn order to match and be discoverable by other users on BlockSeoul Connect, we additionally allow you to submit information about your company, project, job-related information or investment-related information.\nDevice information. We may collect information about devices you use to access the Services and how you use the Services, such as your IP address and which websites you visited before accessing our Services.\n\nLogs. Our servers automatically record information created by your use of our Services to help us diagnose and fix technical issues, and to improve the the overall quality and user experience of our Services. Logs may include information such as your IP address, browser type, operating system, details of how you used our Services (such as your commands at the command line), diagnostic information related to the Services (such as crash activity reports), the referring web page, pages visited, location, your mobile carrier, device and application IDs, search terms, and cookie information.\n\nCookies. We use technologies like cookies and pixel tags to gather information about how you are interacting with the Services, which may include identifying your IP address, browser type, and referring page."
@@ -570,10 +593,6 @@
         "title": "Search investors looking for:",
         "header": "Token Type"
       },
-      "roles": {
-        "title": "Search with roles",
-        "header": "Role"
-      },
       "funding_stages": {
         "title": "Search investors looking for:",
         "header": "Funding Stages"
@@ -588,24 +607,32 @@
       },
       "regions": {
         "title": "Search investors with these nationalities:",
-        "header": "Regions"
+        "header": "Nationality"
       },
       "industries": {
         "title": "Search investors looking for:",
         "header": "Industries"
       },
-      "ticket_size" : {
+      "ticket_size": {
         "title": "Search investors offering:",
         "header": "Ticket Size"
       }
     },
-    "job_filter":{
+    "job_filter": {
       "main_title": "Job Filter",
-      "header": "Tell us more about job offers you are looking for"
+      "header": "Tell us more about job offers you are looking for",
+      "roles": {
+        "title": "Search with roles",
+        "header": "Role"
+      }
     },
-    "professional_filter":{
+    "professional_filter": {
       "main_title": "Professional Filter",
-      "header": "Tell us more about professionals you are looking for"
+      "header": "Tell us more about professionals you are looking for",
+      "roles": {
+        "title": "Search with roles",
+        "header": "Role"
+      }
     },
     "project_filter": {
       "main_title": "Project Filter",
@@ -615,7 +642,7 @@
         "header": "Token Type"
       },
       "funding_stages": {
-        "title": "Search that are at:",
+        "title": "Search projects that are at:",
         "header": "Funding Stages"
       },
       "giveaway": {
@@ -628,7 +655,7 @@
       },
       "regions": {
         "title": "Search projects with these countries:",
-        "header": "Regions"
+        "header": "Country"
       }
     },
     "tab_label_investor": "Investors",

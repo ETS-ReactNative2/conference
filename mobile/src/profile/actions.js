@@ -1,7 +1,6 @@
-import I18n from '../../locales/i18n'
+import { getErrorDataFromNetworkException } from '../common/utils'
 import * as api from '../api/api'
-import { setGlobalLoading, unsetGlobalLoading } from '../global/actions'
-import { fetchConferenceSchedule } from '../schedule/actions'
+import { PROPAGATE_USER_DEFAULTS, PROPAGATE_USER_SEARCH } from '../search/action-types'
 import { fetchDefaults, fetchMatches } from '../search/actions'
 import {
   DEACTIVATE_INVESTOR,
@@ -10,14 +9,14 @@ import {
   LOAD_PROFILES,
   LOAD_PROFILES_ERROR,
   LOAD_PROFILES_SUCCESS,
+  LOAD_PROJECT_MEMBERS,
+  LOAD_PROJECT_MEMBERS_ERROR,
+  LOAD_PROJECT_MEMBERS_SUCCESS,
   PREFILL_EDIT,
+  PROPAGATE_USER_PROFILE,
   REACTIVATE_INVESTOR,
   REACTIVATE_PROFILE,
-  UPDATE_BASIC,
-  LOAD_PROJECT_MEMBERS,
-  LOAD_PROJECT_MEMBERS_SUCCESS,
-  LOAD_PROJECT_MEMBERS_ERROR,
-  ADD_PROJECT_MEMBER
+  UPDATE_BASIC
 } from './action-types'
 
 export function fetchProfiles () {
@@ -40,7 +39,6 @@ export function fetchProfiles () {
         }
       })
     } catch (err) {
-      console.log({ err })
       dispatch({ type: LOAD_PROFILES_ERROR })
     }
   }
@@ -71,30 +69,30 @@ export function openEdit (type, prefill = true) {
   }
 }
 
-export function updateBasic (basicChanges) {
+export function updateBasic(basicChanges) {
   return async (dispatch, getState) => {
-    const basicInfo = getState().profile.basic
-    const shouldUpdatePhoto = basicInfo.avatarSource !== basicChanges.avatarSource
-    dispatch({
-      type: UPDATE_BASIC,
-      data: basicChanges
-    })
     try {
-      dispatch(setGlobalLoading(I18n.t('profile_page.upload_loader_text')))
+      const basicInfo = getState().profile.basic
+      const shouldUpdateData = !compareUser(basicInfo, basicChanges)
+      const shouldUpdatePhoto = !basicChanges.avatarSource.uri.startsWith('https')
+        && basicChanges.avatarSource.uri !== ''
+        && basicChanges.avatarSource.uri !== basicInfo.imageUrl
+      dispatch({
+        type: UPDATE_BASIC,
+        data: { ...basicChanges, imageUrl: basicChanges.avatarSource.uri }
+      })
       if (shouldUpdatePhoto) {
         await api.uploadImage(basicChanges.avatarSource)
       }
-      await api.createOrUpdateConferenceUser(getState().profile.basic)
-      await Promise.all([
-        dispatch(fetchDefaults()),
-        dispatch(fetchProfiles()),
-        dispatch(fetchConferenceSchedule()),
-        dispatch(fetchMatches())
-      ])
-    } catch (er) {
-      console.error(er)
-    } finally {
-      dispatch(unsetGlobalLoading())
+      if (shouldUpdateData || shouldUpdatePhoto) {
+        const { data } = await api.createOrUpdateConferenceUser(getState().profile.basic)
+        dispatch({ type: PROPAGATE_USER_PROFILE, data: { ...data, imageUrl: basicChanges.avatarSource.uri } })
+        dispatch({ type: PROPAGATE_USER_DEFAULTS, data: { ...data, imageUrl: basicChanges.avatarSource.uri } })
+        dispatch({ type: PROPAGATE_USER_SEARCH, data: { ...data, imageUrl: basicChanges.avatarSource.uri } })
+      }
+    } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      throw errorData.errorMessage
     }
   }
 }
@@ -103,11 +101,12 @@ export function activateInvestor () {
   return async dispatch => {
     try {
       await api.reactivateInvestor()
+      dispatch(fetchMatches())
+      dispatch(fetchDefaults())
       dispatch({
         type: REACTIVATE_INVESTOR
       })
     } catch (err) {
-      console.log({ err })
     }
   }
 }
@@ -116,11 +115,12 @@ export function activateProfile () {
   return async dispatch => {
     try {
       await api.reactivateProfile()
+      dispatch(fetchMatches())
+      dispatch(fetchDefaults())
       dispatch({
         type: REACTIVATE_PROFILE
       })
     } catch (err) {
-      console.log({ err })
     }
   }
 }
@@ -133,33 +133,32 @@ export function leaveProject () {
         type: LEAVE_PROJECT
       })
     } catch (err) {
-      console.log({ err })
     }
   }
 }
 
 export function deactivateInvestor () {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       await api.deactivateInvestor()
       dispatch({
-        type: DEACTIVATE_INVESTOR
+        type: DEACTIVATE_INVESTOR,
+        data: getState().profile.investor.user.user
       })
     } catch (err) {
-      console.log({ err })
     }
   }
 }
 
 export function deactivateProfile () {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       await api.deactivateProfile()
       dispatch({
-        type: DEACTIVATE_PROFILE
+        type: DEACTIVATE_PROFILE,
+        data: getState().profile.professional.user.user
       })
     } catch (err) {
-      console.log({ err })
     }
   }
 }
@@ -176,7 +175,6 @@ export function loadProjectMemebers () {
         data: membersResponse.data
       })
     } catch (err) {
-      console.log({ err })
       dispatch({
         type: LOAD_PROJECT_MEMBERS_ERROR
       })
@@ -190,7 +188,6 @@ export function addProjetMember (email) {
       await api.postMyProjectMembers({ email })
       dispatch(loadProjectMemebers())
     } catch (err) {
-      console.log({ err })
       dispatch({
         type: LOAD_PROJECT_MEMBERS_ERROR
       })
@@ -204,10 +201,15 @@ export function removeProjectMember (memberId) {
       await api.deleteMyProjectMembersId({ id: memberId })
       dispatch(loadProjectMemebers())
     } catch (err) {
-      console.log({ err })
       dispatch({
         type: LOAD_PROJECT_MEMBERS_ERROR
       })
     }
   }
+}
+
+function compareUser (first, second) {
+  const { avatarSource: firstAvat, user: firstUser, imageUrl: firstImage, ...firstRest } = first
+  const { avatarSource: secAvat, user: secUser, imageUrl: secImage, ...secondRest } = second
+  return JSON.stringify(firstRest) === JSON.stringify(secondRest)
 }

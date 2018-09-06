@@ -17,7 +17,6 @@ export function setInvestorFilter (filters) {
         data: filters
       })
     } catch (err) {
-      console.error(err)
     }
   }
 }
@@ -31,7 +30,6 @@ export function setJobFilter (filters) {
       })
     }
     catch (err) {
-      console.error(err)
     }
   }
 }
@@ -44,7 +42,6 @@ export function setProjectFilter (filters) {
         data: filters
       })
     } catch (err) {
-      console.error(err)
     }
   }
 }
@@ -57,7 +54,6 @@ export function setProfessionalFilter (filters) {
         data: filters
       })
     } catch (err) {
-      console.error(err)
     }
   }
 }
@@ -82,7 +78,6 @@ export function fetchFilters () {
         }
       })
     } catch (err) {
-      console.log({ err })
       dispatch({ type: LOAD_MATCH_FILTERS_ERROR })
     }
   }

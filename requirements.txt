@@ -3,6 +3,7 @@ boto3==1.8.4
 Django==1.8
 django-timezone-field==2.1
 factory-boy==2.11.1
+mysql-python==1.2.5
 pinax-boxes==2.1.1
 pinax-theme-bootstrap==5.6.0
 six==1.9.0

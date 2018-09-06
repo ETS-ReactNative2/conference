@@ -67,7 +67,7 @@ export class ProfessionalCard extends React.Component {
             { relocate && <Text style={ styles.smallText }>Relocate</Text> }
             {
               localRemoteOptions.map((item, index) => {
-                const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`);
+                const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`)
                 return (
                   <Text key={index} style={styles.smallText}>{option}</Text>
                 )

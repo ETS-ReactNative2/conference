@@ -13,7 +13,6 @@ import InputValidated from '../../design/input-validated'
 import BlackLogo from '../../../assets/logos/logo-black.png'
 import PoweredLuna from '../../../assets/logos/login_logo.png'
 import { BlackButton } from '../../design/buttons'
-import Alert from '../../components/alert/alert'
 
 export class SignupPage extends React.Component {
   constructor (props) {
@@ -21,7 +20,6 @@ export class SignupPage extends React.Component {
     this.state = {
       email: '',
       password: '',
-      phone: '',
       isFormValid: false
     }
   }
@@ -34,21 +32,15 @@ export class SignupPage extends React.Component {
     return validator.isLength(password, { min: 8, max: undefined })
   }
 
-  validatePhoneNumber = (phoneNumber) => {
-    return validator.isLength(phoneNumber, { min: 0, max: 0 }) ||
-      validator.isMobilePhone(phoneNumber, 'any') && validator.isLength(phoneNumber, { min: 4, max: 20 })
-  }
-
   validateForm = () => {
     const isEmailValid = this.validateEmail(this.state.email)
     const isPasswordValid = this.validatePassword(this.state.password)
-    const isPhoneValid = this.validatePhoneNumber(this.state.phone)
-    const isFormValid = isEmailValid && isPasswordValid && isPhoneValid
+    const isFormValid = isEmailValid && isPasswordValid
     this.setState({ isFormValid })
   }
 
   handleFieldChange = (newValue, name) => {
-    if (this.props.isEmailFieldError || this.props.isServerError) {
+    if (this.props.isError) {
       this.props.clearErrors();
     }
     this.setState({
@@ -57,25 +49,22 @@ export class SignupPage extends React.Component {
   }
 
   handleSubmit = () => {
-    const { email, password, phone } = this.state
+    const { email, password } = this.state
     const { signup } = this.props
     if (this.state.isFormValid) {
-      signup({email, password, phone})
+      signup({email, password})
     }
   }
 
   render () {
-    const isEmailFieldError = !this.validateEmail(this.state.email) || this.props.isEmailFieldError;
-    const emailErrorMessage = this.props.isEmailFieldError ? this.props.errorMessage : I18n.t('common.errors.incorrect_email');
+    const isEmailFieldError = !this.validateEmail(this.state.email) || this.props.isError;
+    const emailErrorMessage = this.props.isError ? this.props.errorMessage : I18n.t('common.errors.incorrect_email');
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}} forceInset={{top: 'always'}}>
         <Container>
           <Content style={styles.mainContainer}>
             <Header title={ I18n.t('signup_page.title') } rightIconSource={BlackLogo} />
             <View style={styles.contentContainer}>
-              {this.props.isServerError && (
-                <Alert color="error" message={this.props.errorMessage} />
-              )}
               <View style={styles.inputContainer}>
                 <InputValidated value={ this.state.email }
                       isError={isEmailFieldError}
@@ -94,13 +83,6 @@ export class SignupPage extends React.Component {
                       placeholder='********'
                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'password') }/>
               </View>
-              <InputValidated value={ this.state.phone }
-                    keyboardType='phone-pad'
-                    isError={!this.validatePhoneNumber(this.state.phone)}
-                    errorMessage={I18n.t('common.errors.incorrect_phone_number')}
-                    labelText={ I18n.t('signup_page.phone_placeholder') }
-                    placeholder="+48123456789"
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'phone') }/>
               <View style={ styles.lunaContainer }>
                 <Image style={{ width: 123, height: 52}} source={ PoweredLuna }/>
               </View>
@@ -187,8 +169,7 @@ const styles = EStyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    isServerError: state.signUp.auth.signup.isServerError,
-    isEmailFieldError: state.signUp.auth.signup.isEmailFieldError,
+    isError: state.signUp.auth.signup.isError,
     errorMessage: state.signUp.auth.signup.errorMessage
   }
 }

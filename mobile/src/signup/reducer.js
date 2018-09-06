@@ -4,14 +4,12 @@ import { PREFILL_EDIT } from '../profile/action-types'
 import {
   CLEAR,
   CLEAR_LOGIN_USER_ERROR,
-  CLEAR_SAVE_PROFILE_ERROR,
   CLEAR_SIGN_UP_USER_ERROR,
   LOGIN_USER_ERROR,
   LOGIN_USER_SUCCESS,
   SAVE_EMPLOYEE,
   SAVE_INVESTOR,
   SAVE_PROFILE_EMPLOYER,
-  SAVE_PROFILE_ERROR,
   SAVE_PROFILE_INFO,
   SAVE_PROFILE_INVESTEE,
   SIGN_UP_USER_ERROR
@@ -20,16 +18,10 @@ import {
 const initialState = {
   auth: {
     login: {
-      isServerError: false,
-      isCredentialsError: false,
+      isError: false,
       errorMessage: ''
     },
     signup: {
-      isServerError: false,
-      isEmailFieldError: false,
-      errorMessage: ''
-    },
-    profile: {
       isError: false,
       errorMessage: ''
     }
@@ -37,10 +29,7 @@ const initialState = {
   profile: {
     firstName: '',
     lastName: '',
-    title: '',
     company: '',
-    twitter: '',
-    facebook: '',
     telegram: '',
     linkedin: '',
     imageUrl: '',
@@ -54,8 +43,7 @@ const initialState = {
     ticketSizes: [],
     stages: [],
     marketLocation: -1,
-    regionOtherText: '',
-    industries: []
+    regionOtherText: ''
   },
   investee: {
     projectName: '',
@@ -80,7 +68,6 @@ const initialState = {
     legal: fromCca2ToCountryObject('KR'),
     main: fromCca2ToCountryObject('KR'),
     giveaway: -1,
-    industry: -1,
     imageUrl: ''
   },
   employer: {
@@ -122,8 +109,7 @@ export function signUpReducer (state = initialState, action) {
           ...state.auth,
           login: {
             ...state.auth.login,
-            isServerError: action.isServerError,
-            isCredentialsError: action.isCredentialsError,
+            isError: true,
             errorMessage: action.error
           }
         }
@@ -210,8 +196,7 @@ export function signUpReducer (state = initialState, action) {
           ...state.auth,
           signup: {
             ...state.signup,
-            isServerError: action.isServerError,
-            isEmailFieldError: action.isEmailFieldError,
+            isError: true,
             errorMessage: action.error
           }
         }
@@ -223,8 +208,7 @@ export function signUpReducer (state = initialState, action) {
           ...state.auth,
           signup: {
             ...state.auth.signup,
-            isServerError: false,
-            isEmailFieldError: false,
+            isError: false,
             errorMessage: ''
           }
         }
@@ -236,31 +220,6 @@ export function signUpReducer (state = initialState, action) {
           ...state.auth,
           login: {
             ...state.auth.login,
-            isServerError: false,
-            isCredentialsError: false,
-            errorMessage: ''
-          }
-        }
-      }
-    case SAVE_PROFILE_ERROR:
-      return {
-        ...state,
-        auth: {
-          ...state.auth,
-          profile: {
-            ...state.auth.profile,
-            isError: true,
-            errorMessage: action.error
-          }
-        }
-      }
-    case CLEAR_SAVE_PROFILE_ERROR:
-      return {
-        ...state,
-        auth: {
-          ...state.auth,
-          profile: {
-            ...state.auth.profile,
             isError: false,
             errorMessage: ''
           }
@@ -314,7 +273,6 @@ function fillData (role, info) {
         legal: fromCca2ToCountryObject(info.legalCountry || 'KR'),
         main: fromCca2ToCountryObject(info.mainCountry || 'KR'),
         giveaway: info.giveaway,
-        industry: info.industry,
         imageUrl: info.imageUrl
       }
     case 'investor':
@@ -326,8 +284,7 @@ function fillData (role, info) {
         ticketSizes: info.ticketSizes,
         stages: info.fundingStages,
         marketLocation: info.region,
-        regionOtherText: info.regionOtherText,
-        industries: info.industries
+        regionOtherText: info.regionOtherText
       }
     case 'employee':
       return {

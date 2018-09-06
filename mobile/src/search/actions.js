@@ -35,7 +35,6 @@ export function fetchMatches () {
         }
       })
     } catch (err) {
-      console.log({ err })
       dispatch({ type: LOAD_PROFILES_ERROR })
     }
   }
@@ -59,7 +58,6 @@ export function fetchDefaults () {
         }
       })
     } catch (err) {
-      console.log({ err })
       dispatch({ type: LOAD_DEFAULT_PROFILES_ERROR })
     }
   }

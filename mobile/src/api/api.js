@@ -5,8 +5,8 @@ import Config from 'react-native-config'
 
 const TOKEN_NAME = 'AUTH-TOKEN'
 
-export async function signup ({ email, password, phone }) {
-  return axios.post('/api/users/', { email, password, phone })
+export async function signup ({ email, password }) {
+  return axios.post('/api/users/', { email, password })
 }
 
 export async function fetchProfessionals (filters) {
@@ -179,11 +179,11 @@ export async function createJob ({ jobs }) {
     })
 }
 
-export async function createOrUpdateConferenceUser ({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram }) {
+export async function createOrUpdateConferenceUser ({ firstName, lastName, company, linkedin, telegram }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put(
     '/api/my_person/',
-    decamelizeKeys({ firstName, lastName, title, company, twitter, facebook, linkedin, telegram }),
+    decamelizeKeys({ firstName, lastName, company, linkedin, telegram }),
     {
       headers: {
         'X-Authorization': `Bearer ${token}`
@@ -197,7 +197,6 @@ export async function createInvestee ({
   giveaway,
   notable,
   size,
-  industry,
   name,
   productStage,
   tagline,
@@ -218,7 +217,6 @@ export async function createInvestee ({
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put('/api/my_project/', decamelizeKeys({
     description,
-    industry,
     fundingStage,
     fundraisingAmount,
     legalCountry,
@@ -247,7 +245,7 @@ export async function createInvestee ({
 }
 
 export async function createInvestor ({
-  fundingStages, ticketSizes, productStages, tokenTypes, giveaways, industries, region, nationality, regionOtherText
+  fundingStages, ticketSizes, productStages, tokenTypes, giveaways, region, nationality, regionOtherText
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put('/api/my_investor/', decamelizeKeys({
@@ -256,7 +254,6 @@ export async function createInvestor ({
     productStages,
     tokenTypes,
     giveaways,
-    industries,
     region,
     nationality,
     regionOtherText
@@ -299,8 +296,6 @@ export async function getMyProjectJobs () {
   })
 }
 
-// todo postMyProjectJobs
-
 export async function deleteMyProjectJobsId ({ id }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.delete('/api/my_project/jobs/' + id + '/', {
@@ -309,10 +304,6 @@ export async function deleteMyProjectJobsId ({ id }) {
     }
   })
 }
-
-// todo getMyProjectJobsId
-
-// todo putMyProjectJobsId
 
 export async function getMyProjectMembers () {
   const token = await storageService.getItem(TOKEN_NAME)
@@ -428,17 +419,26 @@ export async function uploadImage (file) {
       name: 'testPhotoName.jpg'
     }
   )
-
-  return fetch(Config.APP_AXIOS_BASE_URL + '/api/my_person/images/', {
+  let fetchResponse = ''
+  try {
+    fetchResponse = await fetch(Config.APP_AXIOS_BASE_URL + '/api/my_person/images/', {
       method: 'post',
       body: bodyFormData,
       headers: {
         // 'Content-Type': 'multipart/form-data',
         'X-Authorization': `Bearer ${ token }`
-
+      }
+    })
+  } catch (err) {
+    throw err;
+  }
+  if (!fetchResponse.ok) {
+    throw {
+      response: {
+        status: 500
       }
     }
-  )
+  }
 }
 
 // Fetch default filter Options

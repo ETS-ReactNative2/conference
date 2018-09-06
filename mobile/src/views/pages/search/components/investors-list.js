@@ -10,19 +10,20 @@ import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.p
 import { FUNDING_STAGES, REGIONS, TICKET_SIZES, TOKEN_TYPES } from '../../../../enums.js'
 import { PAGES_NAMES } from '../../../../navigation'
 import * as searchActions from '../../../../search/actions'
+import Investor from '../../../components/investor/investor-cards'
 
 class InvestorsList extends React.Component {
   state = {
     defaults: {}
   }
 
-  componentWillMount() {
-    const { filters, updateInvestors } = this.props;
-    updateInvestors(filters);
+  componentWillMount () {
+    const { filters, updateInvestors } = this.props
+    updateInvestors(filters)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { filters, updateInvestors } = this.props;
+  componentWillReceiveProps (nextProps) {
+    const { filters, updateInvestors } = this.props
 
     if (filters !== nextProps.filters) {
       updateInvestors(nextProps.filters)
@@ -51,10 +52,14 @@ class InvestorsList extends React.Component {
           <List>
             {
               this.props.profiles.length > 0 &&
-              this.props.profiles.map(profile => {
+              this.props.profiles
+                .filter(prof => !prof.hide)
+                .map(profile => {
                 return (
-                  <InvestorItem key={ profile.id } investor={ profile } onMark={ () => {} }
-                                onClick={ () => this.props.onClick(profile) }/>
+                  <Investor.Medium
+                    key={ profile.id }
+                    investor={ profile }
+                    onClick={ () => this.props.onClick(profile) }/>
                 )
               })
             }

@@ -4,8 +4,8 @@ import { Image, Linking, TouchableHighlight, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../../locales/i18n'
-import { itemWidth } from '../../../../common/dimension-utils'
 import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
+import { itemWidth } from '../../../../common/dimension-utils'
 import { FUNDING_STAGES, PRODUCT_STAGES, REGIONS, TICKET_SIZES, TOKEN_TYPES } from '../../../../enums'
 
 export class InvestorCard extends React.Component {
@@ -20,7 +20,6 @@ export class InvestorCard extends React.Component {
         if (supported) {
           Linking.openURL(this.props.investor.linkedin)
         } else {
-          console.log('Don\'t know how to open URI: ' + this.props.url)
         }
       })
   }
@@ -29,8 +28,8 @@ export class InvestorCard extends React.Component {
     const { investor, onMessageClick, showMessage } = this.props
 
     const avatar = investor.user && investor.user.imageUrl
-      ? {uri: `${investor.user.imageUrl}?w=300&h=300`}
-      :  ColorLogo
+      ? { uri: `${investor.user.imageUrl}?w=300&h=300` }
+      : ColorLogo
 
     const firstName = investor.user ? investor.user.firstName : ''
     const lastName = investor.user ? investor.user.lastName : ''
@@ -133,12 +132,7 @@ export class InvestorCard extends React.Component {
               </TouchableHighlight>
             ) }
             { !showMessage && (<View/>) }
-            <TouchableHighlight onPress={ () => {} } underlayColor='transparent'>
-              <View>
-                <Icon style={ { textAlign: 'center' } } name={ 'ios-heart-outline' }/>
-                <Text style={ styles.smallActionText }>{ I18n.t('cards.save') }</Text>
-              </View>
-            </TouchableHighlight>
+            <View/>
           </View>
         </View>
       </View>

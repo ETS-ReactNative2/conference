@@ -116,6 +116,8 @@ describe('LoginPage Component', () => {
               payload: [{
                   type: signUpActionsTypes.CLEAR_LOGIN_USER_ERROR
               }, {
+                  type: globalActionsTypes.HIDE_ALERT
+              }, {
                   type: globalActionsTypes.SET_LOADING,
                   data: {
                     message: "Mocked translation"

@@ -8,7 +8,7 @@ from django.template import loader, Context
 
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.sites.models import Site
+# from django.contrib.sites.models import Site
 
 from account.decorators import login_required
 
@@ -260,7 +260,7 @@ def schedule_json(request):
                 "description": slot.content.description.raw,
                 "conf_url": "%s://%s%s" % (
                     protocol,
-                    Site.objects.get_current().domain,
+                    # Site.objects.get_current().domain,
                     reverse("schedule_presentation_detail", args=[slot.content.pk])
                 ),
                 "cancelled": slot.content.cancelled,

@@ -18,25 +18,6 @@ import { SmallSubheader } from '../../design/subheader'
 
 class ProfilePage extends React.Component {
 
-  state = {
-    appState: AppState.currentState
-  }
-
-  componentDidMount () {
-    AppState.addEventListener('change', this._handleAppStateChange)
-  }
-
-  componentWillUnmount () {
-    AppState.removeEventListener('change', this._handleAppStateChange)
-  }
-
-  _handleAppStateChange = (nextAppState) => {
-    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      this.props.fetchProfiles()
-    }
-    this.setState({ appState: nextAppState })
-  }
-
   openLink (url) {
     this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri: url })
   }
@@ -192,7 +173,7 @@ class ProfilePage extends React.Component {
                     <React.Fragment>
                       <ProfileWhiteButton onPress={ () => this.handleProjectCreate(false) }
                                           text={ I18n.t('common.create') }/>
-                      { Config.APP_DEV_FLOW && (
+                      { getBoolean(Config.APP_DEV_FLOW) && (
                         <ProfileWhiteButton onPress={ () => this.handleProjectCreate(true) } text={ 'DEV_CREATE' }/>
                       ) }
                     </React.Fragment>
@@ -224,7 +205,7 @@ class ProfilePage extends React.Component {
                     <React.Fragment>
                       <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(false) }
                                           text={ I18n.t('common.create') }/>
-                      { Config.APP_DEV_FLOW && (
+                      { getBoolean(Config.APP_DEV_FLOW) && (
                         <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(true) } text={ 'DEV_CREATE' }/>
                       ) }
                     </React.Fragment>
@@ -305,6 +286,11 @@ ProfilePage.propTypes = {
   logout: PropTypes.func.isRequired,
   fetchProfiles: PropTypes.func.isRequired
 }
+
+function getBoolean(stringBool){
+  return stringBool === 'true'
+}
+
 
 const mapStateToProps = state => {
   return {
