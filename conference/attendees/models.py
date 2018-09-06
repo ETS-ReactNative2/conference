@@ -356,7 +356,7 @@ class ConferenceUser(models.Model):
 
     TELEGRAM_MAX_LENGTH = 32
 
-    LINKEDIN_MAX_LENGTH = 50
+    LINKEDIN_MAX_LENGTH = 100
 
     user = models.OneToOneField(User, null=True, related_name='conference_user', on_delete=models.CASCADE)
 

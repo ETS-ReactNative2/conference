@@ -409,7 +409,7 @@ class XL extends React.Component {
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.telegram ? (
-                <TouchableHighlight onPress={ () => this.handleLink('http://www.telegram.com', project.telegram) } underlayColor='transparent'>
+                <TouchableHighlight onPress={ () => this.handleLink('https://t.me/', project.telegram) } underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
                           name={ 'telegram' }/>

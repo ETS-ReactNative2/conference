@@ -377,7 +377,7 @@ class XL extends React.Component {
             <View style={ [ xl.boxContainer, styles.center ] }>
               { professional.user.telegram ? (
                 <TouchableHighlight
-                  onPress={ () => this.handleUrlClick('http://www.telegram.com/', professional.user.telegram) }
+                  onPress={ () => this.handleUrlClick('https://t.me/', professional.user.telegram) }
                   underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' } name={ 'telegram' }/>

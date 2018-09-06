@@ -110,10 +110,10 @@
       "incorrect_job_min_salary": "Value should be greater or equal to 0",
       "incorrect_password": "Password must be at least 8 characters long",
       "incorrect_phone_number": "Please enter correct phone number",
-      "incorrect_github_user_name": "Please just enter your GitHub username",
-      "incorrect_twitter_user_name": "Please just enter your Twitter username",
-      "incorrect_telegram_user_name": "Please just enter your Telegram username",
-      "incorrect_linkedin_user_name": "Please just enter your LinkedIn username",
+      "incorrect_github_user_name": "Please enter a valid GitHub handle",
+      "incorrect_twitter_user_name": "Please enter a valid Twitter username",
+      "incorrect_telegram_user_name": "Please enter a valid Telegram username",
+      "incorrect_linkedin_user_name": "Please enter a valid LinkedIn username",
       "incorrect_profile_first_name": "Given name must be at least 3 characters long",
       "incorrect_profile_last_name": "Family name must be at least 3 characters long",
       "incorrect_project_description": "Plesae enter project description",
@@ -125,7 +125,7 @@
       "server_error": "We have some issues, please try again or contact us"
     },
     "facebook": "Facebook",
-    "facebook_url": "https://www.facebook.com/",
+    "facebook_url": "Facebook – https://www.facebook.com/…",
     "flow_pages": {
       "titles": {
         "industries": "Industries"
@@ -138,7 +138,7 @@
       "seed": "Seed"
     },
     "github": "GitHub",
-    "github_url": "https://github.com/",
+    "github_url": "GitHub – https://github.com/…",
     "giveaway": {
       "both": "Both",
       "equity": "Equity",
@@ -207,7 +207,7 @@
       "remote": "Remote"
     },
     "linkedin": "LinkedIn",
-    "linkedin_url": "https://www.linkedin.com/in/",
+    "linkedin_url": "LinkedIn – https://linkedin.com/in/…",
     "months": {
       "0": "January",
       "1": "February",
@@ -235,10 +235,6 @@
       "fiat": "Fiat money",
       "tokens": "Tokens"
     },
-    "personal_facebook": "PERSONAL FACEBOOK",
-    "personal_linkedin": "PERSONAL LINKEDIN",
-    "personal_telegram": "PERSONAL TELEGRAM",
-    "personal_twitter": "PERSONAL TWITTER",
     "product_stages": {
       "header": "Product stage",
       "live": "Live product",
@@ -281,7 +277,7 @@
       "sales": "Sales job listing"
     },
     "telegram": "Telegram",
-    "telegram_url": "http://www.telegram.com/",
+    "telegram_url": "Telegram – https://t.me/…",
     "token_types": {
       "app_tokens": "App Token",
       "header": "Token type",
@@ -289,7 +285,7 @@
       "security_tokens": "Security Token"
     },
     "twitter": "Twitter",
-    "twitter_url": "https://twitter.com/",
+    "twitter_url": "Twitter – https://twitter.com/…",
     "yes": "Yes"
   },
   "drawer": {
@@ -301,14 +297,14 @@
   "flow_page": {
     "common": {
       "profile_onboarding": {
-        "company": "COMPANY",
-        "first_name": "GIVEN NAME",
+        "company": "Company",
+        "first_name": "Given Name",
         "header": "WELCOME",
         "edit_header": "Edit basic info",
-        "last_name": "FAMILY NAME",
+        "last_name": "Family Name",
         "spinner_text": "Saving your profile... Please wait",
         "title": "We would like to know more about you",
-        "titleField": "JOB TITLE"
+        "titleField": "Job Title"
       },
       "profile_type": {
         "meeting": "Find a new job",

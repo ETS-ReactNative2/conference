@@ -29,7 +29,8 @@ const options = {
   }
 }
 
-const usernameValidator = /^[a-z0-9A-Z\._-]{3,}$/
+const linkedInUsernameValidator = /^[a-zA-Z0-9-]{3,100}$/
+const telegramUsernameValidator = /^[a-zA-Z0-9_]{5,32}$/
 
 class CommonProfileOnboarding extends React.Component {
 
@@ -58,14 +59,14 @@ class CommonProfileOnboarding extends React.Component {
     const { linkedin } = this.state
     return !linkedin
       || !linkedin.length
-      || usernameValidator.test(this.state.linkedin)
+      || linkedInUsernameValidator.test(this.state.linkedin)
   }
 
   validateTelegramUserName = () => {
     const { telegram } = this.state
     return !telegram
       || !telegram.length
-      || usernameValidator.test(this.state.telegram)
+      || telegramUsernameValidator.test(this.state.telegram)
   }
 
   isFormValid = () => {

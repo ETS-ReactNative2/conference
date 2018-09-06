@@ -14,7 +14,9 @@ import { Subheader } from '../../../design/subheader'
 import { InvesteeProjectLocation } from './index'
 import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
 
-const usernameValidator = /^[a-z0-9A-Z\._-]{3,}$/
+const githubUsernameValidator = /^[a-zA-Z0-9-]{1,39}(\/[a-zA-Z0-9-]{0,100})?$/
+const telegramUsernameValidator = /^[a-zA-Z0-9_]{5,32}$/
+const twitterUsernameValidator = /^[a-zA-Z0-9_]{1,15}$/
 
 class InvesteeLinks extends React.Component {
 
@@ -105,21 +107,21 @@ class InvesteeLinks extends React.Component {
     const { twitter } = this.state
     return !twitter
       || !twitter.length
-      || usernameValidator.test(twitter)
+      || twitterUsernameValidator.test(twitter)
   }
 
   validateTelegramUserName = () => {
     const { telegram } = this.state
     return !telegram
       || !telegram.length
-      || usernameValidator.test(telegram)
+      || telegramUsernameValidator.test(telegram)
   }
 
   validateGithubUserName = () => {
     const { github } = this.state
     return !github
       || !github.length
-      || usernameValidator.test(github)
+      || githubUsernameValidator.test(github)
   }
 
   validateForm = () => {
