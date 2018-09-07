@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import { SafeAreaView } from 'react-navigation'
 import BackgroundImage from '../../assets/images/background_image.png'
 
-export function ImagePageContainer ({children}) {
+export function ImagePageContainer ({children, customGradient}) {
   return (
     <SafeAreaView style={ { flex: 1, backgroundColor: '#000000' } } forceInset={ { top: 'always' } }>
       <StatusBar
@@ -13,8 +13,8 @@ export function ImagePageContainer ({children}) {
         barStyle="light-content"
       />
       <ImageBackground source={ BackgroundImage } style={ styles.imageContainer } blurRadius={ 1 }>
-        <LinearGradient style={ { flex: 1 } } locations={ [ 0, 0.4, 0.8 ] }
-                        colors={ [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .83)', 'rgba(20,25,46, .83)' ] }>
+        <LinearGradient style={ { flex: 1 } } locations={ customGradient ? customGradient.levels : [ 0, 0.4, 0.8 ] }
+                        colors={ customGradient ? customGradient.colors : [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .83)', 'rgba(20,25,46, .83)' ] }>
           {children}
         </LinearGradient>
       </ImageBackground>

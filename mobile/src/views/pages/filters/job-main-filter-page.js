@@ -1,4 +1,4 @@
-import { Body, Button, Container, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
+import { Body, Button, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
 import React from 'react'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -7,10 +7,16 @@ import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { ROLES } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { NavigationHeader } from '../../components/header/header'
+import { ImagePageContainer } from '../../design/image-page-container'
 
 class JobMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {
-    this.props.navigation.navigate(PAGES_NAMES.FILTER_PAGE, { filterSetting, filterField: 'job' })
+    this.props.navigation.navigate(PAGES_NAMES.FILTER_PAGE, {
+      gradient: {
+        colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .83)', 'rgba(199, 35, 85, .83)' ],
+        levels: [ 0, 0.4, 0.8 ]
+      },
+      filterSetting, filterField: 'job' })
   }
 
   handleSubmit = () => {
@@ -24,13 +30,17 @@ class JobMainFilter extends React.Component {
     ]
 
     return (
-      <Container style={ styles.container }>
-        <ScrollView style={ { flex: 1 } }>
-          <NavigationHeader
-            onBack={ () => this.props.navigation.goBack() }
-            title={ I18n.t('search_page.job_filter.main_title') }
-            titleStyle={ { color: '#fff', marginTop: 12 } }
-            rightIconSource={ WhiteLogo }/>
+      <ImagePageContainer
+        customGradient={ {
+          colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .83)', 'rgba(199, 35, 85, .83)' ],
+          levels: [ 0, 0.4, 0.8 ]
+        } }>
+        <NavigationHeader
+          onBack={ () => this.props.navigation.goBack() }
+          title={ I18n.t('search_page.job_filter.main_title') }
+          titleStyle={ { color: '#fff', marginTop: 12 } }
+          rightIconSource={ WhiteLogo }/>
+        <ScrollView>
           <View style={ styles.header }>
             <Text style={ styles.headerText }>{ I18n.t('search_page.job_filter.header') }</Text>
           </View>
@@ -59,7 +69,7 @@ class JobMainFilter extends React.Component {
             </Button>
           </View>
         </ScrollView>
-      </Container>
+      </ImagePageContainer>
     )
   }
 }
@@ -67,7 +77,6 @@ class JobMainFilter extends React.Component {
 const styles = EStyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#0E224D',
     paddingTop: 20
   },
   filterList: {
@@ -81,7 +90,6 @@ const styles = EStyleSheet.create({
     height: 90,
     borderBottomColor: '#fff',
     borderBottomWidth: 1,
-    backgroundColor: '#0E224D',
     marginLeft: 0,
     paddingLeft: 15,
   },
