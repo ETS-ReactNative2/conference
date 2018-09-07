@@ -20,7 +20,6 @@ export default class JobDescriptionPage extends Component {
               <NavigationHeader
                 onBack={ () => this.props.navigation.goBack() }
                 title={ I18n.t('job_page.job_description_page_title') }
-                titleStyle={ styles.navigationStyle }
                 rightIconSource={ WhiteLogo }/>
               <View style={{ flex: 1 }}>
                 <Text style={styles.text}>{ description }</Text>

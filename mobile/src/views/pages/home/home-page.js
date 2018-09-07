@@ -67,9 +67,8 @@ class HomePage extends React.Component {
           <View style={ styles.content }>
             <ScrollView>
               <Header title={ I18n.t('home_page.title') }
-                      titleStyle={ { color: 'white', marginTop: 8 } }
                       rightIconSource={ WhiteLogo }/>
-              <View style={ { marginTop: 16 } }>
+              <View>
                 <Subheader text={ I18n.t('common.investors') }/>
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
                   {

@@ -139,7 +139,6 @@ class CommonProfileOnboarding extends React.Component {
                   <NavigationHeader
                     title={ I18n.t('flow_page.common.profile_onboarding.edit_header') }
                     rightIconSource={ WhiteLogo }
-                    titleStyle={ [ styles.headerTitle, { marginTop: 12 } ] }
                     onBack={ () => { navigation.goBack() } }
                   />
                 )
@@ -148,7 +147,6 @@ class CommonProfileOnboarding extends React.Component {
                   <HeaderSkip
                     title={ I18n.t(edit ? 'common.back' : 'flow_page.common.profile_onboarding.header') }
                     rightIconSource={ WhiteLogo }
-                    titleStyle={ styles.headerTitle }
                     onSkipClick={ () => { navigation.navigate(PAGES_NAMES.HOME_PAGE) } }
                   />
                 )
@@ -269,13 +267,6 @@ const styles = EStyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
     letterSpacing: 0.18,
     lineHeight: 30
-  },
-  headerTitle: {
-    textAlign: 'center',
-    flexGrow: 1,
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontFamily: 'Montserrat-SemiBold'
   }
 })
 

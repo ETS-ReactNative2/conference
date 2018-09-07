@@ -66,7 +66,6 @@ class InvestorPage extends Component {
               <NavigationHeader
                 onBack={ () => this.props.navigation.goBack() }
                 title={ I18n.t('investor_page.title') }
-                titleStyle={ { color: '#fff', marginTop: 12 } }
                 rightIconSource={ WhiteLogo }/>
               <View style={ { marginTop: 32 } }>
                 { showSingle && (

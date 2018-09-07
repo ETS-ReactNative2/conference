@@ -20,7 +20,6 @@ export default class ProjectDescriptionPage extends Component {
               <NavigationHeader
                 onBack={ () => this.props.navigation.goBack() }
                 title={ I18n.t('project_page.description_title') }
-                titleStyle={ styles.navigationStyle }
                 rightIconSource={ WhiteLogo }/>
               <View style={{ flex: 1 }}>
                 <Text style={styles.text}>{ project.description }</Text>

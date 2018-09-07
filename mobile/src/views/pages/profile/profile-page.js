@@ -110,7 +110,6 @@ class ProfilePage extends React.Component {
             <ScrollView>
               <View style={ { backgroundColor: 'transparent' } }>
                 <Header title={ I18n.t('profile_page.title') }
-                        titleStyle={ { color: 'white', marginTop: 8 } }
                         rightIconSource={ WhiteLogo }/>
               </View>
               <SmallSubheader text={ I18n.t('profile_page.personal') }/>

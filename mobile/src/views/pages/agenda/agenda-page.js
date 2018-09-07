@@ -137,7 +137,6 @@ class AgendaPage extends Component {
               <MapHeader
                 onMapClick={ this.onShowImagesCallback }
                 title={ I18n.t('agenda_page.title') }
-                titleStyle={ { color: 'white', marginTop: 8 } }
                 rightIconSource={ WhiteLogo }/>
             </View>
             <View style={ styles.tabContainer }>

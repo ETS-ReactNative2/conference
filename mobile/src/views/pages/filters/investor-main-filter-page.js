@@ -50,7 +50,6 @@ class InvestorMainFilter extends React.Component {
         <NavigationHeader
           onBack={ () => this.props.navigation.goBack() }
           title={ I18n.t('search_page.investor_filter.main_title') }
-          titleStyle={ { color: '#fff', marginTop: 12 } }
           rightIconSource={ WhiteLogo }/>
         <ScrollView>
           <View style={ styles.header }>

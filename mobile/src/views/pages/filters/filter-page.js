@@ -8,11 +8,7 @@ import WhiteLogo from '../../../assets/logos/logo-white.png'
 import * as filterActions from '../../../filters/actions'
 import { NavigationHeader } from '../../components/header/header'
 import { FlowButton } from '../../design/buttons'
-import {
-  BLUE_BACKGROUND_COLOR,
-  INVESTOR_FILTER_BACKGROUND_COLOR,
-  PROJECT_FILTER_BACKGROUND_COLOR
-} from '../../design/constants'
+import { BLUE_BACKGROUND_COLOR } from '../../design/constants'
 import { ImagePageContainer } from '../../design/image-page-container'
 import { FlowListItem } from '../../design/list-items'
 import { SubheaderWithSwitch } from '../../design/subheader'
@@ -105,7 +101,8 @@ class FilterPage extends Component {
     const filterField = this.props.navigation.getParam('filterField', {})
     const gradient = this.props.navigation.getParam('gradient', {
       colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .83)', 'rgba(44, 101, 226, .83)' ],
-      levels: [ 0, 0.4, 0.8 ]})
+      levels: [ 0, 0.4, 0.8 ]
+    })
     const key = this.filterSetting.key
     const { checkeds } = this.state
     const isAllSelected = checkeds.find(item => item === false)
@@ -116,7 +113,6 @@ class FilterPage extends Component {
         <NavigationHeader
           onBack={ () => this.props.navigation.goBack() }
           title={ I18n.t(`search_page.${filterField}_filter.${key}.header`) }
-          titleStyle={ { color: '#fff', marginTop: 12 } }
           rightIconSource={ WhiteLogo }/>
         <ScrollView>
           <View style={ styles.headerContainer }>

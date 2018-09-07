@@ -90,7 +90,6 @@ class SearchPage extends React.Component {
           <View style={ styles.content }>
             <View style={ { backgroundColor: 'transparent' } }>
               <Header title={ I18n.t('search_page.title') }
-                      titleStyle={ { color: '#fff', marginTop: 8 } }
                       rightIconSource={ WhiteLogo }/>
             </View>
             <Tabs

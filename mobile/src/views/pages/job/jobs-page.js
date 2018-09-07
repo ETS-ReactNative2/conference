@@ -49,7 +49,6 @@ export default class JobsPage extends Component {
           <NavigationHeader
             onBack={ () => this.props.navigation.goBack() }
             title={ project.name ? `${I18n.t(`project_page.jobs_title`)} ${project.name}` : I18n.t(`search_page.tab_label_job`) }
-            titleStyle={ styles.navigationStyle }
             rightIconSource={ WhiteLogo }/>
           <View style={ { marginTop: 64 } }>
             <React.Fragment>
@@ -79,18 +78,3 @@ export default class JobsPage extends Component {
     )
   }
 }
-const styles = EStyleSheet.create({
-  navigationStyle: {
-    color: '#fff',
-    marginTop: 12
-  },
-  text: {
-    color: '#fff',
-    textAlign: 'center',
-    paddingTop: 20
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#172D5C'
-  }
-})

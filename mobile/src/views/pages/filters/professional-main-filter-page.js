@@ -39,7 +39,6 @@ class ProfessionalMainFilter extends React.Component {
           onBack={ () => this.props.navigation.goBack() }
           iconStyle={ { color: 'white' } }
           title={ I18n.t('search_page.professional_filter.main_title') }
-          titleStyle={ { color: '#fff', marginTop: 12 } }
           rightIconSource={ WhiteLogo }/>
         <ScrollView>
           <View style={ styles.header }>
