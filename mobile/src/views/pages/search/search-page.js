@@ -77,13 +77,6 @@ class SearchPage extends React.Component {
       )
     }
 
-    if (error) {
-      return (
-        <ErrorMessage
-          message={ 'Something went wrong' }
-          onRetry={ fetchMatches }/>
-      )
-    }
     return (
       <ImagePageContainer>
         <View style={ { flex: 1 } }>

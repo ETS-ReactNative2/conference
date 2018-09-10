@@ -55,7 +55,7 @@ class MessagePage extends React.Component {
                   status={ this.state.message.length > 0 ? 'ok' : 'regular' }/>
                 {
                   error && (
-                    <Text style={{color: 'red', marginTop: 8}}>{I18n.t('message_page.error')}</Text>
+                    <Text style={{color: 'red', marginTop: 8}}>{ error.errorMessage }</Text>
                   )
                 }
                 <View style={ { marginTop: 16 } }>

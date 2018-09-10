@@ -6,7 +6,7 @@ import Flag from 'react-native-flags'
 import I18n from '../../../../locales/i18n'
 import ColorLogo from '../../../assets/logos/logo-white.png'
 import { getDimensions } from '../../../common/dimension-utils'
-import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGIONS, TOKEN_TYPES } from '../../../enums'
+import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TOKEN_TYPES } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 
 function createAvatar (project, extraQuery) {
@@ -256,15 +256,16 @@ class XL extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.JOBS_PAGE, { project })
   }
 
-  handleLink = (prefix, link) => {
-    Linking.canOpenURL(prefix + link)
-      .then(supported => {
-        if (supported) {
-          Linking.openURL(prefix + link)
-        } else {
-          console.log('Don\'t know how to open URI: ' + prefix + link)
-        }
-      })
+  handleLink = async (prefix, link = '/') => {
+    try {
+      const supported = await Linking.canOpenURL(prefix + link)
+      if (!supported) {
+        throw new Error('')
+      }
+      await Linking.openURL(prefix + link)
+    } catch (err) {
+      this.props.onLinkError(I18n.t('common.errors.incorrect_url'))
+    }
   }
 
   render () {
@@ -319,7 +320,7 @@ class XL extends React.Component {
                 <Text style={ xl.title }>{ name }</Text>
               </View>
               <View style={ { marginTop: 2, marginBottom: 2 } }>
-                <Text style={ medium.subtitle }>{ tagline ? tagline : '...'}</Text>
+                <Text style={ medium.subtitle }>{ tagline ? tagline : '...' }</Text>
               </View>
               <View style={ styles.inline }>
                 <React.Fragment>
@@ -350,7 +351,7 @@ class XL extends React.Component {
           </View>
           <View style={ styles.inline }>
             <View style={ xl.boxContainer }>
-              <Text style={ [ xl.header, styles.spaceAbove, styles.spaceBelow ] }>{ I18n.t('cards.description')}</Text>
+              <Text style={ [ xl.header, styles.spaceAbove, styles.spaceBelow ] }>{ I18n.t('cards.description') }</Text>
               <Text style={ xl.subtitle }>{ description ? description : '...' }</Text>
               <Text style={ [ xl.header, styles.spaceAbove, styles.spaceBelow ] }>{ I18n.t('cards.notable')
                 .toUpperCase() }</Text>
@@ -377,7 +378,8 @@ class XL extends React.Component {
 
               <Text style={ [ xl.header ] }>{ I18n.t('cards.raising').toUpperCase() }</Text>
               <Text style={ xl.subtitle }>${ fundraisingAmount }</Text>
-              <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 } style={ [ xl.header, { marginTop: 16 } ] }>{ I18n.t('cards.offer').toUpperCase() }</Text>
+              <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 } style={ [ xl.header, { marginTop: 16 } ] }>{ I18n.t(
+                'cards.offer').toUpperCase() }</Text>
               <Text style={ xl.subtitle }>{ I18n.t(`common.giveaways.${giveaway.slug}`) }</Text>
             </View>
           </View>
@@ -409,7 +411,8 @@ class XL extends React.Component {
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.telegram ? (
-                <TouchableHighlight onPress={ () => this.handleLink('https://t.me/', project.telegram) } underlayColor='transparent'>
+                <TouchableHighlight onPress={ () => this.handleLink('https://t.me/', project.telegram) }
+                                    underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
                           name={ 'telegram' }/>
@@ -423,7 +426,8 @@ class XL extends React.Component {
           <View style={ styles.inline }>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.github ? (
-                <TouchableHighlight onPress={ () => this.handleLink('https://github.com/', project.github) } underlayColor='transparent'>
+                <TouchableHighlight onPress={ () => this.handleLink('https://github.com/', project.github) }
+                                    underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
                           name={ 'github' }/>
@@ -435,7 +439,8 @@ class XL extends React.Component {
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.twitter ? (
-                <TouchableHighlight onPress={ () => this.handleLink('https://twitter.com/', project.twitter) } underlayColor='transparent'>
+                <TouchableHighlight onPress={ () => this.handleLink('https://twitter.com/', project.twitter) }
+                                    underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
                           name={ 'twitter' }/>

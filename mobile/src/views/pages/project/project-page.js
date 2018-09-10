@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { getDimensions } from '../../../common/dimension-utils'
+import * as globalActions from '../../../global/actions'
 import { NavigationHeader } from '../../components/header/header'
 import Project from '../../components/project/project-cards'
 import { ImagePageContainer } from '../../design/image-page-container'
@@ -47,6 +48,7 @@ class ProjectPage extends Component {
     <Project.XL
       key={ index }
       project={ project }
+      onLinkError={ this.props.showError}
       navigation={ this.props.navigation }/>
 
   render () {
@@ -216,8 +218,10 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = () => {
-  return {}
+const mapDispatchToProps = dispatch => {
+  return {
+    showError: mes =>dispatch(globalActions.showAlertError(mes))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectPage)

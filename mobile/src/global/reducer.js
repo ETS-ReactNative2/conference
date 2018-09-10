@@ -43,7 +43,7 @@ export function globalReducer (state = initialState, action) {
     case SEND_MESSAGE_ERROR:
       return {
         ...state,
-        showMessageError: action.data.status
+        showMessageError: action.data
       }
     case SHOW_ALERT:
       return {

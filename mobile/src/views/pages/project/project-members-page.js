@@ -1,4 +1,4 @@
-import { Body, Left, List, ListItem, Right, Text } from 'native-base'
+import { Left, List, ListItem, Right, Text } from 'native-base'
 import React, { Component } from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -7,6 +7,7 @@ import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
 import * as profileActions from '../../../profile/actions'
 import { NavigationHeader } from '../../components/header/header'
+import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ProfileWhiteButton } from '../../design/buttons'
 import FlowInputValidated from '../../design/flow-input-validated'
 import { ImagePageContainer } from '../../design/image-page-container'
@@ -29,8 +30,7 @@ class ProjectMembersPage extends Component {
   }
 
   componentWillMount () {
-    const { loadProjectMemebers } = this.props
-    loadProjectMemebers()
+    this.props.loadProjectMembers()
   }
 
   handleRemoveMember = memberId => {
@@ -38,7 +38,7 @@ class ProjectMembersPage extends Component {
     this.props.removeProjectMember(memberId)
   }
 
-  handleAddMemeber = email => {
+  handleAddMember = email => {
     if (email && email !== '') this.props.addProjectMember(email)
     this.setState({ email: '', isChanging: false })
   }
@@ -47,8 +47,21 @@ class ProjectMembersPage extends Component {
     const { projectMembers, memberRequests, error } = this.props
     const { email, isChanging } = this.state
 
-    return (
+    const { isLoading } = this.props
 
+    if (isLoading) {
+      return (
+        <ImagePageContainer>
+          <View style={ { flex: 1 } }>
+            <View style={ styles.content }>
+              <LunaSpinner/>
+            </View>
+          </View>
+        </ImagePageContainer>
+      )
+    }
+
+    return (
       <ImagePageContainer>
         <View style={ { flex: 1, justifyContent: 'flex-start' } }>
           <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
@@ -63,8 +76,6 @@ class ProjectMembersPage extends Component {
                     <Left>
                       <Text style={ styles.Text }>{ member.firstName } { member.lastName }</Text>
                     </Left>
-                    <Body style={ styles.nonBorder }>
-                    </Body>
                   </ListItem>
                 ))
               }
@@ -74,11 +85,8 @@ class ProjectMembersPage extends Component {
                     <Left>
                       <Text style={ styles.Text }>{ member.firstName } { member.lastName }</Text>
                     </Left>
-                    <Body style={ styles.nonBorder }>
-                    </Body>
                     <Right>
-                      <ProfileWhiteButton onPress={ () => this.handleRemoveMember(member.id) }
-                                          text={ I18n.t('common.remove') }/>
+                      <ProfileWhiteButton onPress={ () => this.handleRemoveMember(member.id) } icon={ 'trash' }/>
                     </Right>
                   </ListItem>
                 ))
@@ -111,6 +119,11 @@ class ProjectMembersPage extends Component {
 }
 
 const styles = EStyleSheet.create({
+  content: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    paddingBottom: 49
+  },
   navigationStyle: {
     color: '#fff',
     marginTop: 12
@@ -136,6 +149,8 @@ const styles = EStyleSheet.create({
     borderBottomWidth: 1,
     marginLeft: 0,
     paddingLeft: 15,
+    alignContent: 'space-between',
+    justifyContent: 'space-between'
   },
   Text: {
     color: '#fff',
@@ -151,25 +166,27 @@ const styles = EStyleSheet.create({
   inputView: {
     flex: 1,
     marginRight: 8,
-    marginLeft: 8
+    marginLeft: 8,
+    marginBottom: 4
   },
-  nonBorder: {
-    borderBottomWidth: 0
-  }
+  // nonBorder: {
+  //   borderBottomWidth: 0
+  // }
 })
 
 const mapStateToProps = state => {
   return {
     projectMembers: state.profile.projectMembers.members,
     memberRequests: state.profile.projectMembers.memberRequests,
-    error: state.profile.projectMembers.error
+    error: state.profile.projectMembers.error,
+    isLoading: state.profile.projectMembers.loading
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadProjectMemebers: () => dispatch(profileActions.loadProjectMemebers()),
-    addProjectMember: email => dispatch(profileActions.addProjetMember(email)),
+    loadProjectMembers: () => dispatch(profileActions.loadProjectMembers()),
+    addProjectMember: email => dispatch(profileActions.addProjectMember(email)),
     removeProjectMember: memberId => dispatch(profileActions.removeProjectMember(memberId))
   }
 }

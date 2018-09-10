@@ -1,3 +1,7 @@
+import { batchActions } from 'redux-batch-enhancer'
+import { getErrorDataFromNetworkException } from '../common/utils'
+import * as globalActions from '../global/actions'
+import { LOAD_PROFILES_ERROR } from '../search/action-types'
 import {
   SET_INVESTOR_FILTERS,
   SET_PROJECT_FILTERS,
@@ -17,6 +21,8 @@ export function setInvestorFilter (filters) {
         data: filters
       })
     } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage)]))
     }
   }
 }
@@ -30,6 +36,8 @@ export function setJobFilter (filters) {
       })
     }
     catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage)]))
     }
   }
 }
@@ -42,6 +50,8 @@ export function setProjectFilter (filters) {
         data: filters
       })
     } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage)]))
     }
   }
 }
@@ -54,6 +64,8 @@ export function setProfessionalFilter (filters) {
         data: filters
       })
     } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage)]))
     }
   }
 }
@@ -78,7 +90,8 @@ export function fetchFilters () {
         }
       })
     } catch (err) {
-      dispatch({ type: LOAD_MATCH_FILTERS_ERROR })
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_MATCH_FILTERS_ERROR}]))
     }
   }
 }

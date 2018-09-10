@@ -48,12 +48,12 @@ export function OutlineWhiteButton ({ text = 'Example text', onPress, disabled, 
   )
 }
 
-export function ProfileWhiteButton ({ text = 'Example text', onPress, disabled, icon }) {
+export function ProfileWhiteButton ({ text, onPress, disabled, icon }) {
   const styles = profileWhiteButton
   return (
     <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
       { icon ? <Icon active style={{color: '#FFFFFF'}} name={icon}></Icon> : null }
-      <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
+      { text ? <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text> : null }
     </BaseButton>
   )
 }

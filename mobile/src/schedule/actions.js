@@ -1,3 +1,6 @@
+import { batchActions } from 'redux-batch-enhancer'
+import { getErrorDataFromNetworkException } from '../common/utils'
+import * as globalActions from '../global/actions'
 import { LOAD_SCHEDULE, LOAD_SCHEDULE_SUCCESS, LOAD_SCHEDULE_ERROR } from './action-types'
 import * as api from '../api/api'
 
@@ -27,6 +30,7 @@ export const fetchConferenceSchedule = () => async dispatch => {
       schedule: mappedSchedule
     })
   } catch (err) {
-    dispatch( {type: LOAD_SCHEDULE_ERROR })
+    const errorData = getErrorDataFromNetworkException(err)
+    dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), {type: LOAD_SCHEDULE_ERROR }]))
   }
 }

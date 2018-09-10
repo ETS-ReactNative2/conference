@@ -1,5 +1,9 @@
 import { decamelizeKeys } from 'humps'
+import { batchActions } from 'redux-batch-enhancer'
 import * as api from '../api/api'
+import { getErrorDataFromNetworkException } from '../common/utils'
+import * as globalActions from '../global/actions'
+import { LOAD_PROJECT_MEMBERS_ERROR } from '../profile/action-types'
 import {
   LOAD_DEFAULT_PROFILES,
   LOAD_DEFAULT_PROFILES_ERROR,
@@ -22,7 +26,6 @@ export function fetchMatches () {
         api.fetchProjects({}),
         api.fetchInvestors({}),
         api.fetchProfessionals({}),
-        // TODO: unlock when endpoint ready
         api.fetchJobs({})
       ])
       dispatch({
@@ -35,7 +38,8 @@ export function fetchMatches () {
         }
       })
     } catch (err) {
-      dispatch({ type: LOAD_PROFILES_ERROR })
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROFILES_ERROR }]))
     }
   }
 }
@@ -58,7 +62,8 @@ export function fetchDefaults () {
         }
       })
     } catch (err) {
-      dispatch({ type: LOAD_DEFAULT_PROFILES_ERROR })
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_DEFAULT_PROFILES_ERROR }]))
     }
   }
 }
@@ -74,7 +79,8 @@ export function updateJobs (filters) {
         }
       })
     } catch (err) {
-      dispatch({ type: LOAD_PROFILES_ERROR })
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROFILES_ERROR }]))
     }
   }
 }
@@ -90,7 +96,8 @@ export function updateInvestors (filters) {
         }
       })
     } catch (err) {
-      dispatch({ type: LOAD_PROFILES_ERROR })
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROFILES_ERROR }]))
     }
   }
 }
@@ -106,7 +113,8 @@ export function updateProfessionals (filters) {
         }
       })
     } catch (err) {
-      dispatch({ type: LOAD_PROFILES_ERROR })
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROFILES_ERROR }]))
     }
   }
 }
@@ -122,7 +130,8 @@ export function updateProjects (filters) {
         }
       })
     } catch (err) {
-      dispatch({ type: LOAD_PROFILES_ERROR })
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROFILES_ERROR }]))
     }
   }
 }

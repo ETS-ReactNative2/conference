@@ -44,8 +44,6 @@
   "message_page": {
     "type_message": "Send message to investor",
     "message": "Message",
-    "error": "Sending message to investor failed!",
-    "send_message_error": "Error in send message",
     "try_again": "Try again"
   },
   "profile_page": {
@@ -128,8 +126,11 @@
       "incorrect_project_tagline": "Please enter project tagline",
       "incorrect_request": "The request was incorrect. Please try again",
       "invalid_credentials": "Unable to log in with provided credentials",
-      "no_internet_connection": "No internet connection",
-      "server_error": "We have some issues, please try again or contact us"
+      "no_internet_connection": "Can't reach service, please check your internet connection or contact us",
+      "resource_not_found": "Item is not available anymore, please refresh",
+      "general": "Something went wrong, please contact us",
+      "server_error": "We have some issues, please try again or contact us",
+      "incorrect_url": "Cannot open this URL"
     },
     "facebook": "Facebook",
     "facebook_url": "Facebook – https://www.facebook.com/…",

@@ -273,15 +273,16 @@ class XL extends React.Component {
     return false
   }
 
-  handleUrlClick = (prefix, link) => {
-    Linking.canOpenURL(prefix + link)
-      .then(supported => {
-        if (supported) {
-          Linking.openURL(prefix + link)
-        } else {
-          console.log('Don\'t know how to open URI: ' + prefix + link)
-        }
-      })
+  handleLink = async (prefix, link = '/') => {
+    try {
+      const supported = await Linking.canOpenURL(prefix + link)
+      if (!supported) {
+        throw new Error('')
+      }
+      await Linking.openURL(prefix + link)
+    } catch (err) {
+      this.props.onLinkError(I18n.t('common.errors.incorrect_url'))
+    }
   }
 
   render () {
@@ -387,7 +388,7 @@ class XL extends React.Component {
             <View style={ [ xl.boxContainer, styles.center ] }>
               { professional.user.telegram ? (
                 <TouchableHighlight
-                  onPress={ () => this.handleUrlClick('https://t.me/', professional.user.telegram) }
+                  onPress={ () => this.handleLink('https://t.me/', professional.user.telegram) }
                   underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' } name={ 'telegram' }/>
@@ -400,7 +401,7 @@ class XL extends React.Component {
             <View style={ [ xl.boxContainer, styles.center ] }>
               { professional.user.linkedin ? (
                 <TouchableHighlight
-                  onPress={ () => this.handleUrlClick('https://www.linkedin.com/in/', professional.user.linkedin) }
+                  onPress={ () => this.handleLink('https://www.linkedin.com/in/', professional.user.linkedin) }
                   underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }

@@ -12,10 +12,14 @@ import {
   LOAD_PROJECT_MEMBERS,
   LOAD_PROJECT_MEMBERS_SUCCESS,
   LOAD_PROJECT_MEMBERS_ERROR,
+  PROFILE_SPINNER_HIDE,
+  PROFILE_SPINNER_SHOW,
+  PROJECT_MEMBERS_SPINNER_HIDE,
+  PROJECT_MEMBERS_SPINNER_SHOW,
   PROPAGATE_USER_PROFILE,
   PROPAGATE_INVESTOR_PROFILE,
   PROPAGATE_PROFESSIONAL_PROFILE,
-  PROPAGATE_PROJECT_PROFILE
+  PROPAGATE_PROJECT_PROFILE, ADD_PROJECT_MEMBER_ERROR, REMOVE_MEMBER, ADD_PROJECT_MEMBER_SUCCESS
 } from './action-types'
 
 const initialState = {
@@ -127,30 +131,56 @@ export function profileReducer (state = initialState, action) {
       return {
         ...state,
         projectMembers: {
-          members: state.projectMembers.members,
-          memberRequests: state.projectMembers.memberRequests,
-          loading: true,
-          error: false
+          ...state.projectMembers,
+          loading: true
         }
       }
     case LOAD_PROJECT_MEMBERS_SUCCESS:
       return {
         ...state,
         projectMembers: {
+          ...state.projectMembers,
           members: action.data.members,
           memberRequests: action.data.memberRequests,
-          loading: false,
-          error: false
+          loading: false
         }
       }
     case LOAD_PROJECT_MEMBERS_ERROR:
       return {
         ...state,
         projectMembers: {
-          members: state.projectMembers.members,
-          memberRequests: state.projectMembers.memberRequests,
+          ...state.projectMembers,
+          members: [],
+          memberRequests: [],
+          loading: false
+        }
+      }
+    case ADD_PROJECT_MEMBER_ERROR:
+      return {
+        ...state,
+        projectMembers: {
+          ...state.projectMembers,
           loading: false,
           error: true
+        }
+      }
+    case ADD_PROJECT_MEMBER_SUCCESS:
+      return {
+        ...state,
+        projectMembers: {
+          ...state.projectMembers,
+          loading: false,
+          error: false
+        }
+      }
+    case REMOVE_MEMBER:
+      return {
+        ...state,
+        projectMembers: {
+          ...state.projectMembers,
+          members: state.projectMembers.members.filter(mem => mem.id !== action.data),
+          loading: false,
+          error: false
         }
       }
     case PROPAGATE_INVESTOR_PROFILE:
@@ -187,6 +217,32 @@ export function profileReducer (state = initialState, action) {
         investor: state.investor && state.investor.user.user === id
           ? { ...state.investor, user: { ...state.investor.user, ...action.data }}
           : state.investor
+      }
+    case PROFILE_SPINNER_SHOW:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case PROFILE_SPINNER_HIDE:
+      return {
+        ...state,
+        isLoading: false
+      }
+    case PROJECT_MEMBERS_SPINNER_HIDE:
+      return {
+        ...state,
+        projectMembers: {
+          ...state.projectMembers,
+          loading: false
+        }
+      }
+    case PROJECT_MEMBERS_SPINNER_SHOW:
+      return {
+        ...state,
+        projectMembers: {
+          ...state.projectMembers,
+          loading: true
+        }
       }
     case CLEAR:
       return initialState
