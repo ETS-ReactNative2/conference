@@ -48,14 +48,14 @@
     "title": "My profile",
     "personal": "Personal data",
     "job_profile": "Job profile",
-    "upload_loader_text": "Your profile is updating!",
+    "upload_loader_text": "Your profile is updating",
     "project": "Project",
     "investor": "Investor",
     "deactivate_warning": "Deactivated – your profile will not show up for others. Click 'Reactivate' to be included again.",
     "reactivate_warning": "Active – your profile is visible for others. Click 'Deactivate' to hide it."
   },
   "navigator": {
-    "conference": "Conference",
+    "conference": "Schedule",
     "profile": "Profile",
     "search": "Find Matches",
     "home": "Home"
@@ -94,25 +94,25 @@
     "email": "email",
     "email_placeholder": "Enter email",
     "spinner": {
-      "logout": "You're being logout!",
-      "clear": "Clearing app state!"
+      "logout": "You're being logged out",
+      "clear": "Clearing app state"
     },
     "investors": "Investors",
     "projects": "Projects",
-    "attendees": "Professionals attending",
+    "attendees": "Professionals",
     "errors": {
       "email_exists": "Error creating new user.",
       "incorrect_image_url": "Logo URL is not valid",
-      "incorrect_amount": "Please enter number greater than 0 and less than 2147483647",
-      "incorrect_email": "Please enter correct email address",
-      "incorrect_investor_custom_location": "Location can be maximum 40 characters long",
+      "incorrect_amount": "Please enter a number greater than 0 and less than 2147483647",
+      "incorrect_email": "Please enter a correct email address",
+      "incorrect_investor_custom_location": "Location can be up to 40 characters long",
       "incorrect_job_city": "Please enter city",
       "incorrect_job_description": "Please enter either job link or job description",
       "incorrect_job_link": "Please enter either job link or job description",
       "incorrect_job_max_salary": "Value should be greater or equal to 0 and greater than min salary if min salary is specified",
       "incorrect_job_min_salary": "Value should be greater or equal to 0",
       "incorrect_password": "Password must be at least 8 characters long",
-      "incorrect_phone_number": "Please enter correct phone number",
+      "incorrect_phone_number": "Please enter a correct phone number",
       "incorrect_github_user_name": "Please enter a valid GitHub handle",
       "incorrect_twitter_user_name": "Please enter a valid Twitter username",
       "incorrect_telegram_user_name": "Please enter a valid Telegram username",
@@ -254,7 +254,7 @@
     "roles": {
       "other": "Other",
       "backend_developer": "Backend Developer",
-      "ceo": "CEO",
+      "ceo": "Executive",
       "community_manager": "Community Manager",
       "data_scientist": "Data Scientist",
       "designer": "Designer",
@@ -268,7 +268,7 @@
     "roles_job": {
       "other": "Other role job listing",
       "backend_developer": "Backend Developer job listing",
-      "ceo": "CEO job listing",
+      "ceo": "Executive job listing",
       "community_manager": "Community Manager job listing",
       "data_scientist": "Data Scientist job listing",
       "designer": "Designer job listing",
@@ -407,7 +407,7 @@
       "when": "When are you going to do your ICO?"
     },
     "industries": {
-      "title": "Which industry you work in?"
+      "title": "Which industry do you work in?"
     },
     "investee": {
       "industries": {
@@ -586,79 +586,79 @@
     "emailError": "Could not add this user"
   },
   "search_page": {
-    "no_profile": "No profiles found. Try to change filters",
+    "no_profile": "No profiles found. Try adjusting the filters",
     "title": "Search",
     "update_filter": "UPDATE SEARCH FILTERS",
     "investor_filter": {
       "main_title": "Investor Filter",
-      "header": "These are the filters for searching for investors",
+      "header": "Investor search filters",
       "token_types": {
-        "title": "Search investors looking for:",
-        "header": "Token Type"
+        "title": "Filter investors looking for:",
+        "header": "Token Types"
       },
       "funding_stages": {
-        "title": "Search investors looking for:",
+        "title": "Filter investors looking for:",
         "header": "Funding Stages"
       },
       "giveaway": {
-        "title": "Search investors looking for:",
+        "title": "Filter investors looking for:",
         "header": "Investor buys"
       },
       "product_stages": {
-        "title": "Search investors looking for:",
-        "header": "Product Stage"
+        "title": "Filter investors looking for:",
+        "header": "Product Stages"
       },
       "regions": {
-        "title": "Search investors with these nationalities:",
-        "header": "Nationality"
+        "title": "Filter investors by location:",
+        "header": "Location"
       },
       "industries": {
         "title": "Search investors looking for:",
         "header": "Industries"
       },
       "ticket_size": {
-        "title": "Search investors offering:",
-        "header": "Ticket Size"
+        "title": "Filter investors by ticket size:",
+        "header": "Ticket Sizes"
       }
     },
     "job_filter": {
       "main_title": "Job Filter",
       "header": "Tell us more about job offers you are looking for",
       "roles": {
-        "title": "Search with roles",
-        "header": "Role"
+        "title": "Filter by role",
+        "header": "Roles"
       }
     },
     "professional_filter": {
       "main_title": "Professional Filter",
       "header": "Tell us more about professionals you are looking for",
       "roles": {
-        "title": "Search with roles",
-        "header": "Role"
+        "title": "Filter by role",
+        "header": "Roles"
       }
     },
     "project_filter": {
-      "main_title": "Project Filter",
+      "main_title": "Project Filters",
       "header": "Tell us more about the projects you are searching for",
       "token_types": {
-        "title": "Search projects having:",
-        "header": "Token Type"
+        "title": "Filter projects by token type:",
+        "header": "Token Types"
       },
       "funding_stages": {
-        "title": "Search projects that are at:",
+        "title": "Filter projects by product stage:",
         "header": "Funding Stages"
       },
       "giveaway": {
-        "title": "Search projects offering:",
+        "title": "Filter projects by offering:",
         "header": "Investor buys"
       },
       "product_stages": {
-        "title": "Search projects that are at:",
-        "header": "Product Stage"
+        "title": "Filter projects by funding stage:",
+        "header": "Product Stages"
       },
       "regions": {
-        "title": "Search projects with these countries:",
-        "header": "Country"
+        "title": "Filter projects by region:",
+        "header": "Regions"
       }
     },
     "tab_label_investor": "Investors",

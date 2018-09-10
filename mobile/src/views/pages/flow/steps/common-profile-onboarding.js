@@ -22,7 +22,7 @@ import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
 
 const options = {
-  title: 'Select Avatar',
+  title: 'Select Profile Photo',
   storageOptions: {
     skipBackup: true,
     path: 'images'
@@ -162,11 +162,11 @@ class CommonProfileOnboarding extends React.Component {
               ) }
               <View style={ { flex: 1 } }>
                 <Form>
-                  <Subheader text={ 'Avatar' }/>
+                  <Subheader text={ 'Profile Photo' }/>
                   <View style={ { margin: 8 } }>
                     {
                       !this.state.avatarSource.uri ? (
-                        <BlueButton text={ 'Choose avatar' } onPress={ this.handleGetImage }/>) : null
+                        <BlueButton text={ 'Choose Profile Photo' } onPress={ this.handleGetImage }/>) : null
                     }
                     { this.state.avatarSource.uri ? (
                       <View style={ { width: '100%', justifyContent: 'center', alignContent: 'center', marginTop: 8 } }>
