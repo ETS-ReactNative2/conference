@@ -18,7 +18,6 @@ import { Subheader } from '../../../design/subheader'
 class EmployerJobs extends React.Component {
 
   static BACKGROUND_COLOR = '#182E5B'
-  static TITLE = 'Job questions'
 
   constructor (props) {
     super(props)

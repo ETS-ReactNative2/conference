@@ -29,6 +29,8 @@
     "traits": "Traits",
     "most": "I know the most about:",
     "raising": "Raising",
+    "year": "year",
+    "years": "years",
     "part_time": "Part time",
     "payments": "Payments"
   },
@@ -42,7 +44,9 @@
   "message_page": {
     "type_message": "Send message to investor",
     "message": "Message",
-    "error": "Sending message to investor failed!"
+    "error": "Sending message to investor failed!",
+    "send_message_error": "Error in send message",
+    "try_again": "Try again"
   },
   "profile_page": {
     "title": "My profile",
@@ -117,8 +121,8 @@
       "incorrect_twitter_user_name": "Please enter a valid Twitter username",
       "incorrect_telegram_user_name": "Please enter a valid Telegram username",
       "incorrect_linkedin_user_name": "Please enter a valid LinkedIn username",
-      "incorrect_profile_first_name": "Given name must be at least 3 characters long",
-      "incorrect_profile_last_name": "Family name must be at least 3 characters long",
+      "incorrect_profile_first_name": "Given name must be at least 2 characters long",
+      "incorrect_profile_last_name": "Family name must be at least 2 characters long",
       "incorrect_project_description": "Plesae enter project description",
       "incorrect_project_name": "Project name must be at least 3 characters long",
       "incorrect_project_tagline": "Please enter project tagline",
@@ -289,7 +293,11 @@
     },
     "twitter": "Twitter",
     "twitter_url": "Twitter – https://twitter.com/…",
-    "yes": "Yes"
+    "yes": "Yes",
+    "status": {
+      "loading": "Loading...",
+      "loading_title": "LOADING"
+    }
   },
   "drawer": {
     "agenda": "Agenda",
@@ -300,18 +308,22 @@
   "flow_page": {
     "common": {
       "profile_onboarding": {
+        "avatar": "Profile Photo",
+        "change_image": "Tap image above to change",
+        "choose_image": "Change Profile Photo",
         "company": "Company",
+        "edit_header": "Edit basic info",
         "first_name": "Given Name",
         "header": "WELCOME",
-        "edit_header": "Edit basic info",
         "last_name": "Family Name",
+        "select_image": "Select Profile Photo",
         "spinner_text": "Saving your profile... Please wait",
         "title": "We would like to know more about you",
         "titleField": "Job Title"
       },
       "profile_type": {
         "meeting": "Find a new job",
-        "metting_investors": "Edit my company profile",
+        "meeting_investors": "Edit my company profile",
         "projects": "Edit my investor profile",
         "title": "What would you like to do?"
       }
@@ -516,7 +528,8 @@
   "notifications": {
     "button_is_read": "Read",
     "button_is_unread": "Mark as read",
-    "mark_all_read": "Mark all as read"
+    "mark_all_read": "Mark all as read",
+    "went_wrong": "Something went wrong"
   },
   "privacy_policy_page": {
     "title": "Privacy Policy",
@@ -563,7 +576,8 @@
     }
   },
   "professional_page": {
-    "title": "Professional details"
+    "title": "Professional details",
+    "experience": "Experience"
   },
   "job_page": {
     "job_description_page_title": "Job Description"
@@ -585,13 +599,26 @@
     "title": "Project Members",
     "emailError": "Could not add this user"
   },
+  "filter_page": {
+    "type": {
+      "token_types": "TOKEN TYPES",
+      "ticket_size": "TICKET SIZE",
+      "funding_stages": "FUNDING STAGE",
+      "giveaway": "INVESTOR BUYS",
+      "product_stages": "PRODUCT STAGE",
+      "nationality": "NATIONALITY",
+      "country": "COUNTRY",
+      "roles": "ROLES"
+    }
+  },
   "search_page": {
     "no_profile": "No profiles found. Try adjusting the filters",
     "title": "Search",
     "update_filter": "UPDATE SEARCH FILTERS",
+    "filter": "filter",
     "investor_filter": {
       "main_title": "Investor Filter",
-      "header": "Investor search filters",
+      "header": "Tell us more about the investors you are searching for",
       "token_types": {
         "title": "Filter investors looking for:",
         "header": "Token Types"
@@ -609,7 +636,7 @@
         "header": "Product Stages"
       },
       "regions": {
-        "title": "Filter investors by location:",
+        "title": "Filter investors by nationality:",
         "header": "Location"
       },
       "industries": {
@@ -623,17 +650,17 @@
     },
     "job_filter": {
       "main_title": "Job Filter",
-      "header": "Tell us more about job offers you are looking for",
+      "header": "Tell us more about the job offers you are looking for",
       "roles": {
-        "title": "Filter by role",
+        "title": "Filter by role:",
         "header": "Roles"
       }
     },
     "professional_filter": {
       "main_title": "Professional Filter",
-      "header": "Tell us more about professionals you are looking for",
+      "header": "Tell us more about the professionals you are looking for",
       "roles": {
-        "title": "Filter by role",
+        "title": "Filter by role:",
         "header": "Roles"
       }
     },
@@ -645,7 +672,7 @@
         "header": "Token Types"
       },
       "funding_stages": {
-        "title": "Filter projects by product stage:",
+        "title": "Filter projects by funding stage:",
         "header": "Funding Stages"
       },
       "giveaway": {
@@ -653,11 +680,11 @@
         "header": "Investor buys"
       },
       "product_stages": {
-        "title": "Filter projects by funding stage:",
+        "title": "Filter projects by product stage:",
         "header": "Product Stages"
       },
       "regions": {
-        "title": "Filter projects by region:",
+        "title": "Filter projects by country:",
         "header": "Regions"
       }
     },

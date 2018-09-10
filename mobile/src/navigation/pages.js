@@ -302,7 +302,7 @@ const AppStackNavigator = createStackNavigator({
   FILTER_PAGE: {
     screen: FilterPage,
     navigationOptions: () => ({
-      title: 'Filter',
+      title: I18n.t('search_page.filter'),
       ...commonNavBarStyle,
       header: null,
       gesturesEnabled: false

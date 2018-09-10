@@ -6,6 +6,7 @@ import BackgroundImage from '../../../assets/images/background_image.png'
 import LoadingLogo from '../../../assets/logos/logo_glow_blue.png'
 import Header from '../header/header'
 import { StepTitle } from '../../design/step-title'
+import I18n from '../../../../locales/i18n'
 
 const LoadingPage = ({ isLoading, message }) => {
   return (
@@ -21,7 +22,7 @@ const LoadingPage = ({ isLoading, message }) => {
                             colors={ [ 'rgba(22, 25 ,45 , 1)', 'rgba(22, 25 ,45 , .83)', 'rgba(31, 91, 228, .83)' ] }>
               <View style={ styles.content }>
                 <ScrollView style={ { width: '100%' } } contentContainerStyle={ { flexGrow: 1 } }>
-                  <Header title="LOADING" titleStyle={ styles.title }/>
+                  <Header title={I18n.t('common.status.loading_title')} titleStyle={ styles.title } />
                   <View style={ { marginTop: 32, marginLeft: 16, marginRight: 16, marginBottom: 16 } }>
                     <StepTitle text={ message }/>
                   </View>

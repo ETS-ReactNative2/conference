@@ -27,7 +27,7 @@ const options = [
     value: 'investor'
   },
   {
-    slug: 'metting_investors',
+    slug: 'meeting_investors',
     value: 'investee'
   }
 ]

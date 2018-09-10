@@ -1,7 +1,8 @@
-import { Body, Button, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
+import { Body, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
 import React from 'react'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { FlowButton } from '../../design/buttons';
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { ROLES } from '../../../enums'
@@ -26,7 +27,7 @@ class ProfessionalMainFilter extends React.Component {
 
   render () {
     const fields = [
-      { label: 'ROLES', items: ROLES, key: 'roles', stateKey: 'role' },
+      { items: ROLES, key: 'roles', stateKey: 'role' },
     ]
 
     return (
@@ -50,7 +51,7 @@ class ProfessionalMainFilter extends React.Component {
                 <ListItem thumbnail key={ `professional-item-filter-${index}` } style={ styles.investorFilterItem }
                           onPress={ () => this.handleFilterItemClick(filterSetting) }>
                   <Left>
-                    <Text style={ styles.Text }>{ filterSetting.label }</Text>
+                    <Text style={ styles.Text }>{ I18n.t(`filter_page.type.${filterSetting.key}`) }</Text>
                   </Left>
                   <Body style={ styles.nonBorder }>
                   </Body>
@@ -62,11 +63,11 @@ class ProfessionalMainFilter extends React.Component {
             }
           </List>
           <View style={ styles.saveButtonContainer }>
-            <Button
+            <FlowButton
               style={ styles.saveButton }
               onPress={ this.handleSubmit }>
-              <Text style={ styles.buttonCaption }>SAVE</Text>
-            </Button>
+              <Text style={ styles.buttonCaption }>{I18n.t('common.next')}</Text>
+            </FlowButton>
           </View>
         </ScrollView>
       </ImagePageContainer>

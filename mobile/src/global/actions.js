@@ -1,4 +1,5 @@
 import * as api from '../api/api'
+import I18n from '../../locales/i18n'
 import { HIDE_MESSAGE, SEND_MESSAGE_ERROR, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING, SHOW_ALERT, HIDE_ALERT } from './action-types'
 
 export function setGlobalLoading (message) {
@@ -28,7 +29,7 @@ export function sendMessage (msg) {
           status
         }
       })
-      throw new Error('Error in send message')
+      throw new Error(I18n.t('message_page.send_message_error'))
     }
   }
 }

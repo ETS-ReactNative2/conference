@@ -64,7 +64,7 @@ export class ProfessionalCard extends React.Component {
             <Text style={ styles.smallText }>{ city }</Text>
           </View>
           <View style={ styles.rowRemote }>
-            { relocate && <Text style={ styles.smallText }>Relocate</Text> }
+            { relocate && <Text style={ styles.smallText }>{I18n.t('cards.relocate')}</Text> }
             {
               localRemoteOptions.map((item, index) => {
                 const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`)
@@ -79,13 +79,13 @@ export class ProfessionalCard extends React.Component {
           <Text style={ styles.smallText }>{ knowMost }</Text>
           <View style={ styles.rowYears }>
             <View style={ styles.row }>
-              <Text style={ [ styles.smallText, styles.boldText ] }>{ age && `Age: ` }</Text>
-              <Text style={ styles.smallText }>{ age && (age > 1 ? `${age} years` : `${age} year`) }</Text>
+              <Text style={ [ styles.smallText, styles.boldText ] }>{ age && `${I18n.t('cards.age')}: ` }</Text>
+              <Text style={ styles.smallText }>{ age && (age > 1 ? `${age} ${I18n.t('cards.years')}` : `${age} ${I18n.t('cards.year')}`) }</Text>
             </View>
             <View style={ styles.row }>
-              <Text style={ [ styles.smallText, styles.boldText ] }>{ experience && `Experience: ` }</Text>
+              <Text style={ [ styles.smallText, styles.boldText ] }>{ experience && `${I18n.t('professional_page.experience')}: ` }</Text>
               <Text
-                style={ styles.smallText }>{ experience && (experience > 1 ? `${experience} years` : `${experience} year`) }</Text>
+                style={ styles.smallText }>{ experience && (experience > 1 ? `${experience} ${I18n.t('cards.years')}` : `${experience} ${I18n.t('cards.year')}`) }</Text>
             </View>
           </View>
           <View style={ {

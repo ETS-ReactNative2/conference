@@ -1,8 +1,9 @@
 import { HIDE_MESSAGE, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING, SEND_MESSAGE_ERROR, SHOW_ALERT, HIDE_ALERT } from './action-types'
+import I18n from '../../locales/i18n'
 
 const initialState = {
   isLoading: false,
-  loadingMessage: 'Loading...',
+  loadingMessage: I18n.t('common.status.loading'),
   showMessage: false,
   investor: null,
   sendMessageError: false,

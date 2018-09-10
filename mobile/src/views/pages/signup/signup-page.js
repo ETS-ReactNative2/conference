@@ -113,6 +113,17 @@ export class SignupPage extends React.Component {
                   { I18n.t('signup_page.terms_and_conditions') }
                 </Text>
               </View>
+              <View style={styles.policyAndConditionsWrapper}>
+                  <Text style={styles.policyAndConditions} onPress={() => this.props.navigation.navigate(PAGES_NAMES.PRIVACY_POLICY_PAGE)}>
+                    { I18n.t('signup_page.privacy_policy')}
+                  </Text>
+                  <Text style={styles.policyAndConditions}>
+                    &amp;
+                  </Text>
+                  <Text style={styles.policyAndConditions} onPress={() => this.props.navigation.navigate(PAGES_NAMES.TERMS_OF_SERVICE_PAGE)}>
+                    { I18n.t('signup_page.terms_and_conditions') }
+                  </Text>
+                </View>
             </View>
           </Content>
         </Container>

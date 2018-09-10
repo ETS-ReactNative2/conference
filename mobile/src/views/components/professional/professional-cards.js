@@ -170,7 +170,7 @@ const Medium = ({ professional, onClick }) => {
                     style={ medium.subtitle }>{ professional.city }</Text> : null
                   }
                   { professional.relocate ?
-                    <Text style={ [ medium.subtitle ] }>Able to relocate</Text> : null }
+                    <Text style={ [ medium.subtitle ] }>{I18n.t('cards.relocate')}</Text> : null }
                 </View>
               </View>
               <View style={ medium.rowDetail }>

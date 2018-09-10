@@ -22,7 +22,7 @@ import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
 
 const options = {
-  title: 'Select Profile Photo',
+  title: I18n.t('flow_page.common.profile_onboarding.select_image'),
   storageOptions: {
     skipBackup: true,
     path: 'images'
@@ -162,11 +162,11 @@ class CommonProfileOnboarding extends React.Component {
               ) }
               <View style={ { flex: 1 } }>
                 <Form>
-                  <Subheader text={ 'Profile Photo' }/>
+                  <Subheader text={ I18n.t('flow_page.common.profile_onboarding.avatar') }/>
                   <View style={ { margin: 8 } }>
                     {
                       !this.state.avatarSource.uri ? (
-                        <BlueButton text={ 'Choose Profile Photo' } onPress={ this.handleGetImage }/>) : null
+                        <BlueButton text={ I18n.t('flow_page.common.profile_onboarding.choose_image') } onPress={ this.handleGetImage }/>) : null
                     }
                     { this.state.avatarSource.uri ? (
                       <View style={ { width: '100%', justifyContent: 'center', alignContent: 'center', marginTop: 8 } }>
@@ -174,7 +174,7 @@ class CommonProfileOnboarding extends React.Component {
                           <Thumbnail large={ true } square={ true } style={ { width: undefined, height: 300 } }
                                     source={ { uri: `${this.state.avatarSource.uri}?w=500&h=500` }}/>
                         </TouchableHighlight>
-                        <Text style={ { color: 'white', textAlign: 'center', marginTop: 8 } }>Tap image above to change</Text>
+                        <Text style={ { color: 'white', textAlign: 'center', marginTop: 8 } }>{ I18n.t('flow_page.common.profile_onboarding.change_image') }</Text>
                       </View>
                     ) : null }
                   </View>

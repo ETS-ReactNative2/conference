@@ -15,7 +15,6 @@ import {ROLES} from '../../../../enums'
 class EmployerRole extends React.Component {
 
   static BACKGROUND_COLOR = '#182E5B'
-  static TITLE = 'Select role'
 
   constructor (props) {
     super(props)

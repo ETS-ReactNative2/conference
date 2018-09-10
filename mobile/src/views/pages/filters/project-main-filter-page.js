@@ -1,7 +1,8 @@
-import { Body, Button, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
+import { Body, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
 import React from 'react'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { FlowButton } from '../../design/buttons';
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGIONS_FILTER, TOKEN_TYPES } from '../../../enums'
@@ -27,11 +28,11 @@ class ProjectMainFilter extends React.Component {
 
   render () {
     const fields = [
-      { label: 'TOKEN TYPES', items: TOKEN_TYPES, key: 'token_types', stateKey: 'tokenType' },
-      { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
-      { label: 'FUNDING STAGE', items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
-      { label: 'INVESTOR BUYS', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
-      { label: 'COUNTRY', items: REGIONS_FILTER, key: 'regions', stateKey: 'region' },
+      { items: TOKEN_TYPES, key: 'token_types', stateKey: 'tokenType' },
+      { items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
+      { items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
+      { items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
+      { items: REGIONS_FILTER, key: 'regions', stateKey: 'region' },
     ]
 
     return (
@@ -55,7 +56,7 @@ class ProjectMainFilter extends React.Component {
                 <ListItem thumbnail key={ index } style={ styles.investorFilterItem }
                           onPress={ () => this.handleFilterItemClick(filterSetting) }>
                   <Left>
-                    <Text style={ styles.Text }>{ filterSetting.label }</Text>
+                    <Text style={ styles.Text }>{ I18n.t(`filter_page.type.${filterSetting.key === 'regions' ? 'country' : filterSetting.key }`) }</Text>
                   </Left>
                   <Body style={ styles.nonBorder }>
                   </Body>
@@ -67,11 +68,11 @@ class ProjectMainFilter extends React.Component {
             }
           </List>
           <View style={ styles.saveButtonContainer }>
-            <Button
+            <FlowButton
               style={ styles.saveButton }
               onPress={ this.handleSubmit }>
-              <Text style={ styles.buttonCaption }>SAVE</Text>
-            </Button>
+              <Text style={ styles.buttonCaption }>{ I18n.t('common.next') }</Text>
+            </FlowButton>
           </View>
         </ScrollView>
       </ImagePageContainer>

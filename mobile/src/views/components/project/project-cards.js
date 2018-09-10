@@ -172,7 +172,7 @@ const Medium = ({ project, onClick }) => {
                 </View>
               </View>
             </View>
-            <Text style={ [ medium.header, medium.amount ] }>Raising ${ fundraisingAmount }</Text>
+            <Text style={ [ medium.header, medium.amount ] }>{`${I18n.t('cards.raising')} ${ fundraisingAmount }`}</Text>
           </View>
         </View>
       </View>
