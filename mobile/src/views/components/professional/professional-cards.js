@@ -57,8 +57,12 @@ const Small = ({ professional, onClick }) => {
               null
             }
           </View>
-          <Text style={ small.subtitle }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
-        </View>
+          {
+            role === 12 ?
+              <Text style={ small.subtitle }>{ professional.roleOtherText }</Text> :
+              <Text style={ small.subtitle }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+          }
+          </View>
       </View>
     </TouchableHighlight>
   )
@@ -142,7 +146,11 @@ const Medium = ({ professional, onClick }) => {
               }
             </View>
             <View style={ { marginTop: 4, marginBottom: 4 } }>
-              <Text style={ medium.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+              {
+                role === 12 ?
+                  <Text style={ medium.role }>{ professional.roleOtherText }</Text> :
+                  <Text style={ medium.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+              }
               <Text
                 ellipsizeMode={ 'tail' } numberOfLines={ 1 }
                 style={ medium.subtitle }>{ professional.skillsText }</Text>
@@ -329,9 +337,11 @@ class XL extends React.Component {
                   </View> : null }
               </View>
               <View style={ { marginTop: 2, marginBottom: 2 } }>
-                <Text
-                  style={ xl.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`)
-                  .toUpperCase() }</Text>
+                {
+                  role === 12 ?
+                    <Text style={ xl.role }>{ professional.roleOtherText.toUpperCase() }</Text> :
+                    <Text style={ xl.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`).toUpperCase() }</Text>
+                }
               </View>
             </View>
           </View>

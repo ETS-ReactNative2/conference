@@ -75,6 +75,7 @@ const initialState = {
   },
   employee: {
     role: -1,
+    roleOtherText: '',
     skills: '',
     traits: '',
     mostInfo: '',

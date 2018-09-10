@@ -358,6 +358,7 @@
       "remote": "Are you willing to work remote?",
       "role": {
         "about": "Tell us more about your skills, traits and knowledge",
+        "other": "Other role",
         "not_looking_for_job": "I'm not looking for a job",
         "title": "Please select the role you're interested in:"
       },
