@@ -388,19 +388,17 @@ class XL extends React.Component {
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
-              <View style={ [ xl.boxContainer, styles.center ] }>
-                { professional.user.linkedin ? (
-                  <TouchableHighlight
-                    onPress={ () => this.handleUrlClick('https://www.linkedin.com/in/', professional.user.linkedin) }
-                    underlayColor='transparent'>
-                    <View>
-                      <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
-                            name={ 'linkedin' }/>
-                      <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.linkedin') }</Text>
-                    </View>
-                  </TouchableHighlight>
-                ) : null }
-              </View>
+              { professional.user.linkedin ? (
+                <TouchableHighlight
+                  onPress={ () => this.handleUrlClick('https://www.linkedin.com/in/', professional.user.linkedin) }
+                  underlayColor='transparent'>
+                  <View>
+                    <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
+                          name={ 'linkedin' }/>
+                    <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.linkedin') }</Text>
+                  </View>
+                </TouchableHighlight>
+              ) : null }
             </View>
           </View>
         </View>

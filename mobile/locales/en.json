@@ -28,7 +28,9 @@
     "skills": "Skills",
     "traits": "Traits",
     "most": "I know the most about:",
-    "raising": "Raising"
+    "raising": "Raising",
+    "part_time": "Part time",
+    "payments": "Payments"
   },
   "home_page": {
     "title": "Home"
@@ -71,6 +73,7 @@
     }
   },
   "common": {
+    "details": "Details",
     "website": "Website",
     "whitepaper": "Whitepaper",
     "back": "Back",

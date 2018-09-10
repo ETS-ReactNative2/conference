@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Dimensions, ScrollView, View } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/logo-white.png'
 import { getDimensions } from '../../../common/dimension-utils'
 import { NavigationHeader } from '../../components/header/header'
+import Job from '../../components/professional/job-cards'
 import { ImagePageContainer } from '../../design/image-page-container'
-import { JobCard } from './components/job-card'
 
 export default class JobsPage extends Component {
   constructor (props) {
@@ -26,8 +25,8 @@ export default class JobsPage extends Component {
     Dimensions.addEventListener('change', this.handleDimensionsChange)
   }
 
-  _renderItem = ({ item: job, index }) => <JobCard key={ `job_card_${index}` } job={ job }
-                                                   navigation={ this.props.navigation }/>
+  _renderItem = ({ item: job, index }) => <Job.XL key={ `job_card_${index}` } job={ job }
+                                                  navigation={ this.props.navigation }/>
 
   componentWillUnmount () {
     Dimensions.removeEventListener('change', this.handleDimensionsChange)
@@ -40,7 +39,18 @@ export default class JobsPage extends Component {
   render () {
     const { itemWidth, sliderWidth } = getDimensions()
     const project = this.props.navigation.getParam('project')
-    const jobs = project.jobListings
+    const jobs = project.jobListings.map(jb => {
+      const { id, imageUrl, name } = project
+      return {
+        ...jb,
+        project: {
+          ...jb.project,
+          id: id || jb.project.id,
+          imageUrl: imageUrl || jb.project.imageUrl,
+          name: name || jb.project.name
+        }
+      }
+    })
     const { currentIndex } = this.state
 
     return (
