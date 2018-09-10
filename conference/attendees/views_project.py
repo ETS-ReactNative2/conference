@@ -19,7 +19,7 @@ class Jobs(generics.ListAPIView):
             roles = self.request.GET.getlist('role')
             if roles:
                 filters['role__in'] = roles
-        return models.JobListing.objects.filter(**filters).distinct()
+        return models.JobListing.objects.filter(**filters).distinct().order_by('?')
 
 
 class JobsDefaults(APIView):
@@ -57,7 +57,7 @@ class ListProject(generics.ListAPIView):
             token_types = self.request.GET.getlist('token_type')
             if token_types:
                 filters['token_type__in'] = token_types
-        return models.Project.objects.filter(**filters).exclude(**excludes).distinct()
+        return models.Project.objects.filter(**filters).exclude(**excludes).distinct().order_by('?')
 
 
 class ProjectsDefaults(APIView):
