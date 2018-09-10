@@ -48,11 +48,11 @@ class CommonProfileOnboarding extends React.Component {
   }
 
   validateProfileFirstName = () => {
-    return validator.isLength(this.state.firstName, { min: 3, max: undefined })
+    return validator.isLength(this.state.firstName, { min: 2, max: undefined })
   }
 
   validateProfileLastName = () => {
-    return validator.isLength(this.state.lastName, { min: 3, max: undefined })
+    return validator.isLength(this.state.lastName, { min: 2, max: undefined })
   }
 
   validateLinkedInUserName = () => {
