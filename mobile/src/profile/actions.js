@@ -1,5 +1,5 @@
-import { getErrorDataFromNetworkException } from '../common/utils'
 import * as api from '../api/api'
+import { getErrorDataFromNetworkException } from '../common/utils'
 import { PROPAGATE_USER_DEFAULTS, PROPAGATE_USER_SEARCH } from '../search/action-types'
 import { fetchDefaults, fetchMatches } from '../search/actions'
 import {
@@ -69,7 +69,7 @@ export function openEdit (type, prefill = true) {
   }
 }
 
-export function updateBasic(basicChanges) {
+export function updateBasic (basicChanges) {
   return async (dispatch, getState) => {
     try {
       const basicInfo = getState().profile.basic
@@ -80,6 +80,12 @@ export function updateBasic(basicChanges) {
       dispatch({
         type: UPDATE_BASIC,
         data: { ...basicChanges, imageUrl: basicChanges.avatarSource.uri }
+      })
+      console.log({
+        basicInfo,
+        basicChanges,
+        shouldUpdateData,
+        shouldUpdatePhoto
       })
       if (shouldUpdatePhoto) {
         await api.uploadImage(basicChanges.avatarSource)
@@ -209,7 +215,20 @@ export function removeProjectMember (memberId) {
 }
 
 function compareUser (first, second) {
-  const { avatarSource: firstAvat, user: firstUser, imageUrl: firstImage, ...firstRest } = first
-  const { avatarSource: secAvat, user: secUser, imageUrl: secImage, ...secondRest } = second
-  return JSON.stringify(firstRest) === JSON.stringify(secondRest)
+  const objFirst = {
+    firstName: first.firstName,
+    lastName: first.lastName,
+    linkedin: first.linkedin,
+    telegram: first.telegram,
+    company: first.company
+  }
+  const objSec = {
+    firstName: second.firstName,
+    lastName: second.lastName,
+    linkedin: second.linkedin,
+    telegram: second.telegram,
+    company: second.company
+  }
+
+  return JSON.stringify(objFirst) === JSON.stringify(objSec)
 }
