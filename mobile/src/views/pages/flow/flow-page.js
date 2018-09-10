@@ -1,20 +1,18 @@
 import { Button, Icon, View } from 'native-base'
 import React from 'react'
-import { BackHandler, Image, ImageBackground, StatusBar } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
+import { BackHandler, Image, StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import { batchActions } from 'redux-batch-enhancer'
-import BackgroundImage from '../../../assets/images/background_image.png'
+
+import I18n from '../../../../locales/i18n'
+import WhiteLogo from '../../../assets/logos/logo-white.png'
+import { globalActions } from '../../../global'
+import { PAGES_NAMES } from '../../../navigation'
 import { profileActions } from '../../../profile'
 import { signUpActions } from '../../../signup'
 import { NavigationHeader } from '../../components/header/header'
 import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation } from './steps'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
-import { PAGES_NAMES } from '../../../navigation';
-
-import I18n from '../../../../locales/i18n'
-import { globalActions } from '../../../global'
 
 class FlowPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -50,7 +48,7 @@ class FlowPage extends React.Component {
     )
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     BackHandler.removeEventListener(
       'hardwareBackPress',
       this.onBackButtonPressAndroid
@@ -146,21 +144,24 @@ class FlowPage extends React.Component {
     const { CurrentStep } = this.state
 
     return (
-      <SafeAreaView style={ { flex: 1, backgroundColor: this.state.CurrentStep.BACKGROUND_COLOR || 'white' } } forceInset={ { top: 'always' } }>
+      <SafeAreaView style={ { flex: 1, backgroundColor: this.state.CurrentStep.BACKGROUND_COLOR || 'white' } }
+                    forceInset={ { top: 'always' } }>
         <StatusBar
           translucent={ true }
           barStyle="light-content"
         />
-        <View style={ { flex:1, backgroundColor: this.state.CurrentStep.BACKGROUND_COLOR || 'white' } }>
-          <NavigationHeader
-            onBack={ () => this.onHeaderBackButton() }
-            title={ I18n.t('flow_page.title') }
-            rightIconSource={ WhiteLogo }/>
+        <View style={ { flex: 1, backgroundColor: this.state.CurrentStep.BACKGROUND_COLOR || 'white' } }>
           <View style={ { flex: 1 } }>
+            <NavigationHeader
+              onBack={ () => this.onHeaderBackButton() }
+              title={ this.props.navigation.getParam('title', I18n.t('flow_page.title')) }
+              rightIconSource={ WhiteLogo }/>
+            <View style={{ flex: 1}}>
             <CurrentStep
               onFill={ this.onFill }
               style={ { marginBottom: 16, marginTop: 16 } }
             />
+            </View>
           </View>
         </View>
       </SafeAreaView>
@@ -178,7 +179,8 @@ const mapDispatchToProps = dispatch => {
   return {
     uploadProfile: () => dispatch(signUpActions.uploadProfile()),
     fetchProfiles: () => dispatch(profileActions.fetchProfiles()),
-    startLoading: () => dispatch(batchActions([ globalActions.hideAlert(), globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
+    startLoading: () => dispatch(batchActions([ globalActions.hideAlert(),
+      globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
     showAlertMessage: errMessage => dispatch(globalActions.showAlertError(errMessage)),
     finishLoading: () => dispatch(globalActions.unsetGlobalLoading())
   }

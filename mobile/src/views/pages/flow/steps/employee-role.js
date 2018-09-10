@@ -1,7 +1,7 @@
 import { Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import {KeyboardAvoidingView, Platform, ScrollView} from 'react-native'
+import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { ROLES } from '../../../../enums'
@@ -45,43 +45,45 @@ class EmployeeRole extends React.Component {
   render () {
     return (
       <FlowContainer>
-        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={96} enabled={Platform.OS === 'ios'}>
-          <ScrollView contentContainerStyle={ { flexGrow: 1, paddingLeft: 16, paddingRight: 16 } }>
-            <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-              <StepTitle text={ I18n.t('flow_page.employee.role.title') }/>
-            </View>
-            <View style={ { flex: 1, flexWrap: 'wrap', justifyContent: 'flex-start', flexDirection: 'row' } }>
-              {
-                ROLES.map(({ slug: option, index }) => {
-                  return (
-                    <Chip
-                      key={`role-item-${index}`}
-                      onSelect={ () => this.handleChange(index) }
-                      selected={ this.state.selected === index }
-                      text={ I18n.t(`common.roles.${option}`) }/>
-                  )
-                })
-              }
-            </View>
-            <View style={{ margin: 8 }}>
-              <FlowInput
-                floatingLabel
-                labelText={I18n.t('flow_page.employee.role.other')}
-                status={ this.state.other.length > 0 ? 'ok' : 'regular' }
-                onChangeText={ text => this.handleFieldChange(text, 'other') }
-                value={ this.state.other }/>
-            </View>
-          </ScrollView>
-          <View style={ { margin: 8 } }>
-            <Text style={ { color: 'white', fontWeight: 'bold', margin: 16, textAlign: 'center' } }
-                  onPress={ this.onAbortClick }>{ I18n.t('flow_page.employee.role.not_looking_for_job') }</Text>
-            <FlowButton
-              text={ I18n.t('common.next') }
-              disabled={ !this.state.isFormValid }
-              onPress={ this.handleSubmit }
-            />
-          </View>
-        </KeyboardAvoidingView>
+        <View style={ { flex: 1, justifyContent: 'flex-start' } }>
+          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={ 96 } enabled={ Platform.OS === 'ios' }>
+            <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+              <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
+                <StepTitle text={ I18n.t('flow_page.employee.role.title') }/>
+              </View>
+              <View style={ { flex: 1, flexWrap: 'wrap', justifyContent: 'flex-start', flexDirection: 'row' } }>
+                {
+                  ROLES.map(({ slug: option, index }) => {
+                    return (
+                      <Chip
+                        key={ `role-item-${index}` }
+                        onSelect={ () => this.handleChange(index) }
+                        selected={ this.state.selected === index }
+                        text={ I18n.t(`common.roles.${option}`) }/>
+                    )
+                  })
+                }
+              </View>
+              <View style={ { margin: 8 } }>
+                <FlowInput
+                  floatingLabel
+                  labelText={ I18n.t('flow_page.employee.role.other') }
+                  status={ this.state.other.length > 0 ? 'ok' : 'regular' }
+                  onChangeText={ text => this.handleFieldChange(text, 'other') }
+                  value={ this.state.other }/>
+              </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </View>
+        <View style={ { margin: 8 } }>
+          <Text style={ { color: 'white', fontWeight: 'bold', margin: 16, textAlign: 'center' } }
+                onPress={ this.onAbortClick }>{ I18n.t('flow_page.employee.role.not_looking_for_job') }</Text>
+          <FlowButton
+            text={ I18n.t('common.next') }
+            disabled={ !this.state.isFormValid }
+            onPress={ this.handleSubmit }
+          />
+        </View>
       </FlowContainer>
     )
   }

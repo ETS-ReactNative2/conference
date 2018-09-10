@@ -7,8 +7,9 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 
 export class Header extends React.Component {
   render () {
+    console.log(this.props.background)
     return (
-      <View style={ styles.container }>
+      <View style={ [styles.container, this.props.background ? { backgroundColor: this.props.background } : null ] }>
         <View style={ styles.leftContainer }>
           { this.props.left }
         </View>

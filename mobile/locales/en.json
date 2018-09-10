@@ -306,6 +306,7 @@
     "search": "Search"
   },
   "flow_page": {
+    "employee_title": "Create Job Profile",
     "common": {
       "profile_onboarding": {
         "avatar": "Profile Photo",

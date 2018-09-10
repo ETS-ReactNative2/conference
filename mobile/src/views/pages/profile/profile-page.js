@@ -74,7 +74,7 @@ class ProfilePage extends React.Component {
 
   handleEditProfessional = () => {
     this.props.openEdit('professional')
-    this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
+    this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE, {title: I18n.t('flow_page.employee_title')})
   }
 
   handleEditProject = () => {
