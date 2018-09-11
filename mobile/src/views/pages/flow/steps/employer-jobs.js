@@ -164,7 +164,7 @@ class EmployerJobs extends React.Component {
                         <View style={ { marginTop: 16, marginBottom: 16 } }>
                           <FlowListSwitch
                             text={ I18n.t('flow_page.employer.job.part_time') }
-                            switchText={ I18n.t('common.yes') }
+                            switchText={ this.state[ role ].partTime ? I18n.t('common.yes') : I18n.t('common.no') }
                             selected={ this.state[ role ].partTime }
                             onToggle={ () => this.handleCheckboxPartTimeClick(role) }/>
                         </View>
