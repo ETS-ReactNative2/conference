@@ -12,12 +12,6 @@ import { ImagePageContainer } from '../../design/image-page-container'
 
 class WelcomePage extends React.Component {
 
-  componentDidMount() {
-    if(SplashScreen) {
-      SplashScreen.hide()
-    }
-  }
-
   render () {
     const { navigate } = this.props.navigation
     return (

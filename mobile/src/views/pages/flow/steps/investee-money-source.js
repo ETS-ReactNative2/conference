@@ -124,7 +124,6 @@ class InvesteeMoneySource extends React.Component {
   }
 
   handleChange = (newValue) => {
-    console.log('new nation: ', newValue)
     this.setState({
       nationality: newValue
     }, this.validateForm)

@@ -1,3 +1,5 @@
+import SplashScreen from "react-native-splash-screen"
+import { StackActions, NavigationActions } from 'react-navigation'
 import I18n from '../../locales/i18n'
 import { PAGES_NAMES } from '../navigation'
 import { fetchProfiles } from '../profile/actions'
@@ -39,7 +41,14 @@ export const loadApp = () => async dispatch => {
     userLandingPage = PAGES_NAMES.WELCOME_PAGE
     await storageService.removeItem(TOKEN_NAME)
   } finally {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: userLandingPage })],
+    })
     dispatch(appFinishedLoading())
-    navigationService.navigate(userLandingPage)
+    navigationService.dispatch(resetAction)
+    if(SplashScreen) {
+      SplashScreen.hide()
+    }
   }
 }

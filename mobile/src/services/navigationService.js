@@ -1,9 +1,13 @@
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation'
 
 let _navigator
 
 export const setTopLevelNavigator = (navigatorRef) => {
-    _navigator = navigatorRef
+  _navigator = navigatorRef
+}
+
+export const dispatch = (action) => {
+  _navigator.dispatch(action)
 }
 
 export const navigate = (routeName, params) => {
@@ -12,5 +16,5 @@ export const navigate = (routeName, params) => {
       routeName,
       params,
     })
-  );
+  )
 }
