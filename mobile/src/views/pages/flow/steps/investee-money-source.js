@@ -83,8 +83,6 @@ class InvesteeMoneySource extends React.Component {
           </KeyboardAvoidingView>
         </View>
         <View style={ { margin: 8 } }>
-          <Text style={ { color: 'white', fontWeight: 'bold', margin: 16, textAlign: 'center' } }
-                onPress={ this.onAbortClick }>{ I18n.t('flow_page.money.not_looking_for_money') }</Text>
           <FlowButton
             text={ I18n.t('common.next') }
             disabled={!this.state.isFormValid}
@@ -95,17 +93,8 @@ class InvesteeMoneySource extends React.Component {
     )
   }
 
-  onAbortClick = () => {
-    this.props.save({
-      money: false
-    })
-    this.props.onFill({
-      nextStep: InvesteeHiring
-    })
-  }
-
   validateAmount = (amount) => {
-    return validator.isEmpty(amount) ? false : validator.isNumeric(amount) && Number(amount) > 0 && Number(amount) < 2147483647
+    return validator.isEmpty(amount) ? false : validator.isNumeric(amount) && Number(amount) < 2147483647
   }
 
   isFormValid = () => {
