@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { FlowButton } from '../../design/buttons';
 import I18n from '../../../../locales/i18n'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { ROLES } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { NavigationHeader } from '../../components/header/header'

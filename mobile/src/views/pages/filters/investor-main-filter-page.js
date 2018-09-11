@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
 import { FlowButton } from '../../design/buttons';
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import {
   FUNDING_STAGES,
   GIVEAWAY_TYPES,

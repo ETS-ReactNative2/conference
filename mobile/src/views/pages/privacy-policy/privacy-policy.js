@@ -4,7 +4,7 @@ import { Linking, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { SafeAreaView } from 'react-navigation'
 import I18n from '../../../../locales/i18n'
-import BlackLogo from '../../../assets/logos/logo-black.png'
+import BlackLogo from '../../../assets/logos/ico_black.png'
 import { NavigationHeader } from '../../components/header/header'
 
 class PrivacyPolicyPage extends Component {

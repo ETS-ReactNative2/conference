@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { batchActions } from 'redux-batch-enhancer'
 
 import I18n from '../../../../locales/i18n'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { globalActions } from '../../../global'
 import { PAGES_NAMES } from '../../../navigation'
 import { profileActions } from '../../../profile'
