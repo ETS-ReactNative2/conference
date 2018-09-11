@@ -15,8 +15,8 @@ class ProjectMainFilter extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.FILTER_PAGE, {
       filterSetting, 'filterField': 'project',
       gradient: {
-        colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .83)', 'rgba(14, 34, 77, .83)' ],
-        levels: [ 0, 0.4, 0.8 ]
+        colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .5)', 'rgba(14, 34, 77, .5)', 'rgba(0,0,0,1)' ],
+        levels: [ 0, 0.4, 0.95, 1 ]
       }
     })
   }
@@ -38,8 +38,8 @@ class ProjectMainFilter extends React.Component {
     return (
       <ImagePageContainer
         customGradient={ {
-          colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .83)', 'rgba(14, 34, 77, .83)' ],
-          levels: [ 0, 0.4, 0.8 ]
+          colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .5)', 'rgba(14, 34, 77, .5)', 'rgba(0,0,0,1)' ],
+          levels: [ 0, 0.4, 0.95, 1 ]
         } }>
         <NavigationHeader
           onBack={ () => this.props.navigation.goBack() }

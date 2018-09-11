@@ -14,8 +14,8 @@ class ProfessionalMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {
     this.props.navigation.navigate(PAGES_NAMES.FILTER_PAGE, {
       gradient: {
-        colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .83)', 'rgba(199, 35, 85, .83)' ],
-        levels: [ 0, 0.4, 0.8 ]
+        colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .5)', 'rgba(199, 35, 85, .5)', 'rgba(0,0,0,1)' ],
+        levels: [ 0, 0.4, 0.95, 1 ]
       },
       filterSetting, filterField: 'professional' })
   }
@@ -33,8 +33,8 @@ class ProfessionalMainFilter extends React.Component {
     return (
       <ImagePageContainer
         customGradient={ {
-          colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .83)', 'rgba(199, 35, 85, .83)' ],
-          levels: [ 0, 0.4, 0.8 ]
+          colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .5)', 'rgba(199, 35, 85, .5)' , 'rgba(0,0,0,1)'],
+          levels: [ 0, 0.4, 0.95, 1 ]
         } }>
         <NavigationHeader
           onBack={ () => this.props.navigation.goBack() }
