@@ -32,7 +32,6 @@ class ProjectMainFilter extends React.Component {
       { items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
       { items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
       { items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
-      { items: REGIONS_FILTER, key: 'regions', stateKey: 'region' },
     ]
 
     return (

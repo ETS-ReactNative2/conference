@@ -65,8 +65,6 @@ const initialState = {
     tokenType: -1,
     investorNationality: 0,
     regionOtherText: '',
-    legal: fromCca2ToCountryObject('KR'),
-    main: fromCca2ToCountryObject('KR'),
     giveaway: -1,
     imageUrl: ''
   },
@@ -271,8 +269,6 @@ function fillData (role, info) {
         tokenType: info.tokenType,
         investorNationality: info.region ? info.region : 1,
         regionOtherText: info.regionOtherText,
-        legal: fromCca2ToCountryObject(info.legalCountry || 'KR'),
-        main: fromCca2ToCountryObject(info.mainCountry || 'KR'),
         giveaway: info.giveaway,
         imageUrl: info.imageUrl
       }

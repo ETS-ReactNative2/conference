@@ -2,7 +2,6 @@ import { Icon, Text, View } from 'native-base'
 import React from 'react'
 import { Image, Linking, TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import Flag from 'react-native-flags'
 import I18n from '../../../../locales/i18n'
 import ColorLogo from '../../../assets/logos/logo-white.png'
 import { getDimensions } from '../../../common/dimension-utils'
@@ -128,14 +127,6 @@ const Medium = ({ project, onClick }) => {
           <View style={ medium.infoContainer }>
             <View style={ [ styles.inline, medium.details ] }>
               <Text style={ medium.title }>{ name }</Text>
-              { project.main ?
-                <Flag style={ medium.flag } code={ project.main }/> :
-                null
-              }
-              { project.legal ?
-                <Flag style={ medium.flag } code={ project.legal }/> :
-                null
-              }
             </View>
             <View style={ { marginTop: 4, marginBottom: 4 } }>
               <Text style={ medium.subtitle }>{ tagline }</Text>
@@ -321,31 +312,6 @@ class XL extends React.Component {
               </View>
               <View style={ { marginTop: 2, marginBottom: 2 } }>
                 <Text style={ medium.subtitle }>{ tagline ? tagline : '...' }</Text>
-              </View>
-              <View style={ styles.inline }>
-                <React.Fragment>
-                  { main ?
-                    <View style={ {
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      alignContent: 'center',
-                      marginRight: 4
-                    } }>
-                      <Flag style={ xl.flag } code={ main }/>
-                    </View> :
-                    null
-                  }
-                  { legal ?
-                    <View style={ {
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      alignContent: 'center'
-                    } }>
-                      <Flag style={ [ xl.flag ] } code={ legal }/>
-                    </View> :
-                    null
-                  }
-                </React.Fragment>
               </View>
             </View>
           </View>
