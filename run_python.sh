@@ -3,7 +3,7 @@
 echo ===== INSTALLING SYSTEM DEPENDENCIES =====
 apt-get update -qq \
 && apt-get upgrade -y -qq \
-&& apt-get install -y -qq gdal-bin python-gdal gcc
+&& apt-get install -y -qq gdal-bin python-gdal gcc default-libmysqlclient-dev mysql-server mysql-client
 
 pip install --upgrade pip
 
