@@ -1,5 +1,5 @@
-import { getErrorDataFromNetworkException } from '../common/utils'
 import * as api from '../api/api'
+import { getErrorDataFromNetworkException } from '../common/utils'
 import { PROPAGATE_USER_DEFAULTS, PROPAGATE_USER_SEARCH } from '../search/action-types'
 import { fetchDefaults, fetchMatches } from '../search/actions'
 import {
@@ -16,8 +16,14 @@ import {
   PROPAGATE_USER_PROFILE,
   REACTIVATE_INVESTOR,
   REACTIVATE_PROFILE,
-  UPDATE_BASIC
+  UPDATE_BASIC,
+  PROFILE_SPINNER_SHOW,
+  PROFILE_SPINNER_HIDE,
+  PROJECT_MEMBERS_SPINNER_HIDE,
+  PROJECT_MEMBERS_SPINNER_SHOW, ADD_PROJECT_MEMBER_ERROR, REMOVE_MEMBER, ADD_PROJECT_MEMBER_SUCCESS
 } from './action-types'
+import { globalActions } from '../global'
+import { batchActions } from 'redux-batch-enhancer';
 
 export function fetchProfiles () {
   return async dispatch => {
@@ -69,7 +75,7 @@ export function openEdit (type, prefill = true) {
   }
 }
 
-export function updateBasic(basicChanges) {
+export function updateBasic (basicChanges) {
   return async (dispatch, getState) => {
     try {
       const basicInfo = getState().profile.basic
@@ -80,6 +86,12 @@ export function updateBasic(basicChanges) {
       dispatch({
         type: UPDATE_BASIC,
         data: { ...basicChanges, imageUrl: basicChanges.avatarSource.uri }
+      })
+      console.log({
+        basicInfo,
+        basicChanges,
+        shouldUpdateData,
+        shouldUpdatePhoto
       })
       if (shouldUpdatePhoto) {
         await api.uploadImage(basicChanges.avatarSource)
@@ -100,6 +112,9 @@ export function updateBasic(basicChanges) {
 export function activateInvestor () {
   return async dispatch => {
     try {
+      dispatch({
+        type: PROFILE_SPINNER_SHOW
+      })
       await api.reactivateInvestor()
       dispatch(fetchMatches())
       dispatch(fetchDefaults())
@@ -107,6 +122,10 @@ export function activateInvestor () {
         type: REACTIVATE_INVESTOR
       })
     } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(globalActions.showAlertError(errorData.errorMessage))
+    } finally {
+      dispatch({ type: PROFILE_SPINNER_HIDE })
     }
   }
 }
@@ -114,6 +133,9 @@ export function activateInvestor () {
 export function activateProfile () {
   return async dispatch => {
     try {
+      dispatch({
+        type: PROFILE_SPINNER_SHOW
+      })
       await api.reactivateProfile()
       dispatch(fetchMatches())
       dispatch(fetchDefaults())
@@ -121,6 +143,11 @@ export function activateProfile () {
         type: REACTIVATE_PROFILE
       })
     } catch (err) {
+      console.log({err})
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(globalActions.showAlertError(errorData.errorMessage))
+    } finally {
+      dispatch({ type: PROFILE_SPINNER_HIDE })
     }
   }
 }
@@ -128,11 +155,18 @@ export function activateProfile () {
 export function leaveProject () {
   return async dispatch => {
     try {
+      dispatch({
+        type: PROFILE_SPINNER_SHOW
+      })
       await api.leaveProject()
       dispatch({
         type: LEAVE_PROJECT
       })
     } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(globalActions.showAlertError(errorData.errorMessage))
+    } finally {
+      dispatch({ type: PROFILE_SPINNER_HIDE })
     }
   }
 }
@@ -140,12 +174,19 @@ export function leaveProject () {
 export function deactivateInvestor () {
   return async (dispatch, getState) => {
     try {
+      dispatch({
+        type: PROFILE_SPINNER_SHOW
+      })
       await api.deactivateInvestor()
       dispatch({
         type: DEACTIVATE_INVESTOR,
         data: getState().profile.investor.user.user
       })
     } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(globalActions.showAlertError(errorData.errorMessage))
+    } finally {
+      dispatch({ type: PROFILE_SPINNER_HIDE })
     }
   }
 }
@@ -153,17 +194,24 @@ export function deactivateInvestor () {
 export function deactivateProfile () {
   return async (dispatch, getState) => {
     try {
+      dispatch({
+        type: PROFILE_SPINNER_SHOW
+      })
       await api.deactivateProfile()
       dispatch({
         type: DEACTIVATE_PROFILE,
         data: getState().profile.professional.user.user
       })
     } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(globalActions.showAlertError(errorData.errorMessage))
+    } finally {
+      dispatch({ type: PROFILE_SPINNER_HIDE })
     }
   }
 }
 
-export function loadProjectMemebers () {
+export function loadProjectMembers () {
   return async dispatch => {
     try {
       dispatch({
@@ -175,22 +223,28 @@ export function loadProjectMemebers () {
         data: membersResponse.data
       })
     } catch (err) {
-      dispatch({
-        type: LOAD_PROJECT_MEMBERS_ERROR
-      })
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROJECT_MEMBERS_ERROR }]))
+    } finally {
+      dispatch({ type: PROJECT_MEMBERS_SPINNER_HIDE })
     }
   }
 }
 
-export function addProjetMember (email) {
+export function addProjectMember (email) {
   return async dispatch => {
     try {
+      dispatch({ type: PROJECT_MEMBERS_SPINNER_SHOW })
       await api.postMyProjectMembers({ email })
-      dispatch(loadProjectMemebers())
+      dispatch({
+        type: ADD_PROJECT_MEMBER_SUCCESS
+      })
     } catch (err) {
       dispatch({
-        type: LOAD_PROJECT_MEMBERS_ERROR
+        type: ADD_PROJECT_MEMBER_ERROR
       })
+    } finally {
+      dispatch(loadProjectMembers())
     }
   }
 }
@@ -198,18 +252,33 @@ export function addProjetMember (email) {
 export function removeProjectMember (memberId) {
   return async dispatch => {
     try {
+      dispatch({ type: PROJECT_MEMBERS_SPINNER_SHOW })
       await api.deleteMyProjectMembersId({ id: memberId })
-      dispatch(loadProjectMemebers())
+      dispatch({ type: REMOVE_MEMBER, data: memberId})
     } catch (err) {
-      dispatch({
-        type: LOAD_PROJECT_MEMBERS_ERROR
-      })
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROJECT_MEMBERS_ERROR }]))
+    } finally {
+      dispatch({ type: PROJECT_MEMBERS_SPINNER_HIDE })
     }
   }
 }
 
 function compareUser (first, second) {
-  const { avatarSource: firstAvat, user: firstUser, imageUrl: firstImage, ...firstRest } = first
-  const { avatarSource: secAvat, user: secUser, imageUrl: secImage, ...secondRest } = second
-  return JSON.stringify(firstRest) === JSON.stringify(secondRest)
+  const objFirst = {
+    firstName: first.firstName,
+    lastName: first.lastName,
+    linkedin: first.linkedin,
+    telegram: first.telegram,
+    company: first.company
+  }
+  const objSec = {
+    firstName: second.firstName,
+    lastName: second.lastName,
+    linkedin: second.linkedin,
+    telegram: second.telegram,
+    company: second.company
+  }
+
+  return JSON.stringify(objFirst) === JSON.stringify(objSec)
 }

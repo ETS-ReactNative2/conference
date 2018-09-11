@@ -13,14 +13,19 @@ const getErrorDataFromNetworkException = err => {
   } else {
     const isInternalServerError = err.response.status >= 500
     const isInvalidRequestError = err.response.status === 400
+    const isNotFoundResourceError = err.response.status === 404
     const errorCode = err.response.data
     if (isInternalServerError) {
       errorMessage = I18n.t('common.errors.server_error')
     } else if (isInvalidRequestError) {
       errorMessage = I18n.t('common.errors.incorrect_request')
-    } else {
+    } else if (isNotFoundResourceError) {
+      errorMessage = I18n.t('common.errors.resource_not_found')
+    } else if (errorCode) {
       errorMessage = I18n.t(`common.errors.${errorCode}`)
       isFieldError = true
+    } else {
+      errorMessage = I18n.t('common.errors.general')
     }
   }
   return {

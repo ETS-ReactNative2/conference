@@ -256,7 +256,7 @@ class Professionals(generics.ListAPIView):
         roles = self.request.GET.getlist('role')
         if roles:
             filters['role__in'] = roles
-        return models.Professional.objects.filter(**filters).distinct()
+        return models.Professional.objects.filter(**filters).distinct().order_by('?')
 
 
 class ProfessionalsDefaults(APIView):

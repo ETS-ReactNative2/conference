@@ -5,7 +5,7 @@ import { ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { PAGES_NAMES } from '../../../navigation'
 import { searchActions } from '../../../search'
 import ErrorMessage from '../../components/error-message/error-message'
@@ -77,20 +77,12 @@ class SearchPage extends React.Component {
       )
     }
 
-    if (error) {
-      return (
-        <ErrorMessage
-          message={ 'Something went wrong' }
-          onRetry={ fetchMatches }/>
-      )
-    }
     return (
       <ImagePageContainer>
         <View style={ { flex: 1 } }>
           <View style={ styles.content }>
             <View style={ { backgroundColor: 'transparent' } }>
               <Header title={ I18n.t('search_page.title') }
-                      titleStyle={ { color: '#fff', marginTop: 8 } }
                       rightIconSource={ WhiteLogo }/>
             </View>
             <Tabs

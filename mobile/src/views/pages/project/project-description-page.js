@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { SafeAreaView } from 'react-navigation'
 import I18n from '../../../../locales/i18n'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { NavigationHeader } from '../../components/header/header'
 
 export default class ProjectDescriptionPage extends Component {
@@ -20,7 +20,6 @@ export default class ProjectDescriptionPage extends Component {
               <NavigationHeader
                 onBack={ () => this.props.navigation.goBack() }
                 title={ I18n.t('project_page.description_title') }
-                titleStyle={ styles.navigationStyle }
                 rightIconSource={ WhiteLogo }/>
               <View style={{ flex: 1 }}>
                 <Text style={styles.text}>{ project.description }</Text>

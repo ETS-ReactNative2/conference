@@ -7,10 +7,9 @@ import Gallery from 'react-native-image-gallery'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import FirstFloor from '../../../assets/images/maps/first-floor.jpg'
-import SecondFloor from '../../../assets/images/maps/second-floor.png'
 import Rooftop from '../../../assets/images/maps/rooftop.jpg'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
-import ErrorMessage from '../../components/error-message/error-message'
+import SecondFloor from '../../../assets/images/maps/second-floor.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { MapHeader } from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
@@ -93,8 +92,9 @@ class AgendaPage extends Component {
   }
 
   render () {
-    const { isLoading, error, agenda, fetchAgenda } = this.props
+    const { isLoading, error, agenda } = this.props
     const { showingImages } = this.state
+    let days = []
 
     if (isLoading) {
       return (
@@ -107,16 +107,11 @@ class AgendaPage extends Component {
         </ImagePageContainer>
       )
     }
-    if (error) {
-      return (
-        <ErrorMessage
-          message={ 'Something went wrong' }
-          onRetry={ fetchAgenda }/>
-      )
-    }
 
-    const [ talks = { days: [] } ] = agenda
-    const { days } = talks
+    if (!error) {
+      const [ talks = { days: [] } ] = agenda
+      days = talks.days
+    }
 
     return (
       <ImagePageContainer>
@@ -137,7 +132,6 @@ class AgendaPage extends Component {
               <MapHeader
                 onMapClick={ this.onShowImagesCallback }
                 title={ I18n.t('agenda_page.title') }
-                titleStyle={ { color: 'white', marginTop: 8 } }
                 rightIconSource={ WhiteLogo }/>
             </View>
             <View style={ styles.tabContainer }>
@@ -154,7 +148,7 @@ class AgendaPage extends Component {
               }
               {
                 days.length === 0 && (
-                  <Text style={{ color: 'white', textAlign: 'center'}}>{ I18n.t('agenda_page.no_agenda') }</Text>
+                  <Text style={ { color: 'white', textAlign: 'center' } }>{ I18n.t('agenda_page.no_agenda') }</Text>
                 )
               }
             </ScrollView>

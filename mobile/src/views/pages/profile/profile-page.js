@@ -6,7 +6,7 @@ import Config from 'react-native-config'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { PAGES_NAMES } from '../../../navigation'
 import { profileActions } from '../../../profile'
 import { signUpActions } from '../../../signup'
@@ -74,7 +74,7 @@ class ProfilePage extends React.Component {
 
   handleEditProfessional = () => {
     this.props.openEdit('professional')
-    this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
+    this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE, {title: I18n.t('flow_page.employee_title')})
   }
 
   handleEditProject = () => {
@@ -110,7 +110,6 @@ class ProfilePage extends React.Component {
             <ScrollView>
               <View style={ { backgroundColor: 'transparent' } }>
                 <Header title={ I18n.t('profile_page.title') }
-                        titleStyle={ { color: 'white', marginTop: 8 } }
                         rightIconSource={ WhiteLogo }/>
               </View>
               <SmallSubheader text={ I18n.t('profile_page.personal') }/>

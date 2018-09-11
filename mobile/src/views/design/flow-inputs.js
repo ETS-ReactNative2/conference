@@ -74,7 +74,7 @@ export class FlowInput extends Component {
     return (
       <View style={ styles.container }>
         { !this.props.floatingLabel &&
-        <Text style={ styles.label }>{ this.props.labelText }</Text>
+        <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 } style={ styles.label }>{ this.props.labelText }</Text>
         }
 
         <Item floatingLabel={ this.props.floatingLabel }
@@ -83,7 +83,10 @@ export class FlowInput extends Component {
               style={ this.getBorderStyle(this.props.status) }>
           { this.renderLeftIcon() }
           { this.props.floatingLabel &&
-          <Label style={ styles.floatingLabel }>{ this.props.labelText }</Label>
+          <Label ellipsizeMode={ 'tail' } numberOfLines={ 1 } style={ styles.floatingLabel }>
+            <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 } style={ styles.label }>{ this.props.labelText }</Text>
+            {/*{ this.props.labelText }*/}
+            </Label>
           }
           <NativeBaseInput
             keyboardType={ this.props.keyboardType || 'default' }
@@ -154,6 +157,7 @@ const styles = EStyleSheet.create({
     fontFamily: 'Montserrat-Regular',
     color: '#fff',
     fontSize: 16,
+    marginTop: 5,
     paddingTop: 5,
     paddingBottom: 5
   }

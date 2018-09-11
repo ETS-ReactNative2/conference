@@ -1,16 +1,24 @@
-import { Body, Button, Container, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
+import { Body, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
 import React from 'react'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { FlowButton } from '../../design/buttons';
 import I18n from '../../../../locales/i18n'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGIONS_FILTER, TOKEN_TYPES } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { NavigationHeader } from '../../components/header/header'
+import { ImagePageContainer } from '../../design/image-page-container'
 
 class ProjectMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {
-    this.props.navigation.navigate(PAGES_NAMES.FILTER_PAGE, { filterSetting, 'filterField': 'project' })
+    this.props.navigation.navigate(PAGES_NAMES.FILTER_PAGE, {
+      filterSetting, 'filterField': 'project',
+      gradient: {
+        colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .5)', 'rgba(14, 34, 77, .5)', 'rgba(0,0,0,1)' ],
+        levels: [ 0, 0.4, 0.95, 1 ]
+      }
+    })
   }
 
   handleSubmit = () => {
@@ -20,22 +28,24 @@ class ProjectMainFilter extends React.Component {
 
   render () {
     const fields = [
-      { label: 'TOKEN TYPES', items: TOKEN_TYPES, key: 'token_types', stateKey: 'tokenType' },
-      { label: 'PRODUCT STAGE', items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
-      { label: 'FUNDING STAGE', items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
-      { label: 'INVESTOR BUYS', items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
-      { label: 'COUNTRY', items: REGIONS_FILTER, key: 'regions', stateKey: 'region' },
+      { items: TOKEN_TYPES, key: 'token_types', stateKey: 'tokenType' },
+      { items: PRODUCT_STAGES, key: 'product_stages', stateKey: 'productStage' },
+      { items: FUNDING_STAGES, key: 'funding_stages', stateKey: 'fundingStage' },
+      { items: GIVEAWAY_TYPES, key: 'giveaway', stateKey: 'giveaway' },
     ]
 
     return (
-      <Container style={ styles.container }>
-        <ScrollView style={ { flex: 1 } }>
-          <NavigationHeader
-            onBack={ () => this.props.navigation.goBack() }
-            iconStyle={ { color: 'white' } }
-            title={ I18n.t('search_page.project_filter.main_title') }
-            titleStyle={ { color: '#fff', marginTop: 12 } }
-            rightIconSource={ WhiteLogo }/>
+      <ImagePageContainer
+        customGradient={ {
+          colors: [ 'rgba(0, 0, 0, 1)', 'rgba(20,25,46, .5)', 'rgba(14, 34, 77, .5)', 'rgba(0,0,0,1)' ],
+          levels: [ 0, 0.4, 0.95, 1 ]
+        } }>
+        <NavigationHeader
+          onBack={ () => this.props.navigation.goBack() }
+          iconStyle={ { color: 'white' } }
+          title={ I18n.t('search_page.project_filter.main_title') }
+          rightIconSource={ WhiteLogo }/>
+        <ScrollView>
           <View style={ styles.header }>
             <Text style={ styles.headerText }>{ I18n.t('search_page.project_filter.header') }</Text>
           </View>
@@ -45,7 +55,7 @@ class ProjectMainFilter extends React.Component {
                 <ListItem thumbnail key={ index } style={ styles.investorFilterItem }
                           onPress={ () => this.handleFilterItemClick(filterSetting) }>
                   <Left>
-                    <Text style={ styles.Text }>{ filterSetting.label }</Text>
+                    <Text style={ styles.Text }>{ I18n.t(`filter_page.type.${filterSetting.key === 'regions' ? 'country' : filterSetting.key }`) }</Text>
                   </Left>
                   <Body style={ styles.nonBorder }>
                   </Body>
@@ -57,14 +67,14 @@ class ProjectMainFilter extends React.Component {
             }
           </List>
           <View style={ styles.saveButtonContainer }>
-            <Button
+            <FlowButton
               style={ styles.saveButton }
               onPress={ this.handleSubmit }>
-              <Text style={ styles.buttonCaption }>SAVE</Text>
-            </Button>
+              <Text style={ styles.buttonCaption }>{ I18n.t('common.next') }</Text>
+            </FlowButton>
           </View>
         </ScrollView>
-      </Container>
+      </ImagePageContainer>
     )
   }
 }
@@ -72,7 +82,6 @@ class ProjectMainFilter extends React.Component {
 const styles = EStyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#0E224D',
     paddingTop: 20
   },
   filterList: {
@@ -86,7 +95,6 @@ const styles = EStyleSheet.create({
     height: 90,
     borderBottomColor: '#fff',
     borderBottomWidth: 1,
-    backgroundColor: '#0E224D',
     marginLeft: 0,
     paddingLeft: 15,
   },

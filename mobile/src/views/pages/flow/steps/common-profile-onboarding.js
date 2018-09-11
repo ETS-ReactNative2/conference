@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { batchActions } from 'redux-batch-enhancer'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
-import WhiteLogo from '../../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../../assets/logos/ico_white.png'
 import { PAGES_NAMES } from '../../../../navigation/index'
 import { profileActions } from '../../../../profile'
 import { signUpActions } from '../../../../signup'
@@ -22,7 +22,7 @@ import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
 
 const options = {
-  title: 'Select Avatar',
+  title: I18n.t('flow_page.common.profile_onboarding.select_image'),
   storageOptions: {
     skipBackup: true,
     path: 'images'
@@ -48,11 +48,11 @@ class CommonProfileOnboarding extends React.Component {
   }
 
   validateProfileFirstName = () => {
-    return validator.isLength(this.state.firstName, { min: 3, max: undefined })
+    return validator.isLength(this.state.firstName, { min: 2, max: undefined })
   }
 
   validateProfileLastName = () => {
-    return validator.isLength(this.state.lastName, { min: 3, max: undefined })
+    return validator.isLength(this.state.lastName, { min: 2, max: undefined })
   }
 
   validateLinkedInUserName = () => {
@@ -139,7 +139,6 @@ class CommonProfileOnboarding extends React.Component {
                   <NavigationHeader
                     title={ I18n.t('flow_page.common.profile_onboarding.edit_header') }
                     rightIconSource={ WhiteLogo }
-                    titleStyle={ [ styles.headerTitle, { marginTop: 12 } ] }
                     onBack={ () => { navigation.goBack() } }
                   />
                 )
@@ -148,7 +147,6 @@ class CommonProfileOnboarding extends React.Component {
                   <HeaderSkip
                     title={ I18n.t(edit ? 'common.back' : 'flow_page.common.profile_onboarding.header') }
                     rightIconSource={ WhiteLogo }
-                    titleStyle={ styles.headerTitle }
                     onSkipClick={ () => { navigation.navigate(PAGES_NAMES.HOME_PAGE) } }
                   />
                 )
@@ -164,11 +162,11 @@ class CommonProfileOnboarding extends React.Component {
               ) }
               <View style={ { flex: 1 } }>
                 <Form>
-                  <Subheader text={ 'Avatar' }/>
+                  <Subheader text={ I18n.t('flow_page.common.profile_onboarding.avatar') }/>
                   <View style={ { margin: 8 } }>
                     {
                       !this.state.avatarSource.uri ? (
-                        <BlueButton text={ 'Choose avatar' } onPress={ this.handleGetImage }/>) : null
+                        <BlueButton text={ I18n.t('flow_page.common.profile_onboarding.choose_image') } onPress={ this.handleGetImage }/>) : null
                     }
                     { this.state.avatarSource.uri ? (
                       <View style={ { width: '100%', justifyContent: 'center', alignContent: 'center', marginTop: 8 } }>
@@ -176,7 +174,7 @@ class CommonProfileOnboarding extends React.Component {
                           <Thumbnail large={ true } square={ true } style={ { width: undefined, height: 300 } }
                                     source={ { uri: `${this.state.avatarSource.uri}?w=500&h=500` }}/>
                         </TouchableHighlight>
-                        <Text style={ { color: 'white', textAlign: 'center', marginTop: 8 } }>Tap image above to change</Text>
+                        <Text style={ { color: 'white', textAlign: 'center', marginTop: 8 } }>{ I18n.t('flow_page.common.profile_onboarding.change_image') }</Text>
                       </View>
                     ) : null }
                   </View>
@@ -269,13 +267,6 @@ const styles = EStyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
     letterSpacing: 0.18,
     lineHeight: 30
-  },
-  headerTitle: {
-    textAlign: 'center',
-    flexGrow: 1,
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontFamily: 'Montserrat-SemiBold'
   }
 })
 

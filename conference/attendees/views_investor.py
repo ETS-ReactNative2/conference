@@ -42,7 +42,7 @@ class ListInvestor(generics.ListAPIView):
             token_types = self.request.GET.getlist('token_type')
             if token_types:
                 filters['token_types__in'] = token_types
-        return models.Investor.objects.filter(**filters).exclude(**excludes).distinct()
+        return models.Investor.objects.filter(**filters).exclude(**excludes).distinct().order_by('?')
 
 
 class InvestorsDefaults(APIView):

@@ -3,6 +3,7 @@ from collections import OrderedDict
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
+from django.http import HttpResponse
 from django.views.generic import TemplateView
 
 from django.contrib import admin
@@ -46,6 +47,11 @@ class NoUsernameSignUpView(SignupView):
 
         return new_username + str(c)
 
+
+def loader_io(request):
+    return HttpResponse('loaderio-20d1aaa3dcabb85588e12065b8284dd3')
+
+
 urlpatterns = patterns(
     "",
     url(r"^$", TemplateView.as_view(template_name="homepage.html"), name="home"),
@@ -71,6 +77,7 @@ urlpatterns = patterns(
     url(r'^api/', include('attendees.urls')),
     url(r"^api/", include('symposion2016.conf_api.urls')),
     url(r'^api-token-auth/', authentication.obtain_auth_token, name='api_token_auth'),
+    url(r'^loaderio-20d1aaa3dcabb85588e12065b8284dd3/$', loader_io, name='loader_io'),
 
     # url(r"^", include("symposion.cms.urls")),
 )

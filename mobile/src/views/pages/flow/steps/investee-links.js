@@ -2,7 +2,6 @@ import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
@@ -11,7 +10,7 @@ import FlowInput from '../../../design/flow-inputs'
 import FlowInputValidated from '../../../design/flow-input-validated'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
-import { InvesteeProjectLocation } from './index'
+import { InvesteeMoneySource } from './index'
 import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
 
 const githubUsernameValidator = /^[a-zA-Z0-9-]{1,39}(\/[a-zA-Z0-9-]{0,100})?$/
@@ -132,7 +131,7 @@ class InvesteeLinks extends React.Component {
   handleSubmit = () => {
     this.props.save(this.state)
     this.props.onFill({
-      nextStep: InvesteeProjectLocation
+      nextStep: InvesteeMoneySource
     })
   }
 

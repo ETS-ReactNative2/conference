@@ -134,13 +134,13 @@ class EmployeeKeywords extends React.Component {
               />
               <FlowListSwitch
                 text={ I18n.t('flow_page.employee.relocate') }
-                switchText={ 'Yes' }
+                switchText={ this.state.relocate ? I18n.t('common.yes') : I18n.t('common.no') }
                 onToggle={ () => this.handleCheck('relocate') }
                 selected={ this.state.relocate }
               />
               <FlowListSwitch
                 text={ I18n.t('flow_page.employee.remote') }
-                switchText={ 'Yes' }
+                switchText={ this.state.remote ? I18n.t('common.yes') : I18n.t('common.no') }
                 onToggle={ () => this.handleCheck('remote') }
                 selected={ this.state.remote }
               />

@@ -96,8 +96,6 @@ export function uploadProfile () {
             whitepaper: investee.whitepaper,
             telegram: investee.telegram,
             news: investee.news,
-            legalCountry: investee.legal.cca2,
-            mainCountry: investee.main.cca2,
             region: investee.investorNationality,
             regionOtherText: investee.regionOtherText,
             imageUrl: investee.imageUrl

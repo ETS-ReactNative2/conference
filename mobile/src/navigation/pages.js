@@ -41,6 +41,7 @@ import JobsPage from '../views/pages/job/jobs-page'
 import JobDescriptionPage from '../views/pages/job/job-description-page'
 import PrivacyPolicyPage from '../views/pages/privacy-policy/privacy-policy'
 import TermsOfServicePage from '../views/pages/terms-of-service/terms-of-service'
+import { PROJECT_FILTER_BACKGROUND_COLOR } from '../views/design/constants';
 
 const PAGES_NAMES = {
   WELCOME_PAGE: 'WELCOME_PAGE',
@@ -199,6 +200,7 @@ const AppStackNavigator = createStackNavigator({
       title: I18n.t('flow_page.title'),
       ...flowNavbarStyle,
       ...FlowPage.navigationOptions(nav),
+      header: null,
       gesturesEnabled: false
     })
   },
@@ -290,13 +292,17 @@ const AppStackNavigator = createStackNavigator({
     screen: WebviewPage,
     navigationOptions: () => ({
       // header: null,
+      ...flowNavbarStyle,
+      headerStyle: {
+        backgroundColor: PROJECT_FILTER_BACKGROUND_COLOR
+      },
       gesturesEnabled: false
     })
   },
   FILTER_PAGE: {
     screen: FilterPage,
     navigationOptions: () => ({
-      title: 'Filter',
+      title: I18n.t('search_page.filter'),
       ...commonNavBarStyle,
       header: null,
       gesturesEnabled: false

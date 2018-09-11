@@ -6,8 +6,9 @@ import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { getDimensions } from '../../../common/dimension-utils'
+import * as globalActions from '../../../global/actions'
 import { NavigationHeader } from '../../components/header/header'
 import { ImagePageContainer } from '../../design/image-page-container'
 import { ProfessionalCard } from './components/professional-card'
@@ -46,7 +47,7 @@ class ProfessionalPage extends Component {
     return defaults ? this.props.defaultProfessionals : this.props.professionals
   }
 
-  _renderItem = ({ item: professional, index }) => <Professional.XL key={ index } professional={ professional } navigation = { this.props.navigation }/>
+  _renderItem = ({ item: professional, index }) => <Professional.XL key={ index } onLinkError={this.props.showError} professional={ professional } navigation = { this.props.navigation }/>
 
   render () {
     const { itemWidth, sliderWidth } = getDimensions()
@@ -58,7 +59,6 @@ class ProfessionalPage extends Component {
               <NavigationHeader
                 onBack={ () => this.props.navigation.goBack() }
                 title={ I18n.t('professional_page.title') }
-                titleStyle={ { color: '#fff', marginTop: 12 } }
                 rightIconSource={ WhiteLogo }/>
               <View style={ { marginTop: 32 } }>
                 { showSingle && (
@@ -216,8 +216,10 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = () => {
-  return {}
+const mapDispatchToProps = dispatch => {
+  return {
+    showError: mes => dispatch(globalActions.showAlertError(mes))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfessionalPage)

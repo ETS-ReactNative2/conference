@@ -57,8 +57,12 @@ const Small = ({ professional, onClick }) => {
               null
             }
           </View>
-          <Text style={ small.subtitle }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
-        </View>
+          {
+            role === 12 ?
+              <Text style={ small.subtitle }>{ professional.roleOtherText }</Text> :
+              <Text style={ small.subtitle }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+          }
+          </View>
       </View>
     </TouchableHighlight>
   )
@@ -142,7 +146,11 @@ const Medium = ({ professional, onClick }) => {
               }
             </View>
             <View style={ { marginTop: 4, marginBottom: 4 } }>
-              <Text style={ medium.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+              {
+                role === 12 ?
+                  <Text style={ medium.role }>{ professional.roleOtherText }</Text> :
+                  <Text style={ medium.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+              }
               <Text
                 ellipsizeMode={ 'tail' } numberOfLines={ 1 }
                 style={ medium.subtitle }>{ professional.skillsText }</Text>
@@ -170,7 +178,7 @@ const Medium = ({ professional, onClick }) => {
                     style={ medium.subtitle }>{ professional.city }</Text> : null
                   }
                   { professional.relocate ?
-                    <Text style={ [ medium.subtitle ] }>Able to relocate</Text> : null }
+                    <Text style={ [ medium.subtitle ] }>{I18n.t('cards.relocate')}</Text> : null }
                 </View>
               </View>
               <View style={ medium.rowDetail }>
@@ -265,15 +273,16 @@ class XL extends React.Component {
     return false
   }
 
-  handleUrlClick = (prefix, link) => {
-    Linking.canOpenURL(prefix + link)
-      .then(supported => {
-        if (supported) {
-          Linking.openURL(prefix + link)
-        } else {
-          console.log('Don\'t know how to open URI: ' + prefix + link)
-        }
-      })
+  handleLink = async (prefix, link = '/') => {
+    try {
+      const supported = await Linking.canOpenURL(prefix + link)
+      if (!supported) {
+        throw new Error('')
+      }
+      await Linking.openURL(prefix + link)
+    } catch (err) {
+      this.props.onLinkError(I18n.t('common.errors.incorrect_url'))
+    }
   }
 
   render () {
@@ -329,9 +338,11 @@ class XL extends React.Component {
                   </View> : null }
               </View>
               <View style={ { marginTop: 2, marginBottom: 2 } }>
-                <Text
-                  style={ xl.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`)
-                  .toUpperCase() }</Text>
+                {
+                  role === 12 ?
+                    <Text style={ xl.role }>{ professional.roleOtherText.toUpperCase() }</Text> :
+                    <Text style={ xl.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`).toUpperCase() }</Text>
+                }
               </View>
             </View>
           </View>
@@ -377,7 +388,7 @@ class XL extends React.Component {
             <View style={ [ xl.boxContainer, styles.center ] }>
               { professional.user.telegram ? (
                 <TouchableHighlight
-                  onPress={ () => this.handleUrlClick('https://t.me/', professional.user.telegram) }
+                  onPress={ () => this.handleLink('https://t.me/', professional.user.telegram) }
                   underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' } name={ 'telegram' }/>
@@ -388,19 +399,17 @@ class XL extends React.Component {
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
-              <View style={ [ xl.boxContainer, styles.center ] }>
-                { professional.user.linkedin ? (
-                  <TouchableHighlight
-                    onPress={ () => this.handleUrlClick('https://www.linkedin.com/in/', professional.user.linkedin) }
-                    underlayColor='transparent'>
-                    <View>
-                      <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
-                            name={ 'linkedin' }/>
-                      <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.linkedin') }</Text>
-                    </View>
-                  </TouchableHighlight>
-                ) : null }
-              </View>
+              { professional.user.linkedin ? (
+                <TouchableHighlight
+                  onPress={ () => this.handleLink('https://www.linkedin.com/in/', professional.user.linkedin) }
+                  underlayColor='transparent'>
+                  <View>
+                    <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
+                          name={ 'linkedin' }/>
+                    <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.linkedin') }</Text>
+                  </View>
+                </TouchableHighlight>
+              ) : null }
             </View>
           </View>
         </View>

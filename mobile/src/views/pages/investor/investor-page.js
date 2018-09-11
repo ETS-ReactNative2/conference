@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-navigation'
 import { globalActions } from '../../../global'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { getDimensions } from '../../../common/dimension-utils'
 import { NavigationHeader } from '../../components/header/header'
 import { ImagePageContainer } from '../../design/image-page-container'
@@ -66,7 +66,6 @@ class InvestorPage extends Component {
               <NavigationHeader
                 onBack={ () => this.props.navigation.goBack() }
                 title={ I18n.t('investor_page.title') }
-                titleStyle={ { color: '#fff', marginTop: 12 } }
                 rightIconSource={ WhiteLogo }/>
               <View style={ { marginTop: 32 } }>
                 { showSingle && (

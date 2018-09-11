@@ -35,7 +35,7 @@ class NotificationsPage extends Component {
     if (error) {
       return (
         <ErrorMessage
-          message={ 'Something went wrong' }
+          message={ I18n.t('notifications.went_wrong') }
           onRetry={ this.props.fetchNotifications }/>
       )
     }

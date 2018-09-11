@@ -2,10 +2,11 @@ import React from 'react'
 import { Image, ImageBackground, ScrollView, StatusBar, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { SafeAreaView } from 'react-navigation'
-import BackgroundImage from '../../../assets/images/background_image.png'
+import BackgroundImage from '../../../assets/images/bg2.jpg'
 import LoadingLogo from '../../../assets/logos/logo_glow_blue.png'
 import Header from '../header/header'
 import { StepTitle } from '../../design/step-title'
+import I18n from '../../../../locales/i18n'
 
 const LoadingPage = ({ isLoading, message }) => {
   return (
@@ -17,11 +18,11 @@ const LoadingPage = ({ isLoading, message }) => {
             barStyle="light-content"
           />
           <ImageBackground source={ BackgroundImage } style={ styles.imageContainer } blurRadius={ 1 }>
-            <LinearGradient style={ { flex: 1 } } locations={ [ 0, 0.2, 1 ] }
-                            colors={ [ 'rgba(22, 25 ,45 , 1)', 'rgba(22, 25 ,45 , .83)', 'rgba(31, 91, 228, .83)' ] }>
+            <LinearGradient style={ { flex: 1 } } locations={ [ 0, 0.05, 0.95, 1 ] }
+                            colors={ [ 'rgba(0, 0 ,0 , 1)', 'rgba(22, 25 ,45 , .5)', 'rgba(31, 91, 228, .5)', 'rgba(0,0,0,1)' ] }>
               <View style={ styles.content }>
                 <ScrollView style={ { width: '100%' } } contentContainerStyle={ { flexGrow: 1 } }>
-                  <Header title="LOADING" titleStyle={ styles.title }/>
+                  <Header title={I18n.t('common.status.loading_title')} titleStyle={ styles.title } />
                   <View style={ { marginTop: 32, marginLeft: 16, marginRight: 16, marginBottom: 16 } }>
                     <StepTitle text={ message }/>
                   </View>
@@ -48,7 +49,7 @@ const styles = {
     position: 'absolute',
     width: '100%',
     height: '100%',
-    backgroundColor: '#14192E'
+    backgroundColor: 'black'
   },
   imageContainer: {
     flex: 1,

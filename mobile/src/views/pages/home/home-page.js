@@ -4,23 +4,17 @@ import { ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
-import WhiteLogo from '../../../assets/logos/logo-white.png'
+import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { PAGES_NAMES } from '../../../navigation'
 import * as searchActions from '../../../search/actions'
-import ErrorMessage from '../../components/error-message/error-message'
 import Header from '../../components/header/header'
 import Investor from '../../components/investor/investor-cards'
-import LunaSpinner from '../../components/luna-spinner/luna-spinner'
+import Professional from '../../components/professional/professional-cards'
 import Project from '../../components/project/project-cards'
 import { ImagePageContainer } from '../../design/image-page-container'
 import { Subheader } from '../../design/subheader'
-import Professional from '../../components/professional/professional-cards'
 
 class HomePage extends React.Component {
-
-  // componentDidMount () {
-  //   this.props.fetchDefaults()
-  // }
 
   handleInvestorClick = investor => {
     this.props.navigation.navigate(PAGES_NAMES.INVESTOR_PAGE, {
@@ -43,45 +37,31 @@ class HomePage extends React.Component {
     })
   }
 
-  onTabChange = ({ from, i }) => {
-    this.setState({
-      currentTab: i
-    })
-  }
-
   render () {
     const {
-      projects, professionals, investors, isLoading, error, fetchMatches
+      projects, professionals, investors
     } = this.props
 
-    if (error) {
-      return (
-        <ErrorMessage
-          message={ 'Something went wrong' }
-          onRetry={ fetchMatches }/>
-      )
-    }
     return (
       <ImagePageContainer>
         <Container style={ { backgroundColor: 'transparent' } }>
           <View style={ styles.content }>
             <ScrollView>
               <Header title={ I18n.t('home_page.title') }
-                      titleStyle={ { color: 'white', marginTop: 8 } }
                       rightIconSource={ WhiteLogo }/>
-              <View style={ { marginTop: 16 } }>
+              <View>
                 <Subheader text={ I18n.t('common.investors') }/>
                 <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
                   {
                     investors
                       .filter(investor => !investor.hide)
                       .map(investor => (
-                      <Investor.Small
-                        key={ investor.id }
-                        investor={ investor }
-                        onClick={ () => this.handleInvestorClick(investor) }
-                      />
-                    ))
+                        <Investor.Small
+                          key={ investor.id }
+                          investor={ investor }
+                          onClick={ () => this.handleInvestorClick(investor) }
+                        />
+                      ))
                   }
                 </ScrollView>
               </View>
@@ -106,12 +86,12 @@ class HomePage extends React.Component {
                     professionals
                       .filter(prof => !prof.hide)
                       .map((professional, index) => (
-                      <Professional.Small
-                        key={ index }
-                        professional={ professional }
-                        onClick={ () => this.handleProfessionalClick(professional) }
-                      />
-                    ))
+                        <Professional.Small
+                          key={ index }
+                          professional={ professional }
+                          onClick={ () => this.handleProfessionalClick(professional) }
+                        />
+                      ))
                   }
                 </ScrollView>
               </View>
