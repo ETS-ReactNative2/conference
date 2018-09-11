@@ -362,14 +362,14 @@ class XL extends React.Component {
           <View style={ styles.inline }>
             <View style={ xl.boxContainer }>
               <Text style={ xl.header }>{ I18n.t('cards.technology').toUpperCase() }</Text>
-              <Text style={ xl.subtitle }>{ I18n.t(`common.token_types.${tokenType.slug}`) }</Text>
+              <Text style={ xl.subtitle }>{ tokenType ? I18n.t(`common.token_types.${tokenType.slug}`) : '' }</Text>
               <Text style={ [ xl.header, { marginTop: 16 } ] }>{ I18n.t('cards.product').toUpperCase() }</Text>
-              <Text style={ xl.subtitle }>{ I18n.t(`common.product_stages.${productStage.slug}`) }</Text>
+              <Text style={ xl.subtitle }>{ productStage ? I18n.t(`common.product_stages.${productStage.slug}`) : '' }</Text>
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ xl.boxContainer }>
               <Text style={ xl.header }>{ I18n.t('cards.stage').toUpperCase() }</Text>
-              <Text style={ xl.subtitle }>{ I18n.t(`common.funding_stages.${fundingStage.slug}`) }</Text>
+              <Text style={ xl.subtitle }>{ fundingStage ? I18n.t(`common.funding_stages.${fundingStage.slug}`) : '' }</Text>
               <Text style={ [ xl.header, { marginTop: 16 } ] }>{ I18n.t('cards.size').toUpperCase() }</Text>
               <Text style={ xl.subtitle }>{ size }</Text>
             </View>
@@ -380,7 +380,7 @@ class XL extends React.Component {
               <Text style={ xl.subtitle }>${ fundraisingAmount }</Text>
               <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 } style={ [ xl.header, { marginTop: 16 } ] }>{ I18n.t(
                 'cards.offer').toUpperCase() }</Text>
-              <Text style={ xl.subtitle }>{ I18n.t(`common.giveaways.${giveaway.slug}`) }</Text>
+              <Text style={ xl.subtitle }>{ giveaway ? I18n.t(`common.giveaways.${giveaway.slug}`) : '' }</Text>
             </View>
           </View>
           <View style={ [ xl.line, horizontalLineWidth ] }/>
