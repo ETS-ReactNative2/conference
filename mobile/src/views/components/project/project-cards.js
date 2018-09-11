@@ -10,7 +10,7 @@ import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TOKEN_TYPES } from '../
 import { PAGES_NAMES } from '../../../navigation'
 
 function createAvatar (project, extraQuery) {
-  const hasAvatar = (project.imageUrl && project.imageUrl !== '') ? true : false
+  const hasAvatar = (project.imageUrl && project.imageUrl !== '' && project.imageUrl.startsWith('http')) ? true : false
   const avatar = hasAvatar
     ? { uri: `${project.imageUrl}?${extraQuery}` }
     : ColorLogo
