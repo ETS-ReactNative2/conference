@@ -4,9 +4,9 @@
     "error_prefix": "ERROR"
   },
   "cards": {
-    "technology": "Technology",
+    "technology": "Token Types",
     "stage": "Funding",
-    "product": "Product",
+    "product": "Products",
     "market": "Markets",
     "message": "Message",
     "location": "Location",
@@ -289,7 +289,7 @@
     "telegram": "Telegram",
     "telegram_url": "Telegram – https://t.me/…",
     "token_types": {
-      "app_tokens": "App Token",
+      "app_tokens": "Utility Token",
       "header": "Token type",
       "protocols": "Protocol",
       "security_tokens": "Security Token"
@@ -489,7 +489,7 @@
       "amount": "Money ($)",
       "nationality": "Investor nationality",
       "need_money": "Are you looking for money?",
-      "not_looking_for_money": "I am not looking for money",
+      "not_looking_for_money": "We are not raising money",
       "other_location_placeholder": "Enter location",
       "title": "How much money are you planning to raise?"
     },

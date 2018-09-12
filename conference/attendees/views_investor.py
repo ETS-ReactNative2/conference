@@ -94,7 +94,7 @@ class InvestorsIdMessages(APIView):
 
         body = """Dear {},
 
-you have received the following message from a verified Block Seoul conference attendee. You can reach this attendee by replying directly to this email.
+You have received the following message from a verified Block Seoul conference attendee. You can reach this attendee by replying directly to this email.
 
 Best regards,
 Luna
