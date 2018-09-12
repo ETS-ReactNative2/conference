@@ -23,7 +23,11 @@ class EmployeeRole extends React.Component {
       selected: this.props.employee.role,
       other: this.props.employee.roleOtherText
     }
-    this.state.isFormValid = this.state.selected !== -1
+    this.state.isFormValid = this.isFormValid()
+  }
+
+  isFormValid () {
+    return this.state.selected !== -1 && (this.state.selected === 12 ? this.state.other !== '' : true)
   }
 
   onAbortClick = () => {
@@ -39,7 +43,7 @@ class EmployeeRole extends React.Component {
   handleFieldChange = (text, name) => {
     this.setState({
       [ name ]: text
-    })
+    }, this.validateForm)
   }
 
   render () {
@@ -88,6 +92,11 @@ class EmployeeRole extends React.Component {
     )
   }
 
+  validateForm = () => {
+    const isFormValid = this.isFormValid()
+    this.setState({ isFormValid })
+  }
+
   handleSubmit = () => {
     this.props.save({
       role: this.state.selected,
@@ -101,9 +110,8 @@ class EmployeeRole extends React.Component {
 
   handleChange = (index) => {
     this.setState({
-      selected: index,
-      isFormValid: true
-    })
+      selected: index
+    }, this.validateForm)
   }
 }
 

@@ -59,7 +59,7 @@ const Small = ({ professional, onClick }) => {
           </View>
           {
             role === 12 ?
-              <Text style={ small.subtitle }>{ professional.roleOtherText }</Text> :
+              <Text style={ small.subtitle }>{ professional.roleOtherText !== '' ? professional.roleOtherText : I18n.t('common.roles.other') }</Text> :
               <Text style={ small.subtitle }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
           }
         </View>
@@ -148,9 +148,8 @@ const Medium = ({ professional, onClick }) => {
             <View style={ { marginTop: 4, marginBottom: 4 } }>
               {
                 role === 12 ?
-                  <Text style={ medium.role }>{ professional.roleOtherText }</Text> :
-                  <Text
-                    style={ medium.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+                  <Text style={ medium.role }>{ professional.roleOtherText !== '' ? professional.roleOtherText : I18n.t('common.roles.other') }</Text> :
+                  <Text style={ medium.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
               }
               <Text
                 ellipsizeMode={ 'tail' } numberOfLines={ 1 }
@@ -341,9 +340,8 @@ class XL extends React.Component {
               <View style={ { marginTop: 2, marginBottom: 2 } }>
                 {
                   role === 12 ?
-                    <Text style={ xl.role }>{ professional.roleOtherText.toUpperCase() }</Text> :
-                    <Text style={ xl.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`)
-                      .toUpperCase() }</Text>
+                    <Text style={ xl.role }>{ professional.roleOtherText !== '' ? professional.roleOtherText.toUpperCase() : I18n.t('common.roles.other').toUpperCase() }</Text> :
+                    <Text style={ xl.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`).toUpperCase() }</Text>
                 }
               </View>
             </View>
