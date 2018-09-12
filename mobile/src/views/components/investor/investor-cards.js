@@ -5,6 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../locales/i18n'
 import ColorLogo from '../../../assets/logos/conference_logo_welcome_medium.png'
+import MessageIcon from '../../../assets/icons/message_icon.png'
 import { getDimensions } from '../../../common/dimension-utils'
 import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGIONS, TICKET_SIZES, TOKEN_TYPES } from '../../../enums'
 
@@ -436,8 +437,8 @@ class XL extends React.Component {
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               <TouchableHighlight onPress={ onMessageClick } underlayColor='transparent'>
-                <View>
-                  <Icon style={ { textAlign: 'center', color: 'white' } } name={ 'ios-mail-open' }/>
+                <View style={{ alignItems: 'center'}}>
+                  <Image source={ MessageIcon} style={ { width: 32, height: 32, alignItems: 'center', color: 'white' } } name={ 'ios-mail-open' }/>
                   <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('cards.message') }</Text>
                 </View>
               </TouchableHighlight>
