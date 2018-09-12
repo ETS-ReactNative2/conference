@@ -109,7 +109,7 @@ class ProjectMembersPage extends Component {
                 onChangeText={ text => this.setState({ email: text, isChanging: true }) }/>
             </View>
             <View>
-              <ProfileWhiteButton onPress={ () => this.handleAddMemeber(email) } text={ I18n.t('common.add') }/>
+              <ProfileWhiteButton onPress={ () => this.handleAddMember(email) } text={ I18n.t('common.add') }/>
             </View>
           </View>
         </KeyboardAvoidingView>
