@@ -163,7 +163,7 @@ const Medium = ({ project, onClick }) => {
                 </View>
               </View>
             </View>
-            <Text style={ [ medium.header, medium.amount ] }>{`${I18n.t('cards.raising')} ${ fundraisingAmount }`}</Text>
+            <Text style={ [ medium.header, medium.amount ] }>{ Number(fundraisingAmount) > 0 ? `${I18n.t('cards.raising')} ${ fundraisingAmount }` : I18n.t('cards.not_raising')}</Text>
           </View>
         </View>
       </View>
@@ -353,9 +353,16 @@ class XL extends React.Component {
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ xl.boxContainer }>
-
-              <Text style={ [ xl.header ] }>{ I18n.t('cards.raising').toUpperCase() }</Text>
-              <Text style={ xl.subtitle }>${ fundraisingAmount }</Text>
+              { Number(fundraisingAmount) > 0 ?
+                <React.Fragment>
+                  <Text style={ [ xl.header ] }>{ I18n.t('cards.raising').toUpperCase() }</Text>
+                  <Text style={ xl.subtitle }> ${ fundraisingAmount }</Text>
+                </React.Fragment> :
+                <React.Fragment>
+                <Text style={ [ xl.header ] }>{ I18n.t('cards.not_raising').toUpperCase() }</Text>
+                  <Text style={ xl.subtitle }/>
+                </React.Fragment>
+              }
               <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 } style={ [ xl.header, { marginTop: 16 } ] }>{ I18n.t(
                 'cards.offer').toUpperCase() }</Text>
               <Text style={ xl.subtitle }>{ giveaway ? I18n.t(`common.giveaways.${giveaway.slug}`) : '' }</Text>

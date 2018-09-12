@@ -4,6 +4,7 @@
     "error_prefix": "ERROR"
   },
   "cards": {
+    "not_raising": "Not raising",
     "technology": "Token Types",
     "stage": "Funding",
     "product": "Products",
