@@ -247,7 +247,19 @@ class XL extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.JOBS_PAGE, { project })
   }
 
-  handleLink = async (prefix, link = '/') => {
+  handleLink = async (link) => {
+    try {
+      const supported = await Linking.canOpenURL(link)
+      if (!supported) {
+        throw new Error('')
+      }
+      await Linking.openURL(link)
+    } catch (err) {
+      this.props.onLinkError(I18n.t('common.errors.incorrect_url'))
+    }
+  }
+
+  handleSocial = async (prefix, link = '/') => {
     try {
       const supported = await Linking.canOpenURL(prefix + link)
       if (!supported) {
@@ -377,7 +389,7 @@ class XL extends React.Component {
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.telegram ? (
-                <TouchableHighlight onPress={ () => this.handleLink('https://t.me/', project.telegram) }
+                <TouchableHighlight onPress={ () => this.handleSocial('https://t.me/', project.telegram) }
                                     underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
@@ -392,7 +404,7 @@ class XL extends React.Component {
           <View style={ styles.inline }>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.github ? (
-                <TouchableHighlight onPress={ () => this.handleLink('https://github.com/', project.github) }
+                <TouchableHighlight onPress={ () => this.handleSocial('https://github.com/', project.github) }
                                     underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
@@ -405,7 +417,7 @@ class XL extends React.Component {
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.twitter ? (
-                <TouchableHighlight onPress={ () => this.handleLink('https://twitter.com/', project.twitter) }
+                <TouchableHighlight onPress={ () => this.handleSocial('https://twitter.com/', project.twitter) }
                                     underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
