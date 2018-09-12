@@ -323,7 +323,7 @@ class XL extends React.Component {
                 <Text style={ xl.title }>{ name }</Text>
               </View>
               <View style={ { marginTop: 2, marginBottom: 2 } }>
-                <Text style={ medium.subtitle }>{ tagline ? tagline : '...' }</Text>
+                <Text style={ medium.subtitle }>{ tagline }</Text>
               </View>
             </View>
           </View>
