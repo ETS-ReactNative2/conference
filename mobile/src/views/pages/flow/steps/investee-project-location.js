@@ -33,6 +33,7 @@ class InvesteeProjectLocation extends React.Component {
               <StepTitle text={ I18n.t('flow_page.investee.project_location.title') }/>
             </View>
             <Subheader
+              color={'white'}
               text={ I18n.t('flow_page.investee.project_location.legal') }
             />
             <CountrySelect
@@ -43,6 +44,7 @@ class InvesteeProjectLocation extends React.Component {
               placeholder={ I18n.t('flow_page.investee.project_location.country_picker_placeholder') }
             />
             <Subheader
+              color={'white'}
               text={ I18n.t('flow_page.investee.project_location.main') }
             />
             <CountrySelect

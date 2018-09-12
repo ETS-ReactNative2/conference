@@ -32,6 +32,7 @@ class InvesteeHiring extends React.Component {
               <StepTitle text={ I18n.t('flow_page.hiring.title') }/>
             </View>
             <Subheader
+              color={'white'}
               text={ I18n.t(`flow_page.hiring.header`) }
             />
             <FlowListItem

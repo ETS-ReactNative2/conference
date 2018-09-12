@@ -46,6 +46,7 @@ class InvesteeGiveaway extends React.Component {
               <StepTitle text={ I18n.t('flow_page.giveaway.title') }/>
             </View>
             <Subheader
+              color={'white'}
               text={ I18n.t(`flow_page.giveaway.header`) }
             />
             { GIVEAWAY_TYPES.map((size) => {

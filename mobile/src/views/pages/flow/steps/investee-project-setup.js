@@ -40,6 +40,7 @@ class InvesteeProjectSetup extends React.Component {
               </View>
 
               <Subheader
+                color={'white'}
                 text={ I18n.t('flow_page.project_setup.header') }
               />
               <View style={ styles.contentContainer }>

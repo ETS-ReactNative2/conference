@@ -131,7 +131,9 @@ class EmployerJobs extends React.Component {
                     return (
                       <React.Fragment key={ role }>
                         <StepTitle text={ I18n.t(`common.roles_job.${role}`) }/>
-                        <Subheader text={ I18n.t(`flow_page.employer.keyword.links`) }/>
+                        <Subheader
+                          color={'white'}
+                          text={ I18n.t(`flow_page.employer.keyword.links`) }/>
                         <View style={ { marginLeft: 8, marginRight: 8 } }>
                           <FlowInputValidated
                             floatingLabel
@@ -169,6 +171,7 @@ class EmployerJobs extends React.Component {
                             onToggle={ () => this.handleCheckboxPartTimeClick(role) }/>
                         </View>
                         <Subheader
+                          color={'white'}
                           text={ I18n.t('flow_page.employer.payment.title') }
                         />
                         { PAYMENTS.map(({ slug, index }) => {
@@ -182,6 +185,7 @@ class EmployerJobs extends React.Component {
                           )
                         }) }
                         <Subheader
+                          color={'white'}
                           text={ I18n.t('flow_page.employer.location.title') }
                         />
                         { JOB_LOCATION.map(({ slug, index }) => {

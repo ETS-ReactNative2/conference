@@ -32,6 +32,7 @@ class InvestorCompanyLocation extends React.Component {
               <StepTitle text={ I18n.t('flow_page.investor.company_location.title') }/>
             </View>
             <Subheader
+              color={'white'}
               text={ I18n.t('flow_page.investor.company_location.nationality') }
             />
             <CountrySelect

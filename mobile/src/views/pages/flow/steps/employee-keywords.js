@@ -100,6 +100,7 @@ class EmployeeKeywords extends React.Component {
                 <StepTitle text={ I18n.t('flow_page.employee.role.about') }/>
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t('flow_page.employee.skills.title') }
               />
               <View style={ { marginLeft: 8, marginRight: 8 } }>
@@ -130,6 +131,7 @@ class EmployeeKeywords extends React.Component {
 
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t('flow_page.employee.condition.title') }
               />
               <FlowListSwitch
@@ -162,6 +164,7 @@ class EmployeeKeywords extends React.Component {
                   onChangeText={ (newValue) => this.handleFieldChange(newValue, 'city') }/>
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t('flow_page.employee.more.title') }
               />
               <View style={ { marginLeft: 8, marginRight: 8 } }>

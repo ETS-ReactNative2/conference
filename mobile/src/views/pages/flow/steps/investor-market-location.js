@@ -50,6 +50,7 @@ class InvestorMarketLocation extends React.Component {
                 <StepTitle text={ I18n.t('flow_page.investor.market_location.title') }/>
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t(`common.regions.header`) }
               />
               { REGIONS.map((region) => {

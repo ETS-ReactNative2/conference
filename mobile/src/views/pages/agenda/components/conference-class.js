@@ -3,7 +3,7 @@ import { Button, Icon } from 'native-base'
 import React from 'react'
 import { Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { BAR_COLOR, BLUE_BACKGROUND_COLOR } from '../../../design/constants'
+import { AGENDA_EXPANDED_COLOR, BAR_COLOR, BLUE_BACKGROUND_COLOR } from '../../../design/constants'
 
 export class ConferenceClass extends React.Component {
 
@@ -70,7 +70,7 @@ const styles = EStyleSheet.create({
     paddingRight: 16,
     paddingTop: 16,
     paddingBottom: 16,
-    backgroundColor: BLUE_BACKGROUND_COLOR,
+    backgroundColor: AGENDA_EXPANDED_COLOR,
     flexDirection: 'row',
     borderBottomColor: 'rgba(255,255,255,.5)',
     borderBottomWidth: 1
@@ -83,7 +83,7 @@ const styles = EStyleSheet.create({
     paddingRight: 16,
     paddingTop: 16,
     paddingBottom: 16,
-    backgroundColor: BLUE_BACKGROUND_COLOR
+    backgroundColor: AGENDA_EXPANDED_COLOR
   },
   firstLine: {
     flexDirection: 'row'

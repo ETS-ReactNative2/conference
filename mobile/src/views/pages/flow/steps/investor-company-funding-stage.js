@@ -63,6 +63,7 @@ class InvestorCompanyFundingStage extends React.Component {
               <StepTitle text={ I18n.t('flow_page.investor.company_funding_stage.title') }/>
             </View>
             <SubheaderWithSwitch
+              color={'white'}
               selected={ this.state.all }
               text={ I18n.t(`common.funding_stages.header`) }
               onToggle={ this.selectAll }

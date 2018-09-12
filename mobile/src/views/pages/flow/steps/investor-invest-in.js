@@ -63,6 +63,7 @@ class InvestorInvestIn extends React.Component {
               <StepTitle text={ I18n.t('flow_page.investor.invest_in.title') }/>
             </View>
             <SubheaderWithSwitch
+              color={'white'}
               selected={ this.state.all }
               text={ I18n.t(`common.token_types.header`) }
               onToggle={ this.selectAll }

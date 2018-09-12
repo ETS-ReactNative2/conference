@@ -42,6 +42,7 @@ class InvesteeMoneySource extends React.Component {
                 <StepTitle text={ I18n.t('flow_page.money.title') }/>
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t(`flow_page.money.amount`) }
               />
               <View style={styles.inputContainer}>
@@ -56,6 +57,7 @@ class InvesteeMoneySource extends React.Component {
                           onChangeText={ (newValue) => this.handleFieldChange(newValue, 'amount') } />
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t(`flow_page.money.nationality`) }
               />
               { REGIONS.map((region) => {

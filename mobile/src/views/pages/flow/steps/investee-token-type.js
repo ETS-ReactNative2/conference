@@ -46,6 +46,7 @@ class InvesteeTokenType extends React.Component {
               <StepTitle text={ I18n.t('flow_page.investee.token_type.title') }/>
             </View>
             <Subheader
+              color={'white'}
               text={ I18n.t(`flow_page.investee.token_type.header`) }
             />
             { TOKEN_TYPES.map((size) => {
