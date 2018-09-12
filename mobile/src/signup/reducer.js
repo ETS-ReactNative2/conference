@@ -286,6 +286,7 @@ function fillData (role, info) {
     case 'employee':
       return {
         role: info.role,
+        roleOtherText: info.roleOtherText,
         skills: info.skillsText,
         traits: info.traitsText,
         mostInfo: info.knowMost,
