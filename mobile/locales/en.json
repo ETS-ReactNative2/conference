@@ -79,7 +79,9 @@
     "setup": "Set up",
     "details": "Details",
     "website": "Website",
+    "no_website": "No Website",
     "whitepaper": "Whitepaper",
+    "no_whitepaper": "No Whitepaper",
     "back": "Back",
     "view": "View",
     "edit": "Edit",
@@ -135,6 +137,7 @@
       "incorrect_url": "Cannot open this URL"
     },
     "facebook": "Facebook",
+    "no_facebook": "No Facebook",
     "facebook_url": "Facebook – https://www.facebook.com/…",
     "flow_pages": {
       "titles": {
@@ -148,6 +151,7 @@
       "seed": "Seed"
     },
     "github": "GitHub",
+    "no_github": "No GitHub",
     "github_url": "GitHub – https://github.com/…",
     "giveaway": {
       "both": "Both",
@@ -217,6 +221,7 @@
       "remote": "Remote"
     },
     "linkedin": "LinkedIn",
+    "no_linkedin": "No LinkedIn",
     "linkedin_url": "LinkedIn – https://linkedin.com/in/…",
     "months": {
       "0": "January",
@@ -238,6 +243,7 @@
       "polish": "Polish"
     },
     "news": "Featured press article URL",
+    "no_news": "No press article",
     "next": "Save",
     "no": "No",
     "payment": {
@@ -287,6 +293,7 @@
       "sales": "Sales job listing"
     },
     "telegram": "Telegram",
+    "no_telegram": "No Telegram",
     "telegram_url": "Telegram – https://t.me/…",
     "token_types": {
       "app_tokens": "Utility Token",
@@ -295,6 +302,7 @@
       "security_tokens": "Security Token"
     },
     "twitter": "Twitter",
+    "no_twitter": "No Twitter",
     "twitter_url": "Twitter – https://twitter.com/…",
     "yes": "Yes",
     "status": {

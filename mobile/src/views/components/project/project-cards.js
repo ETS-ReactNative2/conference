@@ -372,7 +372,13 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.whitepaper') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'map' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_whitepaper') }</Text>
+                </View>
+              }
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
@@ -384,7 +390,13 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.news') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'newspaper-o' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_news') }</Text>
+                </View>
+              }
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
@@ -397,7 +409,13 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.telegram') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'telegram' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_telegram') }</Text>
+                </View>
+              }
             </View>
           </View>
           <View style={ [ xl.line, horizontalLineWidth ] }/>
@@ -412,7 +430,13 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.github') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'github' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_github') }</Text>
+                </View>
+              }
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
@@ -425,7 +449,13 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.twitter') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'twitter' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_twitter') }</Text>
+                </View>
+              }
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
@@ -437,7 +467,14 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.website') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'globe' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_website') }</Text>
+                </View>
+
+              }
             </View>
           </View>
           { (jobListings && jobListings.length > 0) ? (
