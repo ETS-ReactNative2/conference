@@ -44,7 +44,8 @@
   "message_page": {
     "type_message": "Send message to investor",
     "message": "Message",
-    "try_again": "Try again"
+    "try_again": "Try again",
+    "no_project": "To message an investor, please set up a project first."
   },
   "profile_page": {
     "title": "My profile",
@@ -75,6 +76,7 @@
     }
   },
   "common": {
+    "setup": "Set up",
     "details": "Details",
     "website": "Website",
     "whitepaper": "Whitepaper",

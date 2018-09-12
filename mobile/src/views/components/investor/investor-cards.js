@@ -1,6 +1,6 @@
 import { Icon, Text, View } from 'native-base'
 import React from 'react'
-import { Image, Linking, TouchableHighlight } from 'react-native'
+import { Image, TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../locales/i18n'
@@ -280,7 +280,7 @@ class XL extends React.Component {
   }
 
   render () {
-    const { investor, onMessageClick, showMessage } = this.props
+    const { investor, onMessageClick } = this.props
 
     const { hasAvatar, avatar } = createAvatar(investor, 'w=300&h=300')
     const { firstName, lastName, moneyRange } = extractInfo(investor)
@@ -435,16 +435,12 @@ class XL extends React.Component {
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
-              <React.Fragment>
-                { showMessage ? (
-                  <TouchableHighlight onPress={ onMessageClick } underlayColor='transparent'>
-                    <View>
-                      <Icon style={ { textAlign: 'center', color: 'white' } } name={ 'ios-mail-open' }/>
-                      <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('cards.message') }</Text>
-                    </View>
-                  </TouchableHighlight>
-                ) : null }
-              </React.Fragment>
+              <TouchableHighlight onPress={ onMessageClick } underlayColor='transparent'>
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white' } } name={ 'ios-mail-open' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('cards.message') }</Text>
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         </View>
