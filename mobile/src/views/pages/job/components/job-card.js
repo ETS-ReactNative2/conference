@@ -17,7 +17,7 @@ export class JobCard extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.JOB_DESCRIPTION_PAGE, {description});
   }
 
-  handleLink = url => {
+  handleLink = (url) => {
     this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, {url});
   }
 
