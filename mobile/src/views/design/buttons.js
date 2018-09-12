@@ -4,13 +4,14 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import {
   BLACK_DISABLED_COLOR,
   BLUE_COLOR,
-  DISABLED_COLOR, PRIMARY_COLOR,
+  DISABLED_COLOR,
+  PRIMARY_COLOR,
   PRIMARY_DISABLED_COLOR,
   PRIMARY_DISABLED_TEXT_COLOR
 } from './constants'
 import I18n from "../../../locales/i18n";
 
-function BaseButton({onPress, disabled, style, children}) {
+function BaseButton({ onPress, disabled, style, children }) {
   const styles = baseButton
   return (
     <Button disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? [styles.disabledButton, style] : [styles.button, style] }>
@@ -23,16 +24,6 @@ export function BlackButton ({ text = 'Example text', onPress, disabled }) {
   const styles = blackButtonStyles
   return (
     <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
-      <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
-    </BaseButton>
-  )
-}
-
-export function OutlineBlackButton ({ text = 'Example text', onPress, disabled, icon }) {
-  const styles = outlineBlackButtonStyles
-  return (
-    <BaseButton disabled={ disabled } onPress={ ev => onPress(ev) } style={ disabled ? styles.disabledButton : styles.button }>
-      { icon && <Icon active style={{color: '#000000'}} name={icon}></Icon> }
       <Text style={ disabled ? styles.disabledText : styles.text }>{ text.toUpperCase() }</Text>
     </BaseButton>
   )
@@ -58,15 +49,6 @@ export function ProfileWhiteButton ({ text, onPress, disabled, icon }) {
   )
 }
 
-export function SearchButton ({ text = 'Example text', onPress }) {
-  const styles = searchButtonStyles
-  return (
-    <BaseButton onPress={ ev => onPress(ev) } style={ styles.button }>
-      <Text style={ styles.text }>{ text.toUpperCase() }</Text>
-    </BaseButton>
-  )
-}
-
 export function PrimaryButton ({ text = 'Example text', onPress, disabled }) {
   const styles = primaryButtonStyles
   return (
@@ -76,7 +58,7 @@ export function PrimaryButton ({ text = 'Example text', onPress, disabled }) {
   )
 }
 
-export function BlueButton ({ text, onPress, disabled, icon}){
+export function BlueButton ({ text, onPress, disabled, icon }) {
   const styles = blueButtonStyles
   return (
     <BaseButton disabled={ disabled } style={ disabled ? styles.disabledButton : styles.button } onPress={ ev => onPress(ev) }>
@@ -121,18 +103,6 @@ const baseButton = EStyleSheet.create({
     justifyContent: 'center',
     fontWeight: 'bold',
     fontFamily: 'Montserrat-SemiBold'
-  }
-})
-
-
-const searchButtonStyles = EStyleSheet.create({
-  button: {
-    backgroundColor: '#fff',
-    maxWidth: 10000
-  },
-  text: {
-    color: BLACK_DISABLED_COLOR,
-    fontWeight: 'bold'
   }
 })
 
@@ -224,25 +194,6 @@ const profileWhiteButton = EStyleSheet.create({
   },
   text: {
     color: '#fff'
-  },
-  disabledText: {
-    color: DISABLED_COLOR
-  }
-})
-
-const outlineBlackButtonStyles = EStyleSheet.create({
-  button: {
-    backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: '#000'
-  },
-  disabledButton: {
-    backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: DISABLED_COLOR
-  },
-  text: {
-    color: '#000'
   },
   disabledText: {
     color: DISABLED_COLOR

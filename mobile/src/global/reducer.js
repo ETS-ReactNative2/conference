@@ -1,4 +1,12 @@
-import { HIDE_MESSAGE, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING, SEND_MESSAGE_ERROR, SHOW_ALERT, HIDE_ALERT } from './action-types'
+import {
+  HIDE_MESSAGE,
+  SET_LOADING,
+  SHOW_MESSAGE,
+  UNSET_LOADING,
+  SEND_MESSAGE_ERROR,
+  SHOW_ALERT,
+  HIDE_ALERT
+} from './action-types'
 import I18n from '../../locales/i18n'
 
 const initialState = {

@@ -51,7 +51,6 @@ const PAGES_NAMES = {
   SEARCH_PAGE: 'SEARCH_PAGE',
   HOME_PAGE: 'HOME_PAGE',
   AGENDA_PAGE: 'AGENDA_PAGE',
-  NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE',
   INVESTOR_PAGE: 'INVESTOR_PAGE',
   PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
   PROJECT_PAGE: 'PROJECT_PAGE',
@@ -61,7 +60,6 @@ const PAGES_NAMES = {
   JOB_DESCRIPTION_PAGE: 'JOB_DESCRIPTION_PAGE',
   PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
   PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
-  LOCATION_PAGE: 'LOCATION_PAGE',
   FILTER_PAGE: 'FILTER_PAGE',
   INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE',
   PROJECT_MAIN_FILTER_PAGE: 'PROJECT_MAIN_FILTER_PAGE',
@@ -134,7 +132,6 @@ const DrawerStack = createBottomTabNavigator({
         }
       })
     },
-
   },
   {
     tabBarOptions: {
@@ -291,7 +288,6 @@ const AppStackNavigator = createStackNavigator({
   WEBVIEW_PAGE: {
     screen: WebviewPage,
     navigationOptions: () => ({
-      // header: null,
       ...flowNavbarStyle,
       headerStyle: {
         backgroundColor: PROJECT_FILTER_BACKGROUND_COLOR
@@ -391,47 +387,3 @@ const mapDispatchToProps = dispatch => {
 const ConnectedAppStackNavigator = connect(mapStateToProps, mapDispatchToProps)(AppStackNavigatorWithSpinner)
 
 export { PAGES_NAMES, ConnectedAppStackNavigator }
-
-const styles = {
-  container: {
-    flex: 1
-  },
-  spinnerContainer: {
-    flex: 1,
-    alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#14192E'
-  },
-  message: {
-    color: '#603695',
-    fontWeight: 'bold'
-  },
-  imageContainer: {
-    flex: 1,
-    alignSelf: 'stretch',
-    backgroundColor: 'transparent'
-  },
-  content: {
-    flex: 1,
-    alignItems: 'center',
-    paddingTop: 10
-  },
-  title: {
-    textAlign: 'center',
-    flexGrow: 1,
-    color: '#D8D8D8',
-    fontSize: 18,
-    fontFamily: 'Montserrat-SemiBold'
-  },
-
-  logoContainer: {
-    alignItems: 'center',
-    marginBottom: 32,
-    marginLeft: 16,
-    marginRight: 16
-  }
-}

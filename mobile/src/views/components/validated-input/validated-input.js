@@ -10,24 +10,26 @@ class ValidatedInput extends Component {
         value: this.props.value || ''
     }
   }
+
   onValueChanged (newValue) {
-      this.setState( { value: newValue} )
-      this.props.onChangeText(newValue)
+    this.setState( { value: newValue} )
+    this.props.onChangeText(newValue)
   }
+
   render () {
     return (
-        <React.Fragment>
-          <Item floatingLabel={this.props.floatingLabel}>
-           {this.props.iconProps && (
-             <Icon {...this.props.iconProps}/>
-           )}
-           <Label>{this.props.labelText}</Label>
-           <Input {...this.props} onChangeText={ newValue => this.onValueChanged(newValue) }/>
-           </Item>
-           {this.props.isError && (
-             <Text style={styles.errorText}>{this.props.errorMessage}</Text>
-           )}
-        </React.Fragment>
+      <React.Fragment>
+        <Item floatingLabel={this.props.floatingLabel}>
+          {this.props.iconProps && (
+            <Icon {...this.props.iconProps}/>
+          )}
+          <Label>{this.props.labelText}</Label>
+          <Input {...this.props} onChangeText={ newValue => this.onValueChanged(newValue) }/>
+        </Item>
+        {this.props.isError && (
+          <Text style={styles.errorText}>{this.props.errorMessage}</Text>
+        )}
+      </React.Fragment>
     )
   }
 }

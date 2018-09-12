@@ -124,10 +124,6 @@ const styles = EStyleSheet.create({
     backgroundColor: 'transparent',
     paddingBottom: 49
   },
-  navigationStyle: {
-    color: '#fff',
-    marginTop: 12
-  },
   text: {
     color: '#fff',
     textAlign: 'center',
@@ -169,9 +165,6 @@ const styles = EStyleSheet.create({
     marginLeft: 8,
     marginBottom: 4
   },
-  // nonBorder: {
-  //   borderBottomWidth: 0
-  // }
 })
 
 const mapStateToProps = state => {

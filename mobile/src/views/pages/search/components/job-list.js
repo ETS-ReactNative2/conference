@@ -101,8 +101,6 @@ const JobItem = ({ job, onClick, onLink }) => {
   )
 }
 
-
-
 const styles = EStyleSheet.create({
   centerText: {
     textAlign: 'center'
@@ -133,24 +131,6 @@ const styles = EStyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     overflow: 'hidden'
-  },
-  portrait: {
-    width: 97,
-    height: 100
-  },
-  rowHeader: {
-    flex: 1,
-    flexDirection: 'row',
-    marginLeft: 16,
-    marginRight: 18
-  },
-  rowDetail: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginLeft: 16,
-    marginRight: 18,
-    marginBottom: 11
   },
   normalText: {
     fontSize: 11,

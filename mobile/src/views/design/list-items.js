@@ -70,7 +70,6 @@ export class FlowListItem extends React.Component {
 }
 
 export class FlowListSwitch extends React.Component {
-
   render () {
     const { selected = false, onToggle, text = '', switchText = '' } = this.props
     return (

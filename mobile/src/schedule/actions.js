@@ -31,6 +31,6 @@ export const fetchConferenceSchedule = () => async dispatch => {
     })
   } catch (err) {
     const errorData = getErrorDataFromNetworkException(err)
-    dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), {type: LOAD_SCHEDULE_ERROR }]))
+    dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_SCHEDULE_ERROR }]))
   }
 }

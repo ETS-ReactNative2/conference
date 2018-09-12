@@ -1,7 +1,7 @@
 import { Switch, Text, View } from 'native-base'
 import React from 'react'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { BAR_COLOR, SECONDARY_COLOR } from './constants'
+import { BAR_COLOR } from './constants'
 
 export function SmallSubheader ({ text = '', color = BAR_COLOR}) {
   return (

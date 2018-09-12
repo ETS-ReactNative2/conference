@@ -99,6 +99,7 @@ class InvesteeFundingStage extends React.Component {
       [ field ]: text
     })
   }
+  
   validateForm = () => {
     const isFormValid = this.isFormValid()
     this.setState({ isFormValid })

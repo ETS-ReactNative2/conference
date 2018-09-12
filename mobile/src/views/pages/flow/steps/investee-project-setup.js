@@ -139,6 +139,7 @@ class InvesteeProjectSetup extends React.Component {
       nextStep: InvesteeLinks
     })
   }
+  
   handleFieldChange = (value, name) => {
     this.setState({
       [ name ]: value

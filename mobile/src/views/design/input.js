@@ -32,6 +32,7 @@ export class Input extends Component {
     }
     return stylesArray
   }
+
   getIconStyling(inputStatus) {
     if (inputStatus === 'error') {
       return styles.iconError
@@ -40,6 +41,7 @@ export class Input extends Component {
       return styles.iconOk
     }
   }
+
   render() {
     return (
       <View style={styles.container}>

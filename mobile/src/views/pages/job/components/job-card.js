@@ -9,7 +9,6 @@ import { ROLES, JOB_LOCATION, PAYMENTS } from '../../../../enums'
 import { PAGES_NAMES } from '../../../../navigation/pages'
 
 export class JobCard extends React.Component {
-
   shouldComponentUpdate = () => {
     return false
   }
@@ -135,11 +134,11 @@ const styles = EStyleSheet.create({
     width: 100,
     justifyContent: 'space-around'
   },
-    smallActionText: {
-        fontSize: 12,
-        color: '#888'
-    },
-    underline: {
-        textDecorationLine: 'underline'
-    }
+  smallActionText: {
+      fontSize: 12,
+      color: '#888'
+  },
+  underline: {
+      textDecorationLine: 'underline'
+  }
 })

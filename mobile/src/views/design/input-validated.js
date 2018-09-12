@@ -36,14 +36,14 @@ const styles = EStyleSheet.create({
 })
 
 InputValidated.propTypes = {
-    keyboardType: PropTypes.oneOf(['email-address', 'phone-pad']),
-    isSecure: PropTypes.bool,
-    placeholder: PropTypes.string.isRequired,
-    value: PropTypes.string,
-    labelText: PropTypes.string.isRequired,
-    isError: PropTypes.bool.isRequired,
-    errorMessage: PropTypes.string.isRequired,
-    onChangeText: PropTypes.func.isRequired
+  keyboardType: PropTypes.oneOf(['email-address', 'phone-pad']),
+  isSecure: PropTypes.bool,
+  placeholder: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  labelText: PropTypes.string.isRequired,
+  isError: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  onChangeText: PropTypes.func.isRequired
 }
 
 export default InputValidated;

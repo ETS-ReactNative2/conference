@@ -149,33 +149,15 @@ const styles = EStyleSheet.create({
     paddingLeft: 0,
     paddingRight: 0
   },
-  subheader: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    marginLeft: 16
-  },
   content: {
     flex: 1,
     paddingBottom: 49
-  },
-  pageTitleContainer: {
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20
   },
   pageTitle: {
     fontSize: 18,
     fontFamily: 'Montserrat-SemiBold',
     letterSpacing: 0.18,
     lineHeight: 30
-  },
-  headerTitle: {
-    textAlign: 'center',
-    flexGrow: 1,
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontFamily: 'Montserrat-SemiBold'
   }
 })
 

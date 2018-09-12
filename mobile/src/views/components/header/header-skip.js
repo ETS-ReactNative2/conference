@@ -13,8 +13,7 @@ export class HeaderSkip extends React.Component {
         <Button transparent onPress={ this.props.onSkipClick }>
           <Text style={ styles.skip }>{ I18n.t('header.skip') }</Text>
         </Button>
-      }>
-      </Header>
+      } />
     )
   }
 }

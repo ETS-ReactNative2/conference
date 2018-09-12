@@ -71,6 +71,7 @@ class InvesteeProjectLocation extends React.Component {
     this.props.saveInvestee({ legal: this.state.legal, main: this.state.main })
     this.props.onFill({ nextStep: InvesteeMoneySource })
   }
+  
   handleChange = (fieldName, value) => {
     this.setState({
       [ fieldName ]: value

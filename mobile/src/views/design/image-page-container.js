@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import { SafeAreaView } from 'react-navigation'
 import BackgroundImage from '../../assets/images/bg2.jpg'
 
-export function ImagePageContainer ({children, customGradient}) {
+export function ImagePageContainer ({ children, customGradient }) {
   return (
     <SafeAreaView style={ { flex: 1, backgroundColor: '#000000' } } forceInset={ { top: 'always' } }>
       <StatusBar

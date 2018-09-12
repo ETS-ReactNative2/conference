@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Linking, Modal, View } from "react-native"
+import { Linking, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Card, CardItem, Text, Body } from "native-base"
 import I18n from "../../../../locales/i18n"

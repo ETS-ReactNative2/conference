@@ -1,7 +1,7 @@
 import { Container } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { AppState, ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import Config from 'react-native-config'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
@@ -88,7 +88,6 @@ class ProfilePage extends React.Component {
   }
 
   render () {
-
     const { isLoading } = this.props
 
     if (isLoading) {
@@ -247,23 +246,11 @@ const styles = EStyleSheet.create({
     backgroundColor: 'transparent',
     paddingBottom: 49
   },
-  pageTitleContainer: {
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20
-  },
   pageTitle: {
     fontSize: 18,
     fontFamily: 'Montserrat-SemiBold',
     letterSpacing: 0.18,
     lineHeight: 30
-  },
-  headerTitle: {
-    textAlign: 'center',
-    flexGrow: 1,
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontFamily: 'Montserrat-SemiBold'
   },
   warningText: {
     color: 'rgba(255, 255, 255, .5)',

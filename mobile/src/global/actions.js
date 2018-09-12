@@ -1,7 +1,15 @@
 import * as api from '../api/api'
 import { getErrorDataFromNetworkException } from '../common/utils'
 import I18n from '../../locales/i18n'
-import { HIDE_MESSAGE, SEND_MESSAGE_ERROR, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING, SHOW_ALERT, HIDE_ALERT } from './action-types'
+import {
+  HIDE_MESSAGE,
+  SEND_MESSAGE_ERROR,
+  SET_LOADING,
+  SHOW_MESSAGE,
+  UNSET_LOADING,
+  SHOW_ALERT,
+  HIDE_ALERT
+} from './action-types'
 
 export function setGlobalLoading (message) {
   return {

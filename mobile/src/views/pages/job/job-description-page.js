@@ -2,7 +2,6 @@ import { Container, Text } from 'native-base'
 import React, { Component } from 'react'
 import { ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { SafeAreaView } from 'react-navigation'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
@@ -31,6 +30,7 @@ export default class JobDescriptionPage extends Component {
     )
   }
 }
+
 const styles = EStyleSheet.create({
   navigationStyle: {
     color: '#fff',

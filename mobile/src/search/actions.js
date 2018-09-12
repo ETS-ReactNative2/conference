@@ -3,7 +3,6 @@ import { batchActions } from 'redux-batch-enhancer'
 import * as api from '../api/api'
 import { getErrorDataFromNetworkException } from '../common/utils'
 import * as globalActions from '../global/actions'
-import { LOAD_PROJECT_MEMBERS_ERROR } from '../profile/action-types'
 import {
   LOAD_DEFAULT_PROFILES,
   LOAD_DEFAULT_PROFILES_ERROR,

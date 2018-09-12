@@ -58,6 +58,7 @@ class InvestorCompanyLocation extends React.Component {
     this.props.saveInvestor({ nationality: this.state.nationality })
     this.props.onFill({ nextStep: InvestorInvestIn })
   }
+  
   handleChange = (fieldName, value) => {
     this.setState({
       [ fieldName ]: value

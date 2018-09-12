@@ -271,10 +271,6 @@ const xl = EStyleSheet.create({
     marginBottom: 5,
     backgroundColor: 'rgba(255,255,255,.25)'
   },
-  placeholderContainer: {
-    width: 200,
-    height: 150,
-  },
   details: {
     margin: 8
   },
@@ -322,10 +318,6 @@ const xl = EStyleSheet.create({
   boxContainer: {
     flex: 1,
     padding: 8
-  },
-  linkedin: {
-    color: 'white',
-    textAlign: 'center'
   }
 })
 
@@ -350,9 +342,6 @@ const styles = EStyleSheet.create({
   },
   spaceAbove: {
     marginTop: 4,
-  },
-  spaceBelow: {
-    marginBottom: 4
   }
 })
 

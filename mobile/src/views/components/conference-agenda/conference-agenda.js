@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import {ScrollView, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { Text } from 'native-base'
 import EStyleSheet from "react-native-extended-stylesheet"
 import ConferenceDay from "../../components/conference-day/conference-day"

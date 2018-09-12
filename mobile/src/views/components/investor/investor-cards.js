@@ -7,7 +7,14 @@ import I18n from '../../../../locales/i18n'
 import ColorLogo from '../../../assets/logos/conference_logo_welcome_medium.png'
 import MessageIcon from '../../../assets/icons/message_icon.png'
 import { getDimensions } from '../../../common/dimension-utils'
-import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGIONS, TICKET_SIZES, TOKEN_TYPES } from '../../../enums'
+import {
+  FUNDING_STAGES,
+  GIVEAWAY_TYPES,
+  PRODUCT_STAGES,
+  REGIONS,
+  TICKET_SIZES,
+  TOKEN_TYPES
+} from '../../../enums'
 
 function createAvatar (investor, extraQuery) {
   const hasAvatar = investor.user && investor.user.imageUrl

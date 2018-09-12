@@ -10,7 +10,7 @@ import { Chip } from '../../../design/chips'
 import { FlowContainer } from '../../../design/container'
 import { StepTitle } from '../../../design/step-title'
 import { EmployerJobs } from './index'
-import {ROLES} from '../../../../enums'
+import { ROLES } from '../../../../enums'
 
 class EmployerRole extends React.Component {
 
@@ -73,6 +73,7 @@ class EmployerRole extends React.Component {
       nextStep: EmployerJobs
     })
   }
+  
   handleCheckboxClick = index => {
     let roles = [ ...this.state.roles ]
     const roleIndex = roles.indexOf(index)

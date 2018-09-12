@@ -241,7 +241,14 @@ export async function createInvestee ({
 }
 
 export async function createInvestor ({
-  fundingStages, ticketSizes, productStages, tokenTypes, giveaways, region, nationality, regionOtherText
+  fundingStages,
+  ticketSizes,
+  productStages,
+  tokenTypes,
+  giveaways,
+  region,
+  nationality,
+  regionOtherText
 }) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put('/api/my_investor/', decamelizeKeys({

@@ -58,15 +58,6 @@ class EmployerJobs extends React.Component {
     return !validator.isEmpty(city)
   }
 
-  handleCheck = (role, field) => {
-    this.setState({
-      [ role ]: {
-        ...this.state[ role ],
-        [ field ]: !this.state[ role ][ field ]
-      }
-    }, this.validateForm)
-  }
-
   handleCheckboxClickLocation = (index, role) => {
     let location = [ ...this.state[ role ].location ]
     const locationIndex = location.indexOf(index)
@@ -260,7 +251,6 @@ class EmployerJobs extends React.Component {
       .reduce((previous, current) => {
         return previous && current
       })
-
   }
 
   handleSubmit = () => {

@@ -91,9 +91,6 @@ const styles = EStyleSheet.create({
     paddingRight: 16,
     paddingBottom: 24
   },
-  mainContainer: {
-    backgroundColor: '#FFFFFF'
-  },
   description: {
     fontFamily: 'Arial',
     fontSize: 12,

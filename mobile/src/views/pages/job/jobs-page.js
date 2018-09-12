@@ -74,12 +74,12 @@ export default class JobsPage extends Component {
                 onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
               />
               { jobs.length < 8 &&
-              <Pagination
-                dotColor={ 'rgba(255, 255, 255, 0.95)' }
-                inactiveDotColor={ 'rgba(255,255,255,0.75)' }
-                dotsLength={ jobs.length }
-                activeDotIndex={ currentIndex }
-              />
+                <Pagination
+                  dotColor={ 'rgba(255, 255, 255, 0.95)' }
+                  inactiveDotColor={ 'rgba(255,255,255,0.75)' }
+                  dotsLength={ jobs.length }
+                  activeDotIndex={ currentIndex }
+                />
               }
             </React.Fragment>
           </View>
