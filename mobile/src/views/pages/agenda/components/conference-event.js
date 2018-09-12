@@ -11,7 +11,7 @@ export function ConferenceEvent ({ event }) {
       <SmallSubheader text={ formatTime(startDate) }/>
       {
         classes.map((cl, index) => (
-          <ConferenceClass startDate={ startDate } clazz={ cl } key={ index }/>
+          <ConferenceClass startDate={ startDate } clazz={ cl } key={ `${startDate}:${index}` }/>
         ))
       }
     </React.Fragment>

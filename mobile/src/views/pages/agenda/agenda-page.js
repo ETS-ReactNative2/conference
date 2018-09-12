@@ -143,7 +143,7 @@ class AgendaPage extends Component {
             <ScrollView>
               {
                 days.length !== 0 && days[ this.state.selected ].events.map((event, index) => (
-                  <ConferenceEvent key={ index } event={ event }/>
+                  <ConferenceEvent key={ `${this.state.selected}:${index}`} event={ event }/>
                 ))
               }
               {
