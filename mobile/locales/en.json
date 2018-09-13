@@ -79,6 +79,7 @@
     }
   },
   "common": {
+    "skip": "Skip",
     "setup": "Set up",
     "details": "Details",
     "website": "Website",
@@ -428,7 +429,8 @@
     },
     "hiring": {
       "header": "Hiring",
-      "title": "Are you hiring?"
+      "title": "Are you hiring?",
+      "skip_text": "If you don't want to create or edit job listings click SKIP"
     },
     "ico": {
       "question": "Are you going to do an ICO?",
