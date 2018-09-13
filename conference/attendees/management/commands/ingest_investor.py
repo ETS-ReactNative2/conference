@@ -149,6 +149,12 @@ class Command(BaseCommand):
                 product_stages.append(obj)
         return product_stages
 
+    def get_or_none(self, model, *args, **kwargs):
+        try:
+            return model.objects.get(*args, **kwargs)
+        except model.DoesNotExist:
+            return None
+
     def process_investor(self, investor_lines):
         self.investors += 1
         values = {}
@@ -191,11 +197,23 @@ class Command(BaseCommand):
         investor.token_types.add(*token_types)
         investor.save()
 
-        conference_user, created = ConferenceUser.objects.get_or_create(investor=investor)
-        if created:
-            self.stdout.write("Created investor conference user %s" % email_address)
-        else:
-            self.stdout.write("Updating investor conference user %s" % email_address)
+        conference_user = None
+        user = self.get_or_none(User, email=investor.email)
+        if user:
+            conference_user = user.conference_user
+            self.stdout.write("Found user %s %s for %s" % (conference_user.first_name,
+                                                           conference_user.last_name,
+                                                           investor.email))
+            conference_user.investor = investor
+            conference_user.save()
+
+        if not conference_user:
+            conference_user, created = ConferenceUser.objects.get_or_create(investor=investor)
+
+            if created:
+                self.stdout.write("Created investor conference user %s" % email_address)
+            else:
+                self.stdout.write("Updating investor conference user %s" % email_address)
         conference_user.first_name = values[GIVEN_NAME].capitalize()
         conference_user.last_name = values[FAMILY_NAME].capitalize()
         conference_user.title = values[JOB_TITLE].capitalize()
@@ -203,3 +221,4 @@ class Command(BaseCommand):
         conference_user.linkedin = values[LINKED_IN]
 
         conference_user.save()
+

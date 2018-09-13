@@ -221,12 +221,17 @@ class Command(BaseCommand):
 
     def add_project_member(self, email, project):
         self.members += 1
-        member, created = ProjectMember.objects.get_or_create(email=email, defaults={'project': project})
-        if created:
-            self.stdout.write("Created member %s for project %s" % (email, project.name))
-            member.save()
+        user = self.get_or_none(User, email=email)
+        if user:
+            user.conference_user.project = project
+            user.conference_user.save()
         else:
-            self.stdout.write("Updating member %s for project %s" % (email, project.name))
+            member, created = ProjectMember.objects.get_or_create(email=email, defaults={'project': project})
+            if created:
+                self.stdout.write("Created member %s for project %s" % (email, project.name))
+                member.save()
+            else:
+                self.stdout.write("Updating member %s for project %s" % (email, project.name))
 
     def process_project(self, project_lines):
         self.projects += 1

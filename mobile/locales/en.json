@@ -43,7 +43,7 @@
     "full_time": "Full-time only"
   },
   "message_page": {
-    "type_message": "Send message to investor",
+    "type_message": "Message Investor",
     "message": "Message",
     "try_again": "Try again",
     "no_project": "To message an investor, please set up a project first."
@@ -253,7 +253,7 @@
     "no": "No",
     "payment": {
       "equity": "Equity",
-      "fiat": "Fiat money",
+      "fiat": "Fiat Money",
       "tokens": "Tokens"
     },
     "product_stages": {
