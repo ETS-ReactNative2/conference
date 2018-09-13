@@ -1,31 +1,31 @@
 import { Switch, Text, View } from 'native-base'
 import React from 'react'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { BAR_COLOR, SECONDARY_COLOR } from './constants'
+import { BAR_COLOR } from './constants'
 
-export function SmallSubheader ({ text = ''}) {
+export function SmallSubheader ({ text = '', color = BAR_COLOR}) {
   return (
     <View style={ styles.subheader }>
-      <View style={ styles.leftBar }/>
-      <Text style={ styles.textInSmall }>{ text.toUpperCase() }</Text>
+      <View style={ [styles.leftBar,{backgroundColor: color}] }/>
+      <Text style={ [styles.textInSmall, {color}] }>{ text.toUpperCase() }</Text>
     </View>
   )
 }
 
-export function Subheader ({ text = '' }) {
+export function Subheader ({ text = '', color = BAR_COLOR }) {
   return (
     <View style={ styles.subheader }>
-      <View style={ styles.leftBar }/>
-      <Text style={ styles.text }>{ text.toUpperCase() }</Text>
+      <View style={ [styles.leftBar,{backgroundColor: color}] }/>
+      <Text style={ [styles.text, {color}] }>{ text.toUpperCase() }</Text>
     </View>
   )
 }
 
-export function SubheaderWithSwitch ({ text = '', selected = true, onToggle, switchText = 'all', switchTextColor = 'white' }) {
+export function SubheaderWithSwitch ({ text = '', selected = true, onToggle, switchText = 'all', switchTextColor = 'white', color = BAR_COLOR }) {
   return (
     <View style={ styles.subheader }>
-      <View style={ styles.leftBar }/>
-      <Text style={ styles.text }>{ text.toUpperCase() }</Text>
+      <View style={ [styles.leftBar, {backgroundColor: color}] }/>
+      <Text style={ [styles.text, {color}] }>{ text.toUpperCase() }</Text>
       {
         switchText ? (
           <Text style={ [styles.switchTextStyle, { color: switchTextColor }] }>{ switchText.toUpperCase() }</Text>

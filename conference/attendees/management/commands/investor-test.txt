@@ -1,0 +1,53 @@
+First Name: Alice
+Last name: McInvestor
+company name: Extreme Holdings Inc.
+Job Title: VP
+Email Address: alice@extreme.hold
+Company Website: https://www.extreme.hold/index.asp
+Nationality: JP
+What market or industries you interested in?: IT
+Name 3 companies you have invested in:: ETC, BCC, Bitcoin Diamond
+Protocols: false
+App Tokens: true
+Security Tokens: true
+<5k: false
+5k-25k: false
+25k-100k: false
+100k-1M: false
+1M-10M: true
+>10M: false
+Seed: true
+Pre-ICO: true
+Post-ICO: false
+Looking to receive: Tokens
+PRE_PRODUCT: false
+LIVE_PRODUCT: false
+LIVE_PRODUCT_WITH_REVENUE: true
+LinkedIn: aliceinvestor
+----
+First Name: Bob
+Last name: Investorpants
+company name: Enron
+Job Title: Tax Lawyer
+Email Address: contact@enron.com
+Company Website: https://www.enron.com/
+Nationality: KR
+What market or industries you interested in?: Project marketing
+Name 3 companies you have invested in:: Oil, Gas, Ethanol
+Protocols: true
+App Tokens: true
+Security Tokens: true
+<5k: false
+5k-25k: false
+25k-100k: false
+100k-1M: false
+1M-10M: true
+>10M: false
+Seed: true
+Pre-ICO: false
+Post-ICO: false
+Looking to receive: Tokens
+PRE_PRODUCT: false
+LIVE_PRODUCT: true
+LIVE_PRODUCT_WITH_REVENUE: false
+LinkedIn: bob-investorpants

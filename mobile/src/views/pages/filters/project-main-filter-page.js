@@ -5,7 +5,13 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { FlowButton } from '../../design/buttons';
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
-import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGIONS_FILTER, TOKEN_TYPES } from '../../../enums'
+import {
+  FUNDING_STAGES,
+  GIVEAWAY_TYPES,
+  PRODUCT_STAGES,
+  REGIONS_FILTER,
+  TOKEN_TYPES
+} from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { NavigationHeader } from '../../components/header/header'
 import { ImagePageContainer } from '../../design/image-page-container'

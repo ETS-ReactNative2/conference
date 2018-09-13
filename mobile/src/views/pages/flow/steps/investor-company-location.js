@@ -32,6 +32,7 @@ class InvestorCompanyLocation extends React.Component {
               <StepTitle text={ I18n.t('flow_page.investor.company_location.title') }/>
             </View>
             <Subheader
+              color={'white'}
               text={ I18n.t('flow_page.investor.company_location.nationality') }
             />
             <CountrySelect
@@ -57,6 +58,7 @@ class InvestorCompanyLocation extends React.Component {
     this.props.saveInvestor({ nationality: this.state.nationality })
     this.props.onFill({ nextStep: InvestorInvestIn })
   }
+  
   handleChange = (fieldName, value) => {
     this.setState({
       [ fieldName ]: value

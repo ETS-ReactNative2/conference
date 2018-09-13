@@ -14,6 +14,7 @@ import TriangleRed from '../assets/icons/triangle_red.png'
 import { navigationService } from '../services'
 import { globalActions } from '../global'
 import Alert from '../views/components/alert/alert'
+import ContactPage from '../views/components/contact-page/contact-page'
 import LoadingPage from '../views/components/loading-page/loading-page'
 import MessagePage from '../views/components/message-page/message-page'
 import AgendaPage from '../views/pages/agenda/agenda-page'
@@ -51,7 +52,6 @@ const PAGES_NAMES = {
   SEARCH_PAGE: 'SEARCH_PAGE',
   HOME_PAGE: 'HOME_PAGE',
   AGENDA_PAGE: 'AGENDA_PAGE',
-  NOTIFICATIONS_PAGE: 'NOTIFICATIONS_PAGE',
   INVESTOR_PAGE: 'INVESTOR_PAGE',
   PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
   PROJECT_PAGE: 'PROJECT_PAGE',
@@ -61,7 +61,6 @@ const PAGES_NAMES = {
   JOB_DESCRIPTION_PAGE: 'JOB_DESCRIPTION_PAGE',
   PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
   PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
-  LOCATION_PAGE: 'LOCATION_PAGE',
   FILTER_PAGE: 'FILTER_PAGE',
   INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE',
   PROJECT_MAIN_FILTER_PAGE: 'PROJECT_MAIN_FILTER_PAGE',
@@ -134,7 +133,6 @@ const DrawerStack = createBottomTabNavigator({
         }
       })
     },
-
   },
   {
     tabBarOptions: {
@@ -291,7 +289,6 @@ const AppStackNavigator = createStackNavigator({
   WEBVIEW_PAGE: {
     screen: WebviewPage,
     navigationOptions: () => ({
-      // header: null,
       ...flowNavbarStyle,
       headerStyle: {
         backgroundColor: PROJECT_FILTER_BACKGROUND_COLOR
@@ -356,7 +353,7 @@ const AppStackNavigator = createStackNavigator({
   }
 })
 
-const AppStackNavigatorWithSpinner = ({ isLoading, message, showMessage, showAlert, alertType, alertMessage, hideAlert }) => {
+const AppStackNavigatorWithSpinner = ({ isLoading, message, showMessage, showAlert, alertType, alertMessage, hideAlert, showContact }) => {
   return (
     <View style={ { flex: 1 } } forceInset={ { top: 'always' } }>
       <AppStackNavigator ref={ navigatorRef => {
@@ -367,6 +364,7 @@ const AppStackNavigatorWithSpinner = ({ isLoading, message, showMessage, showAle
       )}
       <LoadingPage isLoading={ isLoading } message={ message }/>
       <MessagePage showMessage={ showMessage }/>
+      <ContactPage showMessage={ showContact }/>
     </View>
   )
 }
@@ -377,6 +375,7 @@ const mapStateToProps = state => {
     message: state.global.loadingMessage,
     showMessage: state.global.showMessage,
     showAlert: state.global.showAlert,
+    showContact: state.global.showContactMessage,
     alertType: state.global.alertType,
     alertMessage: state.global.alertMessage
   }
@@ -391,47 +390,3 @@ const mapDispatchToProps = dispatch => {
 const ConnectedAppStackNavigator = connect(mapStateToProps, mapDispatchToProps)(AppStackNavigatorWithSpinner)
 
 export { PAGES_NAMES, ConnectedAppStackNavigator }
-
-const styles = {
-  container: {
-    flex: 1
-  },
-  spinnerContainer: {
-    flex: 1,
-    alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#14192E'
-  },
-  message: {
-    color: '#603695',
-    fontWeight: 'bold'
-  },
-  imageContainer: {
-    flex: 1,
-    alignSelf: 'stretch',
-    backgroundColor: 'transparent'
-  },
-  content: {
-    flex: 1,
-    alignItems: 'center',
-    paddingTop: 10
-  },
-  title: {
-    textAlign: 'center',
-    flexGrow: 1,
-    color: '#D8D8D8',
-    fontSize: 18,
-    fontFamily: 'Montserrat-SemiBold'
-  },
-
-  logoContainer: {
-    alignItems: 'center',
-    marginBottom: 32,
-    marginLeft: 16,
-    marginRight: 16
-  }
-}

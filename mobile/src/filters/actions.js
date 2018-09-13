@@ -1,7 +1,6 @@
 import { batchActions } from 'redux-batch-enhancer'
 import { getErrorDataFromNetworkException } from '../common/utils'
 import * as globalActions from '../global/actions'
-import { LOAD_PROFILES_ERROR } from '../search/action-types'
 import {
   SET_INVESTOR_FILTERS,
   SET_PROJECT_FILTERS,
@@ -34,8 +33,7 @@ export function setJobFilter (filters) {
         type: SET_JOB_FILTERS,
         data: filters
       })
-    }
-    catch (err) {
+    } catch (err) {
       const errorData = getErrorDataFromNetworkException(err)
       dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage)]))
     }
@@ -91,7 +89,7 @@ export function fetchFilters () {
       })
     } catch (err) {
       const errorData = getErrorDataFromNetworkException(err)
-      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_MATCH_FILTERS_ERROR}]))
+      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_MATCH_FILTERS_ERROR }]))
     }
   }
 }

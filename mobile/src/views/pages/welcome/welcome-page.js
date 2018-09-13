@@ -46,11 +46,6 @@ class WelcomePage extends React.Component {
 }
 
 const styles = EStyleSheet.create({
-  imageContainer: {
-    flex: 1,
-    alignSelf: 'stretch',
-    backgroundColor: 'transparent'
-  },
   content: {
     flex: 1,
     alignItems: 'center',
@@ -89,23 +84,6 @@ const styles = EStyleSheet.create({
     marginBottom: 16,
     marginLeft: 16,
     marginRight: 16
-  },
-  loginButton: {
-    marginBottom: '1rem',
-    backgroundColor: '#FE2B77',
-    width: '100%',
-    maxWidth: 270,
-    height: 60,
-    alignSelf: 'center',
-    justifyContent: 'center'
-  },
-  signUpButton: {
-    marginBottom: '1rem',
-    width: '100%',
-    maxWidth: 270,
-    height: 60,
-    alignSelf: 'center',
-    justifyContent: 'center'
   }
 })
 

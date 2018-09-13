@@ -1,11 +1,11 @@
-import { View } from 'native-base'
+import { Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import { signUpActions } from '../../../../signup'
-import { FlowButton } from '../../../design/buttons'
+import { FlowButton, OutlineWhiteButton } from '../../../design/buttons'
 import { FlowContainer } from '../../../design/container'
 import { FlowListItem } from '../../../design/list-items'
 import { StepTitle } from '../../../design/step-title'
@@ -32,6 +32,7 @@ class InvesteeHiring extends React.Component {
               <StepTitle text={ I18n.t('flow_page.hiring.title') }/>
             </View>
             <Subheader
+              color={ 'white' }
               text={ I18n.t(`flow_page.hiring.header`) }
             />
             <FlowListItem
@@ -44,6 +45,15 @@ class InvesteeHiring extends React.Component {
               text={ I18n.t('common.yes') }
               onSelect={ () => this.setState({ hiring: true }) }
               selected={ this.state.hiring }/>
+            <View style={ { margin: 8 } }>
+              <Text style={ { marginBottom: 8, color: 'white', textAlign: 'center' } }>
+                { I18n.t('flow_page.hiring.skip_text') }
+              </Text>
+              <OutlineWhiteButton
+                text={ I18n.t('common.skip') }
+                onPress={ this.handleSkip }
+              />
+            </View>
           </ScrollView>
         </View>
         <View style={ { margin: 8 } }>
@@ -64,6 +74,12 @@ class InvesteeHiring extends React.Component {
     this.props.onFill({
       done: !hiring,
       nextStep: hiring ? EmployerRole : null
+    })
+  }
+
+  handleSkip = () => {
+    this.props.onFill({
+      done: true
     })
   }
 }

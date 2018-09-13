@@ -41,6 +41,7 @@ class InvestorGiveaways extends React.Component {
               <StepTitle text={ I18n.t('flow_page.investor.giveaways.title') }/>
             </View>
             <SubheaderWithSwitch
+              color={'white'}
               selected={ this.state.all }
               text={ I18n.t(`common.giveaway.header`) }
               onToggle={ this.selectAll }

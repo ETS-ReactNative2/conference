@@ -40,6 +40,7 @@ class InvesteeProjectSetup extends React.Component {
               </View>
 
               <Subheader
+                color={'white'}
                 text={ I18n.t('flow_page.project_setup.header') }
               />
               <View style={ styles.contentContainer }>
@@ -138,6 +139,7 @@ class InvesteeProjectSetup extends React.Component {
       nextStep: InvesteeLinks
     })
   }
+  
   handleFieldChange = (value, name) => {
     this.setState({
       [ name ]: value

@@ -34,6 +34,7 @@ class InvesteeProductStage extends React.Component {
               <StepTitle text={ I18n.t('flow_page.product_stage.title') }/>
             </View>
             <Subheader
+              color={'white'}
               text={ I18n.t(`flow_page.product_stage.header`) }
             />
             { PRODUCT_STAGES.map((size) => {

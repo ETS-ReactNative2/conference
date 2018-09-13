@@ -163,7 +163,7 @@ const Medium = ({ project, onClick }) => {
                 </View>
               </View>
             </View>
-            <Text style={ [ medium.header, medium.amount ] }>{`${I18n.t('cards.raising')} ${ fundraisingAmount }`}</Text>
+            <Text style={ [ medium.header, medium.amount ] }>{ Number(fundraisingAmount) > 0 ? `${I18n.t('cards.raising')} ${ fundraisingAmount }` : I18n.t('cards.not_raising')}</Text>
           </View>
         </View>
       </View>
@@ -247,7 +247,19 @@ class XL extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.JOBS_PAGE, { project })
   }
 
-  handleLink = async (prefix, link = '/') => {
+  handleLink = async (link) => {
+    try {
+      const supported = await Linking.canOpenURL(link)
+      if (!supported) {
+        throw new Error('')
+      }
+      await Linking.openURL(link)
+    } catch (err) {
+      this.props.onLinkError(I18n.t('common.errors.incorrect_url'))
+    }
+  }
+
+  handleSocial = async (prefix, link = '/') => {
     try {
       const supported = await Linking.canOpenURL(prefix + link)
       if (!supported) {
@@ -311,7 +323,7 @@ class XL extends React.Component {
                 <Text style={ xl.title }>{ name }</Text>
               </View>
               <View style={ { marginTop: 2, marginBottom: 2 } }>
-                <Text style={ medium.subtitle }>{ tagline ? tagline : '...' }</Text>
+                <Text style={ medium.subtitle }>{ tagline }</Text>
               </View>
             </View>
           </View>
@@ -341,9 +353,16 @@ class XL extends React.Component {
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ xl.boxContainer }>
-
-              <Text style={ [ xl.header ] }>{ I18n.t('cards.raising').toUpperCase() }</Text>
-              <Text style={ xl.subtitle }>${ fundraisingAmount }</Text>
+              { Number(fundraisingAmount) > 0 ?
+                <React.Fragment>
+                  <Text style={ [ xl.header ] }>{ I18n.t('cards.raising').toUpperCase() }</Text>
+                  <Text style={ xl.subtitle }> ${ fundraisingAmount }</Text>
+                </React.Fragment> :
+                <React.Fragment>
+                <Text style={ [ xl.header ] }>{ I18n.t('cards.not_raising').toUpperCase() }</Text>
+                  <Text style={ xl.subtitle }/>
+                </React.Fragment>
+              }
               <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 } style={ [ xl.header, { marginTop: 16 } ] }>{ I18n.t(
                 'cards.offer').toUpperCase() }</Text>
               <Text style={ xl.subtitle }>{ giveaway ? I18n.t(`common.giveaways.${giveaway.slug}`) : '' }</Text>
@@ -360,7 +379,13 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.whitepaper') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'map' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_whitepaper') }</Text>
+                </View>
+              }
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
@@ -372,12 +397,18 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.news') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'newspaper-o' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_news') }</Text>
+                </View>
+              }
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.telegram ? (
-                <TouchableHighlight onPress={ () => this.handleLink('https://t.me/', project.telegram) }
+                <TouchableHighlight onPress={ () => this.handleSocial('https://t.me/', project.telegram) }
                                     underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
@@ -385,14 +416,20 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.telegram') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'telegram' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_telegram') }</Text>
+                </View>
+              }
             </View>
           </View>
           <View style={ [ xl.line, horizontalLineWidth ] }/>
           <View style={ styles.inline }>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.github ? (
-                <TouchableHighlight onPress={ () => this.handleLink('https://github.com/', project.github) }
+                <TouchableHighlight onPress={ () => this.handleSocial('https://github.com/', project.github) }
                                     underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
@@ -400,12 +437,18 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.github') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'github' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_github') }</Text>
+                </View>
+              }
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { project.twitter ? (
-                <TouchableHighlight onPress={ () => this.handleLink('https://twitter.com/', project.twitter) }
+                <TouchableHighlight onPress={ () => this.handleSocial('https://twitter.com/', project.twitter) }
                                     underlayColor='transparent'>
                   <View>
                     <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
@@ -413,7 +456,13 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.twitter') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'twitter' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_twitter') }</Text>
+                </View>
+              }
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
@@ -425,7 +474,14 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.website') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'globe' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_website') }</Text>
+                </View>
+
+              }
             </View>
           </View>
           { (jobListings && jobListings.length > 0) ? (

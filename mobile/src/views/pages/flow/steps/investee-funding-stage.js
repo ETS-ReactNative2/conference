@@ -39,6 +39,7 @@ class InvesteeFundingStage extends React.Component {
                 <StepTitle text={ I18n.t('flow_page.funding_stage.title') }/>
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t(`flow_page.funding_stage.header`) }
               />
               { FUNDING_STAGES.map((size) => {
@@ -54,6 +55,7 @@ class InvesteeFundingStage extends React.Component {
               }) }
               <View style={ { paddingTop: 10 } }>
                 <Subheader
+                  color={'white'}
                   text={ I18n.t(`flow_page.members.header`) }
                 />
               </View>
@@ -97,6 +99,7 @@ class InvesteeFundingStage extends React.Component {
       [ field ]: text
     })
   }
+  
   validateForm = () => {
     const isFormValid = this.isFormValid()
     this.setState({ isFormValid })

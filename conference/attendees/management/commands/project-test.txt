@@ -1,0 +1,43 @@
+Email Address: alice@alicetoken.io
+Project Members Emails: bob@alicetoken.io
+Eventbrite Ticket or Order #: N/A
+Project Name: AliceToken
+Product Description: Our MVP is solving banking problems for traditional big-corporation banking institutions.
+Link to Logo: https://alicetoken.io/img/assets/alicetoken_logo_dark.png
+Company URL: alicetoken.io
+TG Username: alice
+Twitter handle: @alicetkn
+Funding amount: 10,000,000
+TokenType: PROTOCOL
+ProductStage: PRE_PRODUCT
+FundingStage: SEED
+Featured Press URL:
+Whitepaper URL: https://alicetoken.io/img/assets/AT_White_Paper_10Jul18.pdf
+InvestorNationality: ANYWHERE
+InvestorBuys: BOTH
+Notable members/advisors: https://www.linkedin.com/in/mr-investorman-48g695333
+More information:
+Tagline: Alice's favorite token
+Industry: finance
+----
+Email Address: robert.bobberson@megafake.com
+Project Members Emails: jake.danielbro@megafake.com
+Eventbrite Ticket or Order #: 996694
+Project Name: Mega Fake
+Product Description: Platform for analog watches purchasing and donations to our beer fund
+Link to Logo: https://megafake.com/img/logo.svg
+Company URL: www.megafake.com
+TG Username: @megafaketag
+Twitter handle: @megafake
+Funding amount: 8,000,000
+Notable members/advisors: we have 9 years of crypto experience
+TokenType: PROTOCOL
+ProductStage: PRE_PRODUCT
+FundingStage: SEED
+Featured Press URL:
+Whitepaper URL: https://megafake.com/files/Mega%20Fake%20White%20Paper.pdf
+InvestorNationality: ANYWHERE
+InvestorBuys: BOTH
+More information: we offer uncapped ICO
+Tagline: More Platforms. More Everything.
+Industry: art

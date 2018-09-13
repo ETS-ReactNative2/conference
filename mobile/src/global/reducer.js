@@ -1,4 +1,12 @@
-import { HIDE_MESSAGE, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING, SEND_MESSAGE_ERROR, SHOW_ALERT, HIDE_ALERT } from './action-types'
+import {
+  HIDE_MESSAGE,
+  SET_LOADING,
+  SHOW_MESSAGE,
+  UNSET_LOADING,
+  SEND_MESSAGE_ERROR,
+  SHOW_ALERT,
+  HIDE_ALERT, SHOW_CONTACT_MESSAGE, HIDE_CONTACT_MESSAGE, SEND_CONTACT_MESSAGE_ERROR
+} from './action-types'
 import I18n from '../../locales/i18n'
 
 const initialState = {
@@ -9,7 +17,9 @@ const initialState = {
   sendMessageError: false,
   showAlert: false,
   alertType: 'success',
-  alertMessage: ''
+  alertMessage: '',
+  showContactMessage: false,
+  sendContactMessageError: false,
 }
 
 export function globalReducer (state = initialState, action) {
@@ -44,6 +54,23 @@ export function globalReducer (state = initialState, action) {
       return {
         ...state,
         showMessageError: action.data
+      }
+    case SHOW_CONTACT_MESSAGE:
+      return {
+        ...state,
+        showContactMessage: true,
+        showContactMessageError: false
+      }
+    case HIDE_CONTACT_MESSAGE:
+      return {
+        ...state,
+        showContactMessage: false,
+        showContactMessageError: false
+      }
+    case SEND_CONTACT_MESSAGE_ERROR:
+      return {
+        ...state,
+        showContactMessageError: action.data
       }
     case SHOW_ALERT:
       return {

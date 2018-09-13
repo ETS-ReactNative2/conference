@@ -122,8 +122,8 @@ android {
         applicationId "com.meetluna.conference"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 7
-        versionName "1.1"
+        versionCode 8
+        versionName "1.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

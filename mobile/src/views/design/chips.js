@@ -35,5 +35,4 @@ const styles = EStyleSheet.create({
   selectedText: {
     color: 'white'
   }
-
 })

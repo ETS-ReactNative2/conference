@@ -1,7 +1,15 @@
 import * as api from '../api/api'
 import { getErrorDataFromNetworkException } from '../common/utils'
 import I18n from '../../locales/i18n'
-import { HIDE_MESSAGE, SEND_MESSAGE_ERROR, SET_LOADING, SHOW_MESSAGE, UNSET_LOADING, SHOW_ALERT, HIDE_ALERT } from './action-types'
+import {
+  HIDE_MESSAGE,
+  SEND_MESSAGE_ERROR,
+  SET_LOADING,
+  SHOW_MESSAGE,
+  UNSET_LOADING,
+  SHOW_ALERT,
+  HIDE_ALERT, SEND_CONTACT_MESSAGE_ERROR, SHOW_CONTACT_MESSAGE, HIDE_CONTACT_MESSAGE
+} from './action-types'
 
 export function setGlobalLoading (message) {
   return {
@@ -44,6 +52,33 @@ export function showMessage (investor) {
 export function hideMessage () {
   return {
     type: HIDE_MESSAGE
+  }
+}
+
+export function sendContactMessage (msg) {
+  return async (dispatch) => {
+    try {
+      await api.sendContact({ message: msg })
+      dispatch(hideContactMessage())
+    } catch (err) {
+      dispatch({
+        type: SEND_CONTACT_MESSAGE_ERROR,
+        data: getErrorDataFromNetworkException(err)
+      })
+      throw new Error(getErrorDataFromNetworkException(err).errorMessage)
+    }
+  }
+}
+
+export function showContactMessage () {
+  return {
+    type: SHOW_CONTACT_MESSAGE
+  }
+}
+
+export function hideContactMessage () {
+  return {
+    type: HIDE_CONTACT_MESSAGE
   }
 }
 

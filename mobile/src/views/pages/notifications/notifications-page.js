@@ -1,5 +1,5 @@
 import I18n from '../../../../locales/i18n'
-import { Body, Button, Container, Content, List, ListItem, Right, Spinner, Text } from 'native-base'
+import { Body, Button, Container, Content, List, ListItem, Right, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -39,6 +39,7 @@ class NotificationsPage extends Component {
           onRetry={ this.props.fetchNotifications }/>
       )
     }
+    
     return (
       <Container>
         <Content>

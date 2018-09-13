@@ -41,13 +41,14 @@ export default class JobsPage extends Component {
     const project = this.props.navigation.getParam('project')
     const jobs = project.jobListings.map(jb => {
       const { id, imageUrl, name } = project
+      console.log({jb, id, imageUrl, name})
       return {
         ...jb,
         project: {
           ...jb.project,
-          id: id || jb.project.id,
-          imageUrl: imageUrl || jb.project.imageUrl,
-          name: name || jb.project.name
+          id: id !== undefined ? id :  jb.project.id,
+          imageUrl: imageUrl !== undefined ? imageUrl : jb.project.imageUrl,
+          name: name !== undefined ? name : jb.project.name
         }
       }
     })
@@ -74,12 +75,12 @@ export default class JobsPage extends Component {
                 onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
               />
               { jobs.length < 8 &&
-              <Pagination
-                dotColor={ 'rgba(255, 255, 255, 0.95)' }
-                inactiveDotColor={ 'rgba(255,255,255,0.75)' }
-                dotsLength={ jobs.length }
-                activeDotIndex={ currentIndex }
-              />
+                <Pagination
+                  dotColor={ 'rgba(255, 255, 255, 0.95)' }
+                  inactiveDotColor={ 'rgba(255,255,255,0.75)' }
+                  dotsLength={ jobs.length }
+                  activeDotIndex={ currentIndex }
+                />
               }
             </React.Fragment>
           </View>

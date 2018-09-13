@@ -131,9 +131,6 @@ const styles = EStyleSheet.create({
     paddingRight: 16,
     paddingBottom: 24
   },
-  mainContainer: {
-    backgroundColor: '#FFFFFF'
-  },
   textStyling: {
     flex: 1,
     flexWrap: 'wrap',

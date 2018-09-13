@@ -11,8 +11,6 @@ import { FlowContainer } from '../../../design/container'
 import { FlowListItem } from '../../../design/list-items'
 import { StepTitle } from '../../../design/step-title'
 import { SubheaderWithSwitch } from '../../../design/subheader'
-import { InvestorMarketLocation } from './index'
-
 
 class InvestorProductStages extends React.Component {
 
@@ -42,6 +40,7 @@ class InvestorProductStages extends React.Component {
               <StepTitle text={ I18n.t('flow_page.investor.product_stage.title') }/>
             </View>
             <SubheaderWithSwitch
+              color={'white'}
               selected={ this.state.all }
               text={ I18n.t(`common.product_stages.header`) }
               onToggle={ this.selectAll }
@@ -84,7 +83,7 @@ class InvestorProductStages extends React.Component {
       productStages: this.state.productStages
     })
     this.props.onFill({
-      nextStep: InvestorMarketLocation
+      done: true
     })
   }
 

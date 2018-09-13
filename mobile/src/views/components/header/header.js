@@ -4,7 +4,6 @@ import React from 'react'
 import { Image, Platform, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 
-
 export class Header extends React.Component {
   render () {
     return (

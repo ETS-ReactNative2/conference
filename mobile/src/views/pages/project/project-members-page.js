@@ -109,7 +109,7 @@ class ProjectMembersPage extends Component {
                 onChangeText={ text => this.setState({ email: text, isChanging: true }) }/>
             </View>
             <View>
-              <ProfileWhiteButton onPress={ () => this.handleAddMemeber(email) } text={ I18n.t('common.add') }/>
+              <ProfileWhiteButton onPress={ () => this.handleAddMember(email) } text={ I18n.t('common.add') }/>
             </View>
           </View>
         </KeyboardAvoidingView>
@@ -123,10 +123,6 @@ const styles = EStyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     paddingBottom: 49
-  },
-  navigationStyle: {
-    color: '#fff',
-    marginTop: 12
   },
   text: {
     color: '#fff',
@@ -169,9 +165,6 @@ const styles = EStyleSheet.create({
     marginLeft: 8,
     marginBottom: 4
   },
-  // nonBorder: {
-  //   borderBottomWidth: 0
-  // }
 })
 
 const mapStateToProps = state => {

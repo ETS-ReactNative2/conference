@@ -58,15 +58,6 @@ class EmployerJobs extends React.Component {
     return !validator.isEmpty(city)
   }
 
-  handleCheck = (role, field) => {
-    this.setState({
-      [ role ]: {
-        ...this.state[ role ],
-        [ field ]: !this.state[ role ][ field ]
-      }
-    }, this.validateForm)
-  }
-
   handleCheckboxClickLocation = (index, role) => {
     let location = [ ...this.state[ role ].location ]
     const locationIndex = location.indexOf(index)
@@ -131,7 +122,9 @@ class EmployerJobs extends React.Component {
                     return (
                       <React.Fragment key={ role }>
                         <StepTitle text={ I18n.t(`common.roles_job.${role}`) }/>
-                        <Subheader text={ I18n.t(`flow_page.employer.keyword.links`) }/>
+                        <Subheader
+                          color={'white'}
+                          text={ I18n.t(`flow_page.employer.keyword.links`) }/>
                         <View style={ { marginLeft: 8, marginRight: 8 } }>
                           <FlowInputValidated
                             floatingLabel
@@ -169,6 +162,7 @@ class EmployerJobs extends React.Component {
                             onToggle={ () => this.handleCheckboxPartTimeClick(role) }/>
                         </View>
                         <Subheader
+                          color={'white'}
                           text={ I18n.t('flow_page.employer.payment.title') }
                         />
                         { PAYMENTS.map(({ slug, index }) => {
@@ -182,6 +176,7 @@ class EmployerJobs extends React.Component {
                           )
                         }) }
                         <Subheader
+                          color={'white'}
                           text={ I18n.t('flow_page.employer.location.title') }
                         />
                         { JOB_LOCATION.map(({ slug, index }) => {
@@ -256,7 +251,6 @@ class EmployerJobs extends React.Component {
       .reduce((previous, current) => {
         return previous && current
       })
-
   }
 
   handleSubmit = () => {

@@ -59,10 +59,10 @@ const Small = ({ professional, onClick }) => {
           </View>
           {
             role === 12 ?
-              <Text style={ small.subtitle }>{ professional.roleOtherText }</Text> :
+              <Text style={ small.subtitle }>{ professional.roleOtherText !== '' ? professional.roleOtherText : I18n.t('common.roles.other') }</Text> :
               <Text style={ small.subtitle }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
           }
-          </View>
+        </View>
       </View>
     </TouchableHighlight>
   )
@@ -148,7 +148,7 @@ const Medium = ({ professional, onClick }) => {
             <View style={ { marginTop: 4, marginBottom: 4 } }>
               {
                 role === 12 ?
-                  <Text style={ medium.role }>{ professional.roleOtherText }</Text> :
+                  <Text style={ medium.role }>{ professional.roleOtherText !== '' ? professional.roleOtherText : I18n.t('common.roles.other') }</Text> :
                   <Text style={ medium.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
               }
               <Text
@@ -178,7 +178,7 @@ const Medium = ({ professional, onClick }) => {
                     style={ medium.subtitle }>{ professional.city }</Text> : null
                   }
                   { professional.relocate ?
-                    <Text style={ [ medium.subtitle ] }>{I18n.t('cards.relocate')}</Text> : null }
+                    <Text style={ [ medium.subtitle ] }>{ I18n.t('cards.relocate') }</Text> : null }
                 </View>
               </View>
               <View style={ medium.rowDetail }>
@@ -340,7 +340,7 @@ class XL extends React.Component {
               <View style={ { marginTop: 2, marginBottom: 2 } }>
                 {
                   role === 12 ?
-                    <Text style={ xl.role }>{ professional.roleOtherText.toUpperCase() }</Text> :
+                    <Text style={ xl.role }>{ professional.roleOtherText !== '' ? professional.roleOtherText.toUpperCase() : I18n.t('common.roles.other').toUpperCase() }</Text> :
                     <Text style={ xl.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`).toUpperCase() }</Text>
                 }
               </View>
@@ -387,15 +387,20 @@ class XL extends React.Component {
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { professional.user.telegram ? (
-                <TouchableHighlight
-                  onPress={ () => this.handleLink('https://t.me/', professional.user.telegram) }
-                  underlayColor='transparent'>
-                  <View>
-                    <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' } name={ 'telegram' }/>
-                    <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.telegram') }</Text>
-                  </View>
-                </TouchableHighlight>
-              ) : null }
+                  <TouchableHighlight
+                    onPress={ () => this.handleLink('https://t.me/', professional.user.telegram) }
+                    underlayColor='transparent'>
+                    <View>
+                      <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' } name={ 'telegram' }/>
+                      <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.telegram') }</Text>
+                    </View>
+                  </TouchableHighlight>
+                ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' } name={ 'telegram' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_telegram') }</Text>
+                </View>
+              }
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
@@ -409,7 +414,13 @@ class XL extends React.Component {
                     <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.linkedin') }</Text>
                   </View>
                 </TouchableHighlight>
-              ) : null }
+              ) :
+                <View>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'linkedin' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_linkedin') }</Text>
+                </View>
+              }
             </View>
           </View>
         </View>

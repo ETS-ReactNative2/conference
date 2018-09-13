@@ -69,6 +69,7 @@ class InvesteeTeamMembers extends React.Component {
       nextStep: InvesteeHiring
     })
   }
+  
   handleFieldChange = (text, field) => {
     this.setState({
       [ field ]: text

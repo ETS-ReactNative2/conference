@@ -60,13 +60,13 @@ class EmployeeKeywords extends React.Component {
     return !validator.isEmpty(city)
   }
 
-    validateAge = (amount) => {
-        return validator.isEmpty(amount) ? true : validator.isNumeric(amount) && Number(amount) >= 18 && Number(amount) <= 120
-    }
+  validateAge = (amount) => {
+    return validator.isEmpty(amount) ? true : validator.isNumeric(amount) && Number(amount) >= 18 && Number(amount) <= 120
+  }
 
-    validateExperience = (amount) => {
-        return validator.isEmpty(amount) ? true : validator.isNumeric(amount) && Number(amount) >= 0 && Number(amount) <= 120
-    }
+  validateExperience = (amount) => {
+    return validator.isEmpty(amount) ? true : validator.isNumeric(amount) && Number(amount) >= 0 && Number(amount) <= 120
+  }
 
   isFormValid = () => {
     const { skills, traits, mostInfo, city, age, experience } = this.state
@@ -100,6 +100,7 @@ class EmployeeKeywords extends React.Component {
                 <StepTitle text={ I18n.t('flow_page.employee.role.about') }/>
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t('flow_page.employee.skills.title') }
               />
               <View style={ { marginLeft: 8, marginRight: 8 } }>
@@ -130,6 +131,7 @@ class EmployeeKeywords extends React.Component {
 
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t('flow_page.employee.condition.title') }
               />
               <FlowListSwitch
@@ -162,29 +164,30 @@ class EmployeeKeywords extends React.Component {
                   onChangeText={ (newValue) => this.handleFieldChange(newValue, 'city') }/>
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t('flow_page.employee.more.title') }
               />
               <View style={ { marginLeft: 8, marginRight: 8 } }>
-                  <FlowInputValidated
-                      floatingLabel
-                      keyboardType={'numeric'}
-                      value={ this.state.age }
-                      placeholder={ I18n.t('flow_page.employee.age.placeholder') }
-                      labelText={ I18n.t('flow_page.employee.age.placeholder') }
-                      isError={ !this.validateAge(this.state.age) }
-                      errorMessage={ I18n.t('flow_page.employee.age.error') }
-                      onChangeText={ (newValue) => this.handleFieldChange(newValue, 'age') } />
+                <FlowInputValidated
+                    floatingLabel
+                    keyboardType={'numeric'}
+                    value={ this.state.age }
+                    placeholder={ I18n.t('flow_page.employee.age.placeholder') }
+                    labelText={ I18n.t('flow_page.employee.age.placeholder') }
+                    isError={ !this.validateAge(this.state.age) }
+                    errorMessage={ I18n.t('flow_page.employee.age.error') }
+                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'age') } />
               </View>
               <View style={ { marginLeft: 8, marginRight: 8 } }>
-                  <FlowInputValidated
-                      floatingLabel
-                      keyboardType={'numeric'}
-                      value={ this.state.experience }
-                      placeholder={ I18n.t('flow_page.employee.experience.placeholder') }
-                      labelText={ I18n.t('flow_page.employee.experience.placeholder') }
-                      isError={ !this.validateExperience(this.state.experience) }
-                      errorMessage={ I18n.t('flow_page.employee.experience.error') }
-                      onChangeText={ (newValue) => this.handleFieldChange(newValue, 'experience') } />
+                <FlowInputValidated
+                    floatingLabel
+                    keyboardType={'numeric'}
+                    value={ this.state.experience }
+                    placeholder={ I18n.t('flow_page.employee.experience.placeholder') }
+                    labelText={ I18n.t('flow_page.employee.experience.placeholder') }
+                    isError={ !this.validateExperience(this.state.experience) }
+                    errorMessage={ I18n.t('flow_page.employee.experience.error') }
+                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'experience') } />
               </View>
             </ScrollView>
           </KeyboardAvoidingView>

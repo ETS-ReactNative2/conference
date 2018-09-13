@@ -10,7 +10,6 @@ import { JOB_LOCATION, ROLES } from '../../../../enums'
 import { PAGES_NAMES } from '../../../../navigation'
 
 export class ProfessionalCard extends React.Component {
-
   shouldComponentUpdate = () => {
     return false
   }

@@ -15,6 +15,9 @@ COMPANY_URL = "company_url"
 TELEGRAM = "telegram"
 TWITTER = "twitter"
 FUNDING_AMOUNT = "funding_amount"
+WHITEPAPER_URL = "Whitepaper URL"
+FEATURED_PRESS_URL = "Featured Press URL"
+TAGLINE = "Tagline"
 
 TOKEN_TYPE = "TokenType"
 TOKEN_TYPE_UTILITY = "UTILITY"
@@ -74,7 +77,10 @@ class Command(BaseCommand):
                          INVESTOR_REGION: INVESTOR_REGION + ": ",
                          GIVEAWAY_TYPE: GIVEAWAY_TYPE + ": ",
                          MORE_INFORMATION: 'More information: ',
-                         INDUSTRY: 'Industry: '}
+                         INDUSTRY: 'Industry: ',
+                         WHITEPAPER_URL: WHITEPAPER_URL + ": ",
+                         FEATURED_PRESS_URL: FEATURED_PRESS_URL + ": ",
+                         TAGLINE: TAGLINE + ": "}
 
         self.projects = 0
         self.members = 0
@@ -194,6 +200,9 @@ class Command(BaseCommand):
             project.fundraising_amount = int(amount_string)
 
         project.notable = values[NOTABLE_MEMBERS]
+        project.whitepaper = values[WHITEPAPER_URL]
+        project.news = values[FEATURED_PRESS_URL]
+        project.tagline = values[TAGLINE]
 
         funding_stage = self.get_funding_stage(values)
         giveaway = self.get_giveaway(values)
@@ -212,12 +221,17 @@ class Command(BaseCommand):
 
     def add_project_member(self, email, project):
         self.members += 1
-        member, created = ProjectMember.objects.get_or_create(email=email, defaults={'project': project})
-        if created:
-            self.stdout.write("Created member %s for project %s" % (email, project.name))
-            member.save()
+        user = self.get_or_none(User, email=email)
+        if user:
+            user.conference_user.project = project
+            user.conference_user.save()
         else:
-            self.stdout.write("Updating member %s for project %s" % (email, project.name))
+            member, created = ProjectMember.objects.get_or_create(email=email, defaults={'project': project})
+            if created:
+                self.stdout.write("Created member %s for project %s" % (email, project.name))
+                member.save()
+            else:
+                self.stdout.write("Updating member %s for project %s" % (email, project.name))
 
     def process_project(self, project_lines):
         self.projects += 1

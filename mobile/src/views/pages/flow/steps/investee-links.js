@@ -39,6 +39,7 @@ class InvesteeLinks extends React.Component {
                 <StepTitle text={ I18n.t('flow_page.links.title') }/>
               </View>
               <Subheader
+                color={'white'}
                 text={ I18n.t(`flow_page.links.header`) }
               />
               <View style={{ marginLeft: 8, marginRight: 8 }}>

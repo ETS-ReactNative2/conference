@@ -131,6 +131,17 @@ class XL extends React.Component {
       })
   }
 
+    handleLink = (url) => {
+        Linking.canOpenURL(url)
+            .then(supported => {
+                if (supported) {
+                    Linking.openURL(url)
+                } else {
+                    console.log('Don\'t know how to open URI: ' + url)
+                }
+            })
+    }
+
   render () {
     const { job } = this.props
 
@@ -271,10 +282,6 @@ const xl = EStyleSheet.create({
     marginBottom: 5,
     backgroundColor: 'rgba(255,255,255,.25)'
   },
-  placeholderContainer: {
-    width: 200,
-    height: 150,
-  },
   details: {
     margin: 8
   },
@@ -322,10 +329,6 @@ const xl = EStyleSheet.create({
   boxContainer: {
     flex: 1,
     padding: 8
-  },
-  linkedin: {
-    color: 'white',
-    textAlign: 'center'
   }
 })
 
@@ -350,9 +353,6 @@ const styles = EStyleSheet.create({
   },
   spaceAbove: {
     marginTop: 4,
-  },
-  spaceBelow: {
-    marginBottom: 4
   }
 })
 

@@ -141,12 +141,6 @@ export class InvestorCard extends React.Component {
 }
 
 const styles = EStyleSheet.create({
-  subheader: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    marginLeft: 16
-  },
   content: {
     flex: 1,
     backgroundColor: '#2C65E2'
@@ -156,17 +150,6 @@ const styles = EStyleSheet.create({
     top: 8,
     right: 8,
     color: 'black'
-  },
-  pageTitleContainer: {
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20
-  },
-  pageTitle: {
-    fontSize: 18,
-    fontFamily: 'Montserrat-SemiBold',
-    letterSpacing: 0.18,
-    lineHeight: 30
   },
   infoHeader: {
     fontWeight: 'bold',
@@ -180,28 +163,6 @@ const styles = EStyleSheet.create({
     fontSize: 12,
     color: '#888'
   },
-  headerTitle: {
-    textAlign: 'center',
-    flexGrow: 1,
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontFamily: 'Montserrat-SemiBold'
-  },
-  listItem: {
-    flexDirection: 'column',
-    width: 300,
-    marginLeft: 5,
-    marginRight: 5,
-    marginBottom: 5,
-    borderRadius: 7,
-    backgroundColor: '#ffffff',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 3
-  },
   portrait: {
     width: 150,
     height: 150,
@@ -212,22 +173,6 @@ const styles = EStyleSheet.create({
     width: 60,
     height: 45,
     marginTop: 16
-  },
-  rowHeader: {
-    flex: 1,
-    flexDirection: 'row',
-    fontSize: 11,
-    marginLeft: 16,
-    marginRight: 18
-  },
-  rowDetail: {
-    flex: 1,
-    flexDirection: 'row',
-    fontSize: 11,
-    justifyContent: 'flex-start',
-    marginLeft: 16,
-    marginRight: 18,
-    marginBottom: 11
   },
   normalText: {
     fontSize: 16,
@@ -243,19 +188,5 @@ const styles = EStyleSheet.create({
   },
   underline: {
     textDecorationLine: 'underline'
-  },
-  comment: {
-    width: '100%',
-    fontSize: 12,
-    fontFamily: 'Helvetica',
-    marginTop: 2,
-    marginBottom: 8,
-    textAlign: 'center'
-  },
-  footerContainer: {
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 })

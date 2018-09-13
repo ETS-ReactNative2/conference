@@ -7,7 +7,12 @@ import Flag from 'react-native-flags'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import ColorLogo from '../../../../assets/logos/conference_logo_welcome_medium.png'
-import { FUNDING_STAGES, REGIONS, TICKET_SIZES, TOKEN_TYPES } from '../../../../enums.js'
+import {
+  FUNDING_STAGES,
+  REGIONS,
+  TICKET_SIZES,
+  TOKEN_TYPES
+} from '../../../../enums.js'
 import { PAGES_NAMES } from '../../../../navigation'
 import * as searchActions from '../../../../search/actions'
 import Investor from '../../../components/investor/investor-cards'

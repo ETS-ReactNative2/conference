@@ -32,7 +32,6 @@ class FlowPage extends React.Component {
       headerRight: (
         <Image style={ { marginRight: 20, width: 24, height: 30 } } source={ WhiteLogo }/>
       )
-
     })
   }
 
@@ -42,6 +41,7 @@ class FlowPage extends React.Component {
       CurrentStep: this.getStepForType(),
       PreviousSteps: []
     }
+
     BackHandler.addEventListener(
       'hardwareBackPress',
       this.onBackButtonPressAndroid
@@ -126,8 +126,7 @@ class FlowPage extends React.Component {
           getTitle: this.getTitle()
         })
       })
-    }
-    else {
+    } else {
       try {
         await this.props.startLoading()
         await this.props.uploadProfile()
@@ -180,7 +179,7 @@ const mapDispatchToProps = dispatch => {
     uploadProfile: () => dispatch(signUpActions.uploadProfile()),
     fetchProfiles: () => dispatch(profileActions.fetchProfiles()),
     startLoading: () => dispatch(batchActions([ globalActions.hideAlert(),
-      globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
+    globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
     showAlertMessage: errMessage => dispatch(globalActions.showAlertError(errMessage)),
     finishLoading: () => dispatch(globalActions.unsetGlobalLoading())
   }

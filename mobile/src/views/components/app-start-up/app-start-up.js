@@ -8,6 +8,7 @@ class AppStartUp extends Component {
   componentDidMount() {
     this.props.loadApp();
   }
+  
   render() {
     return (
       <React.Fragment>

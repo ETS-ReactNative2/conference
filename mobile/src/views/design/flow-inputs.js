@@ -136,7 +136,8 @@ const styles = EStyleSheet.create({
     paddingLeft: 10,
     color: 'white',
     fontWeight: 'bold',
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
+    minHeight: 70
   },
   inputSingleLine: {
     height: 70

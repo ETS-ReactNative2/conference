@@ -1,12 +1,13 @@
 import { Container } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { AppState, ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text, View, Alert } from 'react-native'
 import Config from 'react-native-config'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
+import { showContactMessage } from '../../../global/actions'
 import { PAGES_NAMES } from '../../../navigation'
 import { profileActions } from '../../../profile'
 import { signUpActions } from '../../../signup'
@@ -87,8 +88,19 @@ class ProfilePage extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
   }
 
-  render () {
+  handleLeaveProject = () => {
+    Alert.alert(
+      I18n.t('profile_page.leave_project'),
+      I18n.t('profile_page.leave_project_confirm'),
+      [
+        { text: I18n.t('common.cancel'), onPress: () => console.log('Cancel to leave the project') },
+        { text: I18n.t('common.ok'), onPress: () => this.props.leaveProject() },
+      ],
+      { cancelable: false }
+    )
+  }
 
+  render () {
     const { isLoading } = this.props
 
     if (isLoading) {
@@ -165,7 +177,7 @@ class ProfilePage extends React.Component {
                       <ProfileWhiteButton onPress={ this.handleOpenProjectDetails } text={ I18n.t('common.view') }/>
                       <ProfileWhiteButton onPress={ this.handleEditProject } text={ I18n.t('common.edit') }/>
                       <ProfileWhiteButton onPress={ this.handleProjectManage } text={ I18n.t('common.manage') }/>
-                      <ProfileWhiteButton onPress={ this.props.leaveProject } text={ I18n.t('common.leave') }/>
+                      <ProfileWhiteButton onPress={ this.handleLeaveProject } text={ I18n.t('common.leave') }/>
                     </React.Fragment>
                   ) }
                   { !this.props.project && (
@@ -220,6 +232,13 @@ class ProfilePage extends React.Component {
                   )
                 }
               </View>
+              <SmallSubheader text={ I18n.t('common.contact') }/>
+              <View style={ { margin: 8 } }>
+                <OutlineWhiteButton
+                  text={ I18n.t('common.contact') }
+                  onPress={ () => this.props.contactUs() }
+                />
+              </View>
               <SmallSubheader text={ I18n.t('common.logout') }/>
               <View style={ { margin: 8 } }>
                 <OutlineWhiteButton
@@ -247,23 +266,11 @@ const styles = EStyleSheet.create({
     backgroundColor: 'transparent',
     paddingBottom: 49
   },
-  pageTitleContainer: {
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20
-  },
   pageTitle: {
     fontSize: 18,
     fontFamily: 'Montserrat-SemiBold',
     letterSpacing: 0.18,
     lineHeight: 30
-  },
-  headerTitle: {
-    textAlign: 'center',
-    flexGrow: 1,
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontFamily: 'Montserrat-SemiBold'
   },
   warningText: {
     color: 'rgba(255, 255, 255, .5)',
@@ -309,7 +316,8 @@ const mapDispatchToProps = dispatch => {
     leaveProject: () => dispatch(profileActions.leaveProject()),
     reactivateProfile: () => dispatch(profileActions.activateProfile()),
     reactivateInvestor: () => dispatch(profileActions.activateInvestor()),
-    openEdit: (type, prefill = true) => dispatch(profileActions.openEdit(type, prefill))
+    openEdit: (type, prefill = true) => dispatch(profileActions.openEdit(type, prefill)),
+    contactUs: () => dispatch(showContactMessage())
   }
 }
 

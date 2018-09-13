@@ -10,14 +10,10 @@ import { OutlineWhiteButton, PrimaryButton } from '../../design/buttons'
 import FlowInput from '../../design/flow-inputs'
 import { StepTitle } from '../../design/step-title'
 
-class MessagePage extends React.Component {
+class ContactPage extends React.Component {
 
   state = {
     message: ''
-  }
-
-  openLink (url) {
-    this.props.navigation.navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri: url })
   }
 
   handleSend = async () => {
@@ -38,7 +34,7 @@ class MessagePage extends React.Component {
   }
 
   render () {
-    const { showMessage, error, project } = this.props
+    const { showMessage, error } = this.props
     return (
       <React.Fragment>
         { showMessage && (
@@ -50,7 +46,7 @@ class MessagePage extends React.Component {
             <View style={ [ styles.content, { width: '100%' } ] }>
               <View style={ { width: '100%', padding: 32 } }>
                 <StepTitle
-                  text={ I18n.t('message_page.type_message') }/>
+                  text={ I18n.t('message_page.type_contact_message') }/>
                 <FlowInput
                   floatingLabel={ true }
                   labelText={ I18n.t('message_page.message') }
@@ -65,25 +61,10 @@ class MessagePage extends React.Component {
                   )
                 }
                 <View style={ { marginTop: 16 } }>
-                  { project ?
                     <PrimaryButton
                       disabled={ this.state.message.length === 0 }
                       onPress={ this.handleSend }
-                      text={ I18n.t('common.send') }
-                    /> :
-                    <React.Fragment>
-                      <Text
-                        style={ { color: 'white', fontWeight: 'bold', textAlign: 'center', marginBottom: 8 } }>{ I18n.t(
-                        'message_page.no_project') }</Text>
-                      <PrimaryButton
-                        onPress={ () => {
-                          this.props.openUrl('https://www.blockseoul.com/projects')
-                          this.handleCancel()
-                        } }
-                        text={ I18n.t('common.setup') }
-                      />
-                    </React.Fragment>
-                  }
+                      text={ I18n.t('common.send') }/>
                 </View>
                 <View style={ { marginTop: 16 } }>
                   <OutlineWhiteButton
@@ -100,20 +81,17 @@ class MessagePage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    investor: state.global.investor,
-    error: state.global.showMessageError,
-    project: state.profile.project
+    error: state.global.showContactMessageError
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    sendMessage: (msg) => dispatch(globalActions.sendMessage(msg)),
-    hideMessage: () => dispatch(globalActions.hideMessage()),
-    openUrl: uri => navigate(PAGES_NAMES.WEBVIEW_PAGE, { uri })
+    sendMessage: (msg) => dispatch(globalActions.sendContactMessage(msg)),
+    hideMessage: () => dispatch(globalActions.hideContactMessage())
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(MessagePage)
+export default connect(mapStateToProps, mapDispatchToProps)(ContactPage)
 
 const styles = {
   messageContainer: {

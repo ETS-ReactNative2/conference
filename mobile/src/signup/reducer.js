@@ -236,7 +236,10 @@ export function signUpReducer (state = initialState, action) {
               ...state[ action.data.role ],
               ...fillData(action.data.role, action.data.info)
             }
-            : initialState[action.data.role]
+            : initialState[action.data.role],
+        employer: action.data.role === 'investee'
+          ? (action.data.prefill ? { ...state[ 'employer' ], ...fillData('employer', action.data.info) } : initialState['employer'])
+          : state.employer
       }
     case CLEAR:
       return initialState
@@ -286,6 +289,7 @@ function fillData (role, info) {
     case 'employee':
       return {
         role: info.role,
+        roleOtherText: info.roleOtherText,
         skills: info.skillsText,
         traits: info.traitsText,
         mostInfo: info.knowMost,
@@ -296,6 +300,28 @@ function fillData (role, info) {
         city: info.city,
         age: info.age ? String(info.age) : '',
         experience: info.age ? String(info.experience) : ''
+      }
+    case 'employer':
+      const {jobListings } = info
+      const roles = jobListings.map(job => job.role)
+      const jobs = {}
+      roles.forEach(role => {
+        const jobName = ROLES.find(job => job.index === role).slug
+        const jobInfo = jobListings.find(job => job.role === role)
+        jobs[ jobName ] = {
+          keywords: jobInfo.skillsText,
+          link: jobInfo.link,
+          description: jobInfo.description,
+          partTime: jobInfo.partTime,
+          payments: jobInfo.payments,
+          location: jobInfo.localRemoteOptions,
+          country: fromCca2ToCountryObject(info.country || 'KR'),
+          city: jobInfo.city
+        }
+      })
+      return {
+        roles: jobListings.map(job => job.role),
+        ...jobs
       }
   }
 }

@@ -40,6 +40,7 @@ class InvestorTicketSize extends React.Component {
               <StepTitle text={ I18n.t('flow_page.investor.ticket_size.title') }/>
             </View>
             <SubheaderWithSwitch
+              color={'white'}
               selected={ this.state.all}
               onToggle={ this.selectAll }
               text={ I18n.t(`flow_page.investor.ticket_size.header`) }

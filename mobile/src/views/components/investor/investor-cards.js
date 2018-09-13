@@ -1,12 +1,20 @@
 import { Icon, Text, View } from 'native-base'
 import React from 'react'
-import { Image, Linking, TouchableHighlight } from 'react-native'
+import { Image, TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../locales/i18n'
 import ColorLogo from '../../../assets/logos/conference_logo_welcome_medium.png'
+import MessageIcon from '../../../assets/icons/message_icon.png'
 import { getDimensions } from '../../../common/dimension-utils'
-import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, REGIONS, TICKET_SIZES, TOKEN_TYPES } from '../../../enums'
+import {
+  FUNDING_STAGES,
+  GIVEAWAY_TYPES,
+  PRODUCT_STAGES,
+  REGIONS,
+  TICKET_SIZES,
+  TOKEN_TYPES
+} from '../../../enums'
 
 function createAvatar (investor, extraQuery) {
   const hasAvatar = investor.user && investor.user.imageUrl
@@ -188,18 +196,22 @@ const Medium = ({ investor, onClick }) => {
                 </View>
               </View>
               <View style={ medium.rowDetail }>
-                <Text style={ medium.header }>{ I18n.t('cards.market') }</Text>
-                <View style={ { flex: 0.5 } }>
+                <Text style={ medium.header }>{ I18n.t('cards.product') }</Text>
+                <View style={ { flex: 0.8 } }>
                   {
-                    investor.region === 4 ? (
-                      <Text style={ medium.subtitle }>{ investor.regionOtherText }</Text>
-                    ) : (
-                      <Text style={ medium.subtitle }>
-                        {
-                          investor.region ? I18n.t(`common.regions.${REGIONS.find(item => item.index === investor.region).slug}`) : ''
-                        }
-                      </Text>
-                    )
+                    investor.productStages.map(index => {
+                      const stage = PRODUCT_STAGES.find(item => item.index === index)
+
+                      if (stage) {
+                        return (
+                          <Text key={ index } style={ medium.subtitle }>
+                            {
+                              I18n.t(`common.product_stages.${stage.slug}`)
+                            }
+                          </Text>
+                        )
+                      }
+                    })
                   }
                 </View>
               </View>
@@ -280,7 +292,7 @@ class XL extends React.Component {
   }
 
   render () {
-    const { investor, onMessageClick, showMessage } = this.props
+    const { investor, onMessageClick } = this.props
 
     const { hasAvatar, avatar } = createAvatar(investor, 'w=300&h=300')
     const { firstName, lastName, moneyRange } = extractInfo(investor)
@@ -380,23 +392,6 @@ class XL extends React.Component {
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ xl.boxContainer }>
-              <Text style={ xl.header }>{ I18n.t('cards.market').toUpperCase() }</Text>
-              {
-                investor.region === 4 ? (
-                  <Text style={ xl.subtitle }>{ investor.regionOtherText }</Text>
-                ) : (
-                  <Text style={ xl.subtitle }>
-                    {
-                      investor.region ? I18n.t(`common.regions.${REGIONS.find(item => item.index === investor.region).slug}`) : ''
-                    }
-                  </Text>
-                )
-              }
-            </View>
-          </View>
-          <View style={ [ xl.line, horizontalLineWidth ] }/>
-          <View style={ styles.inline }>
-            <View style={ xl.boxContainer }>
               <Text style={ xl.header }>{ I18n.t('cards.product').toUpperCase() }</Text>
               {
                 investor.productStages.map(index => {
@@ -414,8 +409,10 @@ class XL extends React.Component {
                 })
               }
             </View>
-            <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
-            <View style={ [ xl.boxContainer ] }>
+          </View>
+          <View style={ [ xl.line, horizontalLineWidth ] }/>
+          <View style={ styles.inline }>
+            <View style={ xl.boxContainer }>
               <Text style={ xl.header }>{ I18n.t('cards.request').toUpperCase() }</Text>
               {
                 investor.giveaways.map(index => {
@@ -435,16 +432,15 @@ class XL extends React.Component {
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
-              <React.Fragment>
-                { showMessage ? (
-                  <TouchableHighlight onPress={ onMessageClick } underlayColor='transparent'>
-                    <View>
-                      <Icon style={ { textAlign: 'center', color: 'white' } } name={ 'ios-mail-open' }/>
-                      <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('cards.message') }</Text>
-                    </View>
-                  </TouchableHighlight>
-                ) : null }
-              </React.Fragment>
+              <TouchableHighlight onPress={ onMessageClick } underlayColor='transparent'>
+                <View style={{ alignItems: 'center'}}>
+                  <Image source={ MessageIcon} style={ { width: 32, height: 32, alignItems: 'center', color: 'white' } } name={ 'ios-mail-open' }/>
+                  <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('cards.message') }</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+            <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
+            <View style={ [ xl.boxContainer, styles.center ] }>
             </View>
           </View>
         </View>
