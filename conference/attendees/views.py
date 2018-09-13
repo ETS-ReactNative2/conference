@@ -8,6 +8,7 @@ from django.core.files.storage import default_storage
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
+from django.utils.html import escape, strip_tags
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
@@ -17,7 +18,19 @@ from . import serializers
 import random
 import string
 
-from pprint import pprint
+
+class ContactMessages(APIView):
+
+    @transaction.atomic
+    def post(self, request, format=None):
+        json_body = request.data
+        message = json_body.get('message')
+        if not message:
+            return JsonResponse({'code': 'no_message'}, status=status.HTTP_400_BAD_REQUEST)
+        clean_message = escape(strip_tags(message))
+
+        models.ContactMessage.objects.create(user=request.user, text=clean_message)
+        return HttpResponse(status=status.HTTP_201_CREATED)
 
 
 class MyPerson(APIView):

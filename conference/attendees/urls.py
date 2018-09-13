@@ -5,6 +5,7 @@ from .views_investor import *
 from .views_project import *
 
 urlpatterns = [
+    url(r'^contact/messages/$', ContactMessages.as_view(), name='contact_messages'),
     url(r'^investors/$', ListInvestor.as_view(), name='investor_list'),
     url(r'^investors/defaults/$', InvestorsDefaults.as_view(), name='investors_defaults'),
     url(r'^investors/(?P<pk>\d+)/$', RetrieveInvestor.as_view(), name='investor_detail'),

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cc394a32-847a-444d-983a-15495f7a9c02",
+		"_postman_id": "af3216f5-e19f-4761-8153-1d43d7bc7bb3",
 		"name": "Conference",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -29,6 +29,35 @@
 					],
 					"path": [
 						"api-token-auth",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/contact/messages/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"Hello, World!\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/contact/messages/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"contact",
+						"messages",
 						""
 					]
 				}
@@ -383,7 +412,10 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{HOST}}/api/my_person/images/",
 					"host": [
@@ -409,7 +441,8 @@
 					"formdata": [
 						{
 							"key": "image",
-							"type": "file"
+							"type": "file",
+							"value": ""
 						}
 					]
 				},

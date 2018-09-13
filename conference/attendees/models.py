@@ -18,6 +18,8 @@ FIRST_NAME_MAX_LENGTH = 30
 
 LAST_NAME_MAX_LENGTH = 30
 
+MESSAGE_MAX_LENGTH = 250
+
 REGION_OTHER_TEXT_MAX_LENGTH = 40
 
 SKILLS_MAX_LENGTH = 100
@@ -417,3 +419,12 @@ class JobListing(models.Model):
     city = models.CharField(max_length=CITY_MAX_LENGTH, blank=True, default='')
 
     project = models.ForeignKey(Project, related_name='job_listings')
+
+
+class ContactMessage(models.Model):
+
+    user = models.ForeignKey(User)
+
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    text = models.CharField(max_length=MESSAGE_MAX_LENGTH)
