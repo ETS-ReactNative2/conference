@@ -43,6 +43,7 @@
     "full_time": "Full-time only"
   },
   "message_page": {
+    "type_contact_message": "Contact Us",
     "type_message": "Message Investor",
     "message": "Message",
     "try_again": "Try again",
@@ -79,6 +80,7 @@
     }
   },
   "common": {
+    "contact": "Contact Us",
     "skip": "Skip",
     "setup": "Set up",
     "details": "Details",

@@ -8,7 +8,7 @@ import {
   SHOW_MESSAGE,
   UNSET_LOADING,
   SHOW_ALERT,
-  HIDE_ALERT
+  HIDE_ALERT, SEND_CONTACT_MESSAGE_ERROR, SHOW_CONTACT_MESSAGE, HIDE_CONTACT_MESSAGE
 } from './action-types'
 
 export function setGlobalLoading (message) {
@@ -52,6 +52,33 @@ export function showMessage (investor) {
 export function hideMessage () {
   return {
     type: HIDE_MESSAGE
+  }
+}
+
+export function sendContactMessage (msg) {
+  return async (dispatch) => {
+    try {
+      await api.sendContact({ message: msg })
+      dispatch(hideContactMessage())
+    } catch (err) {
+      dispatch({
+        type: SEND_CONTACT_MESSAGE_ERROR,
+        data: getErrorDataFromNetworkException(err)
+      })
+      throw new Error(getErrorDataFromNetworkException(err).errorMessage)
+    }
+  }
+}
+
+export function showContactMessage () {
+  return {
+    type: SHOW_CONTACT_MESSAGE
+  }
+}
+
+export function hideContactMessage () {
+  return {
+    type: HIDE_CONTACT_MESSAGE
   }
 }
 

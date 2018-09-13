@@ -179,7 +179,8 @@ const outlineWhiteButtonStyles = EStyleSheet.create({
 const profileWhiteButton = EStyleSheet.create({
   button: {
     backgroundColor: 'transparent',
-    borderWidth: 2,
+    borderWidth: 1,
+    borderRadius: 8,
     borderColor: '#fff',
     maxWidth: null,
     width: null,

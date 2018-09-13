@@ -7,6 +7,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
+import { showContactMessage } from '../../../global/actions'
 import { PAGES_NAMES } from '../../../navigation'
 import { profileActions } from '../../../profile'
 import { signUpActions } from '../../../signup'
@@ -231,6 +232,13 @@ class ProfilePage extends React.Component {
                   )
                 }
               </View>
+              <SmallSubheader text={ I18n.t('common.contact') }/>
+              <View style={ { margin: 8 } }>
+                <OutlineWhiteButton
+                  text={ I18n.t('common.contact') }
+                  onPress={ () => this.props.contactUs() }
+                />
+              </View>
               <SmallSubheader text={ I18n.t('common.logout') }/>
               <View style={ { margin: 8 } }>
                 <OutlineWhiteButton
@@ -308,7 +316,8 @@ const mapDispatchToProps = dispatch => {
     leaveProject: () => dispatch(profileActions.leaveProject()),
     reactivateProfile: () => dispatch(profileActions.activateProfile()),
     reactivateInvestor: () => dispatch(profileActions.activateInvestor()),
-    openEdit: (type, prefill = true) => dispatch(profileActions.openEdit(type, prefill))
+    openEdit: (type, prefill = true) => dispatch(profileActions.openEdit(type, prefill)),
+    contactUs: () => dispatch(showContactMessage())
   }
 }
 

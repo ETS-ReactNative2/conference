@@ -14,6 +14,7 @@ import TriangleRed from '../assets/icons/triangle_red.png'
 import { navigationService } from '../services'
 import { globalActions } from '../global'
 import Alert from '../views/components/alert/alert'
+import ContactPage from '../views/components/contact-page/contact-page'
 import LoadingPage from '../views/components/loading-page/loading-page'
 import MessagePage from '../views/components/message-page/message-page'
 import AgendaPage from '../views/pages/agenda/agenda-page'
@@ -352,7 +353,7 @@ const AppStackNavigator = createStackNavigator({
   }
 })
 
-const AppStackNavigatorWithSpinner = ({ isLoading, message, showMessage, showAlert, alertType, alertMessage, hideAlert }) => {
+const AppStackNavigatorWithSpinner = ({ isLoading, message, showMessage, showAlert, alertType, alertMessage, hideAlert, showContact }) => {
   return (
     <View style={ { flex: 1 } } forceInset={ { top: 'always' } }>
       <AppStackNavigator ref={ navigatorRef => {
@@ -363,6 +364,7 @@ const AppStackNavigatorWithSpinner = ({ isLoading, message, showMessage, showAle
       )}
       <LoadingPage isLoading={ isLoading } message={ message }/>
       <MessagePage showMessage={ showMessage }/>
+      <ContactPage showMessage={ showContact }/>
     </View>
   )
 }
@@ -373,6 +375,7 @@ const mapStateToProps = state => {
     message: state.global.loadingMessage,
     showMessage: state.global.showMessage,
     showAlert: state.global.showAlert,
+    showContact: state.global.showContactMessage,
     alertType: state.global.alertType,
     alertMessage: state.global.alertMessage
   }
