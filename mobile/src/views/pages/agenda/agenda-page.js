@@ -6,9 +6,6 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Gallery from 'react-native-image-gallery'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
-import FirstFloor from '../../../assets/images/maps/first-floor.jpg'
-import Rooftop from '../../../assets/images/maps/rooftop.jpg'
-import SecondFloor from '../../../assets/images/maps/second-floor.png'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { MapHeader } from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
@@ -19,18 +16,15 @@ import { DateTab } from './components/date-tab'
 const secondImagesConfig = [
   {
     caption: I18n.t('agenda_page.maps.first_floor'),
-    source: FirstFloor,
-    dimensions: { width: 842, height: 595 }
+    source: { uri: 'https://blockseoul.imgix.net/map-first-floor' },
   },
   {
     caption: I18n.t('agenda_page.maps.second_floor'),
-    source: SecondFloor,
-    dimensions: { width: 1045, height: 596 }
+    source: { uri: 'https://blockseoul.imgix.net/map-second-floor' },
   },
   {
     caption: I18n.t('agenda_page.maps.rooftop'),
-    source: Rooftop,
-    dimensions: { width: 960, height: 720 }
+    source: { uri: 'https://blockseoul.imgix.net/map-rooftop' },
   }
 ]
 
@@ -143,7 +137,7 @@ class AgendaPage extends Component {
             <ScrollView>
               {
                 days.length !== 0 && days[ this.state.selected ].events.map((event, index) => (
-                  <ConferenceEvent key={ `${this.state.selected}:${index}`} event={ event }/>
+                  <ConferenceEvent key={ `${this.state.selected}:${index}` } event={ event }/>
                 ))
               }
               {
