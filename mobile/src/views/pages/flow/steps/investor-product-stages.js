@@ -11,8 +11,6 @@ import { FlowContainer } from '../../../design/container'
 import { FlowListItem } from '../../../design/list-items'
 import { StepTitle } from '../../../design/step-title'
 import { SubheaderWithSwitch } from '../../../design/subheader'
-import { InvestorMarketLocation } from './index'
-
 
 class InvestorProductStages extends React.Component {
 
@@ -85,7 +83,7 @@ class InvestorProductStages extends React.Component {
       productStages: this.state.productStages
     })
     this.props.onFill({
-      nextStep: InvestorMarketLocation
+      done: true
     })
   }
 

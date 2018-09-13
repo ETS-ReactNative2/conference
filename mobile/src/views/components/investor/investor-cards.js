@@ -196,18 +196,22 @@ const Medium = ({ investor, onClick }) => {
                 </View>
               </View>
               <View style={ medium.rowDetail }>
-                <Text style={ medium.header }>{ I18n.t('cards.market') }</Text>
-                <View style={ { flex: 0.5 } }>
+                <Text style={ medium.header }>{ I18n.t('cards.product') }</Text>
+                <View style={ { flex: 0.8 } }>
                   {
-                    investor.region === 4 ? (
-                      <Text style={ medium.subtitle }>{ investor.regionOtherText }</Text>
-                    ) : (
-                      <Text style={ medium.subtitle }>
-                        {
-                          investor.region ? I18n.t(`common.regions.${REGIONS.find(item => item.index === investor.region).slug}`) : ''
-                        }
-                      </Text>
-                    )
+                    investor.productStages.map(index => {
+                      const stage = PRODUCT_STAGES.find(item => item.index === index)
+
+                      if (stage) {
+                        return (
+                          <Text key={ index } style={ medium.subtitle }>
+                            {
+                              I18n.t(`common.product_stages.${stage.slug}`)
+                            }
+                          </Text>
+                        )
+                      }
+                    })
                   }
                 </View>
               </View>
@@ -388,23 +392,6 @@ class XL extends React.Component {
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ xl.boxContainer }>
-              <Text style={ xl.header }>{ I18n.t('cards.market').toUpperCase() }</Text>
-              {
-                investor.region === 4 ? (
-                  <Text style={ xl.subtitle }>{ investor.regionOtherText }</Text>
-                ) : (
-                  <Text style={ xl.subtitle }>
-                    {
-                      investor.region ? I18n.t(`common.regions.${REGIONS.find(item => item.index === investor.region).slug}`) : ''
-                    }
-                  </Text>
-                )
-              }
-            </View>
-          </View>
-          <View style={ [ xl.line, horizontalLineWidth ] }/>
-          <View style={ styles.inline }>
-            <View style={ xl.boxContainer }>
               <Text style={ xl.header }>{ I18n.t('cards.product').toUpperCase() }</Text>
               {
                 investor.productStages.map(index => {
@@ -422,8 +409,10 @@ class XL extends React.Component {
                 })
               }
             </View>
-            <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
-            <View style={ [ xl.boxContainer ] }>
+          </View>
+          <View style={ [ xl.line, horizontalLineWidth ] }/>
+          <View style={ styles.inline }>
+            <View style={ xl.boxContainer }>
               <Text style={ xl.header }>{ I18n.t('cards.request').toUpperCase() }</Text>
               {
                 investor.giveaways.map(index => {
@@ -449,6 +438,9 @@ class XL extends React.Component {
                   <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('cards.message') }</Text>
                 </View>
               </TouchableHighlight>
+            </View>
+            <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
+            <View style={ [ xl.boxContainer, styles.center ] }>
             </View>
           </View>
         </View>
