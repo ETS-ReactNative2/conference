@@ -56,7 +56,9 @@
     "project": "Project",
     "investor": "Investor",
     "deactivate_warning": "Deactivated – your profile will not show up for others. Click 'Reactivate' to be included again.",
-    "reactivate_warning": "Active – your profile is visible for others. Click 'Deactivate' to hide it."
+    "reactivate_warning": "Active – your profile is visible for others. Click 'Deactivate' to hide it.",
+    "leave_project": "Leave Project",
+    "leave_project_confirm": "Please make sure you want to leave the project."
   },
   "navigator": {
     "conference": "Schedule",
@@ -98,6 +100,7 @@
     "approve": "approve",
     "reject": "reject",
     "add": "add",
+    "ok": "Ok",
     "email": "email",
     "email_placeholder": "Enter email",
     "spinner": {

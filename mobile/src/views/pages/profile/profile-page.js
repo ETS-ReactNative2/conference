@@ -1,7 +1,7 @@
 import { Container } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text, View, Alert } from 'react-native'
 import Config from 'react-native-config'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
@@ -87,6 +87,18 @@ class ProfilePage extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
   }
 
+  handleLeaveProject = () => {
+    Alert.alert(
+      I18n.t('profile_page.leave_project'),
+      I18n.t('profile_page.leave_project_confirm'),
+      [
+        { text: I18n.t('common.cancel'), onPress: () => console.log('Cancel to leave the project') },
+        { text: I18n.t('common.ok'), onPress: () => this.props.leaveProject() },
+      ],
+      { cancelable: false }
+    )
+  }
+
   render () {
     const { isLoading } = this.props
 
@@ -164,7 +176,7 @@ class ProfilePage extends React.Component {
                       <ProfileWhiteButton onPress={ this.handleOpenProjectDetails } text={ I18n.t('common.view') }/>
                       <ProfileWhiteButton onPress={ this.handleEditProject } text={ I18n.t('common.edit') }/>
                       <ProfileWhiteButton onPress={ this.handleProjectManage } text={ I18n.t('common.manage') }/>
-                      <ProfileWhiteButton onPress={ this.props.leaveProject } text={ I18n.t('common.leave') }/>
+                      <ProfileWhiteButton onPress={ this.handleLeaveProject } text={ I18n.t('common.leave') }/>
                     </React.Fragment>
                   ) }
                   { !this.props.project && (
