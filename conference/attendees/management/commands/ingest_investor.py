@@ -81,9 +81,6 @@ class Command(BaseCommand):
 
         self.giveaway_token = Giveaway.objects.get(name='TOKEN')
         self.giveaway_equity = Giveaway.objects.get(name='EQUITY')
-        self.giveaway_both = Giveaway.objects.get(name='BOTH')
-        self.giveaway_mapping = {"Tokens": self.giveaway_token, "Equity": self.giveaway_equity,
-                                 "Both": self.giveaway_both}
 
         self.product_stage_pre = ProductStage.objects.get(name=PRE_PRODUCT)
         self.product_stage_live = ProductStage.objects.get(name=LIVE_PRODUCT)
@@ -114,6 +111,17 @@ class Command(BaseCommand):
                 if not key:   # keys are the lines with "----":
                     self.process_investor(list(group))
         self.stdout.write("Processed %s investors" % self.investors)
+
+    def get_giveaways(self, values):
+        giveaways = []
+        if values[GIVEAWAY] == "Tokens":
+            giveaways.append(self.giveaway_token)
+        if values[GIVEAWAY] == "Equity":
+            giveaways.append(self.giveaway_equity)
+        if values[GIVEAWAY] == "Both":
+            giveaways.append(self.giveaway_token)
+            giveaways.append(self.giveaway_equity)
+        return giveaways
 
     def get_funding_stages(self, values):
         stages = []
@@ -159,7 +167,7 @@ class Command(BaseCommand):
         self.investors += 1
         values = {}
         for raw_line in investor_lines:
-            line = raw_line.strip("\n")
+            line = raw_line.strip()
             if line.endswith(":"):
                 # Ensure empty fields still match the regexes
                 line += " "
@@ -176,7 +184,7 @@ class Command(BaseCommand):
             self.stdout.write("Updating investor %s" % email_address)
 
         funding_stages = self.get_funding_stages(values)
-        giveaway = self.giveaway_mapping[values[GIVEAWAY]]
+        giveaways = self.get_giveaways(values)
         nationality = values[NATIONALITY]
 
         product_stages = self.get_product_stages(values)
@@ -191,7 +199,7 @@ class Command(BaseCommand):
         investor.save()
 
         investor.funding_stages.add(*funding_stages)
-        investor.giveaways.add(giveaway)
+        investor.giveaways.add(*giveaways)
         investor.product_stages.add(*product_stages)
         investor.ticket_sizes.add(*ticket_size)
         investor.token_types.add(*token_types)
@@ -221,4 +229,3 @@ class Command(BaseCommand):
         conference_user.linkedin = values[LINKED_IN]
 
         conference_user.save()
-
