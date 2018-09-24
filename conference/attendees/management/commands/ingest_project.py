@@ -253,7 +253,7 @@ class Command(BaseCommand):
                 if match:
                     values[key] = match.group(1)
 
-        project_name = values[PROJECT_NAME].capitalize()
+        project_name = values[PROJECT_NAME].title()
 
         industry_string = values[INDUSTRY]
         industry = self.industries[industry_string]

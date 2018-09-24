@@ -191,10 +191,10 @@ class Command(BaseCommand):
         ticket_size = self.get_ticket_sizes(values)
         token_types = self.get_token_types(values)
 
-        if len(nationality) == 2:
-            investor.nationality = nationality
-        else:
+        if len(nationality) > 2:
             self.stderr.write("Couldn't save nationality longer than 2 chars: %s" % nationality)
+        else:
+            investor.nationality = nationality
 
         investor.save()
 

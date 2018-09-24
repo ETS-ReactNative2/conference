@@ -1,7 +1,7 @@
 Email Address: alice@alicetoken.io
 Project Members Emails: bob@alicetoken.io
 Eventbrite Ticket or Order #: N/A
-Project Name: AliceToken
+Project Name: Alice token
 Product Description: Our MVP is solving banking problems for traditional big-corporation banking institutions.
 Link to Logo: https://alicetoken.io/img/assets/alicetoken_logo_dark.png
 Company URL: alicetoken.io
