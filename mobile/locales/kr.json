@@ -1,0 +1,686 @@
+﻿
+{
+  "alert": {
+    "success_prefix": "성공:",
+    "error_prefix": "오류"
+  },
+  "cards": {
+    "technology": "토큰 유형",
+    "stage": "펀딩",
+    "product": "프로덕트",
+    "market": "마켓",
+    "message": "메시지",
+    "location": "위치",
+    "relocate": "이직",
+    "notable": "주목할 만한 회원",
+    "main": "메인",
+    "legal": "합법적인",
+    "info": "정보",
+    "age": "나이",
+    "exp": "경험",
+    "size": "팀 사이즈",
+    "work": "활동",
+    "save": "저장",
+    "team": "팀 사이즈",
+    "offer": "제공",
+    "request": "요청",
+    "description": "설명",
+    "industry": "산업",
+    "skills": "기술",
+    "traits": "특성",
+    "most": "나는 다음 사항에 대해 가장 잘 알고 있다:",
+    "raising": "높이기",
+    "년": "년",
+    "년": "년",
+    "part_time": "파트 타임",
+    "payments": "지불"
+  },
+  "home_page": {
+    "title": "홈"
+  },
+  "job_item": {
+    "part_time": "파트 타임 가능",
+    "full_time": "오직 풀 타임만"
+  },
+  "message_page": {
+    "type_message": "투자자에게 메시지 보내기",
+    "message": "메시지",
+    "try_again": "다시 시도하세요."
+  },
+  "profile_page": {
+    "title": "내 프로필",
+    "personal": "개인 정보",
+    "job_profile": "직업 프로필",
+    "upload_loader_text": "당신의 프로필을 업데이트 중입니다.",
+    "project": "프로젝트",
+    "investor": "투자자",
+    "deactivate_warning": "비활성화 - 당신의 프로필이 다른 사람들에게 노출되지 않습니다. 다시 포함시키려면 '재 활성화'를 클릭하세요.",
+    "reactivate_warning": "활성 - 프로필이 다른 사람들에게 공개됩니다. 비활성화 클릭시 숨길 수 있습니다."
+  },
+  "navigator": {
+    "conference": "스케줄",
+    "profile": "프로필",
+    "search": "매치 찾기",
+    "home": "홈"
+  },
+  "agenda_event": {
+    "until": "까지"
+  },
+  "agenda_page": {
+    "title": "스케줄",
+    "no_agenda": "계획된 이벤트가 없습니다.",
+    "maps": {
+      "first_floor": "1층",
+      "rooftop": "옥상",
+      "second_floor": "2층"
+    }
+  },
+  "common": {
+    "details": "디테일",
+    "website": "웹사이트",
+    "whitepaper": "백서",
+    "back": "뒤로",
+    "view": "보기",
+    "edit": "편집",
+    "send": "전송",
+    "deactivate": "비활성화",
+    "create": "생성",
+    "manage": "관리",
+    "reactivate": "재활성화",
+    "leave": "휴가",
+    "logout": "로그아웃",
+    "cancel": "취소",
+    "제거": "제거",
+    "승인": "승인",
+    "거절": "거절",
+    "추가": "추가",
+    "이메일": "이메일",
+    "email_placeholder": "이메일 입력",
+    "spinner": {
+      "logout": "당신은 로그아웃 중입니다.",
+      "clear": "앱 상태 클리어"
+    },
+    "investors": "투자자",
+    "projects": "프로젝트",
+    "attendees": "전문가",
+    "errors": {
+      "email_exists": "신규 유저 생성 중 오류가 발생했습니다.",
+      "incorrect_image_url": "로고 URL이 유효하지 않습니다.",
+      "incorrect_amount": "2147483647보다 작은 숫자를 입력하세요.",
+      "incorrect_email": "올바른 이메일 주소를 입력하세요.",
+      "incorrect_investor_custom_location": "위치는 최대 40자까지 입력할 수 있습니다.",
+      "incorrect_job_city": "도시를 입력하세요.",
+      "incorrect_job_description": "직업 링크 혹은 직업 설명을 입력하세요.",
+      "incorrect_job_link": "직업 링크 혹은 직업 설명을 입력하세요.",
+      "incorrect_job_max_salary": "최소 급여가 지정된 경우 값은 0보다 크거나 같아야하고 최소 급여보다 커야합니다.",
+      "incorrect_job_min_salary": "값은 0보다 크거나 같아야 합니다.",
+      "incorrect_password": "비밀번호는 적어도 8자 이상이어야 합니다.",
+      "incorrect_phone_number": "올바른 전화번호를 입력하세요.",
+      "incorrect_github_user_name": "유효한 GitHub 핸들을 입력하세요.",
+      "incorrect_twitter_user_name": "유효한 트위터 사용자 이름을 입력하세요.",
+      "incorrect_telegram_user_name": "유효한 텔레그램 사용자 이름을 입력하세요.",
+      "incorrect_linkedin_user_name": "유효한 링크드인 사용자 이름을 입력하세요.",
+      "incorrect_profile_first_name": "이름은 2 자 이상이어야 합니다.",
+      "incorrect_profile_last_name": "성은 2 자 이상이어야 합니다.",
+      "incorrect_project_description": "프로젝트 설명을 입력하세요.",
+      "incorrect_project_name": "프로젝트 이름은 최소 3 자 이상이어야 합니다.",
+      "incorrect_project_tagline": "프로젝트 태그 라인을 입력해주세요.",
+      "incorrect_request": "잘못된 요청입니다. 다시 시도하세요.",
+      "invalid_credentials": "제공된 자격증명으로 로그인 할 수 없습니다.",
+      "no_internet_connection": "서비스에 연결할 수 없습니다.e, please check your internet connection or contact us",
+      "resource_not_found": "항목을 이용할 수 없습니다. 새로고침 해보세요.e, please refresh",
+      "general": "문제가 발생했습니다. 팀에 문의주세요.g, please contact us",
+      "server_error": "문제가 발생했습니다. 다시 시도해보거나 팀에 문의주세요.s, please try again or contact us",
+      "incorrect_url": "해당 URL에 연결할 수 없습니다."
+    },
+    "facebook": "페이스북",
+    "facebook_url": "페이스북 – https://www.facebook.com/…",
+    "flow_pages": {
+      "titles": {
+        "industries": "산업"
+      }
+    },
+    "funding_stages": {
+      "header": "펀딩 단계",
+      "post": "포스트 ICO",
+      "pre": "프리 ICO",
+      "seed": "시드"
+    },
+    "github": "GitHub",
+    "github_url": "GitHub - https://github.com/...",
+    "giveaway": {
+      "both": "둘다",
+      "equity": "공평",
+      "header": "투자자 구매",
+      "token": "토큰"
+    },
+    "giveaways": {
+      "both": "둘다",
+      "equity": "공평",
+      "token": "토큰"
+    },
+    "ticket_size": {
+      "range1": "0 ~ 5K",
+      "range2": "5K ~ 25K",
+      "range3": "25K ~ 100K",
+      "range4": "100K ~ 500K",
+      "range5": "500K ~ 10M",
+      "range6": "10M ~ "
+    },
+    "industries": {
+      "other": "다른",
+      "accounting": "회계",
+      "agriculture": "농업",
+      "airlines": "항공",
+      "architecture": "건축",
+      "art": "미술",
+      "automotive": "자동차",
+      "banking": "은행업",
+      "bars_restaurants": "바 & 레스토랑",
+      "broadcasting": "방송",
+      "casinos": "카지노 / 도박",
+      "construction": "구성",
+      "defense": "방어",
+      "education": "교육",
+      "electronics": "전자공학",
+      "energy": "에너지",
+      "entertainment": "엔터테인먼트",
+      "environment": "환경",
+      "finance": "금융",
+      "green_energy": "친환경 에너지",
+      "hardware": "하드웨어",
+      "header": "산업",
+      "health": "건강",
+      "human_resources": "인적 자원",
+      "human_rights": "인권",
+      "insurance": "보험",
+      "internet": "인터넷",
+      "legal": "법적인",
+      "manufacturing": "제조업",
+      "marketing": "마케팅",
+      "non_profit": "비영리",
+      "pharmaceuticals": "제약",
+      "policy": "정책",
+      "public_relations": "홍보",
+      "publishing": "출판",
+      "real_estate": "부동산",
+      "retail": "소매",
+      "sales": "세일즈",
+      "sports": "스포츠",
+      "supply_chain": "공급 체인",
+      "transportation": "운송업",
+      "venture_capital": "벤처 캐피탈"
+    },
+    "job_location": {
+      "local": "로컬",
+      "remote": "원격의"
+    },
+    "linkedin": "링크드인",
+    "linkedin_url": "링크드인 - https://linkedin.com/in/...",
+    "months": {
+      "0": "1월",
+      "1": "2월",
+      "10": "11월",
+      "11": "12 월",
+      "2": "3월",
+      "3": "4 월",
+      "4": "5월",
+      "5": "6월",
+      "6": "7월",
+      "7": "8월",
+      "8": "9월",
+      "9": "10월"
+    },
+    "nationality": {
+      "american": "미국인",
+      "korean": "한국인",
+      "polish": "폴란드인"
+    },
+    "news": "주요 언론 기사 URL",
+    "next": "저장",
+    "no": "아니요",
+    "payment": {
+      "equity": "공평",
+      "fiat": "신용 지폐",
+      "tokens": "토큰"
+    },
+    "product_stages": {
+      "header": "생산 단계",
+      "live": "라이브 생산",
+      "pre": "준비 생산",
+      "revenue": "라이브 + 수익"
+    },
+    "regions": {
+      "other": "다른",
+      "anywhere": "어디든",
+      "anywhere_except_us": "미국을 제외한 어디든",
+      "header": "지역",
+      "korea_only": "한국만"
+    },
+    "roles": {
+      "other": "다른",
+      "backend_developer": "백엔드 개발자",
+      "ceo": "간부",
+      "community_manager": "커뮤니티 관리자",
+      "data_scientist": "데이터 과학자",
+      "designer": "디자이너",
+      "frontend_developer": "프론트 엔드 개발자",
+      "full_stack_developer": "풀 스택 개발자",
+      "marketing": "마케팅",
+      "ml_engineer": "머신 러닝 엔지니어",
+      "qa_engineer": "품질 보증 엔지니어",
+      "sales": "세일즈"
+    },
+    "roles_job": {
+      "other": "다른 역할 구인 목록",
+      "backend_developer": "백엔드 개발자 구인 목록",
+      "ceo": "간부 직업 구인 목록",
+      "community_manager": "커뮤니티 관리자 구인 목록",
+      "data_scientist": "데이터 과학자 구인 목록",
+      "designer": "디자이너 구인 목록",
+      "frontend_developer": "프론트 엔드 개발자 구인 목록",
+      "full_stack_developer": "풀 스택 개발자 구인 목록",
+      "marketing": "마케팅 구인 목록",
+      "ml_engineer": "머신 러닝 엔지니어 구인 목록",
+      "qa_engineer": "품질 보증 엔지니어 구인 목록",
+      "sales": "세일즈 구인 목록"
+    },
+    "telegram": "텔레그램",
+    "telegram_url": "텔레그램 - https://t.me/...",
+    "token_types": {
+      "app_tokens": "앱 토큰",
+      "header": "토큰 유형",
+      "protocols": "프로토콜",
+      "security_tokens": "보안 토큰"
+    },
+    "twitter": "트위터",
+    "twitter_url": "트위터 - https://twitter.com/...",
+    "yes": "예",
+    "status": {
+      "loading": "로딩중...",
+      "loading_title": "로딩"
+    }
+  },
+  "drawer": {
+    "agenda": "어젠다",
+    "flows": "플로우",
+    "notifications": "알림",
+    "search": "검색"
+  },
+  "flow_page": {
+    "employee_title": "직업 프로필 만들기",
+    "common": {
+      "profile_onboarding": {
+        "avatar": "프로필 사진",
+        "change_image": "변경할 이미지 탭",
+        "choose_image": "프로필 사진 변경",
+        "company": "회사",
+        "edit_header": "기본 정보 수정",
+        "first_name": "이름",
+        "header": "환영",
+        "last_name": "성",
+        "select_image": "프로필 사진 선택",
+        "spinner_text": "프로필을 저장하고 있습니다. 잠시 기다려주세요.",
+        "title": "우리는 당신에 대해 자세히 알고 싶습니다.",
+        "titleField": "직업 타이틀"
+      },
+      "profile_type": {
+        "meeting": "새로운 직업 찾기",
+        "meeting_investors": "내 회사 프로필 수정",
+        "projects": "내 투자자 프로필 수정",
+        "title": "무엇을 하실건가요?"
+      }
+    },
+    "employee": {
+      "age": {
+        "error": "18와 120 사이의 숫자",
+        "placeholder": "당신은 몇살인가요?"
+      },
+      "condition": {
+        "title": "직업 상태"
+      },
+      "experience": {
+        "error": "0과 120 사이의 숫자",
+        "placeholder": "당신의 경력은 어느정도 인가요?"
+      },
+      "job": {
+        "city": "도시"
+      },
+      "location": {
+        "header": "당신은 어디에 있나요?"
+      },
+      "more": {
+        "title": "당신에 대해 더"
+      },
+      "most_info": {
+        "error": "정보를 입력하세요.",
+        "header": "당신이 가장 잘 알고 있는 것은 무엇인가요?",
+        "placeholder": "당신이 가장 잘 알고 있는 것은 무엇인가요?"
+      },
+      "relocate": "당신은 이직 계획이 있나요?",
+      "remote": "당신은 원격으로 일할 생각인가요?",
+      "role": {
+        "about": "당신의 기술에 대해 말해주세요.s, traits and knowledge",
+        "other": "다른 역할",
+        "not_looking_for_job": "저는 일자리를 찾고 있지 않습니다.",
+        "title": "당신이 관심있는 역할을 선택하세요."
+      },
+      "skills": {
+        "error": "1~3 기술을 선택하세요.",
+        "header": "귀하의 상위 3가지 기술은 무엇인가요?",
+        "placeholder": "Python, SEO, Photoshop",
+        "title": "기술"
+      },
+      "traits": {
+        "error": "1~3 특성을 선택하세요.",
+        "header": "귀하의 상위 3가지 특성은 무엇인가요?",
+        "placeholder": "목표 지향적인, 자율적인, 소통에 능한d, Autonomous, Great Communicator",
+        "title": "특성"
+      }
+    },
+    "employer": {
+      "job": {
+        "city": "도시",
+        "description": "직업 서술",
+        "link": "링크",
+        "max": "최대 급여",
+        "min": "최소 급여",
+        "part_time": "파트 타임 가능",
+        "title": "직업"
+      },
+      "keyword": {
+        "full_time": "파트 타임 가능?",
+        "links": "링크",
+        "placeholder": "구인 목록을 위한 기술 선택",
+        "remote": "원격 가능?",
+        "title": "키워드"
+      },
+      "location": {
+        "title": "직업 위치"
+      },
+      "payment": {
+        "title": "지불 유형"
+      },
+      "role": {
+        "title": "당신이 고용하고 있는 역할을 선택하세요."
+      }
+    },
+    "funding_stage": {
+      "header": "당신은 어떤 투자 단계에 있나요?",
+      "title": "펀딩 단계"
+    },
+    "giveaway": {
+      "header": "투자자 구매",
+      "title": "어떻게 투자자를 참여시킬 계획인가요?"
+    },
+    "hiring": {
+      "header": "채용",
+      "title": "당신은 고용 중인가요?"
+    },
+    "ico": {
+      "question": "당신은 ICO을 할 예정인가요?",
+      "title": "ICO",
+      "when": "언제 ICO를 할 건가요?"
+    },
+    "industries": {
+      "title": "어떤 산업에서 일하고 있나요?"
+    },
+    "investee": {
+      "industries": {
+        "header": "산업",
+        "title": "무엇을 사용하나요?"
+      },
+      "project_location": {
+        "country_picker_placeholder": "국가를 선택하세요.",
+        "legal": "회사의 법적 위치",
+        "main": "본사 위치",
+        "title": "프로젝트 위치"
+      },
+      "token_type": {
+        "header": "토큰 유형",
+        "title": "당신의 프로젝트의 토큰 유형은 무엇인가요?"
+      }
+    },
+    "investor": {
+      "company_funding_stage": {
+        "title": "투자하고자 하는 프로젝트는 어떤 단계에 있어야 하나요?"
+      },
+      "company_location": {
+        "nationality": "국적",
+        "nationality_placeholder": "국적",
+        "title": "당신의 국적은 무엇인가요?"
+      },
+      "giveaways": {
+        "title": "어떻게 참여하고 싶나요?"
+      },
+      "industries": {
+        "title": "어디에 투자하고 싶나요?"
+      },
+      "invest_in": {
+        "title": "당신이 선호하는 투자 유형은 무엇인가요?"
+      },
+      "market_location": {
+        "other_location_placeholder": "위치 입력",
+        "title": "어디에 투자하고 싶나요?"
+      },
+      "product_stage": {
+        "title": "어떤 단계에 프로덕트가 있을 것으로 예상되나요?"
+      },
+      "ticket_size": {
+        "header": "티켓 사이즈",
+        "title": "얼마나 많은 돈을 투자할 건가요?"
+      }
+    },
+    "links": {
+      "header": "링크",
+      "telegram": "텔레그램",
+      "title": "당신의 프로젝트 링크를 우리에게 공유하세요.",
+      "website": "웹 사이트",
+      "whitepaper": "백서"
+    },
+    "members": {
+      "header": "당신의 주목할 만한 멤버나 어드바이저는 누구인가요?s, if any?",
+      "label": "당신의 주목할 만한 멤버나 어드바이저는 누구인가요?s, if any?",
+      "size": "팀 사이즈",
+      "title": "구성원"
+    },
+    "money": {
+      "amount": "돈 ($)",
+      "nationality": "투자자 국적",
+      "need_money": "당신은 돈을 찾고 있나요?",
+      "not_looking_for_money": "나는 돈을 찾고 있지 않습니다.",
+      "other_location_placeholder": "위치 입력",
+      "title": "얼마나 모금할 계획인가요?"
+    },
+    "product_stage": {
+      "header": "생산 단계",
+      "title": "당신의 제품 단계는 무언인가요?"
+    },
+    "project_setup": {
+      "header": "프로젝트 설정",
+      "project_description": "프로젝트 설명",
+      "project_name": "프로젝트명",
+      "project_tagline": "프로젝트 태그라인",
+      "title": "프로젝트에 대한 자세한 정보를 알려주세요.",
+      "image_url": "로고 URL"
+    },
+    "title": "편집",
+    "token_type": {
+      "title": "당신이 선호하는 투자유형은 무엇인가요?"
+    }
+  },
+  "header": {
+    "skip": "건너뛰기"
+  },
+  "investor_page": {
+    "title": "투자자"
+  },
+  "location_page": {
+    "title": "회사 위치"
+  },
+  "login_page": {
+    "button": "로그인",
+    "change_mind": "마음이 바뀌었습니다.",
+    "email_placeholder": "이메일",
+    "password_placeholder": "암호",
+    "privacy_policy": "개인 정보 정책",
+    "signup": "회원가입",
+    "spinner_text": "로그인 중입니다. 잠시만 기다려주세요.",
+    "terms_and_conditions": "이용 약관",
+    "title": "로그인"
+  },
+  "notifications": {
+    "button_is_read": "읽음",
+    "button_is_unread": "읽음으로 표시",
+    "mark_all_read": "모두 읽음으로 표시",
+    "went_wrong": "문제가 발생했습니다."
+  },
+  "professional_page": {
+    "title": "전문 세부 사항",
+    "experience": "경험"
+  },
+  "job_page": {
+    "job_description_page_title": "직업 설명"
+  },
+  "project_page": {
+    "title": "프로젝트",
+    "description_title": "프로젝트 설명",
+    "jobs_title": "JOBS AT",
+    "description": "설명",
+    "hiring": "채용",
+    "white_paper": "백서",
+    "website": "웹사이트",
+    "in_the_press": "언론에서",
+    "telegram": "텔래그램",
+    "github": "Github",
+    "linkedin": "LinkedIn"
+  },
+  "project_members_page": {
+    "title": "프로젝트 구성원",
+    "emailError": "이 사용자를 추가할 수 없습니다."
+  },
+  "filter_page": {
+    "type": {
+      "token_types": "토큰 타입",
+      "ticket_size": "티켓 사이즈",
+      "funding_stages": "펀딩 단계",
+      "giveaway": "투자자 구매",
+      "product_stages": "생산 단계",
+      "nationality": "국적",
+      "country": "국가",
+      "roles": "역할"
+    }
+  },
+  "search_page": {
+    "no_profile": "프로필을 찾을 수 없습니다. 필터를 조정해보세요.",
+    "title": "찾기",
+    "update_filter": "검색 필터 업데이트",
+    "필터": "필터",
+    "investor_filter": {
+      "main_title": "투자자 필터",
+      "header": "당신이 찾고있는 투자자들에 대해 말해주세요.",
+      "token_types": {
+        "title": "찾고 있는 투자자 필터:",
+        "header": "토큰 유형"
+      },
+      "funding_stages": {
+        "title": "찾고 있는 투자자 필터:",
+        "header": "펀딩 단계"
+      },
+      "giveaway": {
+        "title": "찾고 있는 투자자 필터:",
+        "header": "투자자 구매"
+      },
+      "product_stages": {
+        "title": "찾고 있는 투자자 필터:",
+        "header": "생산 단계"
+      },
+      "regions": {
+        "title": "찾고 있는 투자자 필터:",
+        "header": "위치"
+      },
+      "industries": {
+        "title": "찾고 있는 투자자 검색:",
+        "header": "산업"
+      },
+      "ticket_size": {
+        "title": "티켓 사이즈로 투자자 필터:",
+        "header": "티켓 사이즈"
+      }
+    },
+    "job_filter": {
+      "main_title": "직업 필터",
+      "header": "당신이 찾고 있는 직업에 대해 말해주세요.",
+      "roles": {
+        "title": "역할로 필터:",
+        "header": "역할"
+      }
+    },
+    "professional_filter": {
+      "main_title": "전문가 필터",
+      "header": "당신이 찾고 있는 전문가에 대해 말해주세요.",
+      "roles": {
+        "title": "역할로 필터 :",
+        "header": "역할"
+      }
+    },
+    "project_filter": {
+      "main_title": "프로젝트 필터",
+      "header": "당신이 찾고 있는 프로젝트에 대해 말해주세요.",
+      "token_types": {
+        "title": "토큰 유형으로 프로젝트 필터:",
+        "header": "토큰 유형"
+      },
+      "funding_stages": {
+        "title": "펀딩 단계로 프로젝트 필터:",
+        "header": "펀딩 단계"
+      },
+      "giveaway": {
+        "title": "오퍼링으로 프로젝트 필터:",
+        "header": "투자자 구매"
+      },
+      "product_stages": {
+        "title": "생산 단계로 프로젝트 필터:",
+        "header": "생산 단계"
+      },
+      "regions": {
+        "title": "국가로 프로젝트 필터:",
+        "header": "지역"
+      }
+    },
+    "tab_label_investor": "투자자",
+    "tab_label_professional": "전문가",
+    "tab_label_projects": "프로젝트",
+    "tab_label_job": "직업"
+  },
+  "signup_page": {
+    "account_type_employee": "종업원",
+    "account_type_employer": "고용주",
+    "account_type_header": "계정 유형 선택",
+    "account_type_investee": "투자 대상",
+    "account_type_investor": "투자자",
+    "account_type_placeholder": "계정 유형",
+    "button": "가입",
+    "change_mind": "마음이 바뀌었습니다.",
+    "connect_with": "또는 연결:",
+    "connect_with_telegram": "텔레그램으로 연결",
+    "email_placeholder": "이메일 입력",
+    "login": "로그인",
+    "password_placeholder": "암호 입력",
+    "phone_placeholder": "전화 번호 입력",
+    "privacy_policy": "개인 정보 정책",
+    "spinner_text": "계정을 생성 중입니다. 잠시 기다려주세요.",
+    "terms_and_conditions": "이용 약관",
+    "title": "회원가입"
+  },
+  "welcome_page": {
+    "agenda": "어젠다 - temp",
+    "app_description": "블록 서울",
+    "connect_with": "또는 연결",
+    "connect_with_telegram": "텔레그램으로 연결",
+    "flow": "플로우 - temp",
+    "login": "로그인",
+    "search": "검색 - temp",
+    "signup": "회원가입"
+  }
+}
