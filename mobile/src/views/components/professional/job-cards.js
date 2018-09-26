@@ -120,27 +120,13 @@ class XL extends React.Component {
     return false
   }
 
-  handleUrlClick = (prefix, link) => {
-    Linking.canOpenURL(prefix + link)
-      .then(supported => {
-        if (supported) {
-          Linking.openURL(prefix + link)
-        } else {
-          console.log('Don\'t know how to open URI: ' + prefix + link)
-        }
-      })
+  handleLink = (url) => {
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url)
+      }
+    })
   }
-
-    handleLink = (url) => {
-        Linking.canOpenURL(url)
-            .then(supported => {
-                if (supported) {
-                    Linking.openURL(url)
-                } else {
-                    console.log('Don\'t know how to open URI: ' + url)
-                }
-            })
-    }
 
   render () {
     const { job } = this.props

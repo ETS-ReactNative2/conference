@@ -41,7 +41,6 @@ export default class JobsPage extends Component {
     const project = this.props.navigation.getParam('project')
     const jobs = project.jobListings.map(jb => {
       const { id, imageUrl, name } = project
-      console.log({jb, id, imageUrl, name})
       return {
         ...jb,
         project: {

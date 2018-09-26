@@ -90,12 +90,6 @@ export function updateBasic (basicChanges) {
         type: UPDATE_BASIC,
         data: { ...basicChanges, imageUrl: basicChanges.avatarSource.uri }
       })
-      console.log({
-        basicInfo,
-        basicChanges,
-        shouldUpdateData,
-        shouldUpdatePhoto
-      })
       if (shouldUpdatePhoto) {
         await api.uploadImage(basicChanges.avatarSource)
       }
@@ -146,7 +140,6 @@ export function activateProfile () {
         type: REACTIVATE_PROFILE
       })
     } catch (err) {
-      console.log({err})
       const errorData = getErrorDataFromNetworkException(err)
       dispatch(globalActions.showAlertError(errorData.errorMessage))
     } finally {

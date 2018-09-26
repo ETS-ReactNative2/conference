@@ -93,7 +93,7 @@ class ProfilePage extends React.Component {
       I18n.t('profile_page.leave_project'),
       I18n.t('profile_page.leave_project_confirm'),
       [
-        { text: I18n.t('common.cancel'), onPress: () => console.log('Cancel to leave the project') },
+        { text: I18n.t('common.cancel'), onPress: () => {} },
         { text: I18n.t('common.ok'), onPress: () => this.props.leaveProject() },
       ],
       { cancelable: false }
