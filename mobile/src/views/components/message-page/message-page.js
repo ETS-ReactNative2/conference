@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar, Text, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, StatusBar, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
@@ -47,51 +47,55 @@ class MessagePage extends React.Component {
               translucent={ true }
               barStyle="light-content"
             />
-            <View style={ [ styles.content, { width: '100%' } ] }>
-              <View style={ { width: '100%', padding: 32 } }>
-                <StepTitle
-                  text={ I18n.t('message_page.type_message') }/>
-                <FlowInput
-                  floatingLabel={ true }
-                  labelText={ I18n.t('message_page.message') }
-                  value={ this.state.message }
-                  multiline={ true }
-                  numberOfLines={ 5 }
-                  onChangeText={ value => this.setState({ message: value }) }
-                  status={ this.state.message.length > 0 ? 'ok' : 'regular' }/>
-                {
-                  error && (
-                    <Text style={ { color: 'red', marginTop: 8 } }>{ error.errorMessage }</Text>
-                  )
-                }
-                <View style={ { marginTop: 16 } }>
-                  { project ?
-                    <PrimaryButton
-                      disabled={ this.state.message.length === 0 }
-                      onPress={ this.handleSend }
-                      text={ I18n.t('common.send') }
-                    /> :
-                    <React.Fragment>
-                      <Text
-                        style={ { color: 'white', fontWeight: 'bold', textAlign: 'center', marginBottom: 8 } }>{ I18n.t(
-                        'message_page.no_project') }</Text>
-                      <PrimaryButton
-                        onPress={ () => {
-                          this.props.openUrl('https://www.blockseoul.com/projects')
-                          this.handleCancel()
-                        } }
-                        text={ I18n.t('common.setup') }
-                      />
-                    </React.Fragment>
-                  }
+            <KeyboardAvoidingView style={ { flex: 1, width: '100%' } } behavior="padding" enabled={ Platform.OS === 'ios' }>
+              <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
+                <View style={ [ styles.content, { width: '100%' } ] }>
+                  <View style={ { width: '100%', padding: 32 } }>
+                    <StepTitle
+                      text={ I18n.t('message_page.type_message') }/>
+                    <FlowInput
+                      floatingLabel={ true }
+                      labelText={ I18n.t('message_page.message') }
+                      value={ this.state.message }
+                      multiline={ true }
+                      numberOfLines={ 5 }
+                      onChangeText={ value => this.setState({ message: value }) }
+                      status={ this.state.message.length > 0 ? 'ok' : 'regular' }/>
+                    {
+                      error && (
+                        <Text style={ { color: 'red', marginTop: 8 } }>{ error.errorMessage }</Text>
+                      )
+                    }
+                    <View style={ { marginTop: 16 } }>
+                      { project ?
+                        <PrimaryButton
+                          disabled={ this.state.message.length === 0 }
+                          onPress={ this.handleSend }
+                          text={ I18n.t('common.send') }
+                        /> :
+                        <React.Fragment>
+                          <Text
+                            style={ { color: 'white', fontWeight: 'bold', textAlign: 'center', marginBottom: 8 } }>{ I18n.t(
+                            'message_page.no_project') }</Text>
+                          <PrimaryButton
+                            onPress={ () => {
+                              this.props.openUrl('https://www.blockseoul.com/projects')
+                              this.handleCancel()
+                            } }
+                            text={ I18n.t('common.setup') }
+                          />
+                        </React.Fragment>
+                      }
+                    </View>
+                    <View style={ { marginTop: 16 } }>
+                      <OutlineWhiteButton
+                        onPress={ this.handleCancel }
+                        text={ I18n.t('common.cancel') }/>
+                    </View>
+                  </View>
                 </View>
-                <View style={ { marginTop: 16 } }>
-                  <OutlineWhiteButton
-                    onPress={ this.handleCancel }
-                    text={ I18n.t('common.cancel') }/>
-                </View>
-              </View>
-            </View>
+              </ScrollView>
+            </KeyboardAvoidingView>
           </SafeAreaView>
         ) }
       </React.Fragment>)
