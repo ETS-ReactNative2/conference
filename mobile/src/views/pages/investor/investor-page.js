@@ -1,9 +1,7 @@
-import { Container } from 'native-base'
 import React, { Component } from 'react'
 import { ScrollView, View, Dimensions } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
-import { SafeAreaView } from 'react-navigation'
 import { globalActions } from '../../../global'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
@@ -108,8 +106,7 @@ class InvestorPage extends Component {
 
 const styles = EStyleSheet.create({
   content: {
-    flex: 1,
-    // backgroundColor: '#2C65E2'
+    flex: 1
   },
   underline: {
     textDecorationLine: 'underline'

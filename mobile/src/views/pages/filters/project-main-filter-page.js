@@ -9,7 +9,6 @@ import {
   FUNDING_STAGES,
   GIVEAWAY_TYPES,
   PRODUCT_STAGES,
-  REGIONS_FILTER,
   TOKEN_TYPES
 } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'

@@ -76,7 +76,7 @@ export function uploadProfile () {
   return async (dispatch, getState) => {
     try {
       const flow = getState().signUp
-      const { profile: { type, ...profileRest }, investor, investee, employer, employee } = flow
+      const { profile: { type }, investor, investee, employer, employee } = flow
       switch (type) {
         case 'investee': {
           await api.createInvestee({

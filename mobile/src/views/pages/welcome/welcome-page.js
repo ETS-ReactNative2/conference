@@ -1,7 +1,6 @@
 import React from 'react'
 import { Image, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import SplashScreen from 'react-native-splash-screen'
 import I18n from '../../../../locales/i18n'
 import ColorLogo from '../../../assets/logos/welcome_logo.png'
 import PoweredLuna from '../../../assets/logos/powered_logo.png'

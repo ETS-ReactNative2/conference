@@ -1,4 +1,4 @@
-import { Icon, Text, View } from 'native-base'
+import { Text, View } from 'native-base'
 import React from 'react'
 import { Image, TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -11,7 +11,6 @@ import {
   FUNDING_STAGES,
   GIVEAWAY_TYPES,
   PRODUCT_STAGES,
-  REGIONS,
   TICKET_SIZES,
   TOKEN_TYPES
 } from '../../../enums'
@@ -297,7 +296,7 @@ class XL extends React.Component {
     const { hasAvatar, avatar } = createAvatar(investor, 'w=300&h=300')
     const { firstName, lastName, moneyRange } = extractInfo(investor)
 
-    const { itemWidth, sliderWidth } = getDimensions()
+    const { itemWidth } = getDimensions()
 
     const avatarSize = itemWidth / 3
     const avatarStyle = {
@@ -434,7 +433,7 @@ class XL extends React.Component {
             <View style={ [ xl.boxContainer, styles.center ] }>
               <TouchableHighlight onPress={ onMessageClick } underlayColor='transparent'>
                 <View style={{ alignItems: 'center'}}>
-                  <Image source={ MessageIcon} style={ { width: 32, height: 32, alignItems: 'center', color: 'white' } } name={ 'ios-mail-open' }/>
+                  <Image source={ MessageIcon} style={ { width: 32, height: 32, alignItems: 'center' } } name={ 'ios-mail-open' }/>
                   <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('cards.message') }</Text>
                 </View>
               </TouchableHighlight>

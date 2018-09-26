@@ -13,7 +13,7 @@ export class ConferenceClass extends React.Component {
 
   render () {
     const { clazz, startDate } = this.props
-    const { endDate, rooms, speakers, title, label, description } = clazz
+    const { endDate, rooms, title, label, description } = clazz
 
     return (
       <React.Fragment>

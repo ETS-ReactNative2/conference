@@ -19,9 +19,9 @@ function createAvatar (project, extraQuery) {
   }
 }
 
-const Medium = ({ job, onClick, onLink }) => {
+const Medium = ({ job, onClick }) => {
 
-  const { project, country, city, description, link, partTime, localRemoteOptions, payments, role, skillsText } = job
+  const { project, country, city, partTime, localRemoteOptions, payments, role, skillsText } = job
 
   return (
     <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
@@ -132,7 +132,7 @@ class XL extends React.Component {
     const { job } = this.props
 
     const { hasAvatar, avatar } = createAvatar(job.project, 'w=300&h=300')
-    const { itemWidth, sliderWidth } = getDimensions()
+    const { itemWidth } = getDimensions()
 
     const { role, country, skillsText, description, city } = job
 

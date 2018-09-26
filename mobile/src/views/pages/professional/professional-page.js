@@ -1,9 +1,7 @@
-import { Container } from 'native-base'
 import React, { Component } from 'react'
 import { Dimensions, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
-import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
@@ -11,7 +9,6 @@ import { getDimensions } from '../../../common/dimension-utils'
 import * as globalActions from '../../../global/actions'
 import { NavigationHeader } from '../../components/header/header'
 import { ImagePageContainer } from '../../design/image-page-container'
-import { ProfessionalCard } from './components/professional-card'
 import Professional from '../../components/professional/professional-cards'
 
 class ProfessionalPage extends Component {

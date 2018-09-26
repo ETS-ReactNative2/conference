@@ -70,7 +70,7 @@ export function fetchDefaults () {
 export function updateJobs (filters) {
   return async dispatch => {
     try {
-      const { data, request } = await api.fetchJobs(decamelizeKeys(filters))
+      const { data } = await api.fetchJobs(decamelizeKeys(filters))
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {
@@ -87,7 +87,7 @@ export function updateJobs (filters) {
 export function updateInvestors (filters) {
   return async dispatch => {
     try {
-      const { data, request } = await api.fetchInvestors(decamelizeKeys(filters))
+      const { data } = await api.fetchInvestors(decamelizeKeys(filters))
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {
@@ -104,7 +104,7 @@ export function updateInvestors (filters) {
 export function updateProfessionals (filters) {
   return async dispatch => {
     try {
-      const { data, request } = await api.getProfessionals(decamelizeKeys(filters))
+      const { data } = await api.getProfessionals(decamelizeKeys(filters))
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {
@@ -121,7 +121,7 @@ export function updateProfessionals (filters) {
 export function updateProjects (filters) {
   return async dispatch => {
     try {
-      const { data, request } = await api.fetchProjects(decamelizeKeys(filters))
+      const { data } = await api.fetchProjects(decamelizeKeys(filters))
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {

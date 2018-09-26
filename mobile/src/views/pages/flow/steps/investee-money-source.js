@@ -1,5 +1,4 @@
 import {
-  Text,
   View
 } from 'native-base'
 import React from 'react'
@@ -15,7 +14,7 @@ import { FlowContainer } from '../../../design/container'
 import { FlowListItem } from '../../../design/list-items'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
-import { InvesteeHiring, InvesteeTokenType } from './index'
+import { InvesteeTokenType } from './index'
 import FlowInputValidated from '../../../design/flow-input-validated'
 
 class InvesteeMoneySource extends React.Component {
