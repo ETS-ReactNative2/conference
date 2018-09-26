@@ -12,61 +12,25 @@ import {
 } from './action-types'
 import * as api from '../api/api'
 
-export function setInvestorFilter (filters) {
-  return async (dispatch, getState) => {
-    try {
-      dispatch({
-        type: SET_INVESTOR_FILTERS,
-        data: filters
-      })
-    } catch (err) {
-      const errorData = getErrorDataFromNetworkException(err)
-      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage)]))
-    }
-  }
-}
+export const setInvestorFilter = filters => ({
+  type: SET_INVESTOR_FILTERS,
+  data: filters
+})
 
-export function setJobFilter (filters) {
-  return async (dispatch, getState) => {
-    try {
-      dispatch({
-        type: SET_JOB_FILTERS,
-        data: filters
-      })
-    } catch (err) {
-      const errorData = getErrorDataFromNetworkException(err)
-      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage)]))
-    }
-  }
-}
+export const setJobFilter = filters => ({
+  type: SET_JOB_FILTERS,
+  data: filters
+})
 
-export function setProjectFilter (filters) {
-  return async (dispatch, getState) => {
-    try {
-      dispatch({
-        type: SET_PROJECT_FILTERS,
-        data: filters
-      })
-    } catch (err) {
-      const errorData = getErrorDataFromNetworkException(err)
-      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage)]))
-    }
-  }
-}
+export const setProjectFilter = filters => ({
+  type: SET_PROJECT_FILTERS,
+  data: filters
+})
 
-export function setProfessionalFilter (filters) {
-  return async (dispatch, getState) => {
-    try {
-      dispatch({
-        type: SET_PROFESSIONAL_FILTERS,
-        data: filters
-      })
-    } catch (err) {
-      const errorData = getErrorDataFromNetworkException(err)
-      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage)]))
-    }
-  }
-}
+export const setProfessionalFilter = filters => ({
+  type: SET_PROFESSIONAL_FILTERS,
+  data: filters
+})
 
 export function fetchFilters () {
   return async dispatch => {
