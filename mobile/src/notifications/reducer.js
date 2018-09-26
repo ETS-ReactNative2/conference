@@ -2,7 +2,6 @@ import { CLEAR, LOAD_NOTIFICATIONS, LOAD_NOTIFICATIONS_ERROR, LOAD_NOTIFICATIONS
 
 const initialState = {
   isLoading: false,
-  error: false,
   list: [],
 }
 
@@ -11,21 +10,18 @@ export function notificationsReducer (state = initialState, action) {
     case LOAD_NOTIFICATIONS:
       return {
         ...state,
-        isLoading: true,
-        error: false
+        isLoading: true
       }
     case LOAD_NOTIFICATIONS_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        error: false,
-        list: action.data.notifications,
+        list: action.data.notifications
       }
     case LOAD_NOTIFICATIONS_ERROR:
       return {
         ...state,
-        isLoading: false,
-        error: true
+        isLoading: false
       }
     case CLEAR: {
       return initialState

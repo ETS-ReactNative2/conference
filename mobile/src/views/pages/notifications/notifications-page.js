@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { notificationsActions } from '../../../notifications'
-import ErrorMessage from '../../components/error-message/error-message'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 
 class NotificationsPage extends Component {
@@ -26,20 +25,12 @@ class NotificationsPage extends Component {
   }
 
   render () {
-    const { notifications, isLoading, error } = this.props
+    const { notifications, isLoading } = this.props
 
     if (isLoading) {
       return <LunaSpinner/>
     }
 
-    if (error) {
-      return (
-        <ErrorMessage
-          message={ I18n.t('notifications.went_wrong') }
-          onRetry={ this.props.fetchNotifications }/>
-      )
-    }
-    
     return (
       <Container>
         <Content>
@@ -89,8 +80,7 @@ NotificationsPage.propTypes = {
 const mapStateToProps = state => {
   return {
     notifications: state.notifications.list,
-    isLoading: state.notifications.isLoading,
-    error: state.notifications.error
+    isLoading: state.notifications.isLoading
   }
 }
 

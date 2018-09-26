@@ -1,5 +1,9 @@
-import { LOAD_NOTIFICATIONS, LOAD_NOTIFICATIONS_ERROR, LOAD_NOTIFICATIONS_SUCCESS } from './action-types'
+import { batchActions } from 'redux-batch-enhancer';
+import { LOAD_NOTIFICATIONS, LOAD_NOTIFICATIONS_SUCCESS, LOAD_NOTIFICATIONS_ERROR } from './action-types'
 import * as api from '../api/api'
+
+import I18n from '../../locales/i18n'
+import { globalActions } from '../global'
 
 export function readNotificationsAll () {
   return async (dispatch, getState) => {
@@ -44,7 +48,7 @@ export function fetchNotifications () {
         }
       })
     } catch (err) {
-      dispatch({ type: LOAD_NOTIFICATIONS_ERROR })
+      dispatch(batchActions([globalActions.showAlertError(I18n.t('notifications.went_wrong')), { type: LOAD_NOTIFICATIONS_ERROR }]))
     }
   }
 }
