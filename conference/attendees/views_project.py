@@ -301,7 +301,7 @@ class MyProjectJobs(APIView):
                 role_other_text and clean_role.pk == models.JobRole.OTHER
         ) else ''
 
-        skills = json_body.get('skills')
+        skills = json_body.get('skills_text')
         clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
 
         link = json_body.get('link')
@@ -508,7 +508,7 @@ class MyProjectJobsId(APIView):
                 role_other_text and clean_role.pk == models.JobRole.OTHER
         ) else ''
 
-        skills = json_body.get('skills')
+        skills = json_body.get('skills_text')
         clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
 
         link = json_body.get('link')
