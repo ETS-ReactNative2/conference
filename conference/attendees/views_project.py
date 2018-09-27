@@ -283,6 +283,73 @@ class MyProjectJobs(APIView):
                             status=status.HTTP_200_OK)
 
     @transaction.atomic
+    def post(self, request, format=None):
+        # Check if the current user even has a project
+        project = request.user.conference_user.project
+        if not project:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+        json_body = request.data
+
+        role = json_body.get('role')
+        clean_role = models.JobRole.objects.get(pk=role) if (
+                role and 1 <= role <= 12
+        ) else models.JobRole.objects.get(pk=models.JobRole.OTHER)
+
+        role_other_text = json_body.get('role_other_text')
+        clean_role_other_text = role_other_text[:models.JobRole.ROLE_OTHER_TEXT_MAX_LENGTH] if (
+                role_other_text and clean_role.pk == models.JobRole.OTHER
+        ) else ''
+
+        skills = json_body.get('skills')
+        clean_skills = skills[:models.SKILLS_MAX_LENGTH] if skills else ''
+
+        link = json_body.get('link')
+        clean_link = link[:models.URL_MAX_LENGTH] if link else ''
+
+        description = json_body.get('description')
+        clean_description = description[:models.JobListing.DESCRIPTION_MAX_LENGTH] if description else ''
+
+        part_time = json_body.get('part_time')
+        clean_part_time = part_time if part_time else False
+
+        payments = json_body.get('payments')
+        clean_payments = [models.Payment.objects.get(pk=pk) for pk in payments] if payments else []
+
+        local_remote_options = json_body.get('local_remote_options')
+        clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
+            local_remote_options
+        ) else [models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.REMOTE)]
+
+        country = json_body.get('country')
+        clean_country = country[:models.COUNTRY_MAX_LENGTH] if (
+                country and
+                models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
+        ) else ''
+
+        city = json_body.get('city')
+        clean_city = city[:models.CITY_MAX_LENGTH] if (
+                city and
+                models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
+        ) else ''
+
+        job_listing = models.JobListing.objects.create(
+            role=clean_role,
+            project=project,
+        )
+        job_listing.role_other_text = clean_role_other_text
+        job_listing.link = clean_link
+        job_listing.description = clean_description
+        job_listing.part_time = clean_part_time
+        job_listing.country = clean_country
+        job_listing.city = clean_city
+        job_listing.skills_text = clean_skills
+        job_listing.payments = clean_payments
+        job_listing.local_remote_options = clean_local_remote_options
+        job_listing.save()
+        return JsonResponse(serializers.JobListingSerializer(job_listing).data, status=status.HTTP_200_OK)
+
+    @transaction.atomic
     def put(self, request, format=None):
         body_data = request.data
         body_list = body_data.get('jobs')
@@ -462,7 +529,7 @@ class MyProjectJobsId(APIView):
         clean_part_time = part_time if part_time else False
 
         payments = json_body.get('payments')
-        clean_payments = [models.Payment.objects.get(pk) for pk in payments] if payments else []
+        clean_payments = [models.Payment.objects.get(pk=pk) for pk in payments] if payments else []
 
         local_remote_options = json_body.get('local_remote_options')
         clean_local_remote_options = [models.LocalRemoteOption.objects.get(pk=pk) for pk in local_remote_options] if (
