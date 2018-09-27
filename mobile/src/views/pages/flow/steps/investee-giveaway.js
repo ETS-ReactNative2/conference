@@ -4,7 +4,7 @@ import React from 'react'
 import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { GIVEAWAY_TYPES } from '../../../../enums'
+import { GIVEAWAY_TYPES_PROJECT } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
 import { FlowContainer } from '../../../design/container'
@@ -49,7 +49,7 @@ class InvesteeGiveaway extends React.Component {
               color={'white'}
               text={ I18n.t(`flow_page.giveaway.header`) }
             />
-            { GIVEAWAY_TYPES.map((size) => {
+            { GIVEAWAY_TYPES_PROJECT.map((size) => {
               return (
                 <FlowListItem
                   multiple={ false }

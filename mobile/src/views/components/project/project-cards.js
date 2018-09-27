@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
 import ColorLogo from '../../../assets/logos/logo-white.png'
 import { getDimensions } from '../../../common/dimension-utils'
-import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TOKEN_TYPES } from '../../../enums'
+import { FUNDING_STAGES, GIVEAWAY_TYPES_PROJECT, PRODUCT_STAGES, TOKEN_TYPES } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 
 function createAvatar (project, extraQuery) {
@@ -282,7 +282,7 @@ class XL extends React.Component {
     const tokenType = TOKEN_TYPES.find(item => item.index === project.tokenType)
     const fundingStage = FUNDING_STAGES.find(item => item.index === project.fundingStage)
     const productStage = PRODUCT_STAGES.find(item => item.index === project.productStage)
-    const giveaway = GIVEAWAY_TYPES.find(item => item.index === project.giveaway)
+    const giveaway = GIVEAWAY_TYPES_PROJECT.find(item => item.index === project.giveaway)
 
     const { itemWidth, sliderWidth } = getDimensions()
 
