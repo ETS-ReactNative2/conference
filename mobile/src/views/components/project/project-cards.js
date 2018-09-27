@@ -251,11 +251,11 @@ class XL extends React.Component {
 
   handleLink = async (link) => {
     try {
-      const supported = await Linking.canOpenURL(link)
+      const supported = await Linking.canOpenURL(normalizeUrl(link))
       if (!supported) {
         throw new Error('')
       }
-      await Linking.openURL(link)
+      await Linking.openURL(normalizeUrl(link))
     } catch (err) {
       this.props.onLinkError(I18n.t('common.errors.incorrect_url'))
     }
@@ -621,6 +621,15 @@ const styles = EStyleSheet.create({
     marginBottom: 4
   }
 })
+
+function normalizeUrl(link) {
+  console.log({link})
+  if(!link.toUpperCase().startsWith('HTTP')){
+    link = `http://${link}`
+  }
+
+  return link
+}
 
 export default {
   Small,
