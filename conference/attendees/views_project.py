@@ -369,10 +369,6 @@ class MyProjectJobs(APIView):
                 role and 1 <= role <= 12
             ) else models.JobRole.objects.get(pk=models.JobRole.OTHER)
 
-            # Check if there already is a job listing for that role
-            if models.JobListing.objects.filter(role=clean_role, project=project).exists():
-                return JsonResponse({'code': 'role_exists'}, status=status.HTTP_409_CONFLICT)
-
             role_other_text = json_body.get('role_other_text')
             clean_role_other_text = role_other_text[:models.JobRole.ROLE_OTHER_TEXT_MAX_LENGTH] if (
                 role_other_text and clean_role.pk == models.JobRole.OTHER
@@ -507,10 +503,6 @@ class MyProjectJobsId(APIView):
                 role and 1 <= role <= 12
         ) else models.JobRole.objects.get(pk=models.JobRole.OTHER)
 
-        # Prevent role changes
-        if not job_listing.role == clean_role:
-            return JsonResponse({'code': 'role_changes'}, status=status.HTTP_400_BAD_REQUEST)
-
         role_other_text = json_body.get('role_other_text')
         clean_role_other_text = role_other_text[:models.JobRole.ROLE_OTHER_TEXT_MAX_LENGTH] if (
                 role_other_text and clean_role.pk == models.JobRole.OTHER
@@ -548,6 +540,7 @@ class MyProjectJobsId(APIView):
                 models.LocalRemoteOption.objects.get(pk=models.LocalRemoteOption.LOCAL) in clean_local_remote_options
         ) else ''
 
+        job_listing.role = clean_role
         job_listing.role_other_text = clean_role_other_text
         job_listing.link = clean_link
         job_listing.description = clean_description
