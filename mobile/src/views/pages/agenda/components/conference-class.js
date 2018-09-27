@@ -1,9 +1,9 @@
 import moment from 'moment'
 import { Button, Icon } from 'native-base'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, TouchableHighlight, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { AGENDA_EXPANDED_COLOR, BAR_COLOR, BLUE_BACKGROUND_COLOR } from '../../../design/constants'
+import { AGENDA_EXPANDED_COLOR, BAR_COLOR } from '../../../design/constants'
 
 export class ConferenceClass extends React.Component {
 
@@ -16,9 +16,10 @@ export class ConferenceClass extends React.Component {
     const { endDate, rooms, title, label, description } = clazz
 
     return (
-      <React.Fragment>
+      <TouchableHighlight onPress={ () => this.setState({ expanded: description ? !this.state.expanded : false }) }
+                          underlayColor='transparent'>
         <View style={ styles.classContainer }>
-          <View style={ this.state.expanded ? styles.generalInfoExpanded: styles.generalInfo }>
+          <View style={ this.state.expanded ? styles.generalInfoExpanded : styles.generalInfo }>
             <View style={ styles.leftInfo }>
               <View style={ styles.firstLine }>
                 <Text style={ styles.dateText }>{ `${formatTime(startDate)} - ${formatTime(endDate)}` }</Text>
@@ -27,12 +28,12 @@ export class ConferenceClass extends React.Component {
               </View>
               <Text style={ styles.title }>{ title }</Text>
               { label !== title &&
-                <Text style={ styles.labelText }>{ label }</Text>
+              <Text style={ styles.labelText }>{ label }</Text>
               }
             </View>
             { description && (
-              <Button transparent={true} onPress={ () => this.setState({ expanded: !this.state.expanded }) }>
-                <Icon style={{ color: 'white'}} name={this.state.expanded ? 'arrow-up' : 'arrow-down'}/>
+              <Button transparent={ true } onPress={ () => this.setState({ expanded: description ? !this.state.expanded : false }) }>
+                <Icon style={ { color: 'white' } } name={ this.state.expanded ? 'arrow-up' : 'arrow-down' }/>
               </Button>
             ) }
           </View>
@@ -42,7 +43,7 @@ export class ConferenceClass extends React.Component {
             </View>
           ) }
         </View>
-      </React.Fragment>
+      </TouchableHighlight>
     )
   }
 }
