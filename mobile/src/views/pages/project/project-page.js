@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Dimensions, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import Carousel, { Pagination } from 'react-native-snap-carousel'
+import Carousel from 'react-native-snap-carousel'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
@@ -35,9 +35,7 @@ class ProjectPage extends Component {
     Dimensions.removeEventListener('change', this.handleDimensionsChange)
   }
 
-  handleDimensionsChange = () => {
-    this.forceUpdate()
-  }
+  handleDimensionsChange = this.forceUpdate
 
   get projects () {
     const defaults = this.props.navigation.getParam('defaults', false)
@@ -48,7 +46,7 @@ class ProjectPage extends Component {
     <Project.XL
       key={ index }
       project={ project }
-      onLinkError={ this.props.showError}
+      onLinkError={ this.props.showError }
       navigation={ this.props.navigation }/>
 
   render () {
@@ -63,37 +61,15 @@ class ProjectPage extends Component {
               title={ I18n.t('project_page.title') }
               rightIconSource={ WhiteLogo }/>
             <View style={ { marginTop: 32 } }>
-              { showSingle && (
-                <Carousel
-                  ref={ (c) => { this._carousel = c } }
-                  data={ [ this.props.navigation.getParam('project', {}) ] }
-                  renderItem={ this._renderItem }
-                  sliderWidth={ sliderWidth }
-                  itemWidth={ itemWidth }
-                  keyExtractor={ item => String(item.id) }
-                />
-              ) }
-              { !showSingle && (
-                <React.Fragment>
-                  <Carousel
-                    ref={ (c) => { this._carousel = c } }
-                    data={ this.projects }
-                    renderItem={ this._renderItem }
-                    initialNumToRender={ 50 }
-                    sliderWidth={ sliderWidth }
-                    firstItem={ this.state.currentIndex }
-                    itemWidth={ itemWidth }
-                    keyExtractor={ item => String(item.id) }
-                    onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
-                  />
-                  { this.projects.length < 8 &&
-                  <Pagination
-                    dotColor={ 'rgba(255, 255, 255, 0.95)' }
-                    inactiveDotColor={ 'rgba(255,255,255,0.75)' }
-                    activeDotIndex={ this.state.currentIndex } dotsLength={ this.projects.length }/>
-                  }
-                </React.Fragment>
-              ) }
+              <Carousel
+                ref={ (c) => { this._carousel = c } }
+                data={ showSingle ? [ this.props.navigation.getParam('project', {}) ] : this.projects }
+                renderItem={ this._renderItem }
+                sliderWidth={ sliderWidth }
+                firstItem={ this.state.currentIndex }
+                itemWidth={ itemWidth }
+                keyExtractor={ item => String(item.id) }
+              />
             </View>
           </ScrollView>
         </View>
@@ -105,15 +81,6 @@ class ProjectPage extends Component {
 const styles = EStyleSheet.create({
   content: {
     flex: 1
-  },
-  pageTitle: {
-    fontSize: 18,
-    fontFamily: 'Montserrat-SemiBold',
-    letterSpacing: 0.18,
-    lineHeight: 30
-  },
-  underline: {
-    textDecorationLine: 'underline'
   }
 })
 
@@ -126,7 +93,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    showError: mes =>dispatch(globalActions.showAlertError(mes))
+    showError: mes => dispatch(globalActions.showAlertError(mes))
   }
 }
 

@@ -35,9 +35,7 @@ class InvestorPage extends Component {
     Dimensions.removeEventListener('change', this.handleDimensionsChange)
   }
 
-  handleDimensionsChange = () => {
-    this.forceUpdate()
-  }
+  handleDimensionsChange = this.forceUpdate
 
   handleMessageClick = investor => {
     this.props.openMessage(investor)
@@ -65,37 +63,15 @@ class InvestorPage extends Component {
                 title={ I18n.t('investor_page.title') }
                 rightIconSource={ WhiteLogo }/>
               <View style={ { marginTop: 32 } }>
-                { showSingle && (
                   <Carousel
                     keyExtractor={item => String(item.id)}
                     ref={ (c) => { this._carousel = c } }
-                    data={ [ this.props.navigation.getParam('investor', {}) ] }
+                    data={ showSingle ? [ this.props.navigation.getParam('investor', {}) ] : this.investors }
+                    initialNumToRender={50}
                     renderItem={ this._renderItem }
                     sliderWidth={ sliderWidth }
                     itemWidth={ itemWidth }
                   />
-                ) }
-                { !showSingle && (
-                  <React.Fragment>
-                    <Carousel
-                      keyExtractor={item => String(item.id)}
-                      ref={ (c) => { this._carousel = c } }
-                      data={ this.investors }
-                      renderItem={ this._renderItem }
-                      initialNumToRender={50}
-                      sliderWidth={ sliderWidth }
-                      firstItem={ this.state.currentIndex }
-                      itemWidth={ itemWidth }
-                      onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
-                    />
-                    { this.investors.length < 8 &&
-                    <Pagination
-                      dotColor={ 'rgba(255, 255, 255, 0.95)' }
-                      inactiveDotColor={ 'rgba(255,255,255,0.75)' }
-                      activeDotIndex={ this.state.currentIndex } dotsLength={ this.investors.length }/>
-                    }
-                  </React.Fragment>
-                ) }
               </View>
             </ScrollView>
           </View>
@@ -107,9 +83,6 @@ class InvestorPage extends Component {
 const styles = EStyleSheet.create({
   content: {
     flex: 1
-  },
-  underline: {
-    textDecorationLine: 'underline'
   }
 })
 
