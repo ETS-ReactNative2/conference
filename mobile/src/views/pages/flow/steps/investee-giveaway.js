@@ -11,7 +11,6 @@ import { FlowContainer } from '../../../design/container'
 import { FlowListItem } from '../../../design/list-items'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
-import { InvesteeHiring } from './index'
 
 class InvesteeGiveaway extends React.Component {
 
@@ -28,7 +27,7 @@ class InvesteeGiveaway extends React.Component {
 
   handleSubmit = () => {
     this.props.saveInvestee({ giveaway: this.state.giveaway })
-    this.props.onFill({ nextStep: InvesteeHiring })
+    this.props.onFill({ done: true })
   }
 
   handleChange = (index) => {

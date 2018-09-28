@@ -12,7 +12,7 @@ import { PAGES_NAMES } from '../../../navigation'
 import { profileActions } from '../../../profile'
 import { signUpActions } from '../../../signup'
 import { NavigationHeader } from '../../components/header/header'
-import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation } from './steps'
+import { EmployeeRole, EmployerRole, InvesteeProjectSetup, InvestorCompanyLocation } from './steps'
 
 class FlowPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -71,6 +71,8 @@ class FlowPage extends React.Component {
         return InvestorCompanyLocation
       case 'investee':
         return InvesteeProjectSetup
+      case 'employer':
+        return EmployerRole
     }
   }
 
@@ -130,7 +132,11 @@ class FlowPage extends React.Component {
       try {
         await this.props.startLoading()
         await this.props.uploadProfile()
-        this.props.navigation.navigate(PAGES_NAMES.PROFILE_PAGE)
+        if( this.props.profileType === 'employer'){
+          this.props.navigation.navigate(PAGES_NAMES.PROJECT_JOB_LISTING)
+        } else {
+          this.props.navigation.navigate(PAGES_NAMES.PROFILE_PAGE)
+        }
       } catch (err) {
         this.props.showAlertMessage(err)
       } finally {

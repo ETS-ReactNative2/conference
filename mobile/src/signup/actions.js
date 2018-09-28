@@ -3,7 +3,6 @@ import I18n from '../../locales/i18n'
 import * as api from '../api/api'
 
 import { getErrorDataFromNetworkException, isNetworkUnavailable } from '../common/utils'
-import { ROLES } from '../enums'
 import { CLEAR as FILTER_CLEAR } from '../filters/action-types'
 import { globalActions } from '../global'
 import { PAGES_NAMES } from '../navigation'
@@ -100,29 +99,11 @@ export function uploadProfile () {
             regionOtherText: investee.regionOtherText,
             imageUrl: investee.imageUrl
           })
-          if (investee.hiring) {
-            const { roles, ...jobs } = employer
-            const jobsArray = Object.keys(jobs).map(key => {
-              const job = employer[ key ]
-              return {
-                role: ROLES.find(role => role.slug === key).index,
-                skillsText: job.keywords,
-                link: job.link,
-                description: job.description,
-                partTime: job.partTime,
-                payments: job.payments,
-                localRemoteOptions: job.location,
-                country: job.country ? job.country.cca2 : '',
-                city: job.city
-              }
-            })
-            await api.createJob({ jobs: jobsArray })
-          }
-          const {data} = await api.fetchMyProject()
-          dispatch({ type: PROPAGATE_PROJECT_PROFILE, data})
+          const { data } = await api.fetchMyProject()
+          dispatch({ type: PROPAGATE_PROJECT_PROFILE, data })
           dispatch({ type: PROPAGATE_PROJECT_SEARCH, data })
           dispatch({ type: PROPAGATE_PROJECT_DEFAULTS, data })
-          return data
+          break;
         }
         case 'investor': {
           const { data } = await api.createInvestor({
@@ -135,10 +116,42 @@ export function uploadProfile () {
             nationality: investor.nationality ? investor.nationality.cca2 : '',
             regionOtherText: investor.regionOtherText
           })
-          dispatch({ type: PROPAGATE_INVESTOR_PROFILE, data})
+          dispatch({ type: PROPAGATE_INVESTOR_PROFILE, data })
           dispatch({ type: PROPAGATE_INVESTOR_SEARCH, data })
           dispatch({ type: PROPAGATE_INVESTOR_DEFAULTS, data })
-          return data
+          break;
+        }
+        case 'employer': {
+          if(employer.edit){
+            await api.updateJob(employer.id, {
+              role: employer.role,
+              skillsText: employer.keywords,
+              link: employer.link,
+              description: employer.description,
+              partTime: employer.partTime,
+              payments: employer.payments,
+              localRemoteOptions: employer.location,
+              country: employer.country ? employer.country.cca2 : '',
+              city: employer.city
+            })
+          } else {
+            await api.createJob({
+              role: employer.role,
+              skillsText: employer.keywords,
+              link: employer.link,
+              description: employer.description,
+              partTime: employer.partTime,
+              payments: employer.payments,
+              localRemoteOptions: employer.location,
+              country: employer.country ? employer.country.cca2 : '',
+              city: employer.city
+            })
+          }
+          const { data } = await api.fetchMyProject()
+          dispatch({ type: PROPAGATE_PROJECT_PROFILE, data })
+          dispatch({ type: PROPAGATE_PROJECT_SEARCH, data })
+          dispatch({ type: PROPAGATE_PROJECT_DEFAULTS, data })
+          break;
         }
         case 'employee': {
           if (employee.lookingForJob) {
@@ -155,7 +168,7 @@ export function uploadProfile () {
               age: employee.age,
               experience: employee.experience
             })
-            dispatch({ type: PROPAGATE_PROFESSIONAL_PROFILE, data})
+            dispatch({ type: PROPAGATE_PROFESSIONAL_PROFILE, data })
             dispatch({ type: PROPAGATE_PROFESSIONAL_SEARCH, data })
             dispatch({ type: PROPAGATE_PROFESSIONAL_DEFAULTS, data })
             return data
@@ -164,7 +177,7 @@ export function uploadProfile () {
               await dispatch(deactivateProfile())
             }
           }
-          break
+          break;
         }
       }
     } catch (err) {

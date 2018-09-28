@@ -23,7 +23,7 @@ import {
   PROJECT_MEMBERS_SPINNER_SHOW,
   ADD_PROJECT_MEMBER_ERROR,
   REMOVE_MEMBER,
-  ADD_PROJECT_MEMBER_SUCCESS
+  ADD_PROJECT_MEMBER_SUCCESS, REMOVE_JOB, PREFILL_EDIT_JOB, PROJECT_JOB_SPINNER_SHOW, PROJECT_JOB_SPINNER_HIDE
 } from './action-types'
 import { globalActions } from '../global'
 import { batchActions } from 'redux-batch-enhancer';
@@ -53,7 +53,7 @@ export function fetchProfiles () {
   }
 }
 
-export function openEdit (type, prefill = true) {
+export function openEdit (type, prefill = true, jobId = -1) {
   let role
   switch (type) {
     case 'professional':
@@ -65,16 +65,29 @@ export function openEdit (type, prefill = true) {
     case 'investor':
       role = 'investor'
       break
+    case 'employer':
+      role = 'employer'
   }
-  return async (dispatch, getState) => {
-    dispatch({
-      type: PREFILL_EDIT,
-      data: {
-        role,
-        info: getState().profile[ type ],
-        prefill
-      }
-    })
+  return (dispatch, getState) => {
+    if(role !=='employer') {
+      dispatch({
+        type: PREFILL_EDIT,
+        data: {
+          role,
+          info: getState().profile[ type ],
+          prefill
+        }
+      })
+    } else {
+      dispatch({
+        type: PREFILL_EDIT_JOB,
+        data: {
+          role,
+          info: getState().profile.project.jobListings.find(job => job.id === jobId),
+          prefill
+        }
+      })
+    }
   }
 }
 
@@ -256,6 +269,21 @@ export function removeProjectMember (memberId) {
       dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROJECT_MEMBERS_ERROR }]))
     } finally {
       dispatch({ type: PROJECT_MEMBERS_SPINNER_HIDE })
+    }
+  }
+}
+
+export function removeProjectJob( jobId) {
+  return async dispatch => {
+    try {
+      dispatch({ type: PROJECT_JOB_SPINNER_SHOW })
+      await api.deleteProjectJob(jobId)
+      dispatch({ type: REMOVE_JOB, data: jobId})
+    } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(globalActions.showAlertError(errorData.errorMessage))
+    }finally {
+      dispatch({ type: PROJECT_JOB_SPINNER_HIDE })
     }
   }
 }

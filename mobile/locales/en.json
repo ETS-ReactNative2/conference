@@ -59,7 +59,9 @@
     "deactivate_warning": "Deactivated – your profile will not show up for others. Select 'Reactivate' to be included again.",
     "reactivate_warning": "Active – your profile is visible for others. Select 'Deactivate' to hide it.",
     "leave_project": "Leave Project",
-    "leave_project_confirm": "Please make sure you want to leave the project."
+    "leave_project_confirm": "Please make sure you want to leave the project.",
+    "remove_job": "Remove Job",
+    "remove_job_confirm": "Please make sure you want to remove this job."
   },
   "navigator": {
     "conference": "Schedule",
@@ -95,6 +97,7 @@
     "deactivate": "Deactivate",
     "create": "Create",
     "manage": "Manage",
+    "job_listing": "Job listings",
     "reactivate": "Reactivate",
     "leave": "Leave",
     "logout": "Logout",
@@ -418,7 +421,7 @@
         "title": "Type of payment"
       },
       "role": {
-        "title": "Select the roles for which you're hiring"
+        "title": "Select the role for this job listing"
       }
     },
     "funding_stage": {
@@ -619,6 +622,9 @@
   "project_members_page": {
     "title": "Project Members",
     "emailError": "Could not add this user"
+  },
+  "project_job_page": {
+    "title": "Project job listings"
   },
   "filter_page": {
     "type": {

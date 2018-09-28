@@ -39,6 +39,7 @@ import WelcomePage from '../views/pages/welcome/welcome-page'
 import JobsPage from '../views/pages/job/jobs-page'
 import PrivacyPolicyPage from '../views/pages/privacy-policy/privacy-policy'
 import TermsOfServicePage from '../views/pages/terms-of-service/terms-of-service'
+import ProjectJobListingPage from '../views/pages/project/project-job-listing-page'
 import { PROJECT_FILTER_BACKGROUND_COLOR } from '../views/design/constants';
 
 const PAGES_NAMES = {
@@ -53,6 +54,7 @@ const PAGES_NAMES = {
   PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
   PROJECT_PAGE: 'PROJECT_PAGE',
   PROJECT_MEMBERS_PAGE: 'PROJECT_MEMBERS_PAGE',
+  PROJECT_JOB_LISTING: 'PROJECT_JOB_LISTING',
   JOBS_PAGE: 'JOBS_PAGE',
   PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
   FILTER_PAGE: 'FILTER_PAGE',
@@ -243,6 +245,14 @@ const AppStackNavigator = createStackNavigator({
   },
   PROJECT_MEMBERS_PAGE: {
     screen: ProjectMembersPage,
+    navigationOptions: () => ({
+      ...commonNavBarStyle,
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  PROJECT_JOB_LISTING: {
+    screen: ProjectJobListingPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
       header: null,

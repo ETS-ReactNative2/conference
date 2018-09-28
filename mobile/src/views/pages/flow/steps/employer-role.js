@@ -19,7 +19,7 @@ class EmployerRole extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      roles: this.props.employer.roles
+      role: this.props.employer.role
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -57,7 +57,7 @@ class EmployerRole extends React.Component {
   }
 
   isFormValid = () => {
-    return this.state.roles.length > 0
+    return this.state.role !== -1
   }
 
   validateForm = () => {
@@ -67,26 +67,19 @@ class EmployerRole extends React.Component {
 
   handleSubmit = () => {
     this.props.save({
-      roles: this.state.roles
+      role: this.state.role
     })
     this.props.onFill({
       nextStep: EmployerJobs
     })
   }
-  
+
   handleCheckboxClick = index => {
-    let roles = [ ...this.state.roles ]
-    const roleIndex = roles.indexOf(index)
-    if (roleIndex !== -1) {
-      roles = roles.filter(role => role !== index)
-    } else {
-      roles.push(index)
-    }
-    this.setState({ roles }, this.validateForm)
+    this.setState({ role: index }, this.validateForm)
   }
 
   isCheckboxSelected = index => {
-    return this.state.roles.indexOf(index) !== -1
+    return this.state.role === index
   }
 }
 

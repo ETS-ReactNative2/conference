@@ -42,6 +42,11 @@ class ProfilePage extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.PROJECT_MEMBERS_PAGE)
   }
 
+  handleProjectJobListing = () => {
+    this.props.navigation.navigate(PAGES_NAMES.PROJECT_JOB_LISTING)
+  }
+
+
   handleInvestorCreate = (devMode = false) => {
     if (devMode) {
       this.props.openEdit('investor', false)
@@ -177,6 +182,7 @@ class ProfilePage extends React.Component {
                       <ProfileWhiteButton onPress={ this.handleOpenProjectDetails } text={ I18n.t('common.view') }/>
                       <ProfileWhiteButton onPress={ this.handleEditProject } text={ I18n.t('common.edit') }/>
                       <ProfileWhiteButton onPress={ this.handleProjectManage } text={ I18n.t('common.manage') }/>
+                      <ProfileWhiteButton onPress={ this.handleProjectJobListing } text={ I18n.t('common.job_listing') }/>
                       <ProfileWhiteButton onPress={ this.handleLeaveProject } text={ I18n.t('common.leave') }/>
                     </React.Fragment>
                   ) }

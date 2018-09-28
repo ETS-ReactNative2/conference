@@ -1,7 +1,7 @@
 import { View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
+import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../../locales/i18n'
@@ -15,23 +15,24 @@ import { CountrySelect } from '../../../design/select'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
 
+const LOCAL_JOB = 1
+
 class EmployerJobs extends React.Component {
 
   static BACKGROUND_COLOR = '#182E5B'
 
   constructor (props) {
     super(props)
-    const { roles, ...jobs } = this.props.employer
     this.state = {
-      ...jobs
+      employer: this.props.employer
     }
     this.state.isFormValid = this.isFormValid()
   }
 
-  handleFieldChange = (text, role, name) => {
+  handleFieldChange = (text, name) => {
     this.setState({
-      [ role ]: {
-        ...this.state[ role ],
+      employer: {
+        ...this.state.employer,
         [ name ]: text
       }
 
@@ -58,8 +59,8 @@ class EmployerJobs extends React.Component {
     return !validator.isEmpty(city)
   }
 
-  handleCheckboxClickLocation = (index, role) => {
-    let location = [ ...this.state[ role ].location ]
+  handleCheckboxClickLocation = index => {
+    let location = [ ...this.state.employer.location ]
     const locationIndex = location.indexOf(index)
     if (locationIndex !== -1) {
       location = location.filter(pay => pay !== index)
@@ -67,28 +68,28 @@ class EmployerJobs extends React.Component {
       location.push(index)
     }
     this.setState({
-      [ role ]: {
-        ...this.state[ role ],
+      employer: {
+        ...this.state.employer ,
         location
       }
     }, this.validateForm)
   }
 
-  handleCheckboxPartTimeClick = (role) => {
+  handleCheckboxPartTimeClick = () => {
     this.setState({
-      [ role ]: {
-        ...this.state[ role ],
-        partTime: !this.state[ role ].partTime
+      employer: {
+        ...this.state.employer,
+        partTime: !this.state.employer.partTime
       }
     }, this.validateForm)
   }
 
-  isCheckboxSelectedLocation = (index, role) => {
-    return this.state[ role ].location.indexOf(index) !== -1
+  isCheckboxSelectedLocation = index => {
+    return this.state.employer.location.indexOf(index) !== -1
   }
 
-  handleCheckboxClick = (index, role) => {
-    let payments = [ ...this.state[ role ].payments ]
+  handleCheckboxClick = index => {
+    let payments = [ ...this.state.employer.payments ]
     const paymentIndex = payments.indexOf(index)
     if (paymentIndex !== -1) {
       payments = payments.filter(pay => pay !== index)
@@ -96,131 +97,120 @@ class EmployerJobs extends React.Component {
       payments.push(index)
     }
     this.setState({
-      [ role ]: {
-        ...this.state[ role ],
+      employer: {
+        ...this.state.employer,
         payments
       }
     }, this.validateForm)
   }
 
-  isCheckboxSelected = (index, role) => {
-    return this.state[ role ].payments.indexOf(index) !== -1
+  isCheckboxSelected = (index) => {
+    return this.state.employer.payments.indexOf(index) !== -1
   }
 
   render () {
+    const role = ROLES.find(r => r.index === this.state.employer.role).slug
+
     return (
       <FlowContainer>
         <View style={ { flex: 1, justifyContent: 'flex-start' } }>
-          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={96} enabled={Platform.OS === 'ios'}>
+          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={ 96 } enabled={ Platform.OS === 'ios' }>
             <ScrollView contentContainerStyle={ { flexGrow: 1 } }>
               <View style={ { marginLeft: 32, marginRight: 32, marginTop: 32 } }>
-                <StepTitle text={ I18n.t('flow_page.employer.job.title') }/>
+                <StepTitle text={ I18n.t(`common.roles_job.${role}`) }/>
               </View>
-              { this.props.employer.roles
-                .map(role => ROLES.find(job => job.index === role).slug)
-                .map(role => {
-                    return (
-                      <React.Fragment key={ role }>
-                        <StepTitle text={ I18n.t(`common.roles_job.${role}`) }/>
-                        <Subheader
-                          color={'white'}
-                          text={ I18n.t(`flow_page.employer.keyword.links`) }/>
-                        <View style={ { marginLeft: 8, marginRight: 8 } }>
-                          <FlowInputValidated
-                            floatingLabel
-                            value={ this.state[ role ].keywords }
-                            labelText={ I18n.t('flow_page.employer.keyword.title') }
-                            isError={ !this.validateSkills(this.state[ role ].keywords) }
-                            errorMessage={ I18n.t('flow_page.employee.skills.error') }
-                            onChangeText={ (newValue) => this.handleFieldChange(newValue, role, 'keywords') }/>
-                          <FlowInputValidated
-                            floatingLabel
-                            value={ this.state[ role ].link }
-                            labelText={ I18n.t('flow_page.employer.job.link') }
-                            isError={ !this.validateJobLink(this.state[ role ].link,
-                              this.state[ role ].description) }
-                            errorMessage={ I18n.t('common.errors.incorrect_job_link') }
-                            onChangeText={ (newValue) => this.handleFieldChange(newValue, role, 'link') }/>
-                          <FlowInputValidated
-                            floatingLabel
-                            multiline={ true }
-                            numberOfLines={ 5 }
-                            value={ this.state[ role ].description }
-                            labelText={ I18n.t('flow_page.employer.job.description') }
-                            isError={ !this.validateJobDescription(this.state[ role ].link,
-                              this.state[ role ].description) }
-                            errorMessage={ I18n.t('common.errors.incorrect_job_description') }
-                            onChangeText={ (newValue) => this.handleFieldChange(newValue,
-                              role,
-                              'description') }/>
-                        </View>
-                        <View style={ { marginTop: 16, marginBottom: 16 } }>
-                          <FlowListSwitch
-                            text={ I18n.t('flow_page.employer.job.part_time') }
-                            switchText={ this.state[ role ].partTime ? I18n.t('common.yes') : I18n.t('common.no') }
-                            selected={ this.state[ role ].partTime }
-                            onToggle={ () => this.handleCheckboxPartTimeClick(role) }/>
-                        </View>
-                        <Subheader
-                          color={'white'}
-                          text={ I18n.t('flow_page.employer.payment.title') }
-                        />
-                        { PAYMENTS.map(({ slug, index }) => {
-                          return (
-                            <FlowListItem
-                              key={ `payment-${slug}` }
-                              selected={ this.isCheckboxSelected(index, role) }
-                              onSelect={ () => this.handleCheckboxClick(index, role) }
-                              text={ I18n.t(`common.payment.${slug}`) }
-                            />
-                          )
-                        }) }
-                        <Subheader
-                          color={'white'}
-                          text={ I18n.t('flow_page.employer.location.title') }
-                        />
-                        { JOB_LOCATION.map(({ slug, index }) => {
-                          return (
-                            <FlowListItem
-                              key={ `location-${slug}` }
-                              selected={ this.isCheckboxSelectedLocation(index, role) }
-                              onSelect={ () => this.handleCheckboxClickLocation(index, role) }
-                              text={ I18n.t(`common.job_location.${slug}`) }
-                            />
-                          )
-                        }) }
-
-                        { this.state[ role ].location.includes(1) && (
-                          <React.Fragment>
-                            <CountrySelect
-                              placeholder={ 'Country' }
-                              value={ this.state[ role ].country }
-                              onChange={ value => {
-                                this.setState({
-                                  [ role ]: {
-                                    ...this.state[ role ],
-                                    country: { cca2: value.cca2, countryName: value.name, calling: value.callingCode }
-                                  }
-                                })
-                              } }
-                            />
-                            <View style={ { marginLeft: 8, marginRight: 8 } }>
-                              <FlowInputValidated
-                                floatingLabel
-                                value={ this.state[ role ].city }
-                                labelText={ I18n.t('flow_page.employer.job.city') }
-                                isError={ !this.validateJobCity(this.state[ role ].city) }
-                                errorMessage={ I18n.t('common.errors.incorrect_job_city') }
-                                onChangeText={ (newValue) => this.handleFieldChange(newValue, role, 'city') }/>
-                            </View>
-                          </React.Fragment>
-                        ) }
-                        <View style={ { marginBottom: 64 } }/>
-                      </React.Fragment>
-                    )
-                  }
+              <Subheader
+                color={ 'white' }
+                text={ I18n.t(`flow_page.employer.keyword.links`) }/>
+              <View style={ { marginLeft: 8, marginRight: 8 } }>
+                <FlowInputValidated
+                  floatingLabel
+                  value={ this.state.employer.keywords }
+                  labelText={ I18n.t('flow_page.employer.keyword.title') }
+                  isError={ !this.validateSkills(this.state.employer.keywords) }
+                  errorMessage={ I18n.t('flow_page.employee.skills.error') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'keywords') }/>
+                <FlowInputValidated
+                  floatingLabel
+                  value={ this.state.employer.link }
+                  labelText={ I18n.t('flow_page.employer.job.link') }
+                  isError={ !this.validateJobLink(this.state.employer.link,
+                    this.state.employer.description) }
+                  errorMessage={ I18n.t('common.errors.incorrect_job_link') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'link') }/>
+                <FlowInputValidated
+                  floatingLabel
+                  multiline={ true }
+                  numberOfLines={ 5 }
+                  value={ this.state.employer.description }
+                  labelText={ I18n.t('flow_page.employer.job.description') }
+                  isError={ !this.validateJobDescription(this.state.employer.link,
+                    this.state.employer.description) }
+                  errorMessage={ I18n.t('common.errors.incorrect_job_description') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'description') }/>
+              </View>
+              <View style={ { marginTop: 16, marginBottom: 16 } }>
+                <FlowListSwitch
+                  text={ I18n.t('flow_page.employer.job.part_time') }
+                  switchText={ this.state.employer.partTime ? I18n.t('common.yes') : I18n.t('common.no') }
+                  selected={ this.state.employer.partTime }
+                  onToggle={ () => this.handleCheckboxPartTimeClick() }/>
+              </View>
+              <Subheader
+                color={ 'white' }
+                text={ I18n.t('flow_page.employer.payment.title') }
+              />
+              { PAYMENTS.map(({ slug, index }) => {
+                return (
+                  <FlowListItem
+                    key={ `payment-${slug}` }
+                    selected={ this.isCheckboxSelected(index) }
+                    onSelect={ () => this.handleCheckboxClick(index) }
+                    text={ I18n.t(`common.payment.${slug}`) }
+                  />
                 )
-              }
+              }) }
+              <Subheader
+                color={ 'white' }
+                text={ I18n.t('flow_page.employer.location.title') }
+              />
+              { JOB_LOCATION.map(({ slug, index }) => {
+                return (
+                  <FlowListItem
+                    key={ `location-${slug}` }
+                    selected={ this.isCheckboxSelectedLocation(index) }
+                    onSelect={ () => this.handleCheckboxClickLocation(index) }
+                    text={ I18n.t(`common.job_location.${slug}`) }
+                  />
+                )
+              }) }
+
+              { this.state.employer.location.includes(LOCAL_JOB) && (
+                <React.Fragment>
+                  <CountrySelect
+                    placeholder={ 'Country' }
+                    value={ this.state.employer.country }
+                    onChange={ value => {
+                      this.setState({
+                        employer: {
+                          ...this.state.employer,
+                          country: { cca2: value.cca2, countryName: value.name, calling: value.callingCode }
+                        }
+                      })
+                    } }
+                  />
+                  <View style={ { marginLeft: 8, marginRight: 8 } }>
+                    <FlowInputValidated
+                      floatingLabel
+                      value={ this.state.employer.city }
+                      labelText={ I18n.t('flow_page.employer.job.city') }
+                      isError={ !this.validateJobCity(this.state.employer.city) }
+                      errorMessage={ I18n.t('common.errors.incorrect_job_city') }
+                      onChangeText={ (newValue) => this.handleFieldChange(newValue, 'city') }/>
+                  </View>
+                </React.Fragment>
+              ) }
+              <View style={ { marginBottom: 64 } }/>
             </ScrollView>
           </KeyboardAvoidingView>
         </View>
@@ -241,22 +231,18 @@ class EmployerJobs extends React.Component {
   }
 
   isFormValid = () => {
-    const { isFormValid, ...jobs } = this.state
-    return Object.values(jobs)
-      .map(({ link, description, payments, location, city }) => {
-        return this.validateJobLink(link,
-          description) && payments.length > 0 && location.length > 0 && (location.includes(1) ? this.validateJobCity(
-          city) : true)
-      })
-      .reduce((previous, current) => {
-        return previous && current
-      })
+    const { employer } = this.state
+    const { link, description, payments, location, city } = employer
+    return this.validateJobLink(link, description)
+      && payments.length > 0
+      && location.length > 0
+      && (location.includes(LOCAL_JOB) ? this.validateJobCity(city) : true)
   }
 
   handleSubmit = () => {
-    const { isFormValid, ...jobs } = this.state
+    const { employer } = this.state
     this.props.save({
-      ...jobs
+      ...employer
     })
     this.props.onFill({
       done: true
