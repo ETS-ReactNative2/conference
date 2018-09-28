@@ -17,6 +17,8 @@ import { Subheader } from '../../../design/subheader'
 import { InvesteeTokenType } from './index'
 import FlowInputValidated from '../../../design/flow-input-validated'
 
+const otherRegionConstantIndex = REGIONS.find(region => region.slug === "other").index
+
 class InvesteeMoneySource extends React.Component {
 
   static BACKGROUND_COLOR = '#172D5C'
@@ -65,12 +67,12 @@ class InvesteeMoneySource extends React.Component {
                     multiple={ false }
                     key={ `region-item-${region.slug}` }
                     text={ I18n.t(`common.regions.${region.slug}`) }
-                    onSelect={ () => this.handleChange(region) }
-                    selected={ this.state.nationality.index === region.index }
+                    onSelect={ () => this.handleChange(region.index) }
+                    selected={ this.state.nationality === region.index }
                   />
                 )
               }) }
-              {this.state.nationality.slug === "other" && (
+              {this.state.nationality === otherRegionConstantIndex && (
                 <View style={styles.inputContainer}>
                   <FlowInputValidated floatingLabel
                     value={ this.state.regionOtherText }
@@ -102,7 +104,7 @@ class InvesteeMoneySource extends React.Component {
     const { amount, nationality, regionOtherText } = this.state
     const isAmountValid = this.validateAmount(amount)
     let isRegionValid = !(!nationality);
-    if (nationality.slug === "other") {
+    if (nationality === otherRegionConstantIndex) {
       isRegionValid = regionOtherText.length <= 40
     }
     return isAmountValid && isRegionValid
