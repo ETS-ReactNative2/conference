@@ -12,6 +12,7 @@ import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
 import { ConferenceEvent } from './components/conference-event'
 import { DateTab } from './components/date-tab'
+import moment from 'moment'
 
 const secondImagesConfig = [
   {
@@ -36,6 +37,23 @@ class AgendaPage extends Component {
       currentImageIndex: 0,
       selected: 0
     }
+  }
+
+  componentDidMount() {
+    const { error, agenda } = this.props
+    let days = []
+    if (!error) {
+      const [ talks = { days: [] } ] = agenda
+      days = talks.days
+    }
+    days.map( (day, index) => {
+      if(day.date === moment().format('YYYY-MM-DD')) {
+        this.setState({
+          selected: index
+        })
+      }
+    })
+
   }
 
   hideModal = () => {
