@@ -34,7 +34,7 @@ function extractInfo (professional) {
 class Small extends React.PureComponent {
   render () {
     const { professional, onClick } = this.props
-    const { hasAvatar, avatar } = createAvatar(professional, 'w=500&h=300')
+    const { hasAvatar, avatar } = createAvatar(professional, 'w=500&h=300&crop=faces&auto=compress')
     const { firstName, lastName, country, role } = extractInfo(professional)
 
     return (
@@ -128,7 +128,7 @@ const small = EStyleSheet.create({
 class Medium extends React.PureComponent {
   render () {
     const { professional, onClick } = this.props
-    const { hasAvatar, avatar } = createAvatar(professional, 'w=240&h=320')
+    const { hasAvatar, avatar } = createAvatar(professional, 'w=240&h=320&crop=faces&auto=compress')
     const { firstName, lastName, country, role } = extractInfo(professional)
 
     return (
@@ -296,7 +296,7 @@ class XL extends React.PureComponent {
   render () {
     const { professional } = this.props
 
-    const { hasAvatar, avatar } = createAvatar(professional, 'w=300&h=300')
+    const { hasAvatar, avatar } = createAvatar(professional, 'w=300&h=300&crop=faces&auto=compress')
 
     const { firstName, lastName, country, role } = extractInfo(professional)
 

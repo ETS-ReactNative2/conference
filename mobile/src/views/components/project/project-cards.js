@@ -1,6 +1,7 @@
 import { Icon, Text, View } from 'native-base'
 import React from 'react'
 import { Image, Linking, TouchableHighlight } from 'react-native'
+import AsyncImageAnimated from 'react-native-async-image-animated'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
 import ColorLogo from '../../../assets/logos/logo-white.png'
@@ -20,9 +21,9 @@ function createAvatar (project, extraQuery) {
 
 class Small extends React.PureComponent {
   render () {
-    const { project, onClick} = this.props
+    const { project, onClick } = this.props
     const { hasAvatar, avatar } = createAvatar(project, 'w=200&h=200')
-    const {name, tagline } = project
+    const { name, tagline } = project
 
     return (
       <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
@@ -30,7 +31,9 @@ class Small extends React.PureComponent {
           <View style={ small.cardContent }>
             <View style={ small.avatarContainer }>
               { hasAvatar ?
-                <Image style={ small.avatar } source={ avatar }/> :
+                <AsyncImageAnimated
+                  placeholderColor={ '#DADADA' }
+                  style={ small.avatar } source={ avatar }/> :
                 <View style={ small.placeholderContainer }>
                   <Image style={ small.placeholder } source={ avatar }/>
                 </View>
@@ -54,14 +57,20 @@ const small = EStyleSheet.create({
   },
   avatarContainer: {
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+    overflow: 'hidden'
   },
   cardContent: {
     flexDirection: 'row'
   },
   avatar: {
     width: 100,
-    height: 100
+    height: 100,
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+    overflow: 'hidden'
   },
   placeholderContainer: {
     width: 100,
@@ -107,7 +116,7 @@ const small = EStyleSheet.create({
 
 class Medium extends React.PureComponent {
   render () {
-    const { project, onClick} = this.props
+    const { project, onClick } = this.props
     const { hasAvatar, avatar } = createAvatar(project, 'w=240&h=240')
     const { name, tagline, fundraisingAmount } = project
 
@@ -121,7 +130,9 @@ class Medium extends React.PureComponent {
           <View style={ medium.cardContent }>
             <View style={ medium.avatarContainer }>
               { hasAvatar ?
-                <Image style={ medium.avatar } source={ avatar }/> :
+                <AsyncImageAnimated
+                  placeholderColor={ '#DADADA' }
+                  style={ medium.avatar } source={ avatar }/> :
                 <View style={ medium.placeholderContainer }>
                   <Image style={ medium.placeholder } source={ avatar }/>
                 </View>
@@ -276,7 +287,7 @@ class XL extends React.PureComponent {
   render () {
     const { project } = this.props
 
-    const { hasAvatar, avatar } = createAvatar(project, 'w=300&h=300')
+    const { hasAvatar, avatar } = createAvatar(project, '')
     const { name, tagline, fundraisingAmount, size, description, notable, jobListings, legalCountry: legal, mainCountry: main } = project
 
     const tokenType = TOKEN_TYPES.find(item => item.index === project.tokenType)
@@ -314,7 +325,9 @@ class XL extends React.PureComponent {
           <View style={ styles.inline }>
             <View style={ xl.avatarContainer }>
               { hasAvatar ?
-                <Image style={ avatarStyle } source={ avatar }/> :
+                <AsyncImageAnimated
+                  placeholderColor={ '#DADADA' }
+                  style={ avatarStyle } source={ avatar }/> :
                 <View style={ avatarStyle }>
                   <Image style={ placeholderStyle } source={ avatar }/>
                 </View>
@@ -622,8 +635,8 @@ const styles = EStyleSheet.create({
   }
 })
 
-function normalizeUrl(link) {
-  if(!link.toUpperCase().startsWith('HTTP')){
+function normalizeUrl (link) {
+  if (!link.toUpperCase().startsWith('HTTP')) {
     link = `http://${link}`
   }
 

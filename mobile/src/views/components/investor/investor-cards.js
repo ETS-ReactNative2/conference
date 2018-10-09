@@ -39,7 +39,7 @@ function extractInfo (investor) {
 class Small extends React.PureComponent {
   render () {
     const { investor, onClick } = this.props
-    const { hasAvatar, avatar } = createAvatar(investor, 'w=400&h=300')
+    const { hasAvatar, avatar } = createAvatar(investor, 'w=400&h=300&crop=faces&auto=compress')
     const { firstName, lastName, moneyRange } = extractInfo(investor)
 
     return (
@@ -126,7 +126,7 @@ class Medium extends React.PureComponent {
 
   render () {
     const { investor, onClick } = this.props
-    const { hasAvatar, avatar } = createAvatar(investor, 'w=180&h=240')
+    const { hasAvatar, avatar } = createAvatar(investor, 'w=180&h=240&crop=faces&auto=compress')
     const { firstName, lastName, moneyRange } = extractInfo(investor)
 
     return (
@@ -290,7 +290,7 @@ class XL extends React.PureComponent {
   render () {
     const { investor, onMessageClick } = this.props
 
-    const { hasAvatar, avatar } = createAvatar(investor, 'w=300&h=300')
+    const { hasAvatar, avatar } = createAvatar(investor, 'w=300&h=300&crop=faces&auto=compress')
     const { firstName, lastName, moneyRange } = extractInfo(investor)
 
     const { itemWidth } = getDimensions()
