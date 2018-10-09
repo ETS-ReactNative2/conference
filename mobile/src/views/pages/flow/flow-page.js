@@ -132,11 +132,17 @@ class FlowPage extends React.Component {
       try {
         await this.props.startLoading()
         await this.props.uploadProfile()
-        if( this.props.profileType === 'employer'){
-          this.props.navigation.navigate(PAGES_NAMES.PROJECT_JOB_LISTING)
-        } else {
-          this.props.navigation.navigate(PAGES_NAMES.PROFILE_PAGE)
+        let pageToNavigateTo = PAGES_NAMES.PROFILE_PAGE
+        if (this.props.profileType === 'employer') {
+          pageToNavigateTo = PAGES_NAMES.PROJECT_JOB_LISTING
         }
+        if (!this.props.isEditing && this.props.profileType === 'investor') {
+          pageToNavigateTo = PAGES_NAMES.INVESTOR_FLOW_CREATION_FINISH_PAGE
+        }
+        if (!this.props.isEditing && this.props.profileType === 'investee') {
+          pageToNavigateTo = PAGES_NAMES.PROJECT_FLOW_CREATION_FINISH_PAGE
+        }
+        this.props.navigation.navigate(pageToNavigateTo)
       } catch (err) {
         this.props.showAlertMessage(err)
       } finally {
@@ -176,6 +182,7 @@ class FlowPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    isEditing: state.signUp.isEditing,
     profileType: state.signUp.profile.type
   }
 }

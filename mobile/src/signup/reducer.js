@@ -95,7 +95,8 @@ const initialState = {
     city: '',
     age: '',
     experience: ''
-  }
+  },
+  isEditing: false
 }
 
 export function signUpReducer (state = initialState, action) {
@@ -208,6 +209,7 @@ export function signUpReducer (state = initialState, action) {
     case PREFILL_EDIT_JOB:
       return {
         ...state,
+        isEditing: action.data.prefill,
         profile: {
           ...state.profile,
           type: action.data.role
@@ -223,6 +225,7 @@ export function signUpReducer (state = initialState, action) {
     case PREFILL_EDIT:
       return {
         ...state,
+        isEditing: action.data.prefill,
         profile: {
           ...state.profile,
           type: action.data.role

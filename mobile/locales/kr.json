@@ -78,6 +78,7 @@
     }
   },
   "common": {
+    "home_page": "Home Page",
     "details": "디테일",
     "website": "웹사이트",
     "whitepaper": "백서",
@@ -450,6 +451,10 @@
         "error_missing_token_type": "Please select token type",
         "header": "토큰 유형",
         "title": "당신의 프로젝트의 토큰 유형은 무엇인가요?"
+      },
+      "flow_finished": {
+        "header": "Project created",
+        "text": "Your application will be reviewed. You will be notified when your project is accepted"
       }
     },
     "investor": {
@@ -480,6 +485,10 @@
       "ticket_size": {
         "header": "티켓 사이즈",
         "title": "얼마나 많은 돈을 투자할 건가요?"
+      },
+      "flow_finished": {
+        "header": "Investor Profile created",
+        "text": "Your application will be reviewed. You will be notified when your investor profile is accepted"
       }
     },
     "links": {

@@ -28,14 +28,9 @@ class ProfilePage extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
   }
 
-  handleProjectCreate = (devMode = false) => {
-    if (devMode) {
+  handleProjectCreate = () => {
       this.props.openEdit('project', false)
       this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
-    }
-    else {
-      this.openLink('https://www.blockseoul.com/projects')
-    }
   }
 
   handleProjectManage = () => {
@@ -47,14 +42,9 @@ class ProfilePage extends React.Component {
   }
 
 
-  handleInvestorCreate = (devMode = false) => {
-    if (devMode) {
-      this.props.openEdit('investor', false)
-      this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
-    }
-    else {
-      this.openLink('https://www.blockseoul.com/investors')
-    }
+  handleInvestorCreate = () => {
+    this.props.openEdit('investor', false)
+    this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
   }
 
   handleOpenProfessionalDetails = () => {
@@ -187,13 +177,8 @@ class ProfilePage extends React.Component {
                     </React.Fragment>
                   ) }
                   { !this.props.project && (
-                    <React.Fragment>
-                      <ProfileWhiteButton onPress={ () => this.handleProjectCreate(false) }
-                                          text={ I18n.t('common.create') }/>
-                      { getBoolean(Config.APP_DEV_FLOW) && (
-                        <ProfileWhiteButton onPress={ () => this.handleProjectCreate(true) } text={ 'DEV_CREATE' }/>
-                      ) }
-                    </React.Fragment>
+                    <ProfileWhiteButton onPress={ () => this.handleProjectCreate() }
+                                        text={ I18n.t('common.create') }/>
                   ) }
                 </View>
               </View>
@@ -219,13 +204,8 @@ class ProfilePage extends React.Component {
                     </React.Fragment>
                   ) }
                   { !this.props.investor && (
-                    <React.Fragment>
-                      <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(false) }
-                                          text={ I18n.t('common.create') }/>
-                      { getBoolean(Config.APP_DEV_FLOW) && (
-                        <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(true) } text={ 'DEV_CREATE' }/>
-                      ) }
-                    </React.Fragment>
+                    <ProfileWhiteButton onPress={ () => this.handleInvestorCreate() }
+                                        text={ I18n.t('common.create') }/>
                   ) }
                 </View>
                 {
@@ -298,11 +278,6 @@ ProfilePage.propTypes = {
   logout: PropTypes.func.isRequired,
   fetchProfiles: PropTypes.func.isRequired
 }
-
-function getBoolean(stringBool){
-  return stringBool === 'true'
-}
-
 
 const mapStateToProps = state => {
   return {

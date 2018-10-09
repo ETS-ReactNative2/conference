@@ -82,6 +82,7 @@
     }
   },
   "common": {
+    "home_page": "Home Page",
     "contact": "Contact Us",
     "skip": "Skip",
     "setup": "Set up",
@@ -467,6 +468,10 @@
         "error_missing_token_type": "Please select token type",
         "header": "Token type",
         "title": "What is your project's token type?"
+      },
+      "flow_finished": {
+        "header": "Project created",
+        "text": "Your application will be reviewed. You will be notified when your project is accepted"
       }
     },
     "investor": {
@@ -497,6 +502,10 @@
       "ticket_size": {
         "header": "Ticket size",
         "title": "How much money are you planning to invest?"
+      },
+      "flow_finished": {
+        "header": "Investor Profile created",
+        "text": "Your application will be reviewed. You will be notified when your investor profile is accepted"
       }
     },
     "links": {

@@ -25,6 +25,7 @@ import ProfessionalMainFilterPage from '../views/pages/filters/professional-main
 import JobMainFilterPage from '../views/pages/filters/job-main-filter-page'
 import FlowPage from '../views/pages/flow/flow-page'
 import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/flow/steps/common-profile-onboarding'
+import { ProjectFlowFinishedPage, InvestorFlowFinishedPage } from '../views/pages/flow/steps/common-flow-finished-page'
 import HomePage from '../views/pages/home/home-page'
 import InvestorPage from '../views/pages/investor/investor-page'
 import LoginPage from '../views/pages/login/login-page'
@@ -40,7 +41,7 @@ import JobsPage from '../views/pages/job/jobs-page'
 import PrivacyPolicyPage from '../views/pages/privacy-policy/privacy-policy'
 import TermsOfServicePage from '../views/pages/terms-of-service/terms-of-service'
 import ProjectJobListingPage from '../views/pages/project/project-job-listing-page'
-import { PROJECT_FILTER_BACKGROUND_COLOR } from '../views/design/constants';
+import { PROJECT_FILTER_BACKGROUND_COLOR } from '../views/design/constants'
 
 const PAGES_NAMES = {
   WELCOME_PAGE: 'WELCOME_PAGE',
@@ -66,7 +67,9 @@ const PAGES_NAMES = {
   PROFILE_PAGE: 'PROFILE_PAGE',
   EDIT_BASIC_PROFILE: 'EDIT_BASIC_PROFILE',
   PRIVACY_POLICY_PAGE: 'PRIVACY_POLICY_PAGE',
-  TERMS_OF_SERVICE_PAGE: 'TERMS_OF_SERVICE_PAGE'
+  TERMS_OF_SERVICE_PAGE: 'TERMS_OF_SERVICE_PAGE',
+  PROJECT_FLOW_CREATION_FINISH_PAGE: 'PROJECT_FLOW_CREATION_FINISH_PAGE',
+  INVESTOR_FLOW_CREATION_FINISH_PAGE: 'INVESTOR_FLOW_CREATION_FINISH_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -327,6 +330,20 @@ const AppStackNavigator = createStackNavigator({
   },
   TERMS_OF_SERVICE_PAGE: {
     screen: TermsOfServicePage,
+    navigationOptions: () => ({
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  PROJECT_FLOW_CREATION_FINISH_PAGE: {
+    screen: ProjectFlowFinishedPage,
+    navigationOptions: () => ({
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  INVESTOR_FLOW_CREATION_FINISH_PAGE: {
+    screen: InvestorFlowFinishedPage,
     navigationOptions: () => ({
       header: null,
       gesturesEnabled: false
