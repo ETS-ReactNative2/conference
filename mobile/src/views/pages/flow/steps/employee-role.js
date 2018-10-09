@@ -9,9 +9,21 @@ import * as signUpActions from '../../../../signup/actions'
 import { FlowButton } from '../../../design/buttons'
 import { Chip } from '../../../design/chips'
 import { FlowContainer } from '../../../design/container'
-import FlowInput from '../../../design/flow-inputs'
+import FlowInputValidated from '../../../design/flow-input-validated'
 import { StepTitle } from '../../../design/step-title'
 import { EmployeeKeywords } from './index'
+
+const roleOtherIndex = ROLES.find(role => role.slug === 'other').index
+
+const errorStyleOverride = {
+  border: {
+    borderColor: '#f2b9cb',
+    borderBottomColor: '#f2b9cb'
+  },
+  text: {
+    color: '#f2b9cb'
+  }
+}
 
 class EmployeeRole extends React.Component {
 
@@ -21,13 +33,21 @@ class EmployeeRole extends React.Component {
     super(props)
     this.state = {
       selected: this.props.employee.role,
-      other: this.props.employee.roleOtherText
+      other: this.props.employee.roleOtherText,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.employee.role !== -1
     }
     this.state.isFormValid = this.isFormValid()
   }
 
+  validateOtherRoleText () {
+    const { selected, other } = this.state
+    return selected !== roleOtherIndex || (selected === roleOtherIndex && other !== '')
+  }
+
   isFormValid () {
-    return this.state.selected !== -1 && (this.state.selected === 12 ? this.state.other !== '' : true)
+    return this.state.selected !== -1 && (this.state.selected === roleOtherIndex ? this.state.other !== '' : true)
   }
 
   onAbortClick = () => {
@@ -68,11 +88,22 @@ class EmployeeRole extends React.Component {
                   })
                 }
               </View>
+              { this.state.showValidationError && this.state.selected === -1 && (
+                <View style={ { marginTop: 8 } }>
+                  <Text style={ { color: '#f2b9cb', alignSelf: 'center' } }>
+                    {I18n.t('flow_page.employee.role.error_missing_role')}
+                  </Text>
+                </View>
+              )}
               <View style={ { margin: 8 } }>
-                <FlowInput
+                <FlowInputValidated
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
                   floatingLabel
                   labelText={ I18n.t('flow_page.employee.role.other') }
-                  status={ this.state.other.length > 0 ? 'ok' : 'regular' }
+                  isError={ this.state.showValidationError && !this.validateOtherRoleText() }
+                  errorMessage={ I18n.t('flow_page.employee.role.error_other_role_missing_text') }
+                  errorStyleOverride={ errorStyleOverride }
                   onChangeText={ text => this.handleFieldChange(text, 'other') }
                   value={ this.state.other }/>
               </View>
@@ -84,7 +115,7 @@ class EmployeeRole extends React.Component {
                 onPress={ this.onAbortClick }>{ I18n.t('flow_page.employee.role.not_looking_for_job') }</Text>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={ !this.state.isFormValid }
+            disabled={ this.state.showValidationError && !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />
         </View>
@@ -98,14 +129,20 @@ class EmployeeRole extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.save({
-      role: this.state.selected,
-      roleOtherText: this.state.other,
-      lookingForJob: true
-    })
-    this.props.onFill({
-      nextStep: EmployeeKeywords
-    })
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (this.state.isFormValid) {
+      this.props.save({
+        role: this.state.selected,
+        roleOtherText: this.state.other,
+        lookingForJob: true
+      })
+      this.props.onFill({
+        nextStep: EmployeeKeywords
+      })
+    }
   }
 
   handleChange = (index) => {

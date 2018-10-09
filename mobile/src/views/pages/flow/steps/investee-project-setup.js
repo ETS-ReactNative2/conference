@@ -22,7 +22,10 @@ class InvesteeProjectSetup extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      ...{ projectName, projectTagline, projectDescription, imageUrl } = this.props.investee
+      ...{ projectName, projectTagline, projectDescription, imageUrl } = this.props.investee,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.investee.projectName !== ''
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -47,21 +50,25 @@ class InvesteeProjectSetup extends React.Component {
                 <Form>
                   <View style={ styles.inputContainer }>
                     <FlowInputValidated
+                      overrideStatus={ !this.state.showValidationError }
+                      overrideStatusType={'regular'}
                       floatingLabel
                       value={ this.state.projectName }
                       placeholder={ I18n.t('flow_page.project_setup.project_name') }
                       labelText={ I18n.t('flow_page.project_setup.project_name') }
-                      isError={ !this.validateProjectName(this.state.projectName) }
+                      isError={ this.state.showValidationError && !this.validateProjectName(this.state.projectName) }
                       errorMessage={ I18n.t('common.errors.incorrect_project_name') }
                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'projectName') }/>
                   </View>
                   <View style={ styles.inputContainer }>
                     <FlowInputValidated
+                      overrideStatus={ !this.state.showValidationError }
+                      overrideStatusType={'regular'}
                       floatingLabel
                       value={ this.state.imageUrl }
                       placeholder={ I18n.t('flow_page.project_setup.image_url') }
                       labelText={ I18n.t('flow_page.project_setup.image_url') }
-                      isError={ !this.validateImageUrl(this.state.imageUrl) }
+                      isError={ this.state.showValidationError && !this.validateImageUrl(this.state.imageUrl) }
                       errorMessage={ I18n.t('common.errors.incorrect_image_url') }
                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'imageUrl') }/>
                     { this.state.imageUrl ? (
@@ -99,7 +106,7 @@ class InvesteeProjectSetup extends React.Component {
         </View>
         <View style={ { margin: 8 } }>
           <FlowButton
-            disabled={ !this.state.isFormValid }
+            disabled={ this.state.showValidationError && !this.state.isFormValid }
             text={ I18n.t('common.next') }
             onPress={ this.handleSubmit }
           />
@@ -129,15 +136,21 @@ class InvesteeProjectSetup extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.save({
-      projectName: this.state.projectName,
-      projectTagline: this.state.projectTagline,
-      projectDescription: this.state.projectDescription,
-      imageUrl: this.state.imageUrl
-    })
-    this.props.onFill({
-      nextStep: InvesteeLinks
-    })
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (this.state.isFormValid) {
+      this.props.save({
+        projectName: this.state.projectName,
+        projectTagline: this.state.projectTagline,
+        projectDescription: this.state.projectDescription,
+        imageUrl: this.state.imageUrl
+      })
+      this.props.onFill({
+        nextStep: InvesteeLinks
+      })
+    }
   }
   
   handleFieldChange = (value, name) => {

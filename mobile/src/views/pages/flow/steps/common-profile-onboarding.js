@@ -42,7 +42,10 @@ class CommonProfileOnboarding extends React.Component {
       company: this.props.company,
       telegram: this.props.telegram,
       linkedin: this.props.linkedin,
-      avatarSource: this.props.imageUrl
+      avatarSource: this.props.imageUrl,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.firstName !== '' || this.props.lastName !== ''
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -84,25 +87,31 @@ class CommonProfileOnboarding extends React.Component {
   }
 
   handleSubmit = async () => {
-    try {
-      await this.props.startLoading()
-      await this.props.saveProfileInfo({
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        company: this.state.company,
-        telegram: this.state.telegram,
-        linkedin: this.state.linkedin,
-        avatarSource: this.state.avatarSource
-      })
-      if (this.props.edit) {
-        this.props.navigation.goBack()
-      } else {
-        this.props.navigation.navigate(PAGES_NAMES.HOME_PAGE)
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (this.state.isFormValid) {
+      try {
+        await this.props.startLoading()
+        await this.props.saveProfileInfo({
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          company: this.state.company,
+          telegram: this.state.telegram,
+          linkedin: this.state.linkedin,
+          avatarSource: this.state.avatarSource
+        })
+        if (this.props.edit) {
+          this.props.navigation.goBack()
+        } else {
+          this.props.navigation.navigate(PAGES_NAMES.HOME_PAGE)
+        }
+      } catch (err) {
+        this.props.showAlertMessage(err)
+      } finally {
+        this.props.finishLoading()
       }
-    } catch (err) {
-      this.props.showAlertMessage(err)
-    } finally {
-      this.props.finishLoading()
     }
   }
 
@@ -181,22 +190,26 @@ class CommonProfileOnboarding extends React.Component {
                   <Subheader text={ 'Basic info' }/>
                   <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                     <FlowInputValidated
+                      overrideStatus={ !this.state.showValidationError }
+                      overrideStatusType={'regular'}
                       floatingLabel={ true }
                       value={ this.state.firstName }
                       placeholder={ I18n.t('flow_page.common.profile_onboarding.first_name') }
                       labelText={ I18n.t('flow_page.common.profile_onboarding.first_name') }
-                      isError={ !this.validateProfileFirstName(this.state.firstName) }
+                      isError={ this.state.showValidationError && !this.validateProfileFirstName(this.state.firstName) }
                       errorMessage={ I18n.t('common.errors.incorrect_profile_first_name') }
                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'firstName') }
                     />
                   </View>
                   <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                     <FlowInputValidated
+                      overrideStatus={ !this.state.showValidationError }
+                      overrideStatusType={'regular'}
                       floatingLabel={ true }
                       value={ this.state.lastName }
                       placeholder={ I18n.t('flow_page.common.profile_onboarding.last_name') }
                       labelText={ I18n.t('flow_page.common.profile_onboarding.last_name') }
-                      isError={ !this.validateProfileLastName(this.state.lastName) }
+                      isError={ this.state.showValidationError && !this.validateProfileLastName(this.state.lastName) }
                       errorMessage={ I18n.t('common.errors.incorrect_profile_last_name') }
                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'lastName') }/>
                   </View>
@@ -211,23 +224,25 @@ class CommonProfileOnboarding extends React.Component {
                   </View>
                   <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                     <FlowInputValidated
+                      overrideStatus={ !this.state.showValidationError }
+                      overrideStatusType={'regular'}
                       floatingLabel={ true }
-                      status='regular'
                       value={ this.state.telegram }
                       placeholder=''
                       labelText={ I18n.t('common.telegram_url') }
-                      isError={!this.validateTelegramUserName(this.state.telegram)}
+                      isError={ this.state.showValidationError && !this.validateTelegramUserName(this.state.telegram)}
                       errorMessage={I18n.t('common.errors.incorrect_telegram_user_name')}
                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'telegram') }/>
                   </View>
                   <View style={ { paddingLeft: 8, paddingRight: 8, marginBottom: 16 } }>
                     <FlowInputValidated
+                      overrideStatus={ !this.state.showValidationError }
+                      overrideStatusType={'regular'}
                       floatingLabel={ true }
-                      status='regular'
                       value={ this.state.linkedin }
                       placeholder=''
                       labelText={ I18n.t('common.linkedin_url') }
-                      isError={!this.validateLinkedInUserName(this.state.linkedin)}
+                      isError={ this.state.showValidationError && !this.validateLinkedInUserName(this.state.linkedin)}
                       errorMessage={I18n.t('common.errors.incorrect_linkedin_user_name')}
                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'linkedin') }/>
                   </View>
@@ -239,7 +254,7 @@ class CommonProfileOnboarding extends React.Component {
         <View style={ { margin: 8 } }>
           <PrimaryButton
             text={ I18n.t('common.next') }
-            disabled={ !this.state.isFormValid }
+            disabled={ this.state.showValidationError && !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />
         </View>

@@ -1,4 +1,4 @@
-import { View } from 'native-base'
+import { Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
@@ -24,7 +24,10 @@ class InvesteeFundingStage extends React.Component {
     this.state = {
       selected: this.props.investee.fundingStage,
       members: this.props.investee.teamMembers,
-      size: this.props.investee.teamSize
+      size: this.props.investee.teamSize,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.investee.fundingStage !== -1
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -53,6 +56,13 @@ class InvesteeFundingStage extends React.Component {
                   />
                 )
               }) }
+              {this.state.showValidationError && this.state.selected === -1 && (
+                <View style={ { margin: 8 } }>
+                  <Text style={ { color: 'red', alignSelf: 'center' } }>
+                    {I18n.t('flow_page.funding_stage.error_missing_funding_stage')}
+                  </Text>
+                </View>
+              )}
               <View style={ { paddingTop: 10 } }>
                 <Subheader
                   color={'white'}
@@ -82,7 +92,7 @@ class InvesteeFundingStage extends React.Component {
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={ !this.state.isFormValid }
+            disabled={ this.state.showValidationError && !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />
         </View>
@@ -106,14 +116,20 @@ class InvesteeFundingStage extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.save({
-      fundingStage: this.state.selected,
-      teamMembers: this.state.members,
-      teamSize: this.state.size
-    })
-    this.props.onFill({
-      nextStep: InvesteeGiveaway
-    })
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (this.state.isFormValid) {
+      this.props.save({
+        fundingStage: this.state.selected,
+        teamMembers: this.state.members,
+        teamSize: this.state.size
+      })
+      this.props.onFill({
+        nextStep: InvesteeGiveaway
+      })
+    }
   }
 
   handleChange = index => {

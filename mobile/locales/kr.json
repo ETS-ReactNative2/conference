@@ -364,6 +364,8 @@
       "remote": "당신은 원격으로 일할 생각인가요?",
       "role": {
         "about": "당신의 기술에 대해 말해주세요.s, traits and knowledge",
+        "error_missing_role": "Please select role",
+        "error_other_role_missing_text": "Please enter role name",
         "other": "다른 역할",
         "not_looking_for_job": "저는 일자리를 찾고 있지 않습니다.",
         "title": "당신이 관심있는 역할을 선택하세요."
@@ -399,20 +401,25 @@
         "title": "키워드"
       },
       "location": {
+        "error_missing_location": "Please select job location type",
         "title": "직업 위치"
       },
       "payment": {
+        "error_missing_payment": "Please select payment method",
         "title": "지불 유형"
       },
       "role": {
+        "error_missing_role": "Please select role",
         "title": "당신이 고용하고 있는 역할을 선택하세요."
       }
     },
     "funding_stage": {
+      "error_missing_funding_stage": "Please select stage of investment",
       "header": "당신은 어떤 투자 단계에 있나요?",
       "title": "펀딩 단계"
     },
     "giveaway": {
+      "error_missing_giveaway": "Please select how investor is involved",
       "header": "투자자 구매",
       "title": "어떻게 투자자를 참여시킬 계획인가요?"
     },
@@ -440,6 +447,7 @@
         "title": "프로젝트 위치"
       },
       "token_type": {
+        "error_missing_token_type": "Please select token type",
         "header": "토큰 유형",
         "title": "당신의 프로젝트의 토큰 유형은 무엇인가요?"
       }
@@ -489,6 +497,7 @@
     },
     "money": {
       "amount": "돈 ($)",
+      "error_missing_investor_nationality": "Please select Investor Nationality",
       "nationality": "투자자 국적",
       "need_money": "당신은 돈을 찾고 있나요?",
       "not_looking_for_money": "나는 돈을 찾고 있지 않습니다.",
@@ -496,6 +505,7 @@
       "title": "얼마나 모금할 계획인가요?"
     },
     "product_stage": {
+      "error_missing_product_stage": "Please select your product's stage",
       "header": "생산 단계",
       "title": "당신의 제품 단계는 무언인가요?"
     },

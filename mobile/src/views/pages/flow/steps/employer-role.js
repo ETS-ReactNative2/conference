@@ -1,4 +1,4 @@
-import { View } from 'native-base'
+import { Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
@@ -19,7 +19,10 @@ class EmployerRole extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      role: this.props.employer.role
+      role: this.props.employer.role,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.employer.role !== -1
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -44,11 +47,18 @@ class EmployerRole extends React.Component {
               })
             }
           </View>
+          { this.state.showValidationError && this.state.role === -1 && (
+            <View style={ { marginTop: 8 } }>
+              <Text style={ { color: 'red', alignSelf: 'center' } }>
+                {I18n.t('flow_page.employer.role.error_missing_role')}
+              </Text>
+            </View>
+          )}
         </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={ !this.state.isFormValid }
+            disabled={ this.state.showValidationError && !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />
         </View>
@@ -66,12 +76,18 @@ class EmployerRole extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.save({
-      role: this.state.role
-    })
-    this.props.onFill({
-      nextStep: EmployerJobs
-    })
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (this.state.isFormValid) {
+      this.props.save({
+        role: this.state.role
+      })
+      this.props.onFill({
+        nextStep: EmployerJobs
+      })
+    }
   }
 
   handleCheckboxClick = index => {

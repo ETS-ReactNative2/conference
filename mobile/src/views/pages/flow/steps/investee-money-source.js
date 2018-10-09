@@ -1,5 +1,6 @@
 import {
-  View
+  View,
+  Text
 } from 'native-base'
 import React from 'react'
 import validator from 'validator'
@@ -28,7 +29,10 @@ class InvesteeMoneySource extends React.Component {
     this.state = {
       amount: this.props.investee.amount,
       nationality: this.props.investee.investorNationality,
-      regionOtherText: this.props.investee.regionOtherText
+      regionOtherText: this.props.investee.regionOtherText,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.investee.amount !== ''
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -48,14 +52,16 @@ class InvesteeMoneySource extends React.Component {
               />
               <View style={styles.inputContainer}>
                 <FlowInputValidated
-                          floatingLabel
-                          keyboardType={'numeric'}
-                          value={ this.state.amount }
-                          placeholder={ I18n.t('flow_page.money.amount') }
-                          labelText={ I18n.t('flow_page.money.amount') }
-                          isError={ !this.validateAmount(this.state.amount) }
-                          errorMessage={ I18n.t('common.errors.incorrect_amount') }
-                          onChangeText={ (newValue) => this.handleFieldChange(newValue, 'amount') } />
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
+                  floatingLabel
+                  keyboardType={'numeric'}
+                  value={ this.state.amount }
+                  placeholder={ I18n.t('flow_page.money.amount') }
+                  labelText={ I18n.t('flow_page.money.amount') }
+                  isError={ this.state.showValidationError && !this.validateAmount(this.state.amount) }
+                  errorMessage={ I18n.t('common.errors.incorrect_amount') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'amount') } />
               </View>
               <Subheader
                 color={'white'}
@@ -72,12 +78,21 @@ class InvesteeMoneySource extends React.Component {
                   />
                 )
               }) }
+              {this.state.showValidationError && this.state.nationality === 0 && (
+                <View style={ { margin: 8 } }>
+                  <Text style={ { color: 'red', alignSelf: 'center' } }>
+                    {I18n.t('flow_page.money.error_missing_investor_nationality')}
+                  </Text>
+                </View>
+              )}
               {this.state.nationality === otherRegionConstantIndex && (
                 <View style={styles.inputContainer}>
                   <FlowInputValidated floatingLabel
+                    overrideStatus={ !this.state.showValidationError }
+                    overrideStatusType={'regular'}
                     value={ this.state.regionOtherText }
                     labelText={ I18n.t('flow_page.money.other_location_placeholder') }
-                    isError={ this.state.regionOtherText.length > 40 }
+                    isError={ this.state.showValidationError && this.state.regionOtherText.length > 40 }
                     errorMessage={ I18n.t('common.errors.incorrect_investor_custom_location') }
                     onChangeText={ (newValue) => this.handleFieldChange(newValue, 'regionOtherText') }/>
                 </View>
@@ -88,7 +103,7 @@ class InvesteeMoneySource extends React.Component {
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={!this.state.isFormValid}
+            disabled={ this.state.showValidationError && !this.state.isFormValid}
             onPress={ this.handleSubmit }
           />
         </View>
@@ -128,16 +143,22 @@ class InvesteeMoneySource extends React.Component {
   }
 
   handleSubmit = () => {
-    const { amount, nationality, regionOtherText } = this.state
-    this.props.save({
-      money: true,
-      amount: amount,
-      investorNationality: nationality,
-      regionOtherText: regionOtherText
-    })
-    this.props.onFill({
-      nextStep: InvesteeTokenType
-    })
+    const { amount, isFormValid, nationality, regionOtherText, showValidationError } = this.state
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (isFormValid) {
+      this.props.save({
+        money: true,
+        amount: amount,
+        investorNationality: nationality,
+        regionOtherText: regionOtherText
+      })
+      this.props.onFill({
+        nextStep: InvesteeTokenType
+      })
+    }
   }
 }
 

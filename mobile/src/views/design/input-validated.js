@@ -5,6 +5,14 @@ import PropTypes from "prop-types"
 import Input from './input'
 
 class InputValidated extends Component {
+
+  getInputStatus = (shouldOverrideStatus, overrideStatusType, isError) => {
+    if (shouldOverrideStatus) {
+      return overrideStatusType;
+    }
+    return isError ? 'error' : 'ok'
+  }
+
   render () {
     return (
         <React.Fragment>
@@ -15,7 +23,8 @@ class InputValidated extends Component {
                  value={this.props.value}
                  labelText={this.props.labelText}
                  onChangeText={this.props.onChangeText}
-                 status={this.props.isError ? 'error' : 'ok'}>
+                 status={this.getInputStatus(this.props.overrideStatus, this.props.overrideStatusType, this.props.isError)}
+                 >
             {this.props.isError && (
               <Text style={styles.errorText}>{this.props.errorMessage}</Text>
             )}
@@ -43,7 +52,12 @@ InputValidated.propTypes = {
   labelText: PropTypes.string.isRequired,
   isError: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string.isRequired,
-  onChangeText: PropTypes.func.isRequired
+  onChangeText: PropTypes.func.isRequired,
+  // Used to override status props of Input component
+  // Useful when for example, validation of component should not happen immediately
+  overrideStatus: PropTypes.bool,
+  // Type of status that should be used when overrideStatus flag is flipped to true
+  overrideStatusType: PropTypes.oneOf(['regular', 'ok', 'warning', 'error'])
 }
 
 export default InputValidated;

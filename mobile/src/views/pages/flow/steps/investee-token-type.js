@@ -1,4 +1,4 @@
-import { View } from 'native-base'
+import { Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
@@ -20,15 +20,24 @@ class InvesteeTokenType extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      tokenType: this.props.tokenType
+      tokenType: this.props.tokenType,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.tokenType !== -1
     }
 
     this.state.isFormValid = this.isFormValid()
   }
 
   handleSubmit = () => {
-    this.props.saveInvestee({ tokenType: this.state.tokenType })
-    this.props.onFill({ nextStep: InvesteeProductStage })
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (this.state.isFormValid) {
+      this.props.saveInvestee({ tokenType: this.state.tokenType })
+      this.props.onFill({ nextStep: InvesteeProductStage })
+    }
   }
 
   handleChange = (index) => {
@@ -60,12 +69,19 @@ class InvesteeTokenType extends React.Component {
                 />
               )
             }) }
+            {this.state.showValidationError && this.state.tokenType === -1 && (
+                <View style={ { margin: 8 } }>
+                  <Text style={ { color: 'red', alignSelf: 'center' } }>
+                    {I18n.t('flow_page.investee.token_type.error_missing_token_type')}
+                  </Text>
+                </View>
+            )}
           </ScrollView>
         </View>
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={!this.state.isFormValid}
+            disabled={ this.state.showValidationError && !this.state.isFormValid}
             onPress={ this.handleSubmit }
           />
         </View>

@@ -380,6 +380,8 @@
       "remote": "Are you willing to work remote?",
       "role": {
         "about": "Tell us more about your skills, traits and knowledge",
+        "error_missing_role": "Please select role",
+        "error_other_role_missing_text": "Please enter role name",
         "other": "Other role",
         "not_looking_for_job": "I'm not looking for a job",
         "title": "Please select the role you're interested in:"
@@ -415,20 +417,25 @@
         "title": "Keywords"
       },
       "location": {
+        "error_missing_location": "Please select job location type",
         "title": "Job location"
       },
       "payment": {
+        "error_missing_payment": "Please select payment method",
         "title": "Type of payment"
       },
       "role": {
+        "error_missing_role": "Please select role",
         "title": "Select the role for this job listing"
       }
     },
     "funding_stage": {
+      "error_missing_funding_stage": "Please select stage of investment",
       "header": "At which stage of investment are you?",
       "title": "Funding stage"
     },
     "giveaway": {
+      "error_missing_giveaway": "Please select how investor is involved",
       "header": "Investor buys",
       "title": "How do you plan to involve your investor?"
     },
@@ -457,6 +464,7 @@
         "title": "Project location"
       },
       "token_type": {
+        "error_missing_token_type": "Please select token type",
         "header": "Token type",
         "title": "What is your project's token type?"
       }
@@ -506,6 +514,7 @@
     },
     "money": {
       "amount": "Money ($)",
+      "error_missing_investor_nationality": "Please select Investor Nationality",
       "nationality": "Investor nationality",
       "need_money": "Are you looking for money?",
       "not_looking_for_money": "We are not raising money",
@@ -513,6 +522,7 @@
       "title": "How much money are you planning to raise?"
     },
     "product_stage": {
+      "error_missing_product_stage": "Please select your product's stage",
       "header": "Product stage",
       "title": "What is your product's stage?"
     },

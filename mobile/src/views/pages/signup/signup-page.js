@@ -20,6 +20,8 @@ export class SignupPage extends React.Component {
     this.state = {
       email: '',
       password: '',
+      // used to stop validation until Sign Up button is hitted for the first time
+      showValidationError: false,
       isFormValid: false
     }
   }
@@ -54,10 +56,14 @@ export class SignupPage extends React.Component {
     if (this.state.isFormValid) {
       signup({ email, password })
     }
+    // after first time hitting Sign Up button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
   }
 
   render () {
-    const isEmailFieldError = !this.validateEmail(this.state.email) || this.props.isError
+    const isEmailFieldError = (!this.validateEmail(this.state.email) || this.props.isError) && this.state.showValidationError
     const emailErrorMessage = this.props.isError ? this.props.errorMessage : I18n.t('common.errors.incorrect_email')
     return (
       <SafeAreaView style={ { flex: 1, backgroundColor: '#FFFFFF' } } forceInset={ { top: 'always' } }>
@@ -71,6 +77,8 @@ export class SignupPage extends React.Component {
               <View style={ styles.inputContainer }>
                 <InputValidated value={ this.state.email }
                                 isError={ isEmailFieldError }
+                                overrideStatus={ !this.state.showValidationError }
+                                overrideStatusType={'regular'}
                                 errorMessage={ emailErrorMessage }
                                 keyboardType='email-address'
                                 labelText={ I18n.t('signup_page.email_placeholder').toUpperCase() }
@@ -80,7 +88,9 @@ export class SignupPage extends React.Component {
               <View style={ styles.inputContainer }>
                 <InputValidated value={ this.state.password }
                                 isSecure
-                                isError={ !this.validatePassword(this.state.password) }
+                                isError={ !this.validatePassword(this.state.password) && this.state.showValidationError }
+                                overrideStatus={ !this.state.showValidationError }
+                                overrideStatusType={'regular'}
                                 errorMessage={ I18n.t('common.errors.incorrect_password') }
                                 labelText={ I18n.t('signup_page.password_placeholder').toUpperCase() }
                                 placeholder='********'
@@ -91,7 +101,7 @@ export class SignupPage extends React.Component {
               </View>
               <View style={ styles.button }>
                 <BlackButton
-                  disabled={ !this.state.isFormValid }
+                  disabled={ this.state.showValidationError && !this.state.isFormValid }
                   text={ I18n.t('signup_page.button') }
                   onPress={ () => this.handleSubmit() }/>
               </View>

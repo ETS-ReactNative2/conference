@@ -5,7 +5,6 @@ import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { batchStoreEnhancer, batchMiddleware } from 'redux-batch-enhancer'
 
-import { globalActionsTypes } from '../../../src/global'
 import { SignupPage } from '../../../src/views/pages/signup/signup-page'
 import InputValidated from '../../../src/views/design/input-validated'
 import { BlackButton } from '../../../src/views/design/buttons'
@@ -40,12 +39,12 @@ describe('SignUpPage Component', () => {
     expect(wrapper).not.toBe(null)
   })
 
-  it('renders signup button as disabled by default', () => {
+  it('renders signup button as enabled by default', () => {
     const navigation = { navigate: jest.fn() }
     const wrapper = shallow(<SignupPage navigation={ navigation } store={store}/>)
     const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
-    expect(signUpButtonProps.disabled).toBeTruthy()
+    expect(signUpButtonProps.disabled).toBeFalsy()
   })
 
   it('signup button should not change navigation when button is disabled', () => {
@@ -67,25 +66,24 @@ describe('SignUpPage Component', () => {
     wrapper.update()
     const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
-    expect(signUpButtonProps.disabled).toBeTruthy()
-  })
-
-  it('renders signup button as disabled when phone number and password is correct but email is not', () => {
-    const navigation = { navigate: jest.fn() }
-    const wrapper = shallow(<SignupPage navigation={ navigation } store={store}/>)
-    // Set Email address
-    wrapper.find(InputValidated).first().props().onChangeText('test@.com')
-    // Set Password
-    wrapper.find(InputValidated).at(1).props().onChangeText('12345678')
+    signUpButtonProps.onPress()
     wrapper.update()
-    const signUpButton = wrapper.find(BlackButton).first()
-    const signUpButtonProps = signUpButton.props()
-    expect(signUpButtonProps.disabled).toBeTruthy()
+    const signUpButtonPropsAfterUpdate = wrapper.find(BlackButton).first().props()
+    expect(signUpButtonPropsAfterUpdate.disabled).toBeTruthy()
   })
 
   it('renders signup button as enabled when validation passes', () => {
+    const singupMock = jest.fn()
     const navigation = { navigate: jest.fn() }
-    const wrapper = shallow(<SignupPage navigation={ navigation } store={store}/>)
+    const wrapper = shallow(<SignupPage navigation={ navigation } signup={ singupMock } store={store}/>)
+    // Click SignUp Button for the first time to make validation fail and make button disabled
+    const signUpButtonBeforeValidation = wrapper.find(BlackButton).first()
+    const signUpButtonBeforeValidationProps = signUpButtonBeforeValidation.props()
+    signUpButtonBeforeValidationProps.onPress()
+    wrapper.update()
+    const signUpButtonAfterValidationProps = wrapper.find(BlackButton).first().props()
+    expect(signUpButtonAfterValidationProps.disabled).toBeTruthy()
+
     // Set Email address
     wrapper.find(InputValidated).first().props().onChangeText('test@test.com')
     // Set Password
@@ -93,7 +91,10 @@ describe('SignUpPage Component', () => {
     wrapper.update()
     const signUpButton = wrapper.find(BlackButton).first()
     const signUpButtonProps = signUpButton.props()
-    expect(signUpButtonProps.disabled).toBeFalsy()
+    signUpButtonProps.onPress()
+    wrapper.update()
+    const signUpButtonPropsAfterUpdateProps = wrapper.find(BlackButton).first().props()
+    expect(signUpButtonPropsAfterUpdateProps.disabled).toBeFalsy()
   })
 
   it('signup button should change navigation to FLOW_PAGE when button is enabled and pressed', () => {

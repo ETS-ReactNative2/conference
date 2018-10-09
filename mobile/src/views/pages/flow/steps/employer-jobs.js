@@ -1,4 +1,4 @@
-import { View } from 'native-base'
+import { Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
@@ -24,7 +24,10 @@ class EmployerJobs extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      employer: this.props.employer
+      employer: this.props.employer,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.employer.keywords !== ''
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -124,27 +127,33 @@ class EmployerJobs extends React.Component {
                 text={ I18n.t(`flow_page.employer.keyword.links`) }/>
               <View style={ { marginLeft: 8, marginRight: 8 } }>
                 <FlowInputValidated
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
                   floatingLabel
                   value={ this.state.employer.keywords }
                   labelText={ I18n.t('flow_page.employer.keyword.title') }
-                  isError={ !this.validateSkills(this.state.employer.keywords) }
+                  isError={ this.state.showValidationError && !this.validateSkills(this.state.employer.keywords) }
                   errorMessage={ I18n.t('flow_page.employee.skills.error') }
                   onChangeText={ (newValue) => this.handleFieldChange(newValue, 'keywords') }/>
                 <FlowInputValidated
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
                   floatingLabel
                   value={ this.state.employer.link }
                   labelText={ I18n.t('flow_page.employer.job.link') }
-                  isError={ !this.validateJobLink(this.state.employer.link,
+                  isError={ this.state.showValidationError && !this.validateJobLink(this.state.employer.link,
                     this.state.employer.description) }
                   errorMessage={ I18n.t('common.errors.incorrect_job_link') }
                   onChangeText={ (newValue) => this.handleFieldChange(newValue, 'link') }/>
                 <FlowInputValidated
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
                   floatingLabel
                   multiline={ true }
                   numberOfLines={ 5 }
                   value={ this.state.employer.description }
                   labelText={ I18n.t('flow_page.employer.job.description') }
-                  isError={ !this.validateJobDescription(this.state.employer.link,
+                  isError={ this.state.showValidationError && !this.validateJobDescription(this.state.employer.link,
                     this.state.employer.description) }
                   errorMessage={ I18n.t('common.errors.incorrect_job_description') }
                   onChangeText={ (newValue) => this.handleFieldChange(newValue, 'description') }/>
@@ -170,6 +179,13 @@ class EmployerJobs extends React.Component {
                   />
                 )
               }) }
+              { this.state.showValidationError && this.state.employer.payments.length === 0 && (
+                <View style={ { marginTop: 8 } }>
+                  <Text style={ { color: 'red', alignSelf: 'center' } }>
+                    {I18n.t('flow_page.employer.payment.error_missing_payment')}
+                  </Text>
+                </View>
+              )}
               <Subheader
                 color={ 'white' }
                 text={ I18n.t('flow_page.employer.location.title') }
@@ -184,7 +200,13 @@ class EmployerJobs extends React.Component {
                   />
                 )
               }) }
-
+              { this.state.showValidationError && this.state.employer.location.length === 0 && (
+                <View style={ { marginTop: 8 } }>
+                  <Text style={ { color: 'red', alignSelf: 'center' } }>
+                    {I18n.t('flow_page.employer.location.error_missing_location')}
+                  </Text>
+                </View>
+              )}
               { this.state.employer.location.includes(LOCAL_JOB) && (
                 <React.Fragment>
                   <CountrySelect
@@ -201,10 +223,12 @@ class EmployerJobs extends React.Component {
                   />
                   <View style={ { marginLeft: 8, marginRight: 8 } }>
                     <FlowInputValidated
+                      overrideStatus={ !this.state.showValidationError }
+                      overrideStatusType={'regular'}
                       floatingLabel
                       value={ this.state.employer.city }
                       labelText={ I18n.t('flow_page.employer.job.city') }
-                      isError={ !this.validateJobCity(this.state.employer.city) }
+                      isError={ this.state.showValidationError && !this.validateJobCity(this.state.employer.city) }
                       errorMessage={ I18n.t('common.errors.incorrect_job_city') }
                       onChangeText={ (newValue) => this.handleFieldChange(newValue, 'city') }/>
                   </View>
@@ -217,7 +241,7 @@ class EmployerJobs extends React.Component {
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={ !this.state.isFormValid }
+            disabled={ this.state.showValidationError && !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />
         </View>
@@ -232,8 +256,9 @@ class EmployerJobs extends React.Component {
 
   isFormValid = () => {
     const { employer } = this.state
-    const { link, description, payments, location, city } = employer
+    const { keywords, link, description, payments, location, city } = employer
     return this.validateJobLink(link, description)
+      && keywords.length > 0
       && payments.length > 0
       && location.length > 0
       && (location.includes(LOCAL_JOB) ? this.validateJobCity(city) : true)
@@ -241,12 +266,18 @@ class EmployerJobs extends React.Component {
 
   handleSubmit = () => {
     const { employer } = this.state
-    this.props.save({
-      ...employer
-    })
-    this.props.onFill({
-      done: true
-    })
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (this.state.isFormValid) {
+      this.props.save({
+        ...employer
+      })
+      this.props.onFill({
+        done: true
+      })
+    }
   }
 }
 
