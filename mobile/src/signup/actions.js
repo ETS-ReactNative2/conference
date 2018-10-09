@@ -14,7 +14,6 @@ import {
   PROPAGATE_PROJECT_PROFILE
 } from '../profile/action-types'
 import { deactivateProfile, fetchProfiles } from '../profile/actions'
-import { fetchConferenceSchedule } from '../schedule/actions'
 
 import {
   CLEAR as SEARCH_CLEAR,
@@ -25,7 +24,6 @@ import {
   PROPAGATE_PROJECT_DEFAULTS,
   PROPAGATE_PROJECT_SEARCH
 } from '../search/action-types'
-import { fetchDefaults } from '../search/actions'
 import { navigationService, storageService } from '../services'
 import {
   CLEAR as SIGNUP_CLEAR,
@@ -40,6 +38,11 @@ import {
   SAVE_PROFILE_INVESTEE,
   SIGN_UP_USER_ERROR
 } from './action-types'
+
+import { searchService, profileService, scheduleService } from '../services'
+import { fetchDefaultsSuccess } from '../search/actions'
+import { fetchProfilesSuccess } from '../profile/actions'
+import { fetchConferenceScheduleSuccess } from '../schedule/actions'
 
 const TOKEN_NAME = 'AUTH-TOKEN'
 
@@ -245,9 +248,14 @@ export const login = (username, password, redirectPage) => async dispatch => {
     await storageService.removeItem(TOKEN_NAME)
     await storageService.setItem(TOKEN_NAME, token)
     dispatch(loginInSuccess())
-    dispatch(fetchDefaults())
-    dispatch(fetchProfiles())
-    dispatch(fetchConferenceSchedule())
+    const [
+      [ searchDefaultsProject, searchDefaultsInvestor, searchDefaultsProfessional ],
+      [ profileInfoProject, profileInfoInvestor, profileInfoProfessional, profileInfoBasic ],
+      schedule 
+    ] = await Promise.all([searchService.fetchDefaults(), profileService.fetchProfileInfo(), scheduleService.fetchSchedule()])
+    dispatch(fetchDefaultsSuccess(searchDefaultsProject.data, searchDefaultsInvestor.data, searchDefaultsProfessional.data))
+    dispatch(fetchProfilesSuccess(profileInfoProject.data, profileInfoInvestor.data, profileInfoProfessional.data, profileInfoBasic.data))
+    dispatch(fetchConferenceScheduleSuccess(schedule))
     navigationService.navigate(redirectPage)
   } catch (err) {
     let errorData = {}
@@ -286,21 +294,16 @@ export function saveProfileOnboardingInfo (profileInfo, redirectPage) {
 }
 
 export const logout = () => async dispatch => {
-  try {
-    dispatch(globalActions.setGlobalLoading(I18n.t('common.spinner.logout')))
-    await storageService.removeItem(TOKEN_NAME)
-    await navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
-    dispatch(batchActions([
-      { type: SIGNUP_CLEAR },
-      { type: SEARCH_CLEAR },
-      { type: PROFILE_CLEAR },
-      { type: NOTIFICATION_CLEAR },
-      { type: FILTER_CLEAR },
-      globalActions.setGlobalLoading(I18n.t('common.spinner.clear'))
-    ]))
-  } catch (err) {
-
-  } finally {
-    dispatch(globalActions.unsetGlobalLoading())
-  }
+  dispatch(globalActions.setGlobalLoading(I18n.t('common.spinner.logout')))
+  await storageService.removeItem(TOKEN_NAME)
+  await navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
+  dispatch(batchActions([
+    { type: SIGNUP_CLEAR },
+    { type: SEARCH_CLEAR },
+    { type: PROFILE_CLEAR },
+    { type: NOTIFICATION_CLEAR },
+    { type: FILTER_CLEAR },
+    globalActions.setGlobalLoading(I18n.t('common.spinner.clear'))
+  ]))
+  dispatch(globalActions.unsetGlobalLoading())
 }

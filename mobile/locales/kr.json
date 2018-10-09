@@ -31,7 +31,6 @@
     "most": "나는 다음 사항에 대해 가장 잘 알고 있다:",
     "raising": "높이기",
     "년": "년",
-    "년": "년",
     "part_time": "파트 타임",
     "payments": "지불"
   },
@@ -135,7 +134,8 @@
       "resource_not_found": "항목을 이용할 수 없습니다. 새로고침 해보세요.e, please refresh",
       "general": "문제가 발생했습니다. 팀에 문의주세요.g, please contact us",
       "server_error": "문제가 발생했습니다. 다시 시도해보거나 팀에 문의주세요.s, please try again or contact us",
-      "incorrect_url": "해당 URL에 연결할 수 없습니다."
+      "incorrect_url": "해당 URL에 연결할 수 없습니다.",
+      "unauthorized": "Please log in again"
     },
     "facebook": "페이스북",
     "facebook_url": "페이스북 – https://www.facebook.com/…",

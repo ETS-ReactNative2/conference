@@ -190,7 +190,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     uploadProfile: () => dispatch(signUpActions.uploadProfile()),
-    fetchProfiles: () => dispatch(profileActions.fetchProfiles()),
     startLoading: () => dispatch(batchActions([ globalActions.hideAlert(),
     globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
     showAlertMessage: errMessage => dispatch(globalActions.showAlertError(errMessage)),

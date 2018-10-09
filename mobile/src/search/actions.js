@@ -3,6 +3,7 @@ import { batchActions } from 'redux-batch-enhancer'
 import * as api from '../api/api'
 import { getErrorDataFromNetworkException } from '../common/utils'
 import * as globalActions from '../global/actions'
+import { searchService } from '../services'
 import {
   LOAD_DEFAULT_PROFILES,
   LOAD_DEFAULT_PROFILES_ERROR,
@@ -14,60 +15,24 @@ import {
   SEARCH_RESULTS_QUERY_END
 } from './action-types'
 
-export function fetchMatches () {
-  return async (dispatch, getState) => {
-    try {
-      dispatch({ type: LOAD_PROFILES })
-      const [
-        projectResponse,
-        investorResponse,
-        professionalResponse,
-        jobsResponse
-      ] = await Promise.all([
-        api.fetchProjects(getState().filter.project),
-        api.fetchInvestors(getState().filter.investor),
-        api.fetchProfessionals(getState().filter.professional),
-        api.fetchJobs(getState().filter.job)
-      ])
-      dispatch({
-        type: LOAD_PROFILES_SUCCESS,
-        data: {
-          projects: projectResponse.data,
-          investors: investorResponse.data,
-          professionals: professionalResponse.data,
-          jobs: jobsResponse.data
-        }
-      })
-    } catch (err) {
-      const errorData = getErrorDataFromNetworkException(err)
-      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROFILES_ERROR }]))
-    }
+export const fetchMatchesSuccess = (projects, investors, professionals, jobs) => ({
+  type: LOAD_PROFILES_SUCCESS,
+  data: {
+    projects,
+    investors,
+    professionals,
+    jobs
   }
-}
+})
 
-export function fetchDefaults () {
-  return async dispatch => {
-    try {
-      dispatch({ type: LOAD_DEFAULT_PROFILES })
-      const [ projectResponse, investorResponse, professionalResponse ] = await Promise.all([
-        api.fetchProjects({ defaults: true }),
-        api.fetchInvestors({ defaults: true }),
-        api.getProfessionals({ default: true })
-      ])
-      dispatch({
-        type: LOAD_DEFAULT_PROFILES_SUCCESS,
-        data: {
-          projects: projectResponse.data,
-          investors: investorResponse.data,
-          professionals: professionalResponse.data
-        }
-      })
-    } catch (err) {
-      const errorData = getErrorDataFromNetworkException(err)
-      dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_DEFAULT_PROFILES_ERROR }]))
-    }
+export const fetchDefaultsSuccess = (projects, investors, professionals) => ({
+  type: LOAD_DEFAULT_PROFILES_SUCCESS,
+  data: {
+    projects,
+    investors,
+    professionals
   }
-}
+})
 
 const startSearchResultsQueryLoading = () => ({
   type: SEARCH_RESULTS_QUERY_START
@@ -121,7 +86,7 @@ export function updateProfessionals (filters) {
   return async dispatch => {
     try {
       dispatch(startSearchResultsQueryLoading())
-      const { data } = await api.getProfessionals(decamelizeKeys(filters))
+      const { data } = await api.fetchProfessionals(decamelizeKeys(filters))
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
         data: {

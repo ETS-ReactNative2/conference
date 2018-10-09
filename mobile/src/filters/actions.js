@@ -10,7 +10,7 @@ import {
   LOAD_MATCH_FILTERS_SUCCESS,
   LOAD_MATCH_FILTERS_ERROR
 } from './action-types'
-import * as api from '../api/api'
+import { filtersService } from '../services'
 
 export const setInvestorFilter = filters => ({
   type: SET_INVESTOR_FILTERS,
@@ -32,25 +32,22 @@ export const setProfessionalFilter = filters => ({
   data: filters
 })
 
+export const fetchFiltersSuccess = (projectsFilter, investorsFilter, professionalsFilter, jobsFilter) => ({
+  type: LOAD_MATCH_FILTERS_SUCCESS,
+  data: {
+    project: projectsFilter,
+    investor: investorsFilter,
+    professional: professionalsFilter,
+    job: jobsFilter
+  }
+})
+
 export function fetchFilters () {
   return async dispatch => {
     try {
       dispatch({ type: LOAD_MATCH_FILTERS })
-      const [ investorResponse, projectResponse, professionalResponse, jobResponse ] = await Promise.all([
-        api.fetchInvestorFilter(),
-        api.fetchProjectFilter(),
-        api.fetchProfessionalFilter(),
-        api.fetchJobsFilter(),
-      ])
-      dispatch({
-        type: LOAD_MATCH_FILTERS_SUCCESS,
-        data: {
-          project: projectResponse.data,
-          investor: investorResponse.data,
-          professional: professionalResponse.data,
-          jobResponse: jobResponse.data
-        }
-      })
+      const [ investorResponse, projectResponse, professionalResponse, jobResponse ] = await filtersService.fetchFilters()
+      dispatch(fetchFiltersSuccess(projectResponse.data, investorResponse.data, professionalResponse.data, jobResponse.data))
     } catch (err) {
       const errorData = getErrorDataFromNetworkException(err)
       dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_MATCH_FILTERS_ERROR }]))

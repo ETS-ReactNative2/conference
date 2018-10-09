@@ -210,7 +210,6 @@ const styles = EStyleSheet.create({
 })
 
 AgendaPage.propTypes = {
-  fetchConferenceAgenda: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired
 }
@@ -223,10 +222,4 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchConferenceAgenda: () => dispatch(scheduleActions.fetchConferenceSchedule())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AgendaPage)
+export default connect(mapStateToProps, null)(AgendaPage)

@@ -275,8 +275,7 @@ const styles = EStyleSheet.create({
 })
 
 ProfilePage.propTypes = {
-  logout: PropTypes.func.isRequired,
-  fetchProfiles: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -291,7 +290,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     logout: () => dispatch(signUpActions.logout()),
-    fetchProfiles: () => dispatch(profileActions.fetchProfiles()),
     deactivateProfile: () => dispatch(profileActions.deactivateProfile()),
     deactivateInvestor: () => dispatch(profileActions.deactivateInvestor()),
     leaveProject: () => dispatch(profileActions.leaveProject()),

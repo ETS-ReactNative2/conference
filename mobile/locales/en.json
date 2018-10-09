@@ -145,7 +145,8 @@
       "resource_not_found": "Item is not available anymore, please refresh",
       "general": "Something went wrong, please contact us",
       "server_error": "We have some issues, please try again or contact us",
-      "incorrect_url": "Cannot open this URL"
+      "incorrect_url": "Cannot open this URL",
+      "unauthorized": "Please log in again"
     },
     "facebook": "Facebook",
     "no_facebook": "No Facebook",

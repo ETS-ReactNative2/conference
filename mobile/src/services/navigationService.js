@@ -11,10 +11,12 @@ export const dispatch = (action) => {
 }
 
 export const navigate = (routeName, params) => {
-  _navigator.dispatch(
-    NavigationActions.navigate({
-      routeName,
-      params,
-    })
-  )
+  if (_navigator) {
+    _navigator.dispatch(
+      NavigationActions.navigate({
+        routeName,
+        params,
+      })
+    )
+  }
 }

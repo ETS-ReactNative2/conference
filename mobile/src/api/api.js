@@ -360,17 +360,6 @@ export async function deleteMyProjectMembersId ({ id }) {
   })
 }
 
-export async function getProfessionals (filters) {
-  const token = await storageService.getItem(TOKEN_NAME)
-  return axios.get('/api/professionals/', {
-    params: filters,
-    paramsSerializer: params => transformRequestOptions(params),
-    headers: {
-      'X-Authorization': `Bearer ${token}`
-    }
-  })
-}
-
 export async function fetchNotifications () {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

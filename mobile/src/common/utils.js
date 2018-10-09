@@ -12,6 +12,7 @@ const getErrorDataFromNetworkException = err => {
     errorMessage = I18n.t('common.errors.no_internet_connection')
   } else {
     const isInternalServerError = err.response.status >= 500
+    const isUnauthorizedError = err.response.status === 401
     const isInvalidRequestError = err.response.status === 400
     const isNotFoundResourceError = err.response.status === 404
     const errorCode = err.response.data
@@ -21,6 +22,8 @@ const getErrorDataFromNetworkException = err => {
       errorMessage = I18n.t('common.errors.incorrect_request')
     } else if (isNotFoundResourceError) {
       errorMessage = I18n.t('common.errors.resource_not_found')
+    } else if (isUnauthorizedError) {
+      errorMessage = I18n.t('common.errors.unauthorized')
     } else if (errorCode) {
       errorMessage = I18n.t(`common.errors.${errorCode}`)
       isFieldError = true
@@ -34,13 +37,4 @@ const getErrorDataFromNetworkException = err => {
   }
 }
 
-const isInternetAvailable = async () => {
-  try {
-    const response = await fetch('https://www.google.com')
-    return response.status === 200
-  } catch (err) {
-    return !isNetworkUnavailable(err)
-  }
-}
-
-export { isInternetAvailable, isNetworkUnavailable, getErrorDataFromNetworkException }
+export { isNetworkUnavailable, getErrorDataFromNetworkException }

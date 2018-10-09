@@ -1,15 +1,15 @@
 import SplashScreen from "react-native-splash-screen"
 import { StackActions, NavigationActions } from 'react-navigation'
-import I18n from '../../locales/i18n'
 import { PAGES_NAMES } from '../navigation'
-import { fetchProfiles } from '../profile/actions'
-import { fetchConferenceSchedule } from '../schedule/actions'
-import { fetchDefaults, fetchMatches } from '../search/actions'
-import { fetchFilters } from '../filters/actions'
 import { globalActions } from '../global'
 import { navigationService, storageService } from '../services'
 import { APP_LOADED } from './action-types'
-import { isInternetAvailable } from '../common/utils'
+import { getErrorDataFromNetworkException } from '../common/utils'
+import { searchService, profileService, filtersService, scheduleService } from '../services'
+import { fetchDefaultsSuccess, fetchMatchesSuccess } from '../search/actions'
+import { fetchProfilesSuccess } from '../profile/actions'
+import { fetchFiltersSuccess } from '../filters/actions'
+import { fetchConferenceScheduleSuccess } from '../schedule/actions'
 
 const TOKEN_NAME = 'AUTH-TOKEN'
 
@@ -17,28 +17,34 @@ const appFinishedLoading = () => ({
   type: APP_LOADED
 })
 
-export const loadApp = () => async dispatch => {
+export const loadApp = () => async (dispatch, getState) => {
   let userLandingPage = ''
   try {
     const persistedToken = await storageService.getItem(TOKEN_NAME)
-    const isNetworkOn = await isInternetAvailable()
-    if (persistedToken && isNetworkOn) {
+    if (persistedToken) {
+      const [
+              [ searchDefaultsProject, searchDefaultsInvestor, searchDefaultsProfessional ],
+              [ profileInfoProject, profileInfoInvestor, profileInfoProfessional, profileInfoBasic ],
+              [ searchMatchesProject, searchMatchesInvestor, searchMatchesProfessional, searchMatchesJobs ],
+              [ filtersInvestor, filtersProject, filtersProfessional, filtersJob ],
+              schedule 
+            ] = await Promise.all([searchService.fetchDefaults(), profileService.fetchProfileInfo(),
+                                   searchService.fetchMatches(getState().filter.project, getState().filter.investor, getState().filter.professional, getState().filter.job),
+                                   filtersService.fetchFilters(), scheduleService.fetchSchedule()])
+      dispatch(fetchDefaultsSuccess(searchDefaultsProject.data, searchDefaultsInvestor.data, searchDefaultsProfessional.data))
+      dispatch(fetchProfilesSuccess(profileInfoProject.data, profileInfoInvestor.data, profileInfoProfessional.data, profileInfoBasic.data))
+      dispatch(fetchMatchesSuccess(searchMatchesProject.data, searchMatchesInvestor.data, searchMatchesProfessional.data, searchMatchesJobs.data))
+      dispatch(fetchFiltersSuccess(filtersProject.data, filtersInvestor.data, filtersProfessional.data, filtersJob.data))
+      dispatch(fetchConferenceScheduleSuccess(schedule))
       userLandingPage = PAGES_NAMES.HOME_PAGE
-      Promise.all([
-        dispatch(fetchDefaults()),
-        dispatch(fetchProfiles()),
-        dispatch(fetchFilters()),
-        dispatch(fetchConferenceSchedule())
-      ])
     } else {
       userLandingPage = PAGES_NAMES.WELCOME_PAGE
-    }
-    if (!isNetworkOn) {
-      dispatch(globalActions.showAlertError(I18n.t('common.errors.no_internet_connection')))
     }
   } catch (err) {
     userLandingPage = PAGES_NAMES.WELCOME_PAGE
     await storageService.removeItem(TOKEN_NAME)
+    const errorData = getErrorDataFromNetworkException(err);
+    dispatch(globalActions.showAlertError(errorData.errorMessage))
   } finally {
     const resetAction = StackActions.reset({
       index: 0,
