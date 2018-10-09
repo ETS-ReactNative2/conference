@@ -1,5 +1,6 @@
 import { Body, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
 import React from 'react'
+import { connect } from 'react-redux'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { FlowButton } from '../../design/buttons';
@@ -12,6 +13,7 @@ import {
   TOKEN_TYPES
 } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
+import * as searchActions from '../../../search/actions'
 import { NavigationHeader } from '../../components/header/header'
 import { ImagePageContainer } from '../../design/image-page-container'
 
@@ -28,6 +30,7 @@ class ProjectMainFilter extends React.Component {
 
   handleSubmit = () => {
     const { goBack } = this.props.navigation
+    this.props.updateProjects(this.props.filters)
     goBack()
   }
 
@@ -144,4 +147,16 @@ const styles = EStyleSheet.create({
   }
 })
 
-export default ProjectMainFilter
+const mapStateToProps = state => {
+  return {
+    filters: state.filter.project
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateProjects: filters => dispatch(searchActions.updateProjects(filters))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectMainFilter)

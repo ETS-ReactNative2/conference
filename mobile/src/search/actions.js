@@ -9,7 +9,9 @@ import {
   LOAD_DEFAULT_PROFILES_SUCCESS,
   LOAD_PROFILES,
   LOAD_PROFILES_ERROR,
-  LOAD_PROFILES_SUCCESS
+  LOAD_PROFILES_SUCCESS,
+  SEARCH_RESULTS_QUERY_START,
+  SEARCH_RESULTS_QUERY_END
 } from './action-types'
 
 export function fetchMatches () {
@@ -67,9 +69,18 @@ export function fetchDefaults () {
   }
 }
 
+const startSearchResultsQueryLoading = () => ({
+  type: SEARCH_RESULTS_QUERY_START
+})
+
+const finishSearchResultsQueryLoading = () => ({
+  type: SEARCH_RESULTS_QUERY_END
+})
+
 export function updateJobs (filters) {
   return async dispatch => {
     try {
+      dispatch(startSearchResultsQueryLoading())
       const { data } = await api.fetchJobs(decamelizeKeys(filters))
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
@@ -80,6 +91,8 @@ export function updateJobs (filters) {
     } catch (err) {
       const errorData = getErrorDataFromNetworkException(err)
       dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROFILES_ERROR }]))
+    } finally {
+      dispatch(finishSearchResultsQueryLoading())
     }
   }
 }
@@ -87,6 +100,7 @@ export function updateJobs (filters) {
 export function updateInvestors (filters) {
   return async dispatch => {
     try {
+      dispatch(startSearchResultsQueryLoading())
       const { data } = await api.fetchInvestors(decamelizeKeys(filters))
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
@@ -97,6 +111,8 @@ export function updateInvestors (filters) {
     } catch (err) {
       const errorData = getErrorDataFromNetworkException(err)
       dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROFILES_ERROR }]))
+    } finally {
+      dispatch(finishSearchResultsQueryLoading())
     }
   }
 }
@@ -104,6 +120,7 @@ export function updateInvestors (filters) {
 export function updateProfessionals (filters) {
   return async dispatch => {
     try {
+      dispatch(startSearchResultsQueryLoading())
       const { data } = await api.getProfessionals(decamelizeKeys(filters))
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
@@ -114,6 +131,8 @@ export function updateProfessionals (filters) {
     } catch (err) {
       const errorData = getErrorDataFromNetworkException(err)
       dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROFILES_ERROR }]))
+    } finally {
+      dispatch(finishSearchResultsQueryLoading())
     }
   }
 }
@@ -121,6 +140,7 @@ export function updateProfessionals (filters) {
 export function updateProjects (filters) {
   return async dispatch => {
     try {
+      dispatch(startSearchResultsQueryLoading())
       const { data } = await api.fetchProjects(decamelizeKeys(filters))
       dispatch({
         type: LOAD_PROFILES_SUCCESS,
@@ -131,6 +151,8 @@ export function updateProjects (filters) {
     } catch (err) {
       const errorData = getErrorDataFromNetworkException(err)
       dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROFILES_ERROR }]))
+    } finally {
+      dispatch(finishSearchResultsQueryLoading())
     }
   }
 }

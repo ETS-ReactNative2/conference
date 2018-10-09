@@ -1,5 +1,6 @@
 import { Body, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
 import React from 'react'
+import { connect } from 'react-redux'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
@@ -14,6 +15,7 @@ import {
   TOKEN_TYPES
 } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
+import * as searchActions from '../../../search/actions'
 import { NavigationHeader } from '../../components/header/header'
 import { ImagePageContainer } from '../../design/image-page-container'
 
@@ -29,6 +31,7 @@ class InvestorMainFilter extends React.Component {
 
   handleSubmit = () => {
     const { goBack } = this.props.navigation
+    this.props.updateInvestors(this.props.filters)
     goBack()
   }
 
@@ -146,4 +149,16 @@ const styles = EStyleSheet.create({
   }
 })
 
-export default InvestorMainFilter
+const mapStateToProps = state => {
+  return {
+    filters: state.filter.investor
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateInvestors: filters => dispatch(searchActions.updateInvestors(filters))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvestorMainFilter)

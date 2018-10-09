@@ -1,5 +1,4 @@
 import { ScrollableTab, Tab, Tabs } from 'native-base'
-import PropTypes from 'prop-types'
 import React from 'react'
 import { View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -7,7 +6,6 @@ import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { PAGES_NAMES } from '../../../navigation'
-import { searchActions } from '../../../search'
 import Header from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
@@ -15,20 +13,23 @@ import InvestorsList from './components/investors-list'
 import JobList from './components/job-list'
 import ProfessionalsList from './components/professionals-list'
 import ProjectsList from './components/projects-list'
+import * as searchActions from '../../../search/actions'
 
 class SearchPage extends React.Component {
-
-  componentDidMount () {
-    this.props.fetchMatches()
-  }
 
   constructor (props) {
     super(props)
     this.state = {
       currentTab: 0,
-      investorModal: false,
-      projectModal: false
+      areProfessionalsLoaded: false,
+      areProjectsLoaded: false,
+      areJobsLoaded: false
     }
+  }
+
+  componentDidMount() {
+    // first tab is always investors so load them when component is mounted
+    this.props.updateInvestors(this.props.investorsSearchFilters)
   }
 
   handleInvestorClick = investor => {
@@ -53,28 +54,27 @@ class SearchPage extends React.Component {
     // this.props.navigation.navigate(PAGES_NAMES.JOB_PAGE)
   }
 
-  onTabChange = ({ from, i }) => {
-    this.setState({
-      currentTab: i
-    })
+  onTabChange = ({ i }) => {
+    if (this.state.currentTab !== i) {
+      if (i === 1 && !this.state.areProfessionalsLoaded) {
+        this.props.updateProfessionals(this.props.professionalsSearchFilters)
+        this.setState({ currentTab: i, areProfessionalsLoaded: true })
+      }
+      if (i === 2 && !this.state.areProjectsLoaded) {
+        this.props.updateProjects(this.props.projectsSearchFilters)
+        this.setState({ currentTab: i, areProjectsLoaded: true })
+      }
+      if (i === 3 && !this.state.areJobsLoaded) {
+        this.props.updateJobs(this.props.jobsSearchFilters)
+        this.setState({ currentTab: i, areJobsLoaded: true })
+      }
+    }
   }
 
   render () {
     const {
-      isLoading, error, fetchMatches
+      isLoading
     } = this.props
-
-    if (isLoading) {
-      return (
-        <ImagePageContainer>
-          <View style={ { flex: 1 } }>
-            <View style={ styles.content }>
-              <LunaSpinner/>
-            </View>
-          </View>
-        </ImagePageContainer>
-      )
-    }
 
     return (
       <ImagePageContainer>
@@ -96,7 +96,8 @@ class SearchPage extends React.Component {
                 activeTabStyle={styles.activeTabStyle}
                 tabStyle={styles.tabStyle}
                 heading={ I18n.t('search_page.tab_label_investor') }>
-                <InvestorsList onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/>
+                { isLoading === true && <LunaSpinner /> }
+                { isLoading === false && <InvestorsList profiles={ this.props.investors } onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/> }
               </Tab>
               <Tab
                 style={ { backgroundColor: 'transparent' } }
@@ -105,8 +106,9 @@ class SearchPage extends React.Component {
                 activeTabStyle={styles.activeTabStyle}
                 tabStyle={styles.tabStyle}
                 heading={ I18n.t('search_page.tab_label_professional') }>
-                <ProfessionalsList style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick }
-                                    navigation={ this.props.navigation }/>
+                { isLoading === true && <LunaSpinner /> }
+                { isLoading === false && <ProfessionalsList profiles={ this.props.professionals } style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick }
+                  navigation={ this.props.navigation }/> }
               </Tab>
               <Tab
                 style={ { backgroundColor: 'transparent' } }
@@ -115,8 +117,9 @@ class SearchPage extends React.Component {
                 activeTabStyle={styles.activeTabStyle}
                 tabStyle={styles.tabStyle}
                 heading={ I18n.t('search_page.tab_label_projects') }>
-                <ProjectsList style={ { marginTop: 8 } } onClick={ this.handleProjectClick }
-                              navigation={ this.props.navigation }/>
+                { isLoading === true && <LunaSpinner /> }
+                { isLoading === false && <ProjectsList profiles={ this.props.projects } style={ { marginTop: 8 } } onClick={ this.handleProjectClick }
+                  navigation={ this.props.navigation }/> }
               </Tab>
               <Tab
                 style={ { backgroundColor: 'transparent' } }
@@ -125,9 +128,10 @@ class SearchPage extends React.Component {
                 activeTabStyle={styles.activeTabStyle}
                 tabStyle={styles.tabStyle}
                 heading={ I18n.t('search_page.tab_label_job') }>
-                <JobList style={ { marginTop: 8 } }
+                { isLoading === true && <LunaSpinner /> }
+                { isLoading === false && <JobList jobs={ this.props.jobs } style={ { marginTop: 8 } }
                           onClick={ this.handleJobClick }
-                          navigation={ this.props.navigation }/>
+                          navigation={ this.props.navigation }/> }
               </Tab>
             </Tabs>
           </View>
@@ -160,27 +164,26 @@ const styles = EStyleSheet.create({
   }
 })
 
-SearchPage.propTypes = {
-  fetchMatches: PropTypes.func.isRequired
-}
-
 const mapStateToProps = state => {
   return {
+    investorsSearchFilters: state.filter.investor,
+    professionalsSearchFilters: state.filter.professional,
+    projectsSearchFilters: state.filter.project,
+    jobsSearchFilters: state.filter.job,
     projects: state.search.projects,
     professionals: state.search.professionals,
     investors: state.search.investors,
-    isLoading: state.search.isLoading,
-    error: state.search.error
+    jobs: state.search.jobs,
+    isLoading: state.search.isLoadingSearchQuery
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchMatches: () => dispatch(searchActions.fetchMatches()),
-    // TODO
-    updateInvestors: () => dispatch(searchActions.fetchMatches()),
-    updateProfessionals: () => dispatch(searchActions.fetchMatches()),
-    updateProjects: () => dispatch(searchActions.fetchMatches())
+    updateInvestors: filters => dispatch(searchActions.updateInvestors(filters)),
+    updateProfessionals: filters => dispatch(searchActions.updateProfessionals(filters)),
+    updateProjects: filters => dispatch(searchActions.updateProjects(filters)),
+    updateJobs: filters => dispatch(searchActions.updateJobs(filters))
   }
 }
 

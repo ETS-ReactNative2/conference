@@ -1,5 +1,6 @@
 import { Body, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
 import React from 'react'
+import { connect } from 'react-redux'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { FlowButton } from '../../design/buttons';
@@ -7,6 +8,7 @@ import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { ROLES } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
+import * as searchActions from '../../../search/actions'
 import { NavigationHeader } from '../../components/header/header'
 import { ImagePageContainer } from '../../design/image-page-container'
 
@@ -22,6 +24,7 @@ class JobMainFilter extends React.Component {
 
   handleSubmit = () => {
     const { goBack } = this.props.navigation
+    this.props.updateJobs(this.props.filters)
     goBack()
   }
 
@@ -134,4 +137,16 @@ const styles = EStyleSheet.create({
   }
 })
 
-export default JobMainFilter
+const mapStateToProps = state => {
+  return {
+    filters: state.filter.job
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateJobs: filters => dispatch(searchActions.updateJobs(filters))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(JobMainFilter)
