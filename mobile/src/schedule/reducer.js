@@ -24,8 +24,7 @@ export function scheduleReducer (state = initialState, action) {
     case LOAD_SCHEDULE_ERROR:
       return {
         ...state,
-        isLoading: false,
-        error: true
+        isLoading: false
       }
     default:
       return state;
