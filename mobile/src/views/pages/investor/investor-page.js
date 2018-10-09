@@ -69,6 +69,7 @@ class InvestorPage extends Component {
                     data={ showSingle ? [ this.props.navigation.getParam('investor', {}) ] : this.investors }
                     initialNumToRender={50}
                     renderItem={ this._renderItem }
+                    firstItem={ this.state.currentIndex }
                     sliderWidth={ sliderWidth }
                     itemWidth={ itemWidth }
                   />

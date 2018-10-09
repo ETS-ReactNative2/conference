@@ -145,7 +145,8 @@ class Medium extends React.PureComponent {
             </View>
             <View style={ medium.infoContainer }>
               <View style={ [ styles.inline, medium.details ] }>
-                <Text style={ medium.title }>{ `${firstName} ${lastName}` }</Text>
+                <Text style={ [ medium.title, { flex: 1 } ] } ellipsizeMode={ 'tail' }
+                      numberOfLines={ 1 }>{ `${firstName} ${lastName}` }</Text>
                 { country ?
                   <Flag style={ medium.flag } code={ country }/> :
                   null
@@ -159,6 +160,7 @@ class Medium extends React.PureComponent {
                       'common.roles.other') }</Text> :
                     <Text
                       style={ medium.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+
                 }
                 <Text
                   ellipsizeMode={ 'tail' } numberOfLines={ 1 }

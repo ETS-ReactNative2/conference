@@ -1,21 +1,16 @@
 import { Body, Icon, Left, List, ListItem, Right, Text, View } from 'native-base'
 import React from 'react'
-import { connect } from 'react-redux'
 import { ScrollView } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
-import { FlowButton } from '../../design/buttons';
+import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
-import {
-  FUNDING_STAGES,
-  GIVEAWAY_TYPES,
-  PRODUCT_STAGES,
-  TOKEN_TYPES
-} from '../../../enums'
+import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TOKEN_TYPES } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import * as searchActions from '../../../search/actions'
 import { NavigationHeader } from '../../components/header/header'
+import { FlowButton } from '../../design/buttons'
 import { ImagePageContainer } from '../../design/image-page-container'
+import { filters as styles } from './styles'
 
 class ProjectMainFilter extends React.Component {
   handleFilterItemClick = (filterSetting) => {
@@ -63,7 +58,8 @@ class ProjectMainFilter extends React.Component {
                 <ListItem thumbnail key={ index } style={ styles.investorFilterItem }
                           onPress={ () => this.handleFilterItemClick(filterSetting) }>
                   <Left>
-                    <Text style={ styles.Text }>{ I18n.t(`filter_page.type.${filterSetting.key === 'regions' ? 'country' : filterSetting.key }`) }</Text>
+                    <Text
+                      style={ styles.Text }>{ I18n.t(`filter_page.type.${filterSetting.key === 'regions' ? 'country' : filterSetting.key }`) }</Text>
                   </Left>
                   <Body style={ styles.nonBorder }>
                   </Body>
@@ -86,66 +82,6 @@ class ProjectMainFilter extends React.Component {
     )
   }
 }
-
-const styles = EStyleSheet.create({
-  container: {
-    width: '100%',
-    paddingTop: 20
-  },
-  filterList: {
-    width: '100%',
-    flex: 1,
-    paddingLeft: 5,
-    paddingRight: 5
-  },
-  investorFilterItem: {
-    width: '100%',
-    height: 90,
-    borderBottomColor: '#fff',
-    borderBottomWidth: 1,
-    marginLeft: 0,
-    paddingLeft: 15,
-  },
-  Text: {
-    color: '#fff',
-    fontSize: 14
-  },
-  nonBorder: {
-    borderBottomWidth: 0
-  },
-  headerText: {
-    width: 280,
-    fontSize: 18,
-    color: '#fff',
-    textAlign: 'center'
-  },
-  header: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10,
-    marginBottom: 20
-  },
-  saveButtonContainer: {
-    width: '100%',
-    paddingLeft: 5,
-    paddingRight: 5,
-    paddingBottom: 5
-  },
-  saveButton: {
-    width: '100%',
-    height: 72,
-    backgroundColor: '#fff',
-    borderRadius: 0
-  },
-  buttonCaption: {
-    width: '100%',
-    textAlign: 'center',
-    fontSize: 14,
-    fontFamily: 'Helvetica',
-    color: 'black'
-  }
-})
 
 const mapStateToProps = state => {
   return {

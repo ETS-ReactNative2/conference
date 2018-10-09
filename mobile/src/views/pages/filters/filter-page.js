@@ -22,7 +22,6 @@ class FilterPage extends Component {
     const filterSetting = this.props.navigation.getParam('filterSetting', {})
     const filterField = this.props.navigation.getParam('filterField', {})
 
-    // const filters = filterField === 'investor' ? investorFilters : projectFilters
     let filters
     switch (filterField) {
       case 'investor':
@@ -46,11 +45,10 @@ class FilterPage extends Component {
     this.filterSetting = filterSetting
   }
 
-  handleSubmit = (event, values) => {
+  handleSubmit = () => {
     const { navigation: { goBack }, setInvestorFilter, setProjectFilter, setJobFilter, setProfessionalFilter } = this.props
     const filterField = this.props.navigation.getParam('filterField', {})
     const { checkeds } = this.state
-    // const setFilter = filterField === 'investor' ? setInvestorFilter : setProjectFilter
     let setFilter
     switch (filterField) {
       case 'investor':

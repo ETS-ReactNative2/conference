@@ -12,6 +12,7 @@ import * as scheduleActions from '../../../schedule/actions'
 import { MapHeader } from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
+import { layout } from '../../styles/common'
 import { ConferenceEvent } from './components/conference-event'
 import { DateTab } from './components/date-tab'
 
@@ -112,8 +113,8 @@ class AgendaPage extends Component {
     if (isLoading) {
       return (
         <ImagePageContainer>
-          <View style={ { flex: 1 } }>
-            <View style={ styles.content }>
+          <View style={ layout.stretched }>
+            <View style={ layout.content }>
               <LunaSpinner/>
             </View>
           </View>
@@ -129,7 +130,7 @@ class AgendaPage extends Component {
     return (
       <ImagePageContainer>
         <Modal visible={ showingImages } transparent onRequestClose={ this.hideModal }>
-          <View style={ { flex: 1 } }>
+          <View style={ layout.stretched }>
             <Gallery
               style={ { flex: 1, backgroundColor: 'black' } }
               images={ secondImagesConfig }
@@ -139,7 +140,7 @@ class AgendaPage extends Component {
             { this.imageCaption() }
           </View>
         </Modal>
-        <View style={ { flex: 1 } }>
+        <View style={ layout.stretched }>
           <View style={ styles.content }>
             <View style={ { backgroundColor: 'transparent' } }>
               <MapHeader
@@ -175,10 +176,6 @@ class AgendaPage extends Component {
 }
 
 const styles = EStyleSheet.create({
-  content: {
-    flex: 1,
-    paddingBottom: 49
-  },
   tabContainer: {
     flexDirection: 'row',
     justifyContent: 'center',

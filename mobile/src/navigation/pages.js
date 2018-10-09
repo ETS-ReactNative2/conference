@@ -24,7 +24,7 @@ import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-pa
 import ProfessionalMainFilterPage from '../views/pages/filters/professional-main-filter-page'
 import JobMainFilterPage from '../views/pages/filters/job-main-filter-page'
 import FlowPage from '../views/pages/flow/flow-page'
-import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/flow/steps/common-profile-onboarding'
+import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/onboarding/common-profile-onboarding'
 import { ProjectFlowFinishedPage, InvestorFlowFinishedPage } from '../views/pages/flow/steps/common-flow-finished-page'
 import HomePage from '../views/pages/home/home-page'
 import InvestorPage from '../views/pages/investor/investor-page'

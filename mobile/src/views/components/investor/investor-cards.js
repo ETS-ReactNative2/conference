@@ -44,7 +44,7 @@ class Small extends React.PureComponent {
 
     return (
       <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
-        <View style={ styles.card }>
+        <View style={ [ styles.card, { width: 200 } ] }>
           <View style={ small.avatarContainer }>
             { hasAvatar ?
               <Image style={ small.avatar } source={ avatar }/> :
@@ -56,7 +56,8 @@ class Small extends React.PureComponent {
           <View style={ small.line }/>
           <View style={ small.infoContainer }>
             <View style={ styles.inline }>
-              <Text style={ small.title }>{ `${firstName} ${lastName}` }</Text>
+              <Text style={ [ small.title, { flex: 1 } ] } ellipsizeMode={ 'tail' }
+                    numberOfLines={ 1 }>{ `${firstName} ${lastName}` }</Text>
               { investor.nationality ?
                 <Flag style={ small.flag } code={ investor.nationality }/> :
                 null
@@ -126,7 +127,6 @@ class Medium extends React.PureComponent {
   render () {
     const { investor, onClick } = this.props
     const { hasAvatar, avatar } = createAvatar(investor, 'w=180&h=240')
-
     const { firstName, lastName, moneyRange } = extractInfo(investor)
 
     return (
@@ -143,7 +143,8 @@ class Medium extends React.PureComponent {
             </View>
             <View style={ medium.infoContainer }>
               <View style={ [ styles.inline, medium.details ] }>
-                <Text style={ medium.title }>{ `${firstName} ${lastName}` }</Text>
+                <Text style={ [ medium.title, { flex: 1 } ] } ellipsizeMode={ 'tail' }
+                      numberOfLines={ 1 }>{ `${firstName} ${lastName}` }</Text>
                 { investor.nationality ?
                   <Flag style={ medium.flag } code={ investor.nationality }/> :
                   null

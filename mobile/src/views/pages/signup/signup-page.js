@@ -1,18 +1,18 @@
 import { Container, Content, Text } from 'native-base'
 import React from 'react'
 import { Image, View } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../locales/i18n'
-import PoweredLuna from '../../../assets/logos/login_logo.png'
 import BlackLogo from '../../../assets/logos/ico_black.png'
+import PoweredLuna from '../../../assets/logos/login_logo.png'
 import { PAGES_NAMES } from '../../../navigation/pages'
 import { signUpActions } from '../../../signup'
 import Header from '../../components/header/header'
 import { BlackButton } from '../../design/buttons'
 import InputValidated from '../../design/input-validated'
+import { auth as styles } from '../../styles/common'
 
 export class SignupPage extends React.Component {
   constructor (props) {
@@ -110,17 +110,19 @@ export class SignupPage extends React.Component {
                 <Text onPress={ () => this.props.navigation.navigate(PAGES_NAMES.LOGIN_PAGE) }
                       style={ styles.login }>{ I18n.t('signup_page.login') }</Text>
               </View>
-              <View style={styles.policyAndConditionsWrapper}>
-                  <Text style={styles.policyAndConditions} onPress={() => this.props.navigation.navigate(PAGES_NAMES.PRIVACY_POLICY_PAGE)}>
-                    { I18n.t('signup_page.privacy_policy')}
-                  </Text>
-                  <Text style={styles.policyAndConditions}>
-                    &amp;
-                  </Text>
-                  <Text style={styles.policyAndConditions} onPress={() => this.props.navigation.navigate(PAGES_NAMES.TERMS_OF_SERVICE_PAGE)}>
-                    { I18n.t('signup_page.terms_and_conditions') }
-                  </Text>
-                </View>
+              <View style={ styles.policyAndConditionsWrapper }>
+                <Text style={ styles.policyAndConditions }
+                      onPress={ () => this.props.navigation.navigate(PAGES_NAMES.PRIVACY_POLICY_PAGE) }>
+                  { I18n.t('signup_page.privacy_policy') }
+                </Text>
+                <Text style={ styles.policyAndConditions }>
+                  &amp;
+                </Text>
+                <Text style={ styles.policyAndConditions }
+                      onPress={ () => this.props.navigation.navigate(PAGES_NAMES.TERMS_OF_SERVICE_PAGE) }>
+                  { I18n.t('signup_page.terms_and_conditions') }
+                </Text>
+              </View>
             </View>
           </Content>
         </Container>
@@ -128,56 +130,6 @@ export class SignupPage extends React.Component {
     )
   }
 }
-
-const styles = EStyleSheet.create({
-  contentContainer: {
-    marginTop: 32,
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 24
-  },
-  textStyling: {
-    flex: 1,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingTop: 24,
-    paddingBottom: 24
-  },
-  inputContainer: {
-    marginBottom: 24
-  },
-  button: {
-    marginTop: 32,
-    flex: 0
-  },
-  login: {
-    fontFamily: 'Montserrat-SemiBold',
-    fontSize: 16,
-    textDecorationLine: 'underline',
-    marginLeft: 16
-  },
-  lunaContainer: {
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginTop: 16,
-    marginBottom: 16,
-    marginLeft: 16,
-    marginRight: 16
-  },
-  policyAndConditionsWrapper: {
-    flex: 1,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  policyAndConditions: {
-    fontFamily: 'Montserrat-SemiBold',
-    fontSize: 14,
-    textDecorationLine: 'underline',
-    marginRight: 8
-  }
-})
 
 const mapStateToProps = state => {
   return {
