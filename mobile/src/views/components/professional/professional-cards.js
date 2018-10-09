@@ -31,41 +31,46 @@ function extractInfo (professional) {
   }
 }
 
-const Small = ({ professional, onClick }) => {
+class Small extends React.PureComponent {
+  render () {
+    const { professional, onClick } = this.props
+    const { hasAvatar, avatar } = createAvatar(professional, 'w=500&h=300')
+    const { firstName, lastName, country, role } = extractInfo(professional)
 
-  const { hasAvatar, avatar } = createAvatar(professional, 'w=500&h=300')
-  const { firstName, lastName, country, role } = extractInfo(professional)
-
-  return (
-    <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
-      <View style={ [ styles.card, { width: 250 } ] }>
-        <View style={ small.avatarContainer }>
-          { hasAvatar ?
-            <Image style={ small.avatar } source={ avatar }/> :
-            <View style={ small.placeholderContainer }>
-              <Image style={ small.placeholder } source={ avatar }/>
-            </View>
-          }
-        </View>
-        <View style={ small.line }/>
-        <View style={ small.infoContainer }>
-          <View style={ styles.inline }>
-            <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 }
-                  style={ [ small.title, { maxWidth: 190 } ] }>{ `${firstName} ${lastName}` }</Text>
-            { country ?
-              <Flag style={ small.flag } code={ country }/> :
-              null
+    return (
+      <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
+        <View style={ [ styles.card, { width: 250 } ] }>
+          <View style={ small.avatarContainer }>
+            { hasAvatar ?
+              <Image style={ small.avatar } source={ avatar }/> :
+              <View style={ small.placeholderContainer }>
+                <Image style={ small.placeholder } source={ avatar }/>
+              </View>
             }
           </View>
-          {
-            role === 12 ?
-              <Text style={ small.subtitle }>{ professional.roleOtherText !== '' ? professional.roleOtherText : I18n.t('common.roles.other') }</Text> :
-              <Text style={ small.subtitle }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
-          }
+          <View style={ small.line }/>
+          <View style={ small.infoContainer }>
+            <View style={ styles.inline }>
+              <Text ellipsizeMode={ 'tail' } numberOfLines={ 1 }
+                    style={ [ small.title, { maxWidth: 190 } ] }>{ `${firstName} ${lastName}` }</Text>
+              { country ?
+                <Flag style={ small.flag } code={ country }/> :
+                null
+              }
+            </View>
+            {
+              role === 12 ?
+                <Text
+                  style={ small.subtitle }>{ professional.roleOtherText !== '' ? professional.roleOtherText : I18n.t(
+                  'common.roles.other') }</Text> :
+                <Text
+                  style={ small.subtitle }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+            }
+          </View>
         </View>
-      </View>
-    </TouchableHighlight>
-  )
+      </TouchableHighlight>
+    )
+  }
 }
 
 const small = EStyleSheet.create({
@@ -120,83 +125,88 @@ const small = EStyleSheet.create({
   }
 })
 
-const Medium = ({ professional, onClick }) => {
-  const { hasAvatar, avatar } = createAvatar(professional, 'w=240&h=320')
+class Medium extends React.PureComponent {
+  render () {
+    const { professional, onClick } = this.props
+    const { hasAvatar, avatar } = createAvatar(professional, 'w=240&h=320')
+    const { firstName, lastName, country, role } = extractInfo(professional)
 
-  const { firstName, lastName, country, role } = extractInfo(professional)
-
-  return (
-    <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
-      <View style={ styles.card }>
-        <View style={ medium.cardContent }>
-          <View style={ medium.avatarContainer }>
-            { hasAvatar ?
-              <Image style={ medium.avatar } source={ avatar }/> :
-              <View style={ medium.placeholderContainer }>
-                <Image style={ medium.placeholder } source={ avatar }/>
-              </View>
-            }
-          </View>
-          <View style={ medium.infoContainer }>
-            <View style={ [ styles.inline, medium.details ] }>
-              <Text style={ medium.title }>{ `${firstName} ${lastName}` }</Text>
-              { country ?
-                <Flag style={ medium.flag } code={ country }/> :
-                null
+    return (
+      <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
+        <View style={ styles.card }>
+          <View style={ medium.cardContent }>
+            <View style={ medium.avatarContainer }>
+              { hasAvatar ?
+                <Image style={ medium.avatar } source={ avatar }/> :
+                <View style={ medium.placeholderContainer }>
+                  <Image style={ medium.placeholder } source={ avatar }/>
+                </View>
               }
             </View>
-            <View style={ { marginTop: 4, marginBottom: 4 } }>
-              {
-                role === 12 ?
-                  <Text style={ medium.role }>{ professional.roleOtherText !== '' ? professional.roleOtherText : I18n.t('common.roles.other') }</Text> :
-                  <Text style={ medium.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
-              }
-              <Text
-                ellipsizeMode={ 'tail' } numberOfLines={ 1 }
-                style={ medium.subtitle }>{ professional.skillsText }</Text>
-            </View>
-            <View style={ styles.inline }>
-              <View style={ medium.rowDetail }>
-                <Text style={ medium.header }>{ I18n.t('cards.work') }</Text>
-                <View style={ { flex: 1 } }>
-                  {
-                    professional.localRemoteOptions.map((item, index) => {
-                      const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`)
-                      return (
-                        <Text key={ index } style={ medium.subtitle }>{ option }</Text>
-                      )
-                    })
-                  }
-                </View>
+            <View style={ medium.infoContainer }>
+              <View style={ [ styles.inline, medium.details ] }>
+                <Text style={ medium.title }>{ `${firstName} ${lastName}` }</Text>
+                { country ?
+                  <Flag style={ medium.flag } code={ country }/> :
+                  null
+                }
               </View>
-              <View style={ medium.rowDetail }>
-                <Text style={ medium.header }>{ I18n.t('cards.location') }</Text>
-                <View style={ { flex: 0.8 } }>
-                  { professional.country ? <Text style={ medium.subtitle }>{ professional.country }</Text> : null }
-                  { professional.city ? <Text
-                    ellipsizeMode={ 'tail' } numberOfLines={ 1 }
-                    style={ medium.subtitle }>{ professional.city }</Text> : null
-                  }
-                  { professional.relocate ?
-                    <Text style={ [ medium.subtitle ] }>{ I18n.t('cards.relocate') }</Text> : null }
-                </View>
-              </View>
-              <View style={ medium.rowDetail }>
-                <Text style={ medium.header }>{ I18n.t('cards.info') }</Text>
-                <View style={ { flex: 0.5 } }>
-                  { professional.age ?
-                    <Text style={ medium.subtitle }>{ `${I18n.t('cards.age')}: ${professional.age}` }</Text> : null }
-                  { professional.experience ?
+              <View style={ { marginTop: 4, marginBottom: 4 } }>
+                {
+                  role === 12 ?
                     <Text
-                      style={ medium.subtitle }>{ `${I18n.t('cards.exp')}: ${professional.experience}` }</Text> : null }
+                      style={ medium.role }>{ professional.roleOtherText !== '' ? professional.roleOtherText : I18n.t(
+                      'common.roles.other') }</Text> :
+                    <Text
+                      style={ medium.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) }</Text>
+                }
+                <Text
+                  ellipsizeMode={ 'tail' } numberOfLines={ 1 }
+                  style={ medium.subtitle }>{ professional.skillsText }</Text>
+              </View>
+              <View style={ styles.inline }>
+                <View style={ medium.rowDetail }>
+                  <Text style={ medium.header }>{ I18n.t('cards.work') }</Text>
+                  <View style={ { flex: 1 } }>
+                    {
+                      professional.localRemoteOptions.map((item, index) => {
+                        const option = I18n.t(`common.job_location.${JOB_LOCATION.find(ele => ele.index === item).slug}`)
+                        return (
+                          <Text key={ index } style={ medium.subtitle }>{ option }</Text>
+                        )
+                      })
+                    }
+                  </View>
+                </View>
+                <View style={ medium.rowDetail }>
+                  <Text style={ medium.header }>{ I18n.t('cards.location') }</Text>
+                  <View style={ { flex: 0.8 } }>
+                    { professional.country ? <Text style={ medium.subtitle }>{ professional.country }</Text> : null }
+                    { professional.city ? <Text
+                      ellipsizeMode={ 'tail' } numberOfLines={ 1 }
+                      style={ medium.subtitle }>{ professional.city }</Text> : null
+                    }
+                    { professional.relocate ?
+                      <Text style={ [ medium.subtitle ] }>{ I18n.t('cards.relocate') }</Text> : null }
+                  </View>
+                </View>
+                <View style={ medium.rowDetail }>
+                  <Text style={ medium.header }>{ I18n.t('cards.info') }</Text>
+                  <View style={ { flex: 0.5 } }>
+                    { professional.age ?
+                      <Text style={ medium.subtitle }>{ `${I18n.t('cards.age')}: ${professional.age}` }</Text> : null }
+                    { professional.experience ?
+                      <Text
+                        style={ medium.subtitle }>{ `${I18n.t('cards.exp')}: ${professional.experience}` }</Text> : null }
+                  </View>
                 </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
-    </TouchableHighlight>
-  )
+      </TouchableHighlight>
+    )
+  }
 }
 
 const medium = EStyleSheet.create({
@@ -267,11 +277,7 @@ const medium = EStyleSheet.create({
   }
 })
 
-class XL extends React.Component {
-
-  shouldComponentUpdate = () => {
-    return false
-  }
+class XL extends React.PureComponent {
 
   handleLink = async (prefix, link = '/') => {
     try {
@@ -292,7 +298,7 @@ class XL extends React.Component {
 
     const { firstName, lastName, country, role } = extractInfo(professional)
 
-    const { itemWidth, sliderWidth } = getDimensions()
+    const { itemWidth } = getDimensions()
 
     const avatarSize = itemWidth / 3
     const avatarStyle = {
@@ -340,8 +346,11 @@ class XL extends React.Component {
               <View style={ { marginTop: 2, marginBottom: 2 } }>
                 {
                   role === 12 ?
-                    <Text style={ xl.role }>{ professional.roleOtherText !== '' ? professional.roleOtherText.toUpperCase() : I18n.t('common.roles.other').toUpperCase() }</Text> :
-                    <Text style={ xl.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`).toUpperCase() }</Text>
+                    <Text
+                      style={ xl.role }>{ professional.roleOtherText !== '' ? professional.roleOtherText.toUpperCase() : I18n.t(
+                      'common.roles.other').toUpperCase() }</Text> :
+                    <Text style={ xl.role }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`)
+                      .toUpperCase() }</Text>
                 }
               </View>
             </View>
@@ -397,28 +406,31 @@ class XL extends React.Component {
                   </TouchableHighlight>
                 ) :
                 <View>
-                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' } name={ 'telegram' }/>
-                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_telegram') }</Text>
+                  <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
+                        name={ 'telegram' }/>
+                  <Text style={ [ xl.subtitle,
+                    { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_telegram') }</Text>
                 </View>
               }
             </View>
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               { professional.user.linkedin ? (
-                <TouchableHighlight
-                  onPress={ () => this.handleLink('https://www.linkedin.com/in/', professional.user.linkedin) }
-                  underlayColor='transparent'>
-                  <View>
-                    <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
-                          name={ 'linkedin' }/>
-                    <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.linkedin') }</Text>
-                  </View>
-                </TouchableHighlight>
-              ) :
+                  <TouchableHighlight
+                    onPress={ () => this.handleLink('https://www.linkedin.com/in/', professional.user.linkedin) }
+                    underlayColor='transparent'>
+                    <View>
+                      <Icon style={ { textAlign: 'center', color: 'white' } } type={ 'FontAwesome' }
+                            name={ 'linkedin' }/>
+                      <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('common.linkedin') }</Text>
+                    </View>
+                  </TouchableHighlight>
+                ) :
                 <View>
                   <Icon style={ { textAlign: 'center', color: 'white', opacity: .5 } } type={ 'FontAwesome' }
                         name={ 'linkedin' }/>
-                  <Text style={ [ xl.subtitle, { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_linkedin') }</Text>
+                  <Text style={ [ xl.subtitle,
+                    { textAlign: 'center', opacity: .5 } ] }>{ I18n.t('common.no_linkedin') }</Text>
                 </View>
               }
             </View>

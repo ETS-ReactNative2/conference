@@ -1,6 +1,6 @@
 import { Container } from 'native-base'
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, View, FlatList } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
@@ -51,49 +51,54 @@ class HomePage extends React.Component {
                       rightIconSource={ WhiteLogo }/>
               <View>
                 <Subheader text={ I18n.t('common.investors') }/>
-                <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
-                  {
-                    investors
-                      .filter(investor => !investor.hide)
-                      .map(investor => (
-                        <Investor.Small
-                          key={ investor.id }
-                          investor={ investor }
-                          onClick={ () => this.handleInvestorClick(investor) }
-                        />
-                      ))
-                  }
-                </ScrollView>
+
+                <FlatList
+                  style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } }
+                  horizontal={true}
+                  data={ investors
+                    .filter(investor => !investor.hide) }
+                  keyExtractor={ item => item.id }
+                  renderItem={ ({item}) => (
+                    <Investor.Small
+                      key={ item.id }
+                      investor={ item }
+                      onClick={ () => this.handleInvestorClick(item) }
+                    />
+                  ) }
+                />
               </View>
               <View>
                 <Subheader text={ I18n.t('common.projects') }/>
-                <ScrollView style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } } horizontal>
-                  {
-                    projects.map(project => (
-                      <Project.Small
-                        key={ project.id }
-                        project={ project }
-                        onClick={ () => this.handleProjectClick(project) }
-                      />
-                    ))
-                  }
-                </ScrollView>
+                <FlatList
+                  style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } }
+                  horizontal={true}
+                  data={ projects }
+                  keyExtractor={ item => item.id }
+                  renderItem={ ({item}) => (
+                    <Project.Small
+                      key={ item.id }
+                      project={ item }
+                      onClick={ () => this.handleProjectClick(item) }
+                    />
+                  ) }
+                />
               </View>
               <View>
                 <Subheader text={ I18n.t('common.attendees') }/>
-                <ScrollView style={ { minWidth: '100%', paddingBottom: 4, marginBottom: 4, marginTop: 8 } } horizontal>
-                  {
-                    professionals
-                      .filter(prof => !prof.hide)
-                      .map((professional, index) => (
-                        <Professional.Small
-                          key={ index }
-                          professional={ professional }
-                          onClick={ () => this.handleProfessionalClick(professional) }
-                        />
-                      ))
-                  }
-                </ScrollView>
+                <FlatList
+                  style={ { minWidth: '100%', paddingBottom: 8, marginTop: 8 } }
+                  horizontal={true}
+                  data={ professionals
+                    .filter(prof => !prof.hide) }
+                  keyExtractor={ item => item.id }
+                  renderItem={ ({item}) => (
+                    <Professional.Small
+                      key={ item.id }
+                      professional={ item }
+                      onClick={ () => this.handleProfessionalClick(item) }
+                    />
+                  ) }
+                />
               </View>
             </ScrollView>
           </View>

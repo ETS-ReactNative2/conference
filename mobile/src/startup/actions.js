@@ -27,7 +27,6 @@ export const loadApp = () => async dispatch => {
       Promise.all([
         dispatch(fetchDefaults()),
         dispatch(fetchProfiles()),
-        dispatch(fetchMatches()),
         dispatch(fetchFilters()),
         dispatch(fetchConferenceSchedule())
       ])

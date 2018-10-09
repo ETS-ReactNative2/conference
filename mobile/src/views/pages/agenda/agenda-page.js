@@ -1,18 +1,19 @@
+import moment from 'moment'
 import { Button, Icon, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { Modal, ScrollView, View } from 'react-native'
+import { FlatList, Modal, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Gallery from 'react-native-image-gallery'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
+import * as scheduleActions from '../../../schedule/actions'
 import { MapHeader } from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
 import { ConferenceEvent } from './components/conference-event'
 import { DateTab } from './components/date-tab'
-import moment from 'moment'
 
 const secondImagesConfig = [
   {
@@ -39,15 +40,15 @@ class AgendaPage extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const { error, agenda } = this.props
     let days = []
     if (!error) {
       const [ talks = { days: [] } ] = agenda
       days = talks.days
     }
-    days.map( (day, index) => {
-      if(day.date === moment().format('YYYY-MM-DD')) {
+    days.map((day, index) => {
+      if (day.date === moment().format('YYYY-MM-DD')) {
         this.setState({
           selected: index
         })
@@ -152,18 +153,20 @@ class AgendaPage extends Component {
                          onClick={ () => this.setState({ selected: index }) } key={ index }/>
               )) }
             </View>
-            <ScrollView>
-              {
-                days.length !== 0 && days[ this.state.selected ].events.map((event, index) => (
-                  <ConferenceEvent key={ `${this.state.selected}:${index}` } event={ event }/>
-                ))
-              }
-              {
-                days.length === 0 && (
-                  <Text style={ { color: 'white', textAlign: 'center' } }>{ I18n.t('agenda_page.no_agenda') }</Text>
-                )
-              }
-            </ScrollView>
+            {
+              days.length === 0 && (
+                <Text style={ { color: 'white', textAlign: 'center' } }>{ I18n.t('agenda_page.no_agenda') }</Text>
+              )
+            }
+            <FlatList
+              onRefresh={ () => this.props.fetchConferenceAgenda() }
+              refreshing={ false }
+              data={ days.length !== 0 && days[ this.state.selected ].events ? days[ this.state.selected ].events : [] }
+              keyExtractor={ (item, index) => index }
+              renderItem={ ({ item, index }) => (
+                <ConferenceEvent key={ `${this.state.selected}:${index}` } event={ item }/>
+              ) }
+            />
           </View>
         </View>
       </ImagePageContainer>

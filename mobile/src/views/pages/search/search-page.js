@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import WhiteLogo from '../../../assets/logos/ico_white.png'
 import { PAGES_NAMES } from '../../../navigation'
+import * as searchActions from '../../../search/actions'
 import Header from '../../components/header/header'
 import LunaSpinner from '../../components/luna-spinner/luna-spinner'
 import { ImagePageContainer } from '../../design/image-page-container'
@@ -13,7 +14,6 @@ import InvestorsList from './components/investors-list'
 import JobList from './components/job-list'
 import ProfessionalsList from './components/professionals-list'
 import ProjectsList from './components/projects-list'
-import * as searchActions from '../../../search/actions'
 
 class SearchPage extends React.Component {
 
@@ -27,7 +27,7 @@ class SearchPage extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     // first tab is always investors so load them when component is mounted
     this.props.updateInvestors(this.props.investorsSearchFilters)
   }
@@ -51,7 +51,7 @@ class SearchPage extends React.Component {
   }
 
   handleJobClick = job => {
-    // this.props.navigation.navigate(PAGES_NAMES.JOB_PAGE)
+    this.props.navigation.navigate(PAGES_NAMES.JOB_PAGE, { job })
   }
 
   onTabChange = ({ i }) => {
@@ -93,45 +93,50 @@ class SearchPage extends React.Component {
                 style={ { backgroundColor: 'transparent' } }
                 textStyle={ { color: 'white' } }
                 activeTextStyle={ { color: 'black' } }
-                activeTabStyle={styles.activeTabStyle}
-                tabStyle={styles.tabStyle}
+                activeTabStyle={ styles.activeTabStyle }
+                tabStyle={ styles.tabStyle }
                 heading={ I18n.t('search_page.tab_label_investor') }>
-                { isLoading === true && <LunaSpinner /> }
-                { isLoading === false && <InvestorsList profiles={ this.props.investors } onClick={ this.handleInvestorClick } navigation={ this.props.navigation }/> }
+                { isLoading === true && <LunaSpinner/> }
+                { isLoading === false &&
+                <InvestorsList profiles={ this.props.investors } onClick={ this.handleInvestorClick }
+                               navigation={ this.props.navigation }/> }
               </Tab>
               <Tab
                 style={ { backgroundColor: 'transparent' } }
                 textStyle={ { color: 'white' } }
                 activeTextStyle={ { color: 'black' } }
-                activeTabStyle={styles.activeTabStyle}
-                tabStyle={styles.tabStyle}
+                activeTabStyle={ styles.activeTabStyle }
+                tabStyle={ styles.tabStyle }
                 heading={ I18n.t('search_page.tab_label_professional') }>
-                { isLoading === true && <LunaSpinner /> }
-                { isLoading === false && <ProfessionalsList profiles={ this.props.professionals } style={ { marginTop: 8 } } onClick={ this.handleProfessionalClick }
-                  navigation={ this.props.navigation }/> }
+                { isLoading === true && <LunaSpinner/> }
+                { isLoading === false &&
+                <ProfessionalsList profiles={ this.props.professionals } style={ { marginTop: 8 } }
+                                   onClick={ this.handleProfessionalClick }
+                                   navigation={ this.props.navigation }/> }
               </Tab>
               <Tab
                 style={ { backgroundColor: 'transparent' } }
                 textStyle={ { color: 'white' } }
                 activeTextStyle={ { color: 'black' } }
-                activeTabStyle={styles.activeTabStyle}
-                tabStyle={styles.tabStyle}
+                activeTabStyle={ styles.activeTabStyle }
+                tabStyle={ styles.tabStyle }
                 heading={ I18n.t('search_page.tab_label_projects') }>
-                { isLoading === true && <LunaSpinner /> }
-                { isLoading === false && <ProjectsList profiles={ this.props.projects } style={ { marginTop: 8 } } onClick={ this.handleProjectClick }
-                  navigation={ this.props.navigation }/> }
+                { isLoading === true && <LunaSpinner/> }
+                { isLoading === false && <ProjectsList profiles={ this.props.projects } style={ { marginTop: 8 } }
+                                                       onClick={ this.handleProjectClick }
+                                                       navigation={ this.props.navigation }/> }
               </Tab>
               <Tab
                 style={ { backgroundColor: 'transparent' } }
                 textStyle={ { color: 'white' } }
                 activeTextStyle={ { color: 'black' } }
-                activeTabStyle={styles.activeTabStyle}
-                tabStyle={styles.tabStyle}
+                activeTabStyle={ styles.activeTabStyle }
+                tabStyle={ styles.tabStyle }
                 heading={ I18n.t('search_page.tab_label_job') }>
-                { isLoading === true && <LunaSpinner /> }
+                { isLoading === true && <LunaSpinner/> }
                 { isLoading === false && <JobList jobs={ this.props.jobs } style={ { marginTop: 8 } }
-                          onClick={ this.handleJobClick }
-                          navigation={ this.props.navigation }/> }
+                                                  onClick={ this.handleJobClick }
+                                                  navigation={ this.props.navigation }/> }
               </Tab>
             </Tabs>
           </View>

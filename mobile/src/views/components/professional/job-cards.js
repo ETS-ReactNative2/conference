@@ -19,43 +19,45 @@ function createAvatar (project, extraQuery) {
   }
 }
 
-const Medium = ({ job, onClick }) => {
+class Medium extends React.PureComponent {
+  render () {
+    const { job, onClick} = this.props
+    const { project, country, city, partTime, localRemoteOptions, payments, role, skillsText } = job
 
-  const { project, country, city, partTime, localRemoteOptions, payments, role, skillsText } = job
-
-  return (
-    <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
-      <View style={ styles.card }>
-        <View style={ medium.cardContent }>
-          <View style={ medium.avatarContainer }>
-            <View style={ medium.flagContainer }>
-              <Flag style={ medium.flag } code={ country }/>
+    return (
+      <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
+        <View style={ styles.card }>
+          <View style={ medium.cardContent }>
+            <View style={ medium.avatarContainer }>
+              <View style={ medium.flagContainer }>
+                <Flag style={ medium.flag } code={ country }/>
+              </View>
             </View>
-          </View>
-          <View style={ medium.infoContainer }>
-            <Text
-              style={ medium.title }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) + ` - ${project ? project.name : 'Anonymous project'}` }</Text>
-            { skillsText.length > 0 && <Text style={ medium.subtitle }>{ skillsText }</Text> }
-            <Text
-              style={ medium.subtitle }>{ partTime ? I18n.t('job_item.part_time') : I18n.t('job_item.full_time') }</Text>
-            <View style={ { flexDirection: 'row' } }>
-              { localRemoteOptions.findIndex(op => op === 1) !== -1 &&
-              <Text style={ medium.subtitle }>{ `${country}, ${city}` }</Text>
-              }
-              {
-                localRemoteOptions.length === 2 &&
-                <Text style={ medium.subtitle }> / </Text>
-              }
-              {
-                localRemoteOptions.findIndex(op => op === 2) !== -1 &&
-                <Text style={ medium.subtitle }>{ I18n.t('common.job_location.remote') }</Text>
-              }
+            <View style={ medium.infoContainer }>
+              <Text
+                style={ medium.title }>{ I18n.t(`common.roles.${ROLES.find(r => r.index === role).slug}`) + ` - ${project ? project.name : 'Anonymous project'}` }</Text>
+              { skillsText.length > 0 && <Text style={ medium.subtitle }>{ skillsText }</Text> }
+              <Text
+                style={ medium.subtitle }>{ partTime ? I18n.t('job_item.part_time') : I18n.t('job_item.full_time') }</Text>
+              <View style={ { flexDirection: 'row' } }>
+                { localRemoteOptions.findIndex(op => op === 1) !== -1 &&
+                <Text style={ medium.subtitle }>{ `${country}, ${city}` }</Text>
+                }
+                {
+                  localRemoteOptions.length === 2 &&
+                  <Text style={ medium.subtitle }> / </Text>
+                }
+                {
+                  localRemoteOptions.findIndex(op => op === 2) !== -1 &&
+                  <Text style={ medium.subtitle }>{ I18n.t('common.job_location.remote') }</Text>
+                }
+              </View>
             </View>
           </View>
         </View>
-      </View>
-    </TouchableHighlight>
-  )
+      </TouchableHighlight>
+    )
+  }
 }
 
 const medium = EStyleSheet.create({
@@ -114,11 +116,7 @@ const medium = EStyleSheet.create({
   }
 })
 
-class XL extends React.Component {
-
-  shouldComponentUpdate = () => {
-    return false
-  }
+class XL extends React.PureComponent {
 
   handleLink = (url) => {
     Linking.canOpenURL(url).then(supported => {

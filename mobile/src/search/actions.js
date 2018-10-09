@@ -15,7 +15,7 @@ import {
 } from './action-types'
 
 export function fetchMatches () {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       dispatch({ type: LOAD_PROFILES })
       const [
@@ -24,10 +24,10 @@ export function fetchMatches () {
         professionalResponse,
         jobsResponse
       ] = await Promise.all([
-        api.fetchProjects({}),
-        api.fetchInvestors({}),
-        api.fetchProfessionals({}),
-        api.fetchJobs({})
+        api.fetchProjects(getState().filter.project),
+        api.fetchInvestors(getState().filter.investor),
+        api.fetchProfessionals(getState().filter.professional),
+        api.fetchJobs(getState().filter.job)
       ])
       dispatch({
         type: LOAD_PROFILES_SUCCESS,

@@ -4,16 +4,10 @@ import { Image, TouchableHighlight } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Flag from 'react-native-flags'
 import I18n from '../../../../locales/i18n'
-import ColorLogo from '../../../assets/logos/conference_logo_welcome_medium.png'
 import MessageIcon from '../../../assets/icons/message_icon.png'
+import ColorLogo from '../../../assets/logos/conference_logo_welcome_medium.png'
 import { getDimensions } from '../../../common/dimension-utils'
-import {
-  FUNDING_STAGES,
-  GIVEAWAY_TYPES,
-  PRODUCT_STAGES,
-  TICKET_SIZES,
-  TOKEN_TYPES
-} from '../../../enums'
+import { FUNDING_STAGES, GIVEAWAY_TYPES, PRODUCT_STAGES, TICKET_SIZES, TOKEN_TYPES } from '../../../enums'
 
 function createAvatar (investor, extraQuery) {
   const hasAvatar = investor.user && investor.user.imageUrl
@@ -42,36 +36,38 @@ function extractInfo (investor) {
   }
 }
 
-const Small = ({ investor, onClick }) => {
+class Small extends React.PureComponent {
+  render () {
+    const { investor, onClick } = this.props
+    const { hasAvatar, avatar } = createAvatar(investor, 'w=400&h=300')
+    const { firstName, lastName, moneyRange } = extractInfo(investor)
 
-  const { hasAvatar, avatar } = createAvatar(investor, 'w=400&h=300')
-  const { firstName, lastName, moneyRange } = extractInfo(investor)
-
-  return (
-    <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
-      <View style={ styles.card }>
-        <View style={ small.avatarContainer }>
-          { hasAvatar ?
-            <Image style={ small.avatar } source={ avatar }/> :
-            <View style={ small.placeholderContainer }>
-              <Image style={ small.placeholder } source={ avatar }/>
-            </View>
-          }
-        </View>
-        <View style={ small.line }/>
-        <View style={ small.infoContainer }>
-          <View style={ styles.inline }>
-            <Text style={ small.title }>{ `${firstName} ${lastName}` }</Text>
-            { investor.nationality ?
-              <Flag style={ small.flag } code={ investor.nationality }/> :
-              null
+    return (
+      <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
+        <View style={ styles.card }>
+          <View style={ small.avatarContainer }>
+            { hasAvatar ?
+              <Image style={ small.avatar } source={ avatar }/> :
+              <View style={ small.placeholderContainer }>
+                <Image style={ small.placeholder } source={ avatar }/>
+              </View>
             }
           </View>
-          <Text style={ small.subtitle }>{ moneyRange }</Text>
+          <View style={ small.line }/>
+          <View style={ small.infoContainer }>
+            <View style={ styles.inline }>
+              <Text style={ small.title }>{ `${firstName} ${lastName}` }</Text>
+              { investor.nationality ?
+                <Flag style={ small.flag } code={ investor.nationality }/> :
+                null
+              }
+            </View>
+            <Text style={ small.subtitle }>{ moneyRange }</Text>
+          </View>
         </View>
-      </View>
-    </TouchableHighlight>
-  )
+      </TouchableHighlight>
+    )
+  }
 }
 
 const small = EStyleSheet.create({
@@ -125,101 +121,105 @@ const small = EStyleSheet.create({
   }
 })
 
-const Medium = ({ investor, onClick }) => {
-  const { hasAvatar, avatar } = createAvatar(investor, 'w=180&h=240')
+class Medium extends React.PureComponent {
 
-  const { firstName, lastName, moneyRange } = extractInfo(investor)
+  render () {
+    const { investor, onClick } = this.props
+    const { hasAvatar, avatar } = createAvatar(investor, 'w=180&h=240')
 
-  return (
-    <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
-      <View style={ styles.card }>
-        <View style={ medium.cardContent }>
-          <View style={ medium.avatarContainer }>
-            { hasAvatar ?
-              <Image style={ medium.avatar } source={ avatar }/> :
-              <View style={ medium.placeholderContainer }>
-                <Image style={ medium.placeholder } source={ avatar }/>
-              </View>
-            }
-          </View>
-          <View style={ medium.infoContainer }>
-            <View style={ [ styles.inline, medium.details ] }>
-              <Text style={ medium.title }>{ `${firstName} ${lastName}` }</Text>
-              { investor.nationality ?
-                <Flag style={ medium.flag } code={ investor.nationality }/> :
-                null
+    const { firstName, lastName, moneyRange } = extractInfo(investor)
+
+    return (
+      <TouchableHighlight onPress={ onClick } underlayColor='transparent'>
+        <View style={ styles.card }>
+          <View style={ medium.cardContent }>
+            <View style={ medium.avatarContainer }>
+              { hasAvatar ?
+                <Image style={ medium.avatar } source={ avatar }/> :
+                <View style={ medium.placeholderContainer }>
+                  <Image style={ medium.placeholder } source={ avatar }/>
+                </View>
               }
             </View>
-            <View style={ { marginTop: 4, marginBottom: 4 } }>
-              <Text style={ medium.subtitle }>{ moneyRange }</Text>
-            </View>
-            <View style={ styles.inline }>
-              <View style={ medium.rowDetail }>
-                <Text style={ medium.header }>{ I18n.t('cards.technology') }</Text>
-                <View style={ { flex: 1 } }>
-                  {
-                    investor.tokenTypes.map(index => {
-                      const stage = TOKEN_TYPES.find(item => item.index === index)
-
-                      if (stage) {
-                        return (
-                          <Text key={ index } style={ medium.subtitle }>
-                            {
-                              I18n.t(`common.token_types.${stage.slug}`)
-                            }
-                          </Text>
-                        )
-                      }
-                    })
-                  }
-                </View>
+            <View style={ medium.infoContainer }>
+              <View style={ [ styles.inline, medium.details ] }>
+                <Text style={ medium.title }>{ `${firstName} ${lastName}` }</Text>
+                { investor.nationality ?
+                  <Flag style={ medium.flag } code={ investor.nationality }/> :
+                  null
+                }
               </View>
-              <View style={ medium.rowDetail }>
-                <Text style={ medium.header }>{ I18n.t('cards.stage') }</Text>
-                <View style={ { flex: 0.8 } }>
-                  {
-                    investor.fundingStages.map(index => {
-                      const stage = FUNDING_STAGES.find(item => item.index === index)
-
-                      if (stage) {
-                        return (
-                          <Text key={ index } style={ medium.subtitle }>
-                            {
-                              I18n.t(`common.funding_stages.${stage.slug}`)
-                            }
-                          </Text>
-                        )
-                      }
-                    })
-                  }
-                </View>
+              <View style={ { marginTop: 4, marginBottom: 4 } }>
+                <Text style={ medium.subtitle }>{ moneyRange }</Text>
               </View>
-              <View style={ medium.rowDetail }>
-                <Text style={ medium.header }>{ I18n.t('cards.product') }</Text>
-                <View style={ { flex: 0.8 } }>
-                  {
-                    investor.productStages.map(index => {
-                      const stage = PRODUCT_STAGES.find(item => item.index === index)
+              <View style={ styles.inline }>
+                <View style={ medium.rowDetail }>
+                  <Text style={ medium.header }>{ I18n.t('cards.technology') }</Text>
+                  <View style={ { flex: 1 } }>
+                    {
+                      investor.tokenTypes.map(index => {
+                        const stage = TOKEN_TYPES.find(item => item.index === index)
 
-                      if (stage) {
-                        return (
-                          <Text key={ index } style={ medium.subtitle }>
-                            {
-                              I18n.t(`common.product_stages.${stage.slug}`)
-                            }
-                          </Text>
-                        )
-                      }
-                    })
-                  }
+                        if (stage) {
+                          return (
+                            <Text key={ index } style={ medium.subtitle }>
+                              {
+                                I18n.t(`common.token_types.${stage.slug}`)
+                              }
+                            </Text>
+                          )
+                        }
+                      })
+                    }
+                  </View>
+                </View>
+                <View style={ medium.rowDetail }>
+                  <Text style={ medium.header }>{ I18n.t('cards.stage') }</Text>
+                  <View style={ { flex: 0.8 } }>
+                    {
+                      investor.fundingStages.map(index => {
+                        const stage = FUNDING_STAGES.find(item => item.index === index)
+
+                        if (stage) {
+                          return (
+                            <Text key={ index } style={ medium.subtitle }>
+                              {
+                                I18n.t(`common.funding_stages.${stage.slug}`)
+                              }
+                            </Text>
+                          )
+                        }
+                      })
+                    }
+                  </View>
+                </View>
+                <View style={ medium.rowDetail }>
+                  <Text style={ medium.header }>{ I18n.t('cards.product') }</Text>
+                  <View style={ { flex: 0.8 } }>
+                    {
+                      investor.productStages.map(index => {
+                        const stage = PRODUCT_STAGES.find(item => item.index === index)
+
+                        if (stage) {
+                          return (
+                            <Text key={ index } style={ medium.subtitle }>
+                              {
+                                I18n.t(`common.product_stages.${stage.slug}`)
+                              }
+                            </Text>
+                          )
+                        }
+                      })
+                    }
+                  </View>
                 </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
-    </TouchableHighlight>
-  )
+      </TouchableHighlight>
+    )
+  }
 }
 
 const medium = EStyleSheet.create({
@@ -284,11 +284,7 @@ const medium = EStyleSheet.create({
   }
 })
 
-class XL extends React.Component {
-
-  shouldComponentUpdate = () => {
-    return false
-  }
+class XL extends React.PureComponent {
 
   render () {
     const { investor, onMessageClick } = this.props
@@ -432,8 +428,9 @@ class XL extends React.Component {
             <View style={ [ xl.verticalLine, verticalLineHeight ] }/>
             <View style={ [ xl.boxContainer, styles.center ] }>
               <TouchableHighlight onPress={ onMessageClick } underlayColor='transparent'>
-                <View style={{ alignItems: 'center'}}>
-                  <Image source={ MessageIcon} style={ { width: 32, height: 32, alignItems: 'center' } } name={ 'ios-mail-open' }/>
+                <View style={ { alignItems: 'center' } }>
+                  <Image source={ MessageIcon } style={ { width: 32, height: 32, alignItems: 'center' } }
+                         name={ 'ios-mail-open' }/>
                   <Text style={ [ xl.subtitle, { textAlign: 'center' } ] }>{ I18n.t('cards.message') }</Text>
                 </View>
               </TouchableHighlight>
