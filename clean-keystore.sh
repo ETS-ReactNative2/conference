@@ -1,4 +1,4 @@
-#!/bin/bash -fx
+#!/bin/bash -fe
 if
 	[ "${LUNA_CONFERENCE_KEYSTORE_PASSWORD}" == "" ] || [ "${LUNA_CONFERENCE_KEYSTORE_KEY_PASSWORD}" == "" ]
 then
