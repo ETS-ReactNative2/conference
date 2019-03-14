@@ -1,6 +1,2 @@
 # .gitattributes file
-mobile/android/app/src/main/AndroidManifest.xml filter=update-fabric-keys
-mobile/android/app/fabric.properties filter=update-fabric-keys
-mobile/ios/Luna.xcodeproj/project.pbxproj filter=update-fabric-keys
-mobile/ios/Luna/Info.plist filter=update-fabric-keys
 mobile/android/gradle.properties filter=update-luna-conference-keystore

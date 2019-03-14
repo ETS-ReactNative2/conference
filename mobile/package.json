@@ -62,7 +62,6 @@
     "react-native-country-picker-modal": "^0.6.2",
     "react-native-device-info": "^0.21.5",
     "react-native-extended-stylesheet": "0.8.1",
-    "react-native-fabric": "0.5.1",
     "react-native-fix-xcode-10": "github:rhdeck/react-native-fix-xcode-10",
     "react-native-flags": "^1.0.0",
     "react-native-i18n": "2.0.12",
