@@ -308,7 +308,6 @@
   "drawer": {
     "agenda": "어젠다",
     "flows": "플로우",
-    "notifications": "알림",
     "search": "검색"
   },
   "flow_page": {
@@ -550,12 +549,6 @@
     "spinner_text": "로그인 중입니다. 잠시만 기다려주세요.",
     "terms_and_conditions": "이용 약관",
     "title": "로그인"
-  },
-  "notifications": {
-    "button_is_read": "읽음",
-    "button_is_unread": "읽음으로 표시",
-    "mark_all_read": "모두 읽음으로 표시",
-    "went_wrong": "문제가 발생했습니다."
   },
   "professional_page": {
     "title": "전문 세부 사항",

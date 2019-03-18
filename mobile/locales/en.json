@@ -325,7 +325,6 @@
   "drawer": {
     "agenda": "Agenda",
     "flows": "Flows",
-    "notifications": "Notifications",
     "search": "Search"
   },
   "flow_page": {
@@ -568,12 +567,6 @@
     "spinner_text": "Logging you in... Please wait",
     "terms_and_conditions": "TERMS AND CONDITIONS",
     "title": "Login"
-  },
-  "notifications": {
-    "button_is_read": "Read",
-    "button_is_unread": "Mark as read",
-    "mark_all_read": "Mark all as read",
-    "went_wrong": "Something went wrong"
   },
   "privacy_policy_page": {
     "title": "Privacy Policy",

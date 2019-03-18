@@ -6,7 +6,6 @@ import { getErrorDataFromNetworkException, isNetworkUnavailable } from '../commo
 import { CLEAR as FILTER_CLEAR } from '../filters/action-types'
 import { globalActions } from '../global'
 import { PAGES_NAMES } from '../navigation'
-import { CLEAR as NOTIFICATION_CLEAR } from '../notifications/action-types'
 import {
   CLEAR as PROFILE_CLEAR,
   PROPAGATE_INVESTOR_PROFILE,
@@ -301,7 +300,6 @@ export const logout = () => async dispatch => {
     { type: SIGNUP_CLEAR },
     { type: SEARCH_CLEAR },
     { type: PROFILE_CLEAR },
-    { type: NOTIFICATION_CLEAR },
     { type: FILTER_CLEAR },
     globalActions.setGlobalLoading(I18n.t('common.spinner.clear'))
   ]))

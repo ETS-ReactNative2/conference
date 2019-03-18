@@ -360,34 +360,6 @@ export async function deleteMyProjectMembersId ({ id }) {
   })
 }
 
-export async function fetchNotifications () {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // For testing errors
-      Math.random() >= 0.5 ?
-        reject('error') :
-        resolve({
-          data: [
-            {
-              id: 1,
-              title: 'New olaboga',
-              content: 'Datata lorem ipsum lorem ipsum',
-              time: new Date(),
-              isRead: false
-            },
-            {
-              id: 2,
-              title: 'New olaboga',
-              content: 'Datata lorem ipsum lorem ipsum',
-              time: new Date(),
-              isRead: false
-            }
-          ]
-        })
-    }, 3000)
-  })
-}
-
 const transformRequestOptions = params => {
   let options = ''
   for (const key in params) {
