@@ -1,7 +1,6 @@
 import { Container, Content, Text } from 'native-base'
 import React, { Component } from 'react'
 import { Linking, View } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
 import { SafeAreaView } from 'react-navigation'
 import I18n from '../../../../locales/i18n'
 import BlackLogo from '../../../assets/logos/ico_black.png'

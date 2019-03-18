@@ -13,7 +13,6 @@ import { StepTitle } from '../../../design/step-title'
 class CommonFlowFinishedPage extends React.Component {
 
   goToHomePage = () => {
-    console.log(this.props);
     this.props.navigation.navigate(PAGES_NAMES.HOME_PAGE)
   }
 
