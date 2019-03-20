@@ -5,9 +5,9 @@ services:
     image: python:2-slim
     environment:
       - CONFERENCE_DB_ENGINE=django.contrib.gis.db.backends.postgis
-      - CONFERENCE_DB_NAME=andrzej
-      - CONFERENCE_DB_USER=andrzej
-      - CONFERENCE_DB_PASSWORD=testtest
+      - CONFERENCE_DB_NAME=conference
+      - CONFERENCE_DB_USER=conference_admin
+      - CONFERENCE_DB_PASSWORD=conference_password
       - CONFERENCE_DB_HOST=postgres
       - CONFERENCE_DB_PORT=5432
       - PYTHONUNBUFFERED=0
@@ -24,9 +24,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=andrzej
-      - POSTGRES_USER=andrzej
-      - POSTGRES_PASSWORD=testtest
+      - POSTGRES_DB=conference
+      - POSTGRES_USER=conference_admin
+      - POSTGRES_PASSWORD=conference_password
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
     volumes:
