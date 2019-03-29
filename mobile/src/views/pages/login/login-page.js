@@ -1,18 +1,18 @@
 import { Container, Content, Text } from 'native-base'
 import React from 'react'
 import { Image, View } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../locales/i18n'
-import PoweredLuna from '../../../assets/logos/login_logo.png'
 import BlackLogo from '../../../assets/logos/ico_black.png'
+import PoweredLuna from '../../../assets/logos/login_logo.png'
 import { PAGES_NAMES } from '../../../navigation/pages'
 import { signUpActions } from '../../../signup'
 import Header from '../../components/header/header'
 import { BlackButton } from '../../design/buttons'
 import InputValidated from '../../design/input-validated'
+import { auth as styles } from '../../styles/common'
 
 class LoginPage extends React.Component {
   constructor (props) {
@@ -20,6 +20,8 @@ class LoginPage extends React.Component {
     this.state = {
       email: '',
       password: '',
+      // used to stop validation until Login button is hitted for the first time
+      showValidationError: false,
       isFormValid: false
     }
   }
@@ -43,6 +45,10 @@ class LoginPage extends React.Component {
     if (this.state.isFormValid) {
       this.props.loginUser(this.state.email, this.state.password)
     }
+    // after first time hitting Login button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
   }
 
   handleFieldChange = (newValue, name) => {
@@ -55,8 +61,8 @@ class LoginPage extends React.Component {
   }
 
   render () {
-    const isEmailFieldError = !this.validateEmail(this.state.email) || this.props.isError
-    const isPasswordFieldError = !this.validatePassword(this.state.password) || this.props.isError
+    const isEmailFieldError = (!this.validateEmail(this.state.email) || this.props.isError) && this.state.showValidationError
+    const isPasswordFieldError = (!this.validatePassword(this.state.password) || this.props.isError) && this.state.showValidationError
     const invalidCredentialsErrorMessage = I18n.t('common.errors.invalid_credentials')
     const emailFieldErrorMessage = this.props.isError ? invalidCredentialsErrorMessage : I18n.t(
       'common.errors.incorrect_email')
@@ -74,6 +80,8 @@ class LoginPage extends React.Component {
               <View style={ styles.inputContainer }>
                 <InputValidated value={ this.state.email }
                                 isError={ isEmailFieldError }
+                                overrideStatus={ !this.state.showValidationError }
+                                overrideStatusType={'regular'}
                                 errorMessage={ emailFieldErrorMessage }
                                 keyboardType='email-address'
                                 labelText={ I18n.t('login_page.email_placeholder').toUpperCase() }
@@ -84,6 +92,8 @@ class LoginPage extends React.Component {
                 <InputValidated value={ this.state.password }
                                 isSecure
                                 isError={ isPasswordFieldError }
+                                overrideStatus={ !this.state.showValidationError }
+                                overrideStatusType={'regular'}
                                 errorMessage={ passwordFieldErrorMessage }
                                 labelText={ I18n.t('login_page.password_placeholder').toUpperCase() }
                                 placeholder='********'
@@ -94,7 +104,7 @@ class LoginPage extends React.Component {
               </View>
               <View style={ styles.button }>
                 <BlackButton
-                  disabled={ !this.state.isFormValid }
+                  disabled={ this.state.showValidationError && !this.state.isFormValid }
                   text={ I18n.t('login_page.button') }
                   onPress={ () => this.handleSubmit() }/>
               </View>
@@ -123,62 +133,6 @@ class LoginPage extends React.Component {
     )
   }
 }
-
-const styles = EStyleSheet.create({
-  contentContainer: {
-    marginTop: 32,
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 24
-  },
-  textStyling: {
-    flex: 1,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingTop: 24,
-    paddingBottom: 24
-  },
-  inputContainer: {
-    marginBottom: 24
-  },
-  button: {
-    marginTop: 32,
-    flex: 0
-  },
-  login: {
-    fontFamily: 'Montserrat-SemiBold',
-    fontSize: 16,
-    textDecorationLine: 'underline',
-    marginLeft: 16
-  },
-  lunaContainer: {
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginTop: 16,
-    marginBottom: 16,
-    marginLeft: 16,
-    marginRight: 16
-  },
-  signup: {
-    fontFamily: 'Montserrat-SemiBold',
-    fontSize: 16,
-    textDecorationLine: 'underline',
-    marginLeft: 16
-  },
-  policyAndConditionsWrapper: {
-    flex: 1,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  policyAndConditions: {
-    fontFamily: 'Montserrat-SemiBold',
-    fontSize: 14,
-    textDecorationLine: 'underline',
-    marginRight: 8
-  }
-})
 
 const mapStateToProps = state => {
   return {

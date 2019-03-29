@@ -1,6 +1,5 @@
 import { fromCca2ToCountryObject } from '../common/countryParser'
-import { ROLES } from '../enums'
-import { PREFILL_EDIT } from '../profile/action-types'
+import { PREFILL_EDIT, PREFILL_EDIT_JOB } from '../profile/action-types'
 import {
   CLEAR,
   CLEAR_LOGIN_USER_ERROR,
@@ -69,7 +68,19 @@ const initialState = {
     imageUrl: ''
   },
   employer: {
-    roles: []
+    role: -1,
+    keywords: '',
+    link: '',
+    description: '',
+    partTime: false,
+    payments: [],
+    location: [],
+    country: {
+      cca2: 'US',
+      countryName: 'United States of America',
+      callingCode: '1'
+    },
+    city: ''
   },
   employee: {
     role: -1,
@@ -84,7 +95,8 @@ const initialState = {
     city: '',
     age: '',
     experience: ''
-  }
+  },
+  isEditing: false
 }
 
 export function signUpReducer (state = initialState, action) {
@@ -143,36 +155,6 @@ export function signUpReducer (state = initialState, action) {
         }
       }
     case SAVE_PROFILE_EMPLOYER:
-      if (action.employerInfo.roles) {
-        const jobs = {}
-        action.employerInfo.roles.forEach(role => {
-          const jobName = ROLES.find(job => job.index === role).slug
-          jobs[ jobName ] = state.employer[ jobName ] ? state.employer[ jobName ] : {
-            keywords: '',
-            link: '',
-            description: '',
-            partTime: false,
-            payments: [],
-            location: [],
-            country: {
-              cca2: 'US',
-              countryName: 'United States of America',
-              callingCode: '1'
-            },
-            city: ''
-          }
-        })
-
-        return {
-          ...state,
-          employer: {
-            ...jobs,
-            ...state.employer,
-            roles: action.employerInfo.roles
-          }
-        }
-      }
-
       return {
         ...state,
         employer: {
@@ -224,9 +206,26 @@ export function signUpReducer (state = initialState, action) {
           }
         }
       }
+    case PREFILL_EDIT_JOB:
+      return {
+        ...state,
+        isEditing: action.data.prefill,
+        profile: {
+          ...state.profile,
+          type: action.data.role
+        },
+        employer:
+          action.data.prefill ? {
+              ...state.employer,
+              ...fillData('employer', action.data.info),
+              edit: action.data.prefill
+            }
+            : initialState.employer,
+      }
     case PREFILL_EDIT:
       return {
         ...state,
+        isEditing: action.data.prefill,
         profile: {
           ...state.profile,
           type: action.data.role
@@ -236,9 +235,12 @@ export function signUpReducer (state = initialState, action) {
               ...state[ action.data.role ],
               ...fillData(action.data.role, action.data.info)
             }
-            : initialState[action.data.role],
+            : initialState[ action.data.role ],
         employer: action.data.role === 'investee'
-          ? (action.data.prefill ? { ...state[ 'employer' ], ...fillData('employer', action.data.info) } : initialState['employer'])
+          ? (action.data.prefill ? {
+            ...state[ 'employer' ], ...fillData('employer',
+              action.data.info)
+          } : initialState[ 'employer' ])
           : state.employer
       }
     case CLEAR:
@@ -302,26 +304,17 @@ function fillData (role, info) {
         experience: info.age ? String(info.experience) : ''
       }
     case 'employer':
-      const {jobListings } = info
-      const roles = jobListings.map(job => job.role)
-      const jobs = {}
-      roles.forEach(role => {
-        const jobName = ROLES.find(job => job.index === role).slug
-        const jobInfo = jobListings.find(job => job.role === role)
-        jobs[ jobName ] = {
-          keywords: jobInfo.skillsText,
-          link: jobInfo.link,
-          description: jobInfo.description,
-          partTime: jobInfo.partTime,
-          payments: jobInfo.payments,
-          location: jobInfo.localRemoteOptions,
-          country: fromCca2ToCountryObject(info.country || 'KR'),
-          city: jobInfo.city
-        }
-      })
       return {
-        roles: jobListings.map(job => job.role),
-        ...jobs
+        keywords: info.skillsText,
+        link: info.link,
+        description: info.description,
+        partTime: info.partTime,
+        payments: info.payments,
+        location: info.localRemoteOptions,
+        country: fromCca2ToCountryObject(info.country || 'KR'),
+        city: info.city,
+        role: info.role,
+        id: info.id
       }
   }
 }

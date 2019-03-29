@@ -3,11 +3,9 @@ import I18n from '../../locales/i18n'
 import * as api from '../api/api'
 
 import { getErrorDataFromNetworkException, isNetworkUnavailable } from '../common/utils'
-import { ROLES } from '../enums'
 import { CLEAR as FILTER_CLEAR } from '../filters/action-types'
 import { globalActions } from '../global'
 import { PAGES_NAMES } from '../navigation'
-import { CLEAR as NOTIFICATION_CLEAR } from '../notifications/action-types'
 import {
   CLEAR as PROFILE_CLEAR,
   PROPAGATE_INVESTOR_PROFILE,
@@ -15,7 +13,6 @@ import {
   PROPAGATE_PROJECT_PROFILE
 } from '../profile/action-types'
 import { deactivateProfile, fetchProfiles } from '../profile/actions'
-import { fetchConferenceSchedule } from '../schedule/actions'
 
 import {
   CLEAR as SEARCH_CLEAR,
@@ -26,7 +23,6 @@ import {
   PROPAGATE_PROJECT_DEFAULTS,
   PROPAGATE_PROJECT_SEARCH
 } from '../search/action-types'
-import { fetchDefaults } from '../search/actions'
 import { navigationService, storageService } from '../services'
 import {
   CLEAR as SIGNUP_CLEAR,
@@ -41,6 +37,11 @@ import {
   SAVE_PROFILE_INVESTEE,
   SIGN_UP_USER_ERROR
 } from './action-types'
+
+import { searchService, profileService, scheduleService } from '../services'
+import { fetchDefaultsSuccess } from '../search/actions'
+import { fetchProfilesSuccess } from '../profile/actions'
+import { fetchConferenceScheduleSuccess } from '../schedule/actions'
 
 const TOKEN_NAME = 'AUTH-TOKEN'
 
@@ -76,7 +77,7 @@ export function uploadProfile () {
   return async (dispatch, getState) => {
     try {
       const flow = getState().signUp
-      const { profile: { type, ...profileRest }, investor, investee, employer, employee } = flow
+      const { profile: { type }, investor, investee, employer, employee } = flow
       switch (type) {
         case 'investee': {
           await api.createInvestee({
@@ -100,29 +101,11 @@ export function uploadProfile () {
             regionOtherText: investee.regionOtherText,
             imageUrl: investee.imageUrl
           })
-          if (investee.hiring) {
-            const { roles, ...jobs } = employer
-            const jobsArray = Object.keys(jobs).map(key => {
-              const job = employer[ key ]
-              return {
-                role: ROLES.find(role => role.slug === key).index,
-                skillsText: job.keywords,
-                link: job.link,
-                description: job.description,
-                partTime: job.partTime,
-                payments: job.payments,
-                localRemoteOptions: job.location,
-                country: job.country ? job.country.cca2 : '',
-                city: job.city
-              }
-            })
-            await api.createJob({ jobs: jobsArray })
-          }
-          const {data} = await api.fetchMyProject()
-          dispatch({ type: PROPAGATE_PROJECT_PROFILE, data})
+          const { data } = await api.fetchMyProject()
+          dispatch({ type: PROPAGATE_PROJECT_PROFILE, data })
           dispatch({ type: PROPAGATE_PROJECT_SEARCH, data })
           dispatch({ type: PROPAGATE_PROJECT_DEFAULTS, data })
-          return data
+          break;
         }
         case 'investor': {
           const { data } = await api.createInvestor({
@@ -135,10 +118,42 @@ export function uploadProfile () {
             nationality: investor.nationality ? investor.nationality.cca2 : '',
             regionOtherText: investor.regionOtherText
           })
-          dispatch({ type: PROPAGATE_INVESTOR_PROFILE, data})
+          dispatch({ type: PROPAGATE_INVESTOR_PROFILE, data })
           dispatch({ type: PROPAGATE_INVESTOR_SEARCH, data })
           dispatch({ type: PROPAGATE_INVESTOR_DEFAULTS, data })
-          return data
+          break;
+        }
+        case 'employer': {
+          if(employer.edit){
+            await api.updateJob(employer.id, {
+              role: employer.role,
+              skillsText: employer.keywords,
+              link: employer.link,
+              description: employer.description,
+              partTime: employer.partTime,
+              payments: employer.payments,
+              localRemoteOptions: employer.location,
+              country: employer.country ? employer.country.cca2 : '',
+              city: employer.city
+            })
+          } else {
+            await api.createJob({
+              role: employer.role,
+              skillsText: employer.keywords,
+              link: employer.link,
+              description: employer.description,
+              partTime: employer.partTime,
+              payments: employer.payments,
+              localRemoteOptions: employer.location,
+              country: employer.country ? employer.country.cca2 : '',
+              city: employer.city
+            })
+          }
+          const { data } = await api.fetchMyProject()
+          dispatch({ type: PROPAGATE_PROJECT_PROFILE, data })
+          dispatch({ type: PROPAGATE_PROJECT_SEARCH, data })
+          dispatch({ type: PROPAGATE_PROJECT_DEFAULTS, data })
+          break;
         }
         case 'employee': {
           if (employee.lookingForJob) {
@@ -155,7 +170,7 @@ export function uploadProfile () {
               age: employee.age,
               experience: employee.experience
             })
-            dispatch({ type: PROPAGATE_PROFESSIONAL_PROFILE, data})
+            dispatch({ type: PROPAGATE_PROFESSIONAL_PROFILE, data })
             dispatch({ type: PROPAGATE_PROFESSIONAL_SEARCH, data })
             dispatch({ type: PROPAGATE_PROFESSIONAL_DEFAULTS, data })
             return data
@@ -164,7 +179,7 @@ export function uploadProfile () {
               await dispatch(deactivateProfile())
             }
           }
-          break
+          break;
         }
       }
     } catch (err) {
@@ -232,9 +247,14 @@ export const login = (username, password, redirectPage) => async dispatch => {
     await storageService.removeItem(TOKEN_NAME)
     await storageService.setItem(TOKEN_NAME, token)
     dispatch(loginInSuccess())
-    dispatch(fetchDefaults())
-    dispatch(fetchProfiles())
-    dispatch(fetchConferenceSchedule())
+    const [
+      [ searchDefaultsProject, searchDefaultsInvestor, searchDefaultsProfessional ],
+      [ profileInfoProject, profileInfoInvestor, profileInfoProfessional, profileInfoBasic ],
+      schedule 
+    ] = await Promise.all([searchService.fetchDefaults(), profileService.fetchProfileInfo(), scheduleService.fetchSchedule()])
+    dispatch(fetchDefaultsSuccess(searchDefaultsProject.data, searchDefaultsInvestor.data, searchDefaultsProfessional.data))
+    dispatch(fetchProfilesSuccess(profileInfoProject.data, profileInfoInvestor.data, profileInfoProfessional.data, profileInfoBasic.data))
+    dispatch(fetchConferenceScheduleSuccess(schedule))
     navigationService.navigate(redirectPage)
   } catch (err) {
     let errorData = {}
@@ -273,21 +293,15 @@ export function saveProfileOnboardingInfo (profileInfo, redirectPage) {
 }
 
 export const logout = () => async dispatch => {
-  try {
-    dispatch(globalActions.setGlobalLoading(I18n.t('common.spinner.logout')))
-    await storageService.removeItem(TOKEN_NAME)
-    await navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
-    dispatch(batchActions([
-      { type: SIGNUP_CLEAR },
-      { type: SEARCH_CLEAR },
-      { type: PROFILE_CLEAR },
-      { type: NOTIFICATION_CLEAR },
-      { type: FILTER_CLEAR },
-      globalActions.setGlobalLoading(I18n.t('common.spinner.clear'))
-    ]))
-  } catch (err) {
-
-  } finally {
-    dispatch(globalActions.unsetGlobalLoading())
-  }
+  dispatch(globalActions.setGlobalLoading(I18n.t('common.spinner.logout')))
+  await storageService.removeItem(TOKEN_NAME)
+  await navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
+  dispatch(batchActions([
+    { type: SIGNUP_CLEAR },
+    { type: SEARCH_CLEAR },
+    { type: PROFILE_CLEAR },
+    { type: FILTER_CLEAR },
+    globalActions.setGlobalLoading(I18n.t('common.spinner.clear'))
+  ]))
+  dispatch(globalActions.unsetGlobalLoading())
 }

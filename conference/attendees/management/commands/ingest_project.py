@@ -219,6 +219,12 @@ class Command(BaseCommand):
         project.token_type = token_type
         project.save()
 
+    def get_or_none(self, model, *args, **kwargs):
+        try:
+            return model.objects.get(*args, **kwargs)
+        except model.DoesNotExist:
+            return None
+
     def add_project_member(self, email, project):
         self.members += 1
         user = self.get_or_none(User, email=email)
@@ -238,7 +244,7 @@ class Command(BaseCommand):
         values = {}
 
         for raw_line in project_lines:
-            line = raw_line.strip("\n")
+            line = raw_line.strip()
             if line.endswith(":"):
                 # Ensure empty fields still match the regexes
                 line += " "
@@ -247,7 +253,7 @@ class Command(BaseCommand):
                 if match:
                     values[key] = match.group(1)
 
-        project_name = values[PROJECT_NAME].capitalize()
+        project_name = values[PROJECT_NAME].title()
 
         industry_string = values[INDUSTRY]
         industry = self.industries[industry_string]

@@ -1,4 +1,4 @@
-import { View } from 'native-base'
+import { Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
@@ -20,7 +20,10 @@ class InvesteeProductStage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: this.props.investee.productStage
+      selected: this.props.investee.productStage,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.investee.productStage !== -1
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -48,12 +51,19 @@ class InvesteeProductStage extends React.Component {
                 />
               )
             }) }
+            {this.state.showValidationError && this.state.selected === -1 && (
+                <View style={ { margin: 8 } }>
+                  <Text style={ { color: 'red', alignSelf: 'center' } }>
+                    {I18n.t('flow_page.product_stage.error_missing_product_stage')}
+                  </Text>
+                </View>
+            )}
           </ScrollView>
         </View>
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={!this.state.isFormValid}
+            disabled={ this.state.showValidationError && !this.state.isFormValid}
             onPress={ this.handleSubmit }
           />
         </View>
@@ -71,12 +81,18 @@ class InvesteeProductStage extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.save({
-      productStage: this.state.selected
-    })
-    this.props.onFill({
-      nextStep: InvesteeFundingStage
-    })
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (this.state.isFormValid) {
+      this.props.save({
+        productStage: this.state.selected
+      })
+      this.props.onFill({
+        nextStep: InvesteeFundingStage
+      })
+    }
   }
 
   handleChange = (index) => {

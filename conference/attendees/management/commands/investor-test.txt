@@ -19,7 +19,7 @@ Security Tokens: true
 Seed: true
 Pre-ICO: true
 Post-ICO: false
-Looking to receive: Tokens
+Looking to receive: Both
 PRE_PRODUCT: false
 LIVE_PRODUCT: false
 LIVE_PRODUCT_WITH_REVENUE: true

@@ -1,7 +1,6 @@
-import { Switch, Text, View } from 'native-base'
+import { Text, View } from 'native-base'
 import React from 'react'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { BAR_COLOR, SECONDARY_COLOR } from './constants'
 
 export function StepTitle ({ text = '', textStyle = {} }) {
   return (

@@ -1,10 +1,10 @@
 import { Container, Content, Text } from 'native-base'
 import React, { Component } from 'react'
 import { Linking, View } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
 import { SafeAreaView } from 'react-navigation'
 import BlackLogo from '../../../assets/logos/ico_black.png'
 import { NavigationHeader } from '../../components/header/header'
+import { terms as styles} from '../../styles/common'
 
 class PrivacyPolicyPage extends Component {
 
@@ -379,52 +379,5 @@ class PrivacyPolicyPage extends Component {
     )
   }
 }
-
-const styles = EStyleSheet.create({
-  contentContainer: {
-    marginTop: 32,
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 24
-  },
-  mainContainer: {
-    backgroundColor: '#FFFFFF'
-  },
-  description: {
-    fontFamily: 'Arial',
-    fontSize: 12,
-    color: '#000000',
-    textAlign: 'justify'
-  },
-  sectionHeader: {
-    fontFamily: 'Arial',
-    fontSize: 16,
-    marginTop: 8,
-    marginBottom: 8,
-    textAlign: 'left',
-    color: '#005F9F'
-  },
-  sectionBold: {
-    fontFamily: 'Arial',
-    fontSize: 16,
-    marginTop: 8,
-    marginBottom: 8,
-    color: '#000000',
-    fontWeight: 'bold'
-  },
-  sectionIndent: {
-    fontFamily: 'Arial',
-    fontSize: 12,
-    color: '#000000',
-    textAlign: 'justify',
-    marginLeft: 16,
-    marginBottom: 8
-  },
-  emailAddress: {
-    fontFamily: 'Arial',
-    fontSize: 12,
-    color: '#005F9F'
-  }
-})
 
 export default PrivacyPolicyPage

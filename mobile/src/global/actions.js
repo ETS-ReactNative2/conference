@@ -1,6 +1,5 @@
 import * as api from '../api/api'
 import { getErrorDataFromNetworkException } from '../common/utils'
-import I18n from '../../locales/i18n'
 import {
   HIDE_MESSAGE,
   SEND_MESSAGE_ERROR,

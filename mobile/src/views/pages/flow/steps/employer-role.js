@@ -1,4 +1,4 @@
-import { View } from 'native-base'
+import { Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
@@ -19,7 +19,10 @@ class EmployerRole extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      roles: this.props.employer.roles
+      role: this.props.employer.role,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.employer.role !== -1
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -44,11 +47,18 @@ class EmployerRole extends React.Component {
               })
             }
           </View>
+          { this.state.showValidationError && this.state.role === -1 && (
+            <View style={ { marginTop: 8 } }>
+              <Text style={ { color: 'red', alignSelf: 'center' } }>
+                {I18n.t('flow_page.employer.role.error_missing_role')}
+              </Text>
+            </View>
+          )}
         </ScrollView>
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={ !this.state.isFormValid }
+            disabled={ this.state.showValidationError && !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />
         </View>
@@ -57,7 +67,7 @@ class EmployerRole extends React.Component {
   }
 
   isFormValid = () => {
-    return this.state.roles.length > 0
+    return this.state.role !== -1
   }
 
   validateForm = () => {
@@ -66,27 +76,26 @@ class EmployerRole extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.save({
-      roles: this.state.roles
-    })
-    this.props.onFill({
-      nextStep: EmployerJobs
-    })
-  }
-  
-  handleCheckboxClick = index => {
-    let roles = [ ...this.state.roles ]
-    const roleIndex = roles.indexOf(index)
-    if (roleIndex !== -1) {
-      roles = roles.filter(role => role !== index)
-    } else {
-      roles.push(index)
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
     }
-    this.setState({ roles }, this.validateForm)
+    if (this.state.isFormValid) {
+      this.props.save({
+        role: this.state.role
+      })
+      this.props.onFill({
+        nextStep: EmployerJobs
+      })
+    }
+  }
+
+  handleCheckboxClick = index => {
+    this.setState({ role: index }, this.validateForm)
   }
 
   isCheckboxSelected = index => {
-    return this.state.roles.indexOf(index) !== -1
+    return this.state.role === index
   }
 }
 

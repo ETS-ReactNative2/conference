@@ -32,16 +32,13 @@ export default class JobsPage extends Component {
     Dimensions.removeEventListener('change', this.handleDimensionsChange)
   }
 
-  handleDimensionsChange = () => {
-    this.forceUpdate()
-  }
+  handleDimensionsChange = this.forceUpdate
 
   render () {
     const { itemWidth, sliderWidth } = getDimensions()
     const project = this.props.navigation.getParam('project')
     const jobs = project.jobListings.map(jb => {
       const { id, imageUrl, name } = project
-      console.log({jb, id, imageUrl, name})
       return {
         ...jb,
         project: {
@@ -72,16 +69,7 @@ export default class JobsPage extends Component {
                 sliderWidth={ sliderWidth }
                 itemWidth={ itemWidth }
                 firstItem={ currentIndex }
-                onBeforeSnapToItem={ index => this.setState({ currentIndex: index }) }
               />
-              { jobs.length < 8 &&
-                <Pagination
-                  dotColor={ 'rgba(255, 255, 255, 0.95)' }
-                  inactiveDotColor={ 'rgba(255,255,255,0.75)' }
-                  dotsLength={ jobs.length }
-                  activeDotIndex={ currentIndex }
-                />
-              }
             </React.Fragment>
           </View>
         </ScrollView>

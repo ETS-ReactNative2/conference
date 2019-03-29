@@ -176,11 +176,23 @@ export async function leaveProject () {
   })
 }
 
-export async function createJob ({ jobs }) {
+export async function createJob (job) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.post(
+    '/api/my_project/jobs/',
+    decamelizeKeys(job),
+    {
+      headers: {
+        'X-Authorization': `Bearer ${token}`
+      }
+    })
+}
+
+export async function updateJob (id, job) {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.put(
-    '/api/my_project/jobs/',
-    decamelizeKeys({ jobs }),
+    `/api/my_project/jobs/${id}/`,
+    decamelizeKeys(job),
     {
       headers: {
         'X-Authorization': `Bearer ${token}`
@@ -348,45 +360,6 @@ export async function deleteMyProjectMembersId ({ id }) {
   })
 }
 
-export async function getProfessionals (filters) {
-  const token = await storageService.getItem(TOKEN_NAME)
-  return axios.get('/api/professionals/', {
-    params: filters,
-    paramsSerializer: params => transformRequestOptions(params),
-    headers: {
-      'X-Authorization': `Bearer ${token}`
-    }
-  })
-}
-
-export async function fetchNotifications () {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // For testing errors
-      Math.random() >= 0.5 ?
-        reject('error') :
-        resolve({
-          data: [
-            {
-              id: 1,
-              title: 'New olaboga',
-              content: 'Datata lorem ipsum lorem ipsum',
-              time: new Date(),
-              isRead: false
-            },
-            {
-              id: 2,
-              title: 'New olaboga',
-              content: 'Datata lorem ipsum lorem ipsum',
-              time: new Date(),
-              isRead: false
-            }
-          ]
-        })
-    }, 3000)
-  })
-}
-
 const transformRequestOptions = params => {
   let options = ''
   for (const key in params) {
@@ -487,6 +460,16 @@ export async function fetchProfessionalFilter () {
 export async function fetchJobsFilter () {
   const token = await storageService.getItem(TOKEN_NAME)
   return axios.get('/api/jobs/defaults/', {
+    headers: {
+      'X-Authorization': `Bearer ${ token }`,
+      Accept: 'application/json'
+    }
+  })
+}
+
+export async function deleteProjectJob (jobId) {
+  const token = await storageService.getItem(TOKEN_NAME)
+  return axios.delete(`/api/my_project/jobs/${jobId}/`, {
     headers: {
       'X-Authorization': `Bearer ${ token }`,
       Accept: 'application/json'

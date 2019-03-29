@@ -39,7 +39,10 @@ class EmployeeKeywords extends React.Component {
       country: this.props.employee.country,
       city: this.props.employee.city,
       age: this.props.employee.age,
-      experience: this.props.employee.experience
+      experience: this.props.employee.experience,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.employee.skills !== '' || this.props.employee.traits !== '' || this.props.employee.mostInfo !== ''
     }
     this.state.isFormValid = this.isFormValid()
   }
@@ -105,26 +108,32 @@ class EmployeeKeywords extends React.Component {
               />
               <View style={ { marginLeft: 8, marginRight: 8 } }>
                 <FlowInputValidated
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
                   floatingLabel
                   value={ this.state.skills }
                   labelText={ I18n.t('flow_page.employee.skills.placeholder') }
-                  isError={ !this.validateSkills(this.state.skills) }
+                  isError={ this.state.showValidationError && !this.validateSkills(this.state.skills) }
                   errorMessage={ I18n.t('flow_page.employee.skills.error') }
                   errorStyleOverride={ errorStyleOverride }
                   onChangeText={ (newValue) => this.handleFieldChange(newValue, 'skills') }/>
                 <FlowInputValidated
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
                   floatingLabel
                   value={ this.state.traits }
                   labelText={ I18n.t('flow_page.employee.traits.placeholder') }
-                  isError={ !this.validateTraits(this.state.traits) }
+                  isError={ this.state.showValidationError && !this.validateTraits(this.state.traits) }
                   errorMessage={ I18n.t('flow_page.employee.traits.error') }
                   errorStyleOverride={ errorStyleOverride }
                   onChangeText={ (newValue) => this.handleFieldChange(newValue, 'traits') }/>
                 <FlowInputValidated
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
                   floatingLabel
                   value={ this.state.mostInfo }
                   labelText={ I18n.t('flow_page.employee.most_info.placeholder') }
-                  isError={ !this.validateMostInfo(this.state.mostInfo) }
+                  isError={ this.state.showValidationError && !this.validateMostInfo(this.state.mostInfo) }
                   errorMessage={ I18n.t('flow_page.employee.most_info.error') }
                   errorStyleOverride={ errorStyleOverride }
                   onChangeText={ (newValue) => this.handleFieldChange(newValue, 'mostInfo') }/>
@@ -155,10 +164,12 @@ class EmployeeKeywords extends React.Component {
               />
               <View style={ { marginLeft: 8, marginRight: 8 } }>
                 <FlowInputValidated
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
                   floatingLabel
                   value={ this.state.city }
                   labelText={ I18n.t('flow_page.employee.job.city') }
-                  isError={ !this.validateJobCity(this.state.city) }
+                  isError={ this.state.showValidationError && !this.validateJobCity(this.state.city) }
                   errorMessage={ I18n.t('common.errors.incorrect_job_city') }
                   errorStyleOverride={ errorStyleOverride }
                   onChangeText={ (newValue) => this.handleFieldChange(newValue, 'city') }/>
@@ -169,25 +180,29 @@ class EmployeeKeywords extends React.Component {
               />
               <View style={ { marginLeft: 8, marginRight: 8 } }>
                 <FlowInputValidated
-                    floatingLabel
-                    keyboardType={'numeric'}
-                    value={ this.state.age }
-                    placeholder={ I18n.t('flow_page.employee.age.placeholder') }
-                    labelText={ I18n.t('flow_page.employee.age.placeholder') }
-                    isError={ !this.validateAge(this.state.age) }
-                    errorMessage={ I18n.t('flow_page.employee.age.error') }
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'age') } />
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
+                  floatingLabel
+                  keyboardType={'numeric'}
+                  value={ this.state.age }
+                  placeholder={ I18n.t('flow_page.employee.age.placeholder') }
+                  labelText={ I18n.t('flow_page.employee.age.placeholder') }
+                  isError={ this.state.showValidationError && !this.validateAge(this.state.age) }
+                  errorMessage={ I18n.t('flow_page.employee.age.error') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'age') } />
               </View>
               <View style={ { marginLeft: 8, marginRight: 8 } }>
                 <FlowInputValidated
-                    floatingLabel
-                    keyboardType={'numeric'}
-                    value={ this.state.experience }
-                    placeholder={ I18n.t('flow_page.employee.experience.placeholder') }
-                    labelText={ I18n.t('flow_page.employee.experience.placeholder') }
-                    isError={ !this.validateExperience(this.state.experience) }
-                    errorMessage={ I18n.t('flow_page.employee.experience.error') }
-                    onChangeText={ (newValue) => this.handleFieldChange(newValue, 'experience') } />
+                  overrideStatus={ !this.state.showValidationError }
+                  overrideStatusType={'regular'}
+                  floatingLabel
+                  keyboardType={'numeric'}
+                  value={ this.state.experience }
+                  placeholder={ I18n.t('flow_page.employee.experience.placeholder') }
+                  labelText={ I18n.t('flow_page.employee.experience.placeholder') }
+                  isError={ this.state.showValidationError && !this.validateExperience(this.state.experience) }
+                  errorMessage={ I18n.t('flow_page.employee.experience.error') }
+                  onChangeText={ (newValue) => this.handleFieldChange(newValue, 'experience') } />
               </View>
             </ScrollView>
           </KeyboardAvoidingView>
@@ -195,7 +210,7 @@ class EmployeeKeywords extends React.Component {
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={ !this.state.isFormValid }
+            disabled={ this.state.showValidationError && !this.state.isFormValid }
             onPress={ this.handleSubmit }
           />
         </View>
@@ -210,20 +225,26 @@ class EmployeeKeywords extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.save({
-      skills: this.state.skills,
-      traits: this.state.traits,
-      mostInfo: this.state.mostInfo,
-      relocate: this.state.relocate,
-      remote: this.state.remote,
-      country: this.state.country,
-      city: this.state.city,
-      age: this.state.age,
-      experience: this.state.experience
-    })
-    this.props.onFill({
-      done: true
-    })
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (this.state.isFormValid) {
+      this.props.save({
+        skills: this.state.skills,
+        traits: this.state.traits,
+        mostInfo: this.state.mostInfo,
+        relocate: this.state.relocate,
+        remote: this.state.remote,
+        country: this.state.country,
+        city: this.state.city,
+        age: this.state.age,
+        experience: this.state.experience
+      })
+      this.props.onFill({
+        done: true
+      })
+    }
   }
 }
 

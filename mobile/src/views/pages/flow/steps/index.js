@@ -14,7 +14,6 @@ export { default as InvesteeTokenType } from './investee-token-type'
 export { default as InvesteeGiveaway } from './investee-giveaway'
 export { default as InvesteeProjectLocation } from './investee-project-location'
 
-export { default as CommonProfileType } from './common-profile-type'
 export { default as InvestorCompanyLocation } from './investor-company-location'
 export { default as InvestorInvestIn } from './investor-invest-in'
 export { default as InvestorTicketSize } from './investor-ticket-size'

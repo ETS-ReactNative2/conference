@@ -12,7 +12,7 @@ import { PAGES_NAMES } from '../../../navigation'
 import { profileActions } from '../../../profile'
 import { signUpActions } from '../../../signup'
 import { NavigationHeader } from '../../components/header/header'
-import { EmployeeRole, InvesteeProjectSetup, InvestorCompanyLocation } from './steps'
+import { EmployeeRole, EmployerRole, InvesteeProjectSetup, InvestorCompanyLocation } from './steps'
 
 class FlowPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -71,6 +71,8 @@ class FlowPage extends React.Component {
         return InvestorCompanyLocation
       case 'investee':
         return InvesteeProjectSetup
+      case 'employer':
+        return EmployerRole
     }
   }
 
@@ -130,7 +132,17 @@ class FlowPage extends React.Component {
       try {
         await this.props.startLoading()
         await this.props.uploadProfile()
-        this.props.navigation.navigate(PAGES_NAMES.PROFILE_PAGE)
+        let pageToNavigateTo = PAGES_NAMES.PROFILE_PAGE
+        if (this.props.profileType === 'employer') {
+          pageToNavigateTo = PAGES_NAMES.PROJECT_JOB_LISTING
+        }
+        if (!this.props.isEditing && this.props.profileType === 'investor') {
+          pageToNavigateTo = PAGES_NAMES.INVESTOR_FLOW_CREATION_FINISH_PAGE
+        }
+        if (!this.props.isEditing && this.props.profileType === 'investee') {
+          pageToNavigateTo = PAGES_NAMES.PROJECT_FLOW_CREATION_FINISH_PAGE
+        }
+        this.props.navigation.navigate(pageToNavigateTo)
       } catch (err) {
         this.props.showAlertMessage(err)
       } finally {
@@ -170,6 +182,7 @@ class FlowPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    isEditing: state.signUp.isEditing,
     profileType: state.signUp.profile.type
   }
 }
@@ -177,7 +190,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     uploadProfile: () => dispatch(signUpActions.uploadProfile()),
-    fetchProfiles: () => dispatch(profileActions.fetchProfiles()),
     startLoading: () => dispatch(batchActions([ globalActions.hideAlert(),
     globalActions.setGlobalLoading(I18n.t('profile_page.upload_loader_text')) ])),
     showAlertMessage: errMessage => dispatch(globalActions.showAlertError(errMessage)),

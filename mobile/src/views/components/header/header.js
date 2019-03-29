@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, Platform, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import MapIcon from '../../../assets/icons/map-icon.png'
 
 export class Header extends React.Component {
   render () {
@@ -30,7 +31,7 @@ export class MapHeader extends React.Component {
         { ...this.props }
         left={
           <Button transparent onPress={ this.props.onMapClick }>
-            <Text style={ { color: 'white', textDecorationLine: 'underline' } }>Map</Text>
+            <Image style={ styles.mapIcon } source={ MapIcon }/>
           </Button>
         }
       />
@@ -74,6 +75,11 @@ const styles = EStyleSheet.create({
     marginRight: 8,
     width: 24,
     height: 24
+  },
+  mapIcon: {
+    width: 24,
+    height: 24,
+    marginLeft: 8
   },
   titleContainer: {
     flex: 3,

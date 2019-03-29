@@ -663,6 +663,35 @@
 		{
 			"name": "/api/my_project/jobs/",
 			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role\": 1,\n    \"skills_text\": \"skills1\",\n    \"link\": \"http://www.example.com/1\",\n    \"description\": \"description1\",\n    \"part_time\": true,\n    \"payments\": [1, 2, 3],\n    \"local_remote_options\": [1, 2],\n    \"country\": \"US\",\n    \"city\": \"Berkeley1\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/my_project/jobs/",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"my_project",
+						"jobs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/my_project/jobs/",
+			"request": {
 				"method": "PUT",
 				"header": [
 					{

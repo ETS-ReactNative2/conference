@@ -24,8 +24,8 @@ import ProjectMainFilterPage from '../views/pages/filters/project-main-filter-pa
 import ProfessionalMainFilterPage from '../views/pages/filters/professional-main-filter-page'
 import JobMainFilterPage from '../views/pages/filters/job-main-filter-page'
 import FlowPage from '../views/pages/flow/flow-page'
-import { CommonProfileType } from '../views/pages/flow/steps'
-import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/flow/steps/common-profile-onboarding'
+import CommonProfileOnboarding, { EditBasicInfo } from '../views/pages/onboarding/common-profile-onboarding'
+import { ProjectFlowFinishedPage, InvestorFlowFinishedPage } from '../views/pages/flow/steps/common-flow-finished-page'
 import HomePage from '../views/pages/home/home-page'
 import InvestorPage from '../views/pages/investor/investor-page'
 import LoginPage from '../views/pages/login/login-page'
@@ -37,12 +37,11 @@ import SearchPage from '../views/pages/search/search-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WebviewPage from '../views/pages/webview/webview-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
-import ProjectDescriptionPage from '../views/pages/project/project-description-page'
 import JobsPage from '../views/pages/job/jobs-page'
-import JobDescriptionPage from '../views/pages/job/job-description-page'
 import PrivacyPolicyPage from '../views/pages/privacy-policy/privacy-policy'
 import TermsOfServicePage from '../views/pages/terms-of-service/terms-of-service'
-import { PROJECT_FILTER_BACKGROUND_COLOR } from '../views/design/constants';
+import ProjectJobListingPage from '../views/pages/project/project-job-listing-page'
+import { PROJECT_FILTER_BACKGROUND_COLOR } from '../views/design/constants'
 
 const PAGES_NAMES = {
   WELCOME_PAGE: 'WELCOME_PAGE',
@@ -55,12 +54,10 @@ const PAGES_NAMES = {
   INVESTOR_PAGE: 'INVESTOR_PAGE',
   PROFESSIONAL_PAGE: 'PROFESSIONAL_PAGE',
   PROJECT_PAGE: 'PROJECT_PAGE',
-  PROJECT_DESCRIPTION_PAGE: 'PROJECT_DESCRIPTION_PAGE',
   PROJECT_MEMBERS_PAGE: 'PROJECT_MEMBERS_PAGE',
+  PROJECT_JOB_LISTING: 'PROJECT_JOB_LISTING',
   JOBS_PAGE: 'JOBS_PAGE',
-  JOB_DESCRIPTION_PAGE: 'JOB_DESCRIPTION_PAGE',
   PROFILE_ONBOARDING_PAGE: 'PROFILE_ONBOARDING_PAGE',
-  PROFILE_TYPE_PAGE: 'PROFILE_TYPE_PAGE',
   FILTER_PAGE: 'FILTER_PAGE',
   INVESTOR_MAIN_FILTER_PAGE: 'INVESTOR_MAIN_FILTER_PAGE',
   PROJECT_MAIN_FILTER_PAGE: 'PROJECT_MAIN_FILTER_PAGE',
@@ -70,7 +67,9 @@ const PAGES_NAMES = {
   PROFILE_PAGE: 'PROFILE_PAGE',
   EDIT_BASIC_PROFILE: 'EDIT_BASIC_PROFILE',
   PRIVACY_POLICY_PAGE: 'PRIVACY_POLICY_PAGE',
-  TERMS_OF_SERVICE_PAGE: 'TERMS_OF_SERVICE_PAGE'
+  TERMS_OF_SERVICE_PAGE: 'TERMS_OF_SERVICE_PAGE',
+  PROJECT_FLOW_CREATION_FINISH_PAGE: 'PROJECT_FLOW_CREATION_FINISH_PAGE',
+  INVESTOR_FLOW_CREATION_FINISH_PAGE: 'INVESTOR_FLOW_CREATION_FINISH_PAGE'
 }
 
 const commonNavBarStyle = {
@@ -98,7 +97,7 @@ const flowNavbarStyle = {
 const DrawerStack = createBottomTabNavigator({
     HOME_PAGE: {
       screen: HomePage,
-      navigationOptions: ({ navigation }) => ({
+      navigationOptions: () => ({
         title: I18n.t('navigator.home'),
         tabBarIcon: ({ focused }) => {
           return <Image style={ { width: 20, height: 20 } } source={ focused ? TriangleRed : TriangleBlack }/>
@@ -108,7 +107,7 @@ const DrawerStack = createBottomTabNavigator({
     },
     AGENDA_PAGE: {
       screen: AgendaPage,
-      navigationOptions: ({ navigation }) => ({
+      navigationOptions: () => ({
         title: I18n.t('navigator.conference'),
         tabBarIcon: ({ focused }) => {
           return <Image style={ { width: 20, height: 22 } } source={ focused ? PolygonRed : PolygonBlack }/>
@@ -117,7 +116,7 @@ const DrawerStack = createBottomTabNavigator({
     },
     SEARCH_PAGE: {
       screen: SearchPage,
-      navigationOptions: ({ navigation }) => ({
+      navigationOptions: () => ({
         title: I18n.t('navigator.search'),
         tabBarIcon: ({ focused }) => {
           return <Image style={ { width: 22, height: 22 } } source={ focused ? GlassRed : GlassBlack }/>
@@ -126,7 +125,7 @@ const DrawerStack = createBottomTabNavigator({
     },
     PROFILE_PAGE: {
       screen: ProfilePage,
-      navigationOptions: ({ navigation }) => ({
+      navigationOptions: () => ({
         title: I18n.t('navigator.profile'),
         tabBarIcon: ({ focused }) => {
           return <Image style={ { width: 20, height: 20 } } source={ focused ? RectangleRed : RectangleBlack }/>
@@ -173,13 +172,6 @@ const AppStackNavigator = createStackNavigator({
   },
   PROFILE_ONBOARDING_PAGE: {
     screen: CommonProfileOnboarding,
-    navigationOptions: () => ({
-      header: null,
-      gesturesEnabled: false
-    })
-  },
-  PROFILE_TYPE_PAGE: {
-    screen: CommonProfileType,
     navigationOptions: () => ({
       header: null,
       gesturesEnabled: false
@@ -254,14 +246,6 @@ const AppStackNavigator = createStackNavigator({
       gesturesEnabled: false
     })
   },
-  PROJECT_DESCRIPTION_PAGE: {
-    screen: ProjectDescriptionPage,
-    navigationOptions: () => ({
-      ...commonNavBarStyle,
-      header: null,
-      gesturesEnabled: false
-    })
-  },
   PROJECT_MEMBERS_PAGE: {
     screen: ProjectMembersPage,
     navigationOptions: () => ({
@@ -270,16 +254,16 @@ const AppStackNavigator = createStackNavigator({
       gesturesEnabled: false
     })
   },
-  JOBS_PAGE: {
-    screen: JobsPage,
+  PROJECT_JOB_LISTING: {
+    screen: ProjectJobListingPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
       header: null,
       gesturesEnabled: false
     })
   },
-  JOB_DESCRIPTION_PAGE: {
-    screen: JobDescriptionPage,
+  JOBS_PAGE: {
+    screen: JobsPage,
     navigationOptions: () => ({
       ...commonNavBarStyle,
       header: null,
@@ -346,6 +330,20 @@ const AppStackNavigator = createStackNavigator({
   },
   TERMS_OF_SERVICE_PAGE: {
     screen: TermsOfServicePage,
+    navigationOptions: () => ({
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  PROJECT_FLOW_CREATION_FINISH_PAGE: {
+    screen: ProjectFlowFinishedPage,
+    navigationOptions: () => ({
+      header: null,
+      gesturesEnabled: false
+    })
+  },
+  INVESTOR_FLOW_CREATION_FINISH_PAGE: {
+    screen: InvestorFlowFinishedPage,
     navigationOptions: () => ({
       header: null,
       gesturesEnabled: false

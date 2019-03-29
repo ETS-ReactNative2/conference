@@ -28,28 +28,23 @@ class ProfilePage extends React.Component {
     this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
   }
 
-  handleProjectCreate = (devMode = false) => {
-    if (devMode) {
+  handleProjectCreate = () => {
       this.props.openEdit('project', false)
       this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
-    }
-    else {
-      this.openLink('https://www.blockseoul.com/projects')
-    }
   }
 
   handleProjectManage = () => {
     this.props.navigation.navigate(PAGES_NAMES.PROJECT_MEMBERS_PAGE)
   }
 
-  handleInvestorCreate = (devMode = false) => {
-    if (devMode) {
-      this.props.openEdit('investor', false)
-      this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
-    }
-    else {
-      this.openLink('https://www.blockseoul.com/investors')
-    }
+  handleProjectJobListing = () => {
+    this.props.navigation.navigate(PAGES_NAMES.PROJECT_JOB_LISTING)
+  }
+
+
+  handleInvestorCreate = () => {
+    this.props.openEdit('investor', false)
+    this.props.navigation.navigate(PAGES_NAMES.FLOW_PAGE)
   }
 
   handleOpenProfessionalDetails = () => {
@@ -93,7 +88,7 @@ class ProfilePage extends React.Component {
       I18n.t('profile_page.leave_project'),
       I18n.t('profile_page.leave_project_confirm'),
       [
-        { text: I18n.t('common.cancel'), onPress: () => console.log('Cancel to leave the project') },
+        { text: I18n.t('common.cancel'), onPress: () => {} },
         { text: I18n.t('common.ok'), onPress: () => this.props.leaveProject() },
       ],
       { cancelable: false }
@@ -177,17 +172,13 @@ class ProfilePage extends React.Component {
                       <ProfileWhiteButton onPress={ this.handleOpenProjectDetails } text={ I18n.t('common.view') }/>
                       <ProfileWhiteButton onPress={ this.handleEditProject } text={ I18n.t('common.edit') }/>
                       <ProfileWhiteButton onPress={ this.handleProjectManage } text={ I18n.t('common.manage') }/>
+                      <ProfileWhiteButton onPress={ this.handleProjectJobListing } text={ I18n.t('common.job_listing') }/>
                       <ProfileWhiteButton onPress={ this.handleLeaveProject } text={ I18n.t('common.leave') }/>
                     </React.Fragment>
                   ) }
                   { !this.props.project && (
-                    <React.Fragment>
-                      <ProfileWhiteButton onPress={ () => this.handleProjectCreate(false) }
-                                          text={ I18n.t('common.create') }/>
-                      { getBoolean(Config.APP_DEV_FLOW) && (
-                        <ProfileWhiteButton onPress={ () => this.handleProjectCreate(true) } text={ 'DEV_CREATE' }/>
-                      ) }
-                    </React.Fragment>
+                    <ProfileWhiteButton onPress={ () => this.handleProjectCreate() }
+                                        text={ I18n.t('common.create') }/>
                   ) }
                 </View>
               </View>
@@ -213,13 +204,8 @@ class ProfilePage extends React.Component {
                     </React.Fragment>
                   ) }
                   { !this.props.investor && (
-                    <React.Fragment>
-                      <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(false) }
-                                          text={ I18n.t('common.create') }/>
-                      { getBoolean(Config.APP_DEV_FLOW) && (
-                        <ProfileWhiteButton onPress={ () => this.handleInvestorCreate(true) } text={ 'DEV_CREATE' }/>
-                      ) }
-                    </React.Fragment>
+                    <ProfileWhiteButton onPress={ () => this.handleInvestorCreate() }
+                                        text={ I18n.t('common.create') }/>
                   ) }
                 </View>
                 {
@@ -289,14 +275,8 @@ const styles = EStyleSheet.create({
 })
 
 ProfilePage.propTypes = {
-  logout: PropTypes.func.isRequired,
-  fetchProfiles: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired
 }
-
-function getBoolean(stringBool){
-  return stringBool === 'true'
-}
-
 
 const mapStateToProps = state => {
   return {
@@ -310,7 +290,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     logout: () => dispatch(signUpActions.logout()),
-    fetchProfiles: () => dispatch(profileActions.fetchProfiles()),
     deactivateProfile: () => dispatch(profileActions.deactivateProfile()),
     deactivateInvestor: () => dispatch(profileActions.deactivateInvestor()),
     leaveProject: () => dispatch(profileActions.leaveProject()),

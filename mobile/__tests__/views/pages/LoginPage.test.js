@@ -39,13 +39,13 @@ describe('LoginPage Component', () => {
         expect(wrapper).not.toBe(null)
       });
       
-      it('renders login button as disabled by default', () => {
+      it('renders login button as enabled by default', () => {
           const navigation = { navigate: jest.fn() }
           const callbackMock = jest.fn()
           const wrapper = shallow(<LoginPage navigation={navigation} onSubmit={ callbackMock } store={store}/>).dive()
           const loginButton = wrapper.find(BlackButton).first()
           const loginButtonProps = loginButton.props()
-          expect(loginButtonProps.disabled).toBeTruthy()
+          expect(loginButtonProps.disabled).toBeFalsy()
       });
       
       it('onSubmit callback should not be called when button is disabled', () => {
@@ -69,7 +69,10 @@ describe('LoginPage Component', () => {
           wrapper.update()
           const loginButton = wrapper.find(BlackButton).first()
           const loginButtonProps = loginButton.props()
-          expect(loginButtonProps.disabled).toBeTruthy()
+          loginButtonProps.onPress()
+          wrapper.update()
+          const loginButtonPropsAfterUpdate = wrapper.find(BlackButton).first().props()
+          expect(loginButtonPropsAfterUpdate.disabled).toBeTruthy()
       });
       
       it('renders login button as disabled when email is corrent and passowrd is incorrect', () => {
@@ -83,7 +86,10 @@ describe('LoginPage Component', () => {
           wrapper.update()
           const loginButton = wrapper.find(BlackButton).first()
           const loginButtonProps = loginButton.props()
-          expect(loginButtonProps.disabled).toBeTruthy()
+          loginButtonProps.onPress()
+          wrapper.update()
+          const loginButtonPropsAfterUpdate = wrapper.find(BlackButton).first().props()
+          expect(loginButtonPropsAfterUpdate.disabled).toBeTruthy()
       });
       
       it('renders login button as enabled when validation passes', () => {

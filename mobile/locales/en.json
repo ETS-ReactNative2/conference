@@ -56,10 +56,12 @@
     "upload_loader_text": "Your profile is updating",
     "project": "Project",
     "investor": "Investor",
-    "deactivate_warning": "Deactivated – your profile will not show up for others. Click 'Reactivate' to be included again.",
-    "reactivate_warning": "Active – your profile is visible for others. Click 'Deactivate' to hide it.",
+    "deactivate_warning": "Deactivated – your profile will not show up for others. Select 'Reactivate' to be included again.",
+    "reactivate_warning": "Active – your profile is visible for others. Select 'Deactivate' to hide it.",
     "leave_project": "Leave Project",
-    "leave_project_confirm": "Please make sure you want to leave the project."
+    "leave_project_confirm": "Please make sure you want to leave the project.",
+    "remove_job": "Remove Job",
+    "remove_job_confirm": "Please make sure you want to remove this job."
   },
   "navigator": {
     "conference": "Schedule",
@@ -80,6 +82,7 @@
     }
   },
   "common": {
+    "home_page": "Home Page",
     "contact": "Contact Us",
     "skip": "Skip",
     "setup": "Set up",
@@ -95,6 +98,7 @@
     "deactivate": "Deactivate",
     "create": "Create",
     "manage": "Manage",
+    "job_listing": "Job listings",
     "reactivate": "Reactivate",
     "leave": "Leave",
     "logout": "Logout",
@@ -141,7 +145,8 @@
       "resource_not_found": "Item is not available anymore, please refresh",
       "general": "Something went wrong, please contact us",
       "server_error": "We have some issues, please try again or contact us",
-      "incorrect_url": "Cannot open this URL"
+      "incorrect_url": "Cannot open this URL",
+      "unauthorized": "Please log in again"
     },
     "facebook": "Facebook",
     "no_facebook": "No Facebook",
@@ -172,12 +177,12 @@
       "token": "Token"
     },
     "ticket_size": {
-      "range1": "0 ~ 5K",
-      "range2": "5K ~ 25K",
-      "range3": "25K ~ 100K",
-      "range4": "100K ~ 500K",
-      "range5": "500K ~ 10M",
-      "range6": "10M ~ "
+      "range1": "0 - 5K",
+      "range2": "5K - 25K",
+      "range3": "25K - 100K",
+      "range4": "100K - 1M",
+      "range5": "1M - 10M",
+      "range6": "10M+"
     },
     "industries": {
       "other": "Other",
@@ -320,7 +325,6 @@
   "drawer": {
     "agenda": "Agenda",
     "flows": "Flows",
-    "notifications": "Notifications",
     "search": "Search"
   },
   "flow_page": {
@@ -377,6 +381,8 @@
       "remote": "Are you willing to work remote?",
       "role": {
         "about": "Tell us more about your skills, traits and knowledge",
+        "error_missing_role": "Please select role",
+        "error_other_role_missing_text": "Please enter role name",
         "other": "Other role",
         "not_looking_for_job": "I'm not looking for a job",
         "title": "Please select the role you're interested in:"
@@ -412,27 +418,32 @@
         "title": "Keywords"
       },
       "location": {
+        "error_missing_location": "Please select job location type",
         "title": "Job location"
       },
       "payment": {
+        "error_missing_payment": "Please select payment method",
         "title": "Type of payment"
       },
       "role": {
-        "title": "Select the roles for which you're hiring"
+        "error_missing_role": "Please select role",
+        "title": "Select the role for this job listing"
       }
     },
     "funding_stage": {
+      "error_missing_funding_stage": "Please select stage of investment",
       "header": "At which stage of investment are you?",
       "title": "Funding stage"
     },
     "giveaway": {
+      "error_missing_giveaway": "Please select how investor is involved",
       "header": "Investor buys",
       "title": "How do you plan to involve your investor?"
     },
     "hiring": {
       "header": "Hiring",
       "title": "Are you hiring?",
-      "skip_text": "If you don't want to create or edit job listings click SKIP"
+      "skip_text": "If you don't want to create or edit job listings, select SKIP"
     },
     "ico": {
       "question": "Are you going to do an ICO?",
@@ -454,8 +465,13 @@
         "title": "Project location"
       },
       "token_type": {
+        "error_missing_token_type": "Please select token type",
         "header": "Token type",
         "title": "What is your project's token type?"
+      },
+      "flow_finished": {
+        "header": "Project created",
+        "text": "Your application will be reviewed. You will be notified when your project is accepted"
       }
     },
     "investor": {
@@ -486,6 +502,10 @@
       "ticket_size": {
         "header": "Ticket size",
         "title": "How much money are you planning to invest?"
+      },
+      "flow_finished": {
+        "header": "Investor Profile created",
+        "text": "Your application will be reviewed. You will be notified when your investor profile is accepted"
       }
     },
     "links": {
@@ -503,6 +523,7 @@
     },
     "money": {
       "amount": "Money ($)",
+      "error_missing_investor_nationality": "Please select Investor Nationality",
       "nationality": "Investor nationality",
       "need_money": "Are you looking for money?",
       "not_looking_for_money": "We are not raising money",
@@ -510,6 +531,7 @@
       "title": "How much money are you planning to raise?"
     },
     "product_stage": {
+      "error_missing_product_stage": "Please select your product's stage",
       "header": "Product stage",
       "title": "What is your product's stage?"
     },
@@ -545,12 +567,6 @@
     "spinner_text": "Logging you in... Please wait",
     "terms_and_conditions": "TERMS AND CONDITIONS",
     "title": "Login"
-  },
-  "notifications": {
-    "button_is_read": "Read",
-    "button_is_unread": "Mark as read",
-    "mark_all_read": "Mark all as read",
-    "went_wrong": "Something went wrong"
   },
   "privacy_policy_page": {
     "title": "Privacy Policy",
@@ -619,6 +635,9 @@
   "project_members_page": {
     "title": "Project Members",
     "emailError": "Could not add this user"
+  },
+  "project_job_page": {
+    "title": "Project job listings"
   },
   "filter_page": {
     "type": {

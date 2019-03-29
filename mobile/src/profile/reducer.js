@@ -22,7 +22,7 @@ import {
   PROPAGATE_PROJECT_PROFILE,
   ADD_PROJECT_MEMBER_ERROR,
   REMOVE_MEMBER,
-  ADD_PROJECT_MEMBER_SUCCESS
+  ADD_PROJECT_MEMBER_SUCCESS, REMOVE_JOB, PROJECT_JOB_SPINNER_SHOW, PROJECT_JOB_SPINNER_HIDE,
 } from './action-types'
 
 const initialState = {
@@ -37,7 +37,8 @@ const initialState = {
     memberRequests: [],
     loading: false,
     error: false
-  }
+  },
+  isRemovingJob: false
 }
 
 export function profileReducer (state = initialState, action) {
@@ -231,6 +232,16 @@ export function profileReducer (state = initialState, action) {
         ...state,
         isLoading: false
       }
+    case PROJECT_JOB_SPINNER_SHOW:
+      return {
+        ...state,
+        isRemovingJob: true
+      }
+    case PROJECT_JOB_SPINNER_HIDE:
+      return {
+        ...state,
+        isRemovingJob: false
+      }
     case PROJECT_MEMBERS_SPINNER_HIDE:
       return {
         ...state,
@@ -245,6 +256,14 @@ export function profileReducer (state = initialState, action) {
         projectMembers: {
           ...state.projectMembers,
           loading: true
+        }
+      }
+    case REMOVE_JOB:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          jobListings: state.project.jobListings.filter(job => job.id !== action.data)
         }
       }
     case CLEAR:

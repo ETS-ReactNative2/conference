@@ -15,9 +15,12 @@ import {
   PROPAGATE_PROJECT_SEARCH,
   PROPAGATE_USER_DEFAULTS,
   PROPAGATE_USER_SEARCH,
+  SEARCH_RESULTS_QUERY_START,
+  SEARCH_RESULTS_QUERY_END
 } from './action-types'
 
 const initialState = {
+  isLoadingSearchQuery: false,
   isLoading: false,
   error: false,
   professionals: [],
@@ -303,6 +306,16 @@ export function searchReducer (state = initialState, action) {
             return prof
           }),
         }
+      }
+    case SEARCH_RESULTS_QUERY_START:
+      return {
+        ...state,
+        isLoadingSearchQuery: true
+      }
+    case SEARCH_RESULTS_QUERY_END:
+      return {
+        ...state,
+        isLoadingSearchQuery: false
       }
     case CLEAR:
       return initialState

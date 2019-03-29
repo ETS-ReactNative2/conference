@@ -5,6 +5,17 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { FlowInput } from './flow-inputs'
 
 class FlowInputValidated extends Component {
+
+  getInputStatus = (shouldOverrideStatus, overrideStatusType, isError, customStatus) => {
+    if (shouldOverrideStatus) {
+      return overrideStatusType
+    }
+    if (isError) {
+      return 'error'
+    }
+    return customStatus || 'ok'
+  }
+
   render () {
     return (
       <React.Fragment>
@@ -14,7 +25,7 @@ class FlowInputValidated extends Component {
           value={ this.props.value }
           labelText={ this.props.labelText }
           onChangeText={ this.props.onChangeText }
-          status={ this.props.isError ? 'error' : this.props.status || 'ok' }
+          status={this.getInputStatus(this.props.overrideStatus, this.props.overrideStatusType, this.props.isError, this.props.status)}
           errorStyleOverride={this.props.errorStyleOverride}
           keyboardType={this.props.keyboardType}
         />
@@ -50,7 +61,12 @@ FlowInputValidated.propTypes = {
     text: PropTypes.shape({
       color: PropTypes.string
     })
-  })
+  }),
+  // Used to override status props of Input component
+  // Useful when for example, validation of component should not happen immediately
+  overrideStatus: PropTypes.bool,
+  // Type of status that should be used when overrideStatus flag is flipped to true
+  overrideStatusType: PropTypes.oneOf(['regular', 'ok', 'warning', 'error'])
 }
 
 export default FlowInputValidated

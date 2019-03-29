@@ -1,17 +1,16 @@
-import { View } from 'native-base'
+import { Text, View } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import { GIVEAWAY_TYPES } from '../../../../enums'
+import { GIVEAWAY_TYPES_PROJECT } from '../../../../enums'
 import { signUpActions } from '../../../../signup'
 import { FlowButton } from '../../../design/buttons'
 import { FlowContainer } from '../../../design/container'
 import { FlowListItem } from '../../../design/list-items'
 import { StepTitle } from '../../../design/step-title'
 import { Subheader } from '../../../design/subheader'
-import { InvesteeHiring } from './index'
 
 class InvesteeGiveaway extends React.Component {
 
@@ -20,15 +19,24 @@ class InvesteeGiveaway extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      giveaway: this.props.giveaway
+      giveaway: this.props.giveaway,
+      // used to stop validation until Save button is hitted for the first time
+      // unless field are already filled (editing)
+      showValidationError: this.props.giveaway !== -1
     }
 
     this.state.isFormValid = this.isFormValid()
   }
 
   handleSubmit = () => {
-    this.props.saveInvestee({ giveaway: this.state.giveaway })
-    this.props.onFill({ nextStep: InvesteeHiring })
+    // after first time hitting Save button, flip flag to enable showing validation errors
+    if (!this.state.showValidationError) {
+      this.setState( { showValidationError: true } )
+    }
+    if (this.state.isFormValid) {
+      this.props.saveInvestee({ giveaway: this.state.giveaway })
+      this.props.onFill({ done: true })
+    }
   }
 
   handleChange = (index) => {
@@ -49,7 +57,7 @@ class InvesteeGiveaway extends React.Component {
               color={'white'}
               text={ I18n.t(`flow_page.giveaway.header`) }
             />
-            { GIVEAWAY_TYPES.map((size) => {
+            { GIVEAWAY_TYPES_PROJECT.map((size) => {
               return (
                 <FlowListItem
                   multiple={ false }
@@ -60,13 +68,19 @@ class InvesteeGiveaway extends React.Component {
                 />
               )
             }) }
-
+            {this.state.showValidationError && this.state.giveaway === -1 && (
+              <View style={ { margin: 8 } }>
+                <Text style={ { color: 'red', alignSelf: 'center' } }>
+                  {I18n.t('flow_page.giveaway.error_missing_giveaway')}
+                </Text>
+              </View>
+            )}
           </ScrollView>
         </View>
         <View style={ { margin: 8 } }>
           <FlowButton
             text={ I18n.t('common.next') }
-            disabled={!this.state.isFormValid}
+            disabled={ this.state.showValidationError && !this.state.isFormValid}
             onPress={ this.handleSubmit }
           />
         </View>

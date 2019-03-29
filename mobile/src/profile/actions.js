@@ -1,7 +1,6 @@
 import * as api from '../api/api'
 import { getErrorDataFromNetworkException } from '../common/utils'
 import { PROPAGATE_USER_DEFAULTS, PROPAGATE_USER_SEARCH } from '../search/action-types'
-import { fetchDefaults, fetchMatches } from '../search/actions'
 import {
   DEACTIVATE_INVESTOR,
   DEACTIVATE_PROFILE,
@@ -23,37 +22,36 @@ import {
   PROJECT_MEMBERS_SPINNER_SHOW,
   ADD_PROJECT_MEMBER_ERROR,
   REMOVE_MEMBER,
-  ADD_PROJECT_MEMBER_SUCCESS
+  ADD_PROJECT_MEMBER_SUCCESS, REMOVE_JOB, PREFILL_EDIT_JOB, PROJECT_JOB_SPINNER_SHOW, PROJECT_JOB_SPINNER_HIDE
 } from './action-types'
+import { searchActions } from '../search'
 import { globalActions } from '../global'
-import { batchActions } from 'redux-batch-enhancer';
+import { batchActions } from 'redux-batch-enhancer'
+import { profileService, searchService } from '../services'
+
+export const fetchProfilesSuccess = (project, investor, professional, basic) => ({
+  type: LOAD_PROFILES_SUCCESS,
+  data: {
+    project,
+    investor,
+    professional,
+    basic
+  }
+})
 
 export function fetchProfiles () {
   return async dispatch => {
     try {
       dispatch({ type: LOAD_PROFILES })
-      const [ projectResponse, investorResponse, professionalResponse, basicResponse ] = await Promise.all([
-        api.fetchMyProject(),
-        api.fetchMyInvestor(),
-        api.fetchMyProfile(),
-        api.fetchMyBasic()
-      ])
-      dispatch({
-        type: LOAD_PROFILES_SUCCESS,
-        data: {
-          project: projectResponse.data,
-          investor: investorResponse.data,
-          professional: professionalResponse.data,
-          basic: basicResponse.data
-        }
-      })
+      const [ projectResponse, investorResponse, professionalResponse, basicResponse ] = await profileService.fetchProfileInfo()
+      dispatch(fetchProfilesSuccess(projectResponse.data, investorResponse.data, professionalResponse.data, basicResponse.data))
     } catch (err) {
       dispatch({ type: LOAD_PROFILES_ERROR })
     }
   }
 }
 
-export function openEdit (type, prefill = true) {
+export function openEdit (type, prefill = true, jobId = -1) {
   let role
   switch (type) {
     case 'professional':
@@ -65,16 +63,29 @@ export function openEdit (type, prefill = true) {
     case 'investor':
       role = 'investor'
       break
+    case 'employer':
+      role = 'employer'
   }
-  return async (dispatch, getState) => {
-    dispatch({
-      type: PREFILL_EDIT,
-      data: {
-        role,
-        info: getState().profile[ type ],
-        prefill
-      }
-    })
+  return (dispatch, getState) => {
+    if(role !=='employer') {
+      dispatch({
+        type: PREFILL_EDIT,
+        data: {
+          role,
+          info: getState().profile[ type ],
+          prefill
+        }
+      })
+    } else {
+      dispatch({
+        type: PREFILL_EDIT_JOB,
+        data: {
+          role,
+          info: getState().profile.project.jobListings.find(job => job.id === jobId),
+          prefill
+        }
+      })
+    }
   }
 }
 
@@ -89,12 +100,6 @@ export function updateBasic (basicChanges) {
       dispatch({
         type: UPDATE_BASIC,
         data: { ...basicChanges, imageUrl: basicChanges.avatarSource.uri }
-      })
-      console.log({
-        basicInfo,
-        basicChanges,
-        shouldUpdateData,
-        shouldUpdatePhoto
       })
       if (shouldUpdatePhoto) {
         await api.uploadImage(basicChanges.avatarSource)
@@ -113,14 +118,19 @@ export function updateBasic (basicChanges) {
 }
 
 export function activateInvestor () {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       dispatch({
         type: PROFILE_SPINNER_SHOW
       })
       await api.reactivateInvestor()
-      dispatch(fetchMatches())
-      dispatch(fetchDefaults())
+      const [
+        [ projectMatchesResponse, investorMatchesResponse, professionalMatchesResponse, jobsMatchesResponse ] = matchesResponses,
+        [ projectDefaultResponse, investorDefaultResponse, professionalDefaultResponse] = defaultsResponses
+      ] = await Promise.all([searchService.fetchMatches(getState().filter.project, getState().filter.investor, getState().filter.professional, getState().filter.job),
+                            searchService.fetchDefaults()])
+      dispatch(searchActions.fetchMatchesSuccess(projectMatchesResponse.data, investorMatchesResponse.data, professionalMatchesResponse.data, jobsMatchesResponse.data))
+      dispatch(searchActions.fetchDefaultsSuccess(projectDefaultResponse.data, investorDefaultResponse.data, professionalDefaultResponse.data))
       dispatch({
         type: REACTIVATE_INVESTOR
       })
@@ -134,19 +144,23 @@ export function activateInvestor () {
 }
 
 export function activateProfile () {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       dispatch({
         type: PROFILE_SPINNER_SHOW
       })
       await api.reactivateProfile()
-      dispatch(fetchMatches())
-      dispatch(fetchDefaults())
+      const [
+        [ projectMatchesResponse, investorMatchesResponse, professionalMatchesResponse, jobsMatchesResponse ] = matchesResponses,
+        [ projectDefaultResponse, investorDefaultResponse, professionalDefaultResponse] = defaultsResponses
+      ] = await Promise.all([searchService.fetchMatches(getState().filter.project, getState().filter.investor, getState().filter.professional, getState().filter.job),
+                             searchService.fetchDefaults()])
+      dispatch(searchActions.fetchMatchesSuccess(projectMatchesResponse.data, investorMatchesResponse.data, professionalMatchesResponse.data, jobsMatchesResponse.data))
+      dispatch(searchActions.fetchDefaultsSuccess(projectDefaultResponse.data, investorDefaultResponse.data, professionalDefaultResponse.data))
       dispatch({
         type: REACTIVATE_PROFILE
       })
     } catch (err) {
-      console.log({err})
       const errorData = getErrorDataFromNetworkException(err)
       dispatch(globalActions.showAlertError(errorData.errorMessage))
     } finally {
@@ -263,6 +277,21 @@ export function removeProjectMember (memberId) {
       dispatch(batchActions([globalActions.showAlertError(errorData.errorMessage), { type: LOAD_PROJECT_MEMBERS_ERROR }]))
     } finally {
       dispatch({ type: PROJECT_MEMBERS_SPINNER_HIDE })
+    }
+  }
+}
+
+export function removeProjectJob( jobId) {
+  return async dispatch => {
+    try {
+      dispatch({ type: PROJECT_JOB_SPINNER_SHOW })
+      await api.deleteProjectJob(jobId)
+      dispatch({ type: REMOVE_JOB, data: jobId})
+    } catch (err) {
+      const errorData = getErrorDataFromNetworkException(err)
+      dispatch(globalActions.showAlertError(errorData.errorMessage))
+    }finally {
+      dispatch({ type: PROJECT_JOB_SPINNER_HIDE })
     }
   }
 }
